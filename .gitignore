@@ -1,0 +1,10 @@
+.idea/
+.tmp/
+.deploy/
+.DS_Store
+node_modules/
+any_test/
+build/
+examples/arcanex.js
+examples/arcanex.min.js
+documents/site
