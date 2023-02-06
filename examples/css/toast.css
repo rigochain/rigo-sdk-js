@@ -1,0 +1,36 @@
+#div_toast {
+    visibility: hidden;
+    position: fixed;
+    bottom: 60%;
+    left: 50%;
+    transform: translateX(-50%);
+    min-width: 100px;
+    border-radius: 25px;
+    background-color: #666666;
+    color: #FFFFFF;
+    padding: 15px 25px;
+}
+
+#div_toast.show {
+    visibility: visible;
+    /* 700ms동안 fade-in하고 2000ms 딜레이를 갖고 700ms동안 fade-out함 */
+    animation: fade-in 700ms, fade-out 700ms 2000ms;
+}
+@keyframes fade-in {
+    /* // 투명도가 0부터 1로 */
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+@keyframes fade-out {
+    /* // 투명도가 1에서 0으로 */
+    from {
+        opacity: 1;
+    }
+    to {
+        opacity: 0;
+    }
+}
