@@ -5,14 +5,14 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       <link rel="shortcut icon" href="../img/favicon.ico" />
-    <title>RPC - arcanex-sdk-js</title>
+    <title>RPC APIs - ACNet - arcanex-sdk-js</title>
     <link rel="stylesheet" href="../css/theme.css" />
     <link rel="stylesheet" href="../css/theme_extra.css" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css" />
     
       <script>
         // Current page data
-        var mkdocs_page_name = "RPC";
+        var mkdocs_page_name = "RPC APIs - ACNet";
         var mkdocs_page_input_path = "acnet.md";
         var mkdocs_page_url = null;
       </script>
@@ -44,22 +44,34 @@
                 <li class="toctree-l1"><a class="reference internal" href="..">Overview</a>
                 </li>
               </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../account/">Account</a>
-                </li>
-              </ul>
               <ul class="current">
-                <li class="toctree-l1 current"><a class="reference internal current" href="./">RPC</a>
+                <li class="toctree-l1 current"><a class="reference internal current" href="./">RPC APIs - ACNet</a>
     <ul class="current">
     <li class="toctree-l2"><a class="reference internal" href="#queryaccount">queryAccount</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#parameters">Parameters</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#returns">Returns</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#examples">Examples</a>
+    </li>
+        </ul>
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#syncaccount">syncAccount</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#parameters_1">Parameters</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#returns_1">Returns</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#examples_1">Examples</a>
+    </li>
+        </ul>
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#queryvalidators">queryValidators</a>
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#querystakes">queryStakes</a>
     </li>
-    <li class="toctree-l2"><a class="reference internal" href="#querydeslegatee">queryDeslegatee</a>
+    <li class="toctree-l2"><a class="reference internal" href="#querydelegatee">queryDelegatee</a>
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#broadcasttrxsync">broadcastTrxSync</a>
     </li>
@@ -81,12 +93,15 @@
                 </li>
               </ul>
               <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../subscriber/">Subscriber</a>
+                <li class="toctree-l1"><a class="reference internal" href="../subscriber/">Event Subscription - Subscriber</a>
                 </li>
               </ul>
+              <p class="caption"><span class="caption-text">internals</span></p>
               <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../transactions/">Transactions</a>
-                </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../internals/account/">Account</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../internals/transactions/">Transaction</a>
+                  </li>
               </ul>
       </div>
     </div>
@@ -102,7 +117,7 @@
         <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
   <ul class="wy-breadcrumbs">
     <li><a href=".." class="icon icon-home" alt="Docs"></a> &raquo;</li>
-      <li>RPC</li>
+      <li>RPC APIs - ACNet</li>
     <li class="wy-breadcrumbs-aside">
     </li>
   </ul>
@@ -111,17 +126,74 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
             <div class="section" itemprop="articleBody">
               
-                <h1 id="rpc">RPC</h1>
+                <h1 id="acnet">ACNet</h1>
+<p><code>ACNet</code> API를 사용하여 지정된 ARCANEX 노드에 다양한 요청 작업을 수행할 수 있다.</p>
 <hr />
 <h2 id="queryaccount">queryAccount</h2>
+<pre><code class="language-ts">static queryAccount(addr: string|Bytes, cb?:(_:any)=&gt;void)
+</code></pre>
+<p><code>addr</code>로 지정된 <code>Account</code>의 최신 상태 정보(<code>nonce</code>, <code>balance</code> 등) 를 조회 한다.</p>
+<h3 id="parameters">Parameters</h3>
+<ol>
+<li><code>addr</code>: 조회 대상 <code>Account</code>의 주소. (20bytes 또는 40chars hex-string)</li>
+<li><code>cb</code>: 조회 결과를 수신할 콜백 함수.</li>
+</ol>
+<h3 id="returns">Returns</h3>
+<pre><code class="language-json">{
+    &quot;key&quot;: &quot;DF976A96545DAD0E0B14FED615587A89BA980B84&quot;,
+    &quot;value&quot;: {
+        &quot;address&quot;: &quot;DF976A96545DAD0E0B14FED615587A89BA980B84&quot;,
+        &quot;nonce&quot;: 0,
+        &quot;balance&quot;: &quot;0&quot;
+    }
+}
+</code></pre>
+<h3 id="examples">Examples</h3>
+<pre><code class="language-ts">
+ACNet.queryAccount(&quot;DF976A96545DAD0E0B14FED615587A89BA980B84&quot;, resp =&gt; {
+    console.log(resp)
+})
+
+</code></pre>
+<pre><code class="language-shell">{
+    &quot;key&quot;: &quot;DF976A96545DAD0E0B14FED615587A89BA980B84&quot;,
+    &quot;value&quot;: {
+        &quot;address&quot;: &quot;DF976A96545DAD0E0B14FED615587A89BA980B84&quot;,
+        &quot;nonce&quot;: 0,
+        &quot;balance&quot;: &quot;0&quot;
+    }
+}
+</code></pre>
 <hr />
 <h2 id="syncaccount">syncAccount</h2>
+<pre><code class="language-ts">static syncAccount(acct: Account, cb?:(_:any)=&gt;void) 
+</code></pre>
+<p>블록체인상에 기록된 <code>acct</code>의 최신 상태 정보(<code>nonce</code>, <code>balance</code>) 를 동기화 한다.</p>
+<h3 id="parameters_1">Parameters</h3>
+<ol>
+<li><code>acct</code>: 조회 대상 <code>Account</code> 객체.</li>
+<li><code>cb</code>: 조회 결과를 수신할 콜백 함수.</li>
+</ol>
+<h3 id="returns_1">Returns</h3>
+<p><code>PromiseLike&lt;any&gt;</code></p>
+<h3 id="examples_1">Examples</h3>
+<pre><code class="language-ts">let acct = Account.New(&quot;test-0&quot;)
+
+    ...
+
+ACNet.syncAccount(acct, resp =&gt; {
+    console.log(acct) // `acct` is not updated.
+})
+.then( resp =&gt; {
+    console.log(acct) // `acct` is updated.
+})
+</code></pre>
 <hr />
 <h2 id="queryvalidators">queryValidators</h2>
 <hr />
 <h2 id="querystakes">queryStakes</h2>
 <hr />
-<h2 id="querydeslegatee">queryDeslegatee</h2>
+<h2 id="querydelegatee">queryDelegatee</h2>
 <hr />
 <h2 id="broadcasttrxsync">broadcastTrxSync</h2>
 <hr />
@@ -142,8 +214,8 @@
             </div>
           </div><footer>
     <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
-        <a href="../account/" class="btn btn-neutral float-left" title="Account"><span class="icon icon-circle-arrow-left"></span> Previous</a>
-        <a href="../subscriber/" class="btn btn-neutral float-right" title="Subscriber">Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href=".." class="btn btn-neutral float-left" title="Overview"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../subscriber/" class="btn btn-neutral float-right" title="Event Subscription - Subscriber">Next <span class="icon icon-circle-arrow-right"></span></a>
     </div>
 
   <hr/>
@@ -166,7 +238,7 @@
   <span class="rst-current-version" data-toggle="rst-current-version">
     
     
-      <span><a href="../account/" style="color: #fcfcfc">&laquo; Previous</a></span>
+      <span><a href=".." style="color: #fcfcfc">&laquo; Previous</a></span>
     
     
       <span><a href="../subscriber/" style="color: #fcfcfc">Next &raquo;</a></span>
