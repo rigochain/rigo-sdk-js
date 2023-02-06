@@ -1,3 +1,11 @@
 site_name: arcanex-sdk-js
 
 theme: readthedocs
+
+nav:
+  - index.md
+  - RPC APIs - ACNet: acnet.md
+  - Event Subscription - Subscriber: subscriber.md
+  - internals:
+      - Account: internals/account.md
+      - Transaction: internals/transactions.md

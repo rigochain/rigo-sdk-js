@@ -1,6 +1,6 @@
 # Account
 
-`Account` API 를 사용하여 ARCANEX Account 를 생성하고, 전자서명 및 전자서명 검증을 수행할 수 있다.
+`Account` API 를 사용하여 ARCANEX Account 를 생성하고, 생성된 Account 의 Private/Public keypaire 를 이용하여 전자서명 및 전자서명 검증을 수행할 수 있다.
 `Account` 객체는 다음과 같은 정보를 갖는다.
 
 ```ts
