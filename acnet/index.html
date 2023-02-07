@@ -91,17 +91,33 @@
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#queryblockbyheight">queryBlockByHeight</a>
         <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#parameters_4">Parameters</a>
+    </li>
     <li class="toctree-l3"><a class="reference internal" href="#returns_5">Returns</a>
     </li>
         </ul>
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#queryblockbyhash">queryBlockByHash</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#parameters_5">Parameters</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#returns_6">Returns</a>
+    </li>
+        </ul>
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#queryrule">queryRule</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#returns_7">Returns</a>
+    </li>
+        </ul>
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#getclient">getClient</a>
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#seturl">setUrl</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#parameters_6">Parameters</a>
+    </li>
+        </ul>
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#geturl">getUrl</a>
     </li>
@@ -364,11 +380,22 @@ ACNet.syncAccount(acct, resp =&gt; {
 <li><code>index</code>: 블록내에서 트랜잭션의 순번</li>
 <li><code>tx_result</code>: 트랜잭션 처리 결과.  <code>tx_result.code</code>가 <code>0</code> 이면 성공, 그렇지 않으면 실패에 해당된다.  </li>
 <li><code>tx</code>: 처리된 트랜잭션.</li>
-<li><code>encoded</code>: Protobuf v3 로 인코딩된 트랜잭션 데이터.</li>
+<li><code>encoded</code>: Protobuf v3 로 인코딩된 트랜잭션 데이터의 base64 형식.</li>
 <li><code>proof</code>:</li>
 </ul>
 <hr />
 <h2 id="queryblockbyheight">queryBlockByHeight</h2>
+<pre><code class="language-ts">static queryBlockByHeight(height: number|string): PromiseLike&lt;any&gt;
+</code></pre>
+<pre><code class="language-ts">ACNet.queryBlockByHeight(10818).then(resp =&gt; {
+    console.log(resp)
+}
+</code></pre>
+<p>블록 높이(번호)로 블록을 조회 한다.</p>
+<h3 id="parameters_4">Parameters</h3>
+<ul>
+<li><code>height</code>: 블록 높이(번호).</li>
+</ul>
 <h3 id="returns_5">Returns</h3>
 <pre><code class="language-json">{
   &quot;block_id&quot;: {
@@ -442,16 +469,82 @@ ACNet.syncAccount(acct, resp =&gt; {
   }
 }
 </code></pre>
+<ul>
+<li><code>block_id</code>: 블록 해시 값. <code>block_id.hash</code> 값을 사용한다.</li>
+<li><code>block</code>: 블록의 내용.</li>
+<li><code>data.txs</code>: 블록에 포함된 트랜잭션 배열. 각각의 트랜잭션 데이터는 Protobuf v3 인코딩 데이터의 base64 형식.</li>
+</ul>
 <hr />
 <h2 id="queryblockbyhash">queryBlockByHash</h2>
+<pre><code class="language-ts">static queryBlockByHash(hash: string|Uint8Array): PromiseLike&lt;any&gt;
+</code></pre>
+<pre><code class="language-ts">ACNet.queryBlockByHash(&quot;2227E9F1505C98EE0360A953735623FC3FD74A6E81ADFC9D7EF3BE8927F9136E&quot;).then(resp =&gt; {
+    console.log(resp)
+}
+</code></pre>
+<p>블록 해시 값으로 블록을 조회 한다.</p>
+<h3 id="parameters_5">Parameters</h3>
+<ul>
+<li><code>hash</code>: 블록 해시 값. (32bytes or 64chars hex-string)</li>
+</ul>
+<h3 id="returns_6">Returns</h3>
+<p><code>queryBlockByHeight</code> 와 동일</p>
 <hr />
 <h2 id="queryrule">queryRule</h2>
+<pre><code class="language-ts">static queryRule(): PromiseLike&lt;any&gt;
+</code></pre>
+<pre><code class="language-ts">ACNet.queryRule().then(resp =&gt; {
+    console.log(resp)
+})
+</code></pre>
+<p>현재 적용된 governance rule 을 조회한다.</p>
+<h3 id="returns_7">Returns</h3>
+<pre><code class="language-json">{
+    &quot;value&quot;: {
+      &quot;version&quot;: &quot;0&quot;,
+      &quot;maxValidatorCnt&quot;: &quot;21&quot;,
+      &quot;amountPerPower&quot;: &quot;1000000000000000000&quot;,
+      &quot;rewardPerPower&quot;: &quot;1000000000&quot;,
+      &quot;lazyRewardBlocks&quot;: &quot;20&quot;,
+      &quot;lazyApplyingBlocks&quot;: &quot;10&quot;,
+      &quot;minTrxFee&quot;: &quot;10&quot;,
+      &quot;minVotingPeriodBlocks&quot;: &quot;259200&quot;,
+      &quot;maxVotingPeriodBlocks&quot;: &quot;2592000&quot;
+    }
+  }
+</code></pre>
+<ul>
+<li><code>version</code>: 거버넌스 규칙 버전.</li>
+<li><code>maxValidatorCnt</code>: 최대 Validator 수.</li>
+<li><code>amountPerPower</code>: 1 voting power 당 암호화폐 자산 수량.</li>
+<li><code>rewardPerPower</code>: 1 voting power 당 받게되는 블록 보상 수량.</li>
+<li><code>lazyRewardBlocks</code>: Un-staking 후 보상량을 전송할 수 있게 되기까지의 블록 수.</li>
+<li><code>lazyApplyingBlocks</code>: 제안된 새로운 거버넌스 규칙이 투표 종료 부터 실재 반영되기까지의 블록 수.</li>
+<li><code>minTrxFee</code>: 최소 트랜잭션 수수료.</li>
+<li><code>minVotingPeriodBlocks</code>: 최소 투표 기간(블록 수).</li>
+<li><code>maxVotingPeriodBlocks</code>: 최대 투표 기간(블록 수).</li>
+</ul>
 <hr />
 <h2 id="getclient">getClient</h2>
 <hr />
 <h2 id="seturl">setUrl</h2>
+<pre><code class="language-ts">static setUrl(url:string)
+</code></pre>
+<pre><code class="language-ts">ACNet.setUrl('http://localhost:26657')
+</code></pre>
+<p><code>ACNet</code> API 호출시 접속하게 될 ARCANEX 노드의 RPC 서버 URL을 설정한다.</p>
+<h3 id="parameters_6">Parameters</h3>
+<ul>
+<li><code>url</code>: ARCANEX 노드의 RPC 서버 URL</li>
+</ul>
 <hr />
 <h2 id="geturl">getUrl</h2>
+<pre><code class="language-ts">static getUrl():string
+</code></pre>
+<pre><code class="language-ts">const nodeUrl = ACNet.getUrl()
+console.log(nodeUrl) // 'http://localhost:26657'
+</code></pre>
+<p>현재 사용중인 ARCANEX 노드 RPC Server URL.</p>
               
             </div>
           </div><footer>
