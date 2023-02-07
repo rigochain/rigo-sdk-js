@@ -53,8 +53,6 @@
     </li>
     <li class="toctree-l3"><a class="reference internal" href="#returns">Returns</a>
     </li>
-    <li class="toctree-l3"><a class="reference internal" href="#examples">Examples</a>
-    </li>
         </ul>
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#syncaccount">syncAccount</a>
@@ -62,8 +60,6 @@
     <li class="toctree-l3"><a class="reference internal" href="#parameters_1">Parameters</a>
     </li>
     <li class="toctree-l3"><a class="reference internal" href="#returns_1">Returns</a>
-    </li>
-    <li class="toctree-l3"><a class="reference internal" href="#examples_1">Examples</a>
     </li>
         </ul>
     </li>
@@ -127,48 +123,44 @@
             <div class="section" itemprop="articleBody">
               
                 <h1 id="acnet">ACNet</h1>
-<p><code>ACNet</code> API를 사용하여 지정된 ARCANEX 노드에 다양한 요청 작업을 수행할 수 있다.</p>
+<p><code>ACNet</code> API를 사용하여 지정된 ARCANEX 노드의 JSONRPC 서버로 요청 작업을 수행할 수 있다.</p>
 <hr />
 <h2 id="queryaccount">queryAccount</h2>
-<pre><code class="language-ts">static queryAccount(addr: string|Bytes, cb?:(_:any)=&gt;void)
+<pre><code class="language-ts">static queryAccount(addr: string|Bytes)
 </code></pre>
-<p><code>addr</code>로 지정된 <code>Account</code>의 최신 상태 정보(<code>nonce</code>, <code>balance</code> 등) 를 조회 한다.</p>
+<pre><code class="language-ts">
+ACNet.queryAccount(&quot;DF976A96545DAD0E0B14FED615587A89BA980B84&quot;)
+    .then(resp =&gt; {
+        console.log(resp)
+    })
+
+</code></pre>
+<p><code>addr</code>로 지정된 주소의 <code>Account</code> 최신 상태 정보를 조회 한다.</p>
 <h3 id="parameters">Parameters</h3>
 <ol>
 <li><code>addr</code>: 조회 대상 <code>Account</code>의 주소. (20bytes 또는 40chars hex-string)</li>
-<li><code>cb</code>: 조회 결과를 수신할 콜백 함수.</li>
 </ol>
 <h3 id="returns">Returns</h3>
-<p><code>PromiseLike&lt;any&gt;</code></p>
-<h3 id="examples">Examples</h3>
-<pre><code class="language-ts">
-ACNet.queryAccount(&quot;DF976A96545DAD0E0B14FED615587A89BA980B84&quot;, resp =&gt; {
-    console.log(resp)
-})
-
-</code></pre>
-<pre><code class="language-shell">{
-    &quot;key&quot;: &quot;DF976A96545DAD0E0B14FED615587A89BA980B84&quot;,
+<p><code>value</code> 객체의 값이 실질적인 조회 결과에 해당된다.</p>
+<pre><code class="language-js">{
+    ...
     &quot;value&quot;: {
         &quot;address&quot;: &quot;DF976A96545DAD0E0B14FED615587A89BA980B84&quot;,
         &quot;nonce&quot;: 0,
         &quot;balance&quot;: &quot;0&quot;
     }
-}
+    ...
+}    
 </code></pre>
+<ul>
+<li><code>address</code>: 조회한 계정의 주소. <code>key</code> 값과 동일한 값.</li>
+<li><code>nonce</code>: 현재 계정으로 발행한 트랜잭션 수.</li>
+<li><code>balance</code>: 계정의 잔액.</li>
+</ul>
 <hr />
 <h2 id="syncaccount">syncAccount</h2>
 <pre><code class="language-ts">static syncAccount(acct: Account, cb?:(_:any)=&gt;void) 
 </code></pre>
-<p>블록체인상에 기록된 <code>acct</code>의 최신 상태 정보(<code>nonce</code>, <code>balance</code>) 를 동기화 한다.</p>
-<h3 id="parameters_1">Parameters</h3>
-<ol>
-<li><code>acct</code>: 조회 대상 <code>Account</code> 객체.</li>
-<li><code>cb</code>: 조회 결과를 수신할 콜백 함수.</li>
-</ol>
-<h3 id="returns_1">Returns</h3>
-<p><code>PromiseLike&lt;any&gt;</code></p>
-<h3 id="examples_1">Examples</h3>
 <pre><code class="language-ts">let acct = Account.New(&quot;test-0&quot;)
 
     ...
@@ -180,6 +172,14 @@ ACNet.syncAccount(acct, resp =&gt; {
     console.log(acct) // `acct` is updated.
 })
 </code></pre>
+<p>블록체인상에 기록된 <code>acct</code>의 최신 상태 정보(<code>nonce</code>, <code>balance</code>) 를 동기화 한다.</p>
+<h3 id="parameters_1">Parameters</h3>
+<ol>
+<li><code>acct</code>: 조회 대상 <code>Account</code> 객체.</li>
+<li><code>cb</code>: 조회 결과를 수신할 콜백 함수.</li>
+</ol>
+<h3 id="returns_1">Returns</h3>
+<p><code>queryAccount</code> 의 리턴값과 동일하다.</p>
 <hr />
 <h2 id="queryvalidators">queryValidators</h2>
 <hr />
