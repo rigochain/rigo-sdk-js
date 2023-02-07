@@ -82,8 +82,18 @@
     <li class="toctree-l2"><a class="reference internal" href="#broadcasttrxsync">broadcastTrxSync</a>
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#querytrx">queryTrx</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#parameters_3">Parameters</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#returns_4">Returns</a>
+    </li>
+        </ul>
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#queryblockbyheight">queryBlockByHeight</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#returns_5">Returns</a>
+    </li>
+        </ul>
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#queryblockbyhash">queryBlockByHash</a>
     </li>
@@ -222,9 +232,10 @@ ACNet.syncAccount(acct, resp =&gt; {
 <li><code>block_height</code>: 블록 번호.</li>
 <li><code>validators</code>: Validator 목록.</li>
 <li><code>address</code>: Validator 계정의 주소.</li>
-<li><code>pub_key</code>: Validator 의 Public Key. Base64 인코딩.</li>
+<li><code>pub_key</code>: Validator의 Public Key. (Base64 인코딩)</li>
 <li><code>voting_power</code>: Validator의 지분.</li>
-<li><code>proposer_proiority</code>: Validator 가 블록 제안자(Proposer)가 될 수 있는 우선 순위.</li>
+<li><code>proposer_proiority</code>: Validator 가 블록 제안자(Proposer)가 될 수 있는 우선 순위.<br />
+  지분이 클 수록, 마지막 블록 제안이후 경과 시간이 클 수록 우선 순위는 높아진다.</li>
 <li><code>count</code>: <code>validators</code> 의 개수.</li>
 <li><code>total</code>: 현재(<code>block_height</code>) 시점의 총 Validator 수.</li>
 </ul>
@@ -271,8 +282,166 @@ ACNet.syncAccount(acct, resp =&gt; {
 <h2 id="broadcasttrxsync">broadcastTrxSync</h2>
 <hr />
 <h2 id="querytrx">queryTrx</h2>
+<pre><code class="language-ts">static queryTrx(txhash: string|Uint8Array)
+</code></pre>
+<pre><code class="language-ts">ACNet.queryTrx(&quot;AD10C104B8E3B3DBE357CF4133B8376B6EB48E44AE28260D42F7A0B53E1B34F1&quot;).then(resp =&gt; {
+  console.log(resp)
+})
+</code></pre>
+<h3 id="parameters_3">Parameters</h3>
+<ul>
+<li><code>txhash</code>: 조회하고자 하는 트랜잭션의 해시. (32bytes or 64chars Hex-string)</li>
+</ul>
+<h3 id="returns_4">Returns</h3>
+<pre><code class="language-json">{
+    &quot;hash&quot;: &quot;AD10C104B8E3B3DBE357CF4133B8376B6EB48E44AE28260D42F7A0B53E1B34F1&quot;,
+    &quot;height&quot;: &quot;6980&quot;,
+    &quot;index&quot;: 0,
+    &quot;tx_result&quot;: {
+        &quot;code&quot;: 0,
+        &quot;data&quot;: null,
+        &quot;log&quot;: &quot;&quot;,
+        &quot;info&quot;: &quot;&quot;,
+        &quot;gas_wanted&quot;: &quot;10&quot;,
+        &quot;gas_used&quot;: &quot;10&quot;,
+        &quot;events&quot;: [
+            {
+                &quot;type&quot;: &quot;tx&quot;,
+                &quot;attributes&quot;: [
+                    {
+                        &quot;key&quot;: &quot;dHgudHlwZQ==&quot;,
+                        &quot;value&quot;: &quot;dHJhbnNmZXI=&quot;,
+                        &quot;index&quot;: true
+                    },
+                    {
+                        &quot;key&quot;: &quot;dHguc2VuZGVy&quot;,
+                        &quot;value&quot;: &quot;MjkwMzZBQjAwRDE4QjFCNzI3NDQ0ODJGNUEwOUZEREU4QzZGMTk2RQ==&quot;,
+                        &quot;index&quot;: true
+                    },
+                    {
+                        &quot;key&quot;: &quot;dHgucmVjZWl2ZXI=&quot;,
+                        &quot;value&quot;: &quot;OERDNDFBODZCOTFFQjg4RDgyNDg5QzREMDM3QUU5RkZDQTY1Q0ZCRg==&quot;,
+                        &quot;index&quot;: true
+                    },
+                    {
+                        &quot;key&quot;: &quot;dHguYWRkcnBhaXI=&quot;,
+                        &quot;value&quot;: &quot;MjkwMzZBQjAwRDE4QjFCNzI3NDQ0ODJGNUEwOUZEREU4QzZGMTk2RThEQzQxQTg2QjkxRUI4OEQ4MjQ4OUM0RDAzN0FFOUZGQ0E2NUNGQkY=&quot;,
+                        &quot;index&quot;: true
+                    }
+                ]
+            }
+        ],
+        &quot;codespace&quot;: &quot;&quot;
+    },
+    &quot;tx&quot;: {
+        &quot;hash&quot;: &quot;ad10c104b8e3b3dbe357cf4133b8376b6eb48e44ae28260d42f7a0b53e1b34f1&quot;,
+        &quot;version&quot;: 1,
+        &quot;time&quot;: &quot;1675752794424000000&quot;,
+        &quot;nonce&quot;: &quot;3&quot;,
+        &quot;from&quot;: &quot;29036ab00d18b1b72744482f5a09fdde8c6f196e&quot;,
+        &quot;to&quot;: &quot;8dc41a86b91eb88d82489c4d037ae9ffca65cfbf&quot;,
+        &quot;amount&quot;: &quot;1&quot;,
+        &quot;gas&quot;: &quot;10&quot;,
+        &quot;type&quot;: 1,
+        &quot;sig&quot;: &quot;89122638fef0e2793a0f3fba18fa9884690d8f1ac957fb1437e9b282f74909c04aae758bd118e7f324f25fbecedfc61e9c90fe6749fd1f0905945571f8360d0500&quot;
+    },
+    &quot;proof&quot;: {
+        &quot;root_hash&quot;: &quot;D27A3C02E3618E16982ED008703381BB43A84C44A12ECE2600E271200E42099E&quot;,
+        &quot;data&quot;: &quot;CAEQgPyK2JuJ3qAXGAMiFCkDarANGLG3J0RIL1oJ/d6MbxluKhSNxBqGuR64jYJInE0Deun/ymXPvzIBAToBCkABUkGJEiY4/vDieToPP7oY+piEaQ2PGslX+xQ36bKC90kJwEqudYvRGOfzJPJfvs7fxh6ckP5nSf0fCQWUVXH4Ng0FAA==&quot;,
+        &quot;proof&quot;: {
+            &quot;total&quot;: &quot;1&quot;,
+            &quot;index&quot;: &quot;0&quot;,
+            &quot;leaf_hash&quot;: &quot;0no8AuNhjhaYLtAIcDOBu0OoTEShLs4mAOJxIA5CCZ4=&quot;,
+            &quot;aunts&quot;: []
+        }
+    },
+    &quot;encoded&quot;: &quot;CAEQgPyK2JuJ3qAXGAMiFCkDarANGLG3J0RIL1oJ/d6MbxluKhSNxBqGuR64jYJInE0Deun/ymXPvzIBAToBCkABUkGJEiY4/vDieToPP7oY+piEaQ2PGslX+xQ36bKC90kJwEqudYvRGOfzJPJfvs7fxh6ckP5nSf0fCQWUVXH4Ng0FAA==&quot;
+}
+</code></pre>
+<ul>
+<li><code>hash</code>: 트랜잭션 해시</li>
+<li><code>height</code>: 트랜잭션이 포함된 블록의 높이(번호)</li>
+<li><code>index</code>: 블록내에서 트랜잭션의 순번</li>
+<li><code>tx_result</code>: 트랜잭션 처리 결과.  <code>tx_result.code</code>가 <code>0</code> 이면 성공, 그렇지 않으면 실패에 해당된다.  </li>
+<li><code>tx</code>: 처리된 트랜잭션.</li>
+<li><code>encoded</code>: Protobuf v3 로 인코딩된 트랜잭션 데이터.</li>
+<li><code>proof</code>:</li>
+</ul>
 <hr />
 <h2 id="queryblockbyheight">queryBlockByHeight</h2>
+<h3 id="returns_5">Returns</h3>
+<pre><code class="language-json">{
+  &quot;block_id&quot;: {
+    &quot;hash&quot;: &quot;2227E9F1505C98EE0360A953735623FC3FD74A6E81ADFC9D7EF3BE8927F9136E&quot;,
+    &quot;parts&quot;: {
+      &quot;total&quot;: 1,
+      &quot;hash&quot;: &quot;99334F31D0B4CFFEFDC4D5E79C3D2088E1A6EC86DD89D239F814C48FDB50ADEE&quot;
+    }
+  },
+  &quot;block&quot;: {
+    &quot;header&quot;: {
+      &quot;version&quot;: {
+        &quot;block&quot;: &quot;11&quot;,
+        &quot;app&quot;: &quot;4294967296&quot;
+      },
+      &quot;chain_id&quot;: &quot;localnet&quot;,
+      &quot;height&quot;: &quot;10818&quot;,
+      &quot;time&quot;: &quot;2023-02-07T08:05:56.788513Z&quot;,
+      &quot;last_block_id&quot;: {
+        &quot;hash&quot;: &quot;8113152BFD6476DBDA918F3870F8EE7EE9370A56AE99231E032BE384764BE3EE&quot;,
+        &quot;parts&quot;: {
+          &quot;total&quot;: 1,
+          &quot;hash&quot;: &quot;E856C017C67CD7559467C1A16377ECD8B8A0B19A17AA53ADE73AE82BA811E5BC&quot;
+        }
+      },
+      &quot;last_commit_hash&quot;: &quot;8A5A5F04B37C4E318C211C343907B1DD64515C6C7F922DE61CFDE593117515D0&quot;,
+      &quot;data_hash&quot;: &quot;003D156CB163310A1B87407DD97F6242F92ED8ED9347DC2B3C7FB83524899F57&quot;,
+      &quot;validators_hash&quot;: &quot;FE36DFA0965A3207F370004FD5A35B0D9CFE22C1E5EC6282B11E0A078E022C11&quot;,
+      &quot;next_validators_hash&quot;: &quot;FE36DFA0965A3207F370004FD5A35B0D9CFE22C1E5EC6282B11E0A078E022C11&quot;,
+      &quot;consensus_hash&quot;: &quot;048091BC7DDC283F77BFBF91D73C44DA58C3DF8A9CBC867405D8B7F3DAADA22F&quot;,
+      &quot;app_hash&quot;: &quot;322829380FD53F359AF2040B2536FB0B6A47E2DDF4918766590541D719D1CAD7&quot;,
+      &quot;last_results_hash&quot;: &quot;CCEC9736296570B1A5CA9F69D56AE286E473BDE1950EB97B419259C2DA071637&quot;,
+      &quot;evidence_hash&quot;: &quot;E3B0C44298FC1C149AFBF4C8996FB92427AE41E4649B934CA495991B7852B855&quot;,
+      &quot;proposer_address&quot;: &quot;8DC41A86B91EB88D82489C4D037AE9FFCA65CFBF&quot;
+    },
+    &quot;data&quot;: {
+      &quot;txs&quot;: [
+        &quot;CAEQwKK/6piI36AXGJoIIhTEYfux+YzfUycqPFBZp2SsYziBXCoUrjsLNQASnt99xA4njqI1k3RaF4QyAgLEOgEKQAFSQdLVXe+ELBnuS2vF0OwYlfDNgurj0IWiBXGdq8cpaO81M6qvwyiGb8Mr6ZWOnD3/nDvWEkKCSKVWuS+Ld4bXg1wA&quot;,
+        &quot;CAEQkK/A6piI36AXGJoIIhQAQCOcw9QIFDgBqNRXMYBk7BBd/yoUfEskb4RzA8QqK4B2H39FIVpmxAUyAgLEOgEKQAFSQVPT9NJZ426c89CotpatqndouTxORCt94204obWs6RlXa1e2vSpZwrFkfCn409SsoIkPrQUoXm29K/dWzoJvatIB&quot;,
+        &quot;CAEQkKbD6piI36AXGJoIIhSNFO5EqCyixc74BbcNjB0kDbooISoUMLAlEfyMyew1LDPiOyR8dqPntqgyAgLEOgEKQAFSQcz4UOU5qT9H8txblik9sYiCBrS3dkO7/v/AwPgjR31HIdK1RFd7Gvi5aNOC12WBDVNrPzX/s14zwH9vG9LEXJsB&quot;,
+        &quot;CAEQ+KfF6piI36AXGJoIIhQRkD2yGoCJ2LplnWugmZteVqGJLCoUb6EpBDEV3C1kjGLETUsdVClZmnkyAgLEOgEKQAFSQUTYppjNZzJiv73eBd4iVL0MZRFefI27+1F7DclBN/PUVgO3ymip5wo9oDmjujjX+JRug0WJZ75Huyuc9229CoAA&quot;,
+        &quot;CAEQmKbQ6piI36AXGJoIIhQ923KOXCHGdek8olfpLuS6Bq8RjyoUcdqwpyeP8PU+s7QVP+ZaIv3NXqgyAgLEOgEKQAFSQXdmLY21GvElXS54SMShK+VTGhn5y+6DbayWD4NMBeM2A9E3Fuus5PjQgYuofZNN6BOS3zUuTogdCj5jMIRMTV0A&quot;,
+        &quot;CAEQoMrR6piI36AXGJoIIhTtwwfQPUjSDuS+fNE8FfLD1GJXlyoUZxMNYNR9J+jqpNUFkBClkG8XqS0yAgLEOgEKQAFSQcRZEHGNiMQuxh6rYucuLb6w3LP9x4pYGq54f3XP/654Fxf2zANuO01cPkQTZdhi0Y2JaTEnjJ5OCpY+ctOs1wwA&quot;,
+        &quot;CAEQiNjP6piI36AXGJoIIhQUFOQiWO8r7++FWhg7jOkucHR/SyoU2KU7DNCsqsSOEWZTjtrittYSBlkyAgLEOgEKQAFSQU04aE+ZAJ7W7V9Kv5zu7Rz7e1CDuUtq3kSOc1FedKSQaCCuXqF2/x5RSc1Ix19ksY89UBUbxf9J4QBp/0D/saAA&quot;,
+        &quot;CAEQkPPT6piI36AXGJoIIhSzK8vw2EZt+BNCYr7RCMa6SCvtdyoUssY9flobuPJRnY9xdsLa3slx40AyAgLEOgEKQAFSQQA5/AS+cwqb7D89In8Qsnm1EYYkvJlLS/Iyt5qJlRy1SrVmBP+GRfv1H8m7pHGk1sdvv42EydP3sNZAcU3YccgA&quot;,
+        &quot;CAEQ6KbV6piI36AXGJoIIhRh8JfNVC+0RFKIvBUuxz+WEstDHioUNiw81aRP6L6KD03GCBVLCmiU814yAgLEOgEKQAFSQWy45CDU57VHi4O7AmZuCpd5HYfJCATP651y4ZIQi+uYUHojMZgcDsG7euId5oqKX4+1BN/Zplw6/IcL8hTANgAB&quot;
+      ]
+    },
+    &quot;evidence&quot;: {
+      &quot;evidence&quot;: []
+    },
+    &quot;last_commit&quot;: {
+      &quot;height&quot;: &quot;10817&quot;,
+      &quot;round&quot;: 0,
+      &quot;block_id&quot;: {
+        &quot;hash&quot;: &quot;8113152BFD6476DBDA918F3870F8EE7EE9370A56AE99231E032BE384764BE3EE&quot;,
+        &quot;parts&quot;: {
+          &quot;total&quot;: 1,
+          &quot;hash&quot;: &quot;E856C017C67CD7559467C1A16377ECD8B8A0B19A17AA53ADE73AE82BA811E5BC&quot;
+        }
+      },
+      &quot;signatures&quot;: [
+        {
+          &quot;block_id_flag&quot;: 2,
+          &quot;validator_address&quot;: &quot;8DC41A86B91EB88D82489C4D037AE9FFCA65CFBF&quot;,
+          &quot;timestamp&quot;: &quot;2023-02-07T08:05:56.788513Z&quot;,
+          &quot;signature&quot;: &quot;JC8Js09k3LPlWFmV3kJoL2gkgvA74Did2cZTRXFdjfRikA0aRwNDMkAnMDtAxtRgsa8ZSVDLngDg3gtU1sq6bg==&quot;
+        }
+      ]
+    }
+  }
+}
+</code></pre>
 <hr />
 <h2 id="queryblockbyhash">queryBlockByHash</h2>
 <hr />
