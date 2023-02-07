@@ -70,4 +70,14 @@ export default class Bytes extends Uint8Array {
     static rand(n: number): Bytes {
         return webcrypto.getRandomValues(new Bytes(n))
     }
+
+    static b64ToBytes(base64:string):Bytes {
+        var binary_string = window.atob(base64);
+        var len = binary_string.length;
+        var bytes = new Bytes(len);
+        for (var i = 0; i < len; i++) {
+            bytes[i] = binary_string.charCodeAt(i);
+        }
+        return bytes;
+    }
 }

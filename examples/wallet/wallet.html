@@ -127,7 +127,7 @@
                             ${errmark}${acnUtil.shortString(retTx.hash, 20, 0)}
                         </div>
                         <div class="text_label" style="display:block;">
-                            ${retTx.height} @ ${Utils.Time.dateFromNano(retTx.txObj.time)}
+                            ${retTx.height} @ ${Utils.Time.dateFromNano(retTx.tx.time)}
                         </div>
                     </div>
                 </div>
@@ -137,17 +137,17 @@
                 </div>
                 <div class="text_box" style="display:flex; flex:0.4; margin-left:4px;">
                     <div>
-                        <div class="text_hex_small" title="${retTx.txObj.from}">
-                            ${acnUtil.shortString(retTx.txObj.from)}
+                        <div class="text_hex_small" title="${retTx.tx.from}">
+                            ${acnUtil.shortString(retTx.tx.from)}
                         </div>
-                        <div class="text_hex_small" title="${retTx.txObj.to}">
-                            ${acnUtil.shortString(retTx.txObj.to)}
+                        <div class="text_hex_small" title="${retTx.tx.to}">
+                            ${acnUtil.shortString(retTx.tx.to)}
                         </div>
                     </div>
                 </div>
                 <div class="text_box" style="margin-left:4px;">
-                    <div class="text_amount_small" id="trans_amt">${acnUtil.fmtNum(retTx.txObj.amount)}</div>
-                    <div class="text_amount_small" id="trans_gas">${acnUtil.fmtNum(retTx.txObj.gas)}</div>
+                    <div class="text_amount_small" id="trans_amt">${acnUtil.fmtNum(retTx.tx.amount)}</div>
+                    <div class="text_amount_small" id="trans_gas">${acnUtil.fmtNum(retTx.tx.gas)}</div>
                 </div>
             </div>`;
 
@@ -690,9 +690,6 @@
     }
 
     function ProcessResultTx(retTx) {
-        const txbytes = acnUtil.b64ToU8Array(retTx.tx);
-        retTx.txObj= Trx.decodeTrx(txbytes);
-
         if(retTx.tx_result.code == 0) {
             ACNet.syncAccount(activeAcct).then( () => {
                 displayAccount(activeAcct);
@@ -707,10 +704,8 @@
     function ShowTx(hash) {
         ACNet.queryTrx(hash)
             .then(retTx => {
-                const txbytes = acnUtil.b64ToU8Array(retTx.tx);
-                retTx.txObj= Trx.decodeTrx(txbytes);
-                console.log(JSON.stringify(retTx.txObj, null, 4))
-                showAlert(JSON.stringify(retTx.txObj, null, 4))
+                console.log(JSON.stringify(retTx.tx, null, 4))
+                showAlert(JSON.stringify(retTx.tx, null, 4))
             })
     }
 </script>

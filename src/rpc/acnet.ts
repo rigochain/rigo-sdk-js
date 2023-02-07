@@ -2,6 +2,7 @@ import Account from "../account/account";
 import ACNClient from "./acn_client";
 import Bytes from "../utils/bytes";
 import {TrxProto} from "../proto/trx";
+import {decodeTrx} from '../trxs/trx';
 
 export default class ACNet {
     static client:ACNClient
@@ -61,6 +62,12 @@ export default class ACNet {
             txhash = Bytes.fromHex(txhash)
         }
         return ACNet.client.rpcall("tx",{hash: Buffer.from(txhash).toString('base64'), prove:true},cb)
+            .then(resp => {
+                const txbytes = Bytes.b64ToBytes(resp.tx);
+                resp.encoded = resp.tx;
+                resp.tx = decodeTrx(txbytes);
+                return resp
+            })
     }
     static queryBlockByHeight(height: number|string, cb?:(_:any)=>void) {
         if(typeof height === 'number') {

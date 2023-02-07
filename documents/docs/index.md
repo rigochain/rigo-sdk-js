@@ -2,6 +2,19 @@
 
 This document describes the JavaScript SDK for ARCANEX.
 
+## Sources and compiles
+
+```bash
+git clone https://github.com/arcanexio/arcanex-sdk-js.git
+cd arcanex-sdk-js
+npm install
+gulp
+```
+
+위와 같이 수행하면
+
+## NodeJS
+
 ## Browserify
 
 ```bash
