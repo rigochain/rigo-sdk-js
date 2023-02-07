@@ -64,8 +64,18 @@
         </ul>
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#queryvalidators">queryValidators</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#parameters_2">Parameters</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#returns_2">Returns</a>
+    </li>
+        </ul>
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#querystakes">queryStakes</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#returns_3">Returns</a>
+    </li>
+        </ul>
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#querydelegatee">queryDelegatee</a>
     </li>
@@ -129,20 +139,18 @@
 <pre><code class="language-ts">static queryAccount(addr: string|Bytes)
 </code></pre>
 <pre><code class="language-ts">
-ACNet.queryAccount(&quot;DF976A96545DAD0E0B14FED615587A89BA980B84&quot;)
-    .then(resp =&gt; {
-        console.log(resp)
-    })
-
+ACNet.queryAccount(&quot;DF976A96545DAD0E0B14FED615587A89BA980B84&quot;).then(resp =&gt; {
+    console.log(resp)
+})
 </code></pre>
 <p><code>addr</code>로 지정된 주소의 <code>Account</code> 최신 상태 정보를 조회 한다.</p>
 <h3 id="parameters">Parameters</h3>
-<ol>
+<ul>
 <li><code>addr</code>: 조회 대상 <code>Account</code>의 주소. (20bytes 또는 40chars hex-string)</li>
-</ol>
+</ul>
 <h3 id="returns">Returns</h3>
 <p><code>value</code> 객체의 값이 실질적인 조회 결과에 해당된다.</p>
-<pre><code class="language-js">{
+<pre><code class="language-json">{
     ...
     &quot;value&quot;: {
         &quot;address&quot;: &quot;DF976A96545DAD0E0B14FED615587A89BA980B84&quot;,
@@ -174,16 +182,89 @@ ACNet.syncAccount(acct, resp =&gt; {
 </code></pre>
 <p>블록체인상에 기록된 <code>acct</code>의 최신 상태 정보(<code>nonce</code>, <code>balance</code>) 를 동기화 한다.</p>
 <h3 id="parameters_1">Parameters</h3>
-<ol>
+<ul>
 <li><code>acct</code>: 조회 대상 <code>Account</code> 객체.</li>
-<li><code>cb</code>: 조회 결과를 수신할 콜백 함수.</li>
-</ol>
+</ul>
 <h3 id="returns_1">Returns</h3>
 <p><code>queryAccount</code> 의 리턴값과 동일하다.</p>
 <hr />
 <h2 id="queryvalidators">queryValidators</h2>
+<pre><code class="language-ts">static queryValidators(height:number|string)
+</code></pre>
+<pre><code class="language-ts">ACNet.queryValidators().then( resp =&gt; {
+    console.log(resp)
+})
+</code></pre>
+<p>지정된 블록 번호 시점의 Validator 목록을 조회한다.</p>
+<h3 id="parameters_2">Parameters</h3>
+<ul>
+<li><code>height</code>: 블록 번호. </li>
+</ul>
+<h3 id="returns_2">Returns</h3>
+<pre><code class="language-json">{
+    &quot;block_height&quot;: &quot;1153&quot;,
+    &quot;validators&quot;: [
+      {
+        &quot;address&quot;: &quot;8DC41A86B91EB88D82489C4D037AE9FFCA65CFBF&quot;,
+        &quot;pub_key&quot;: {
+          &quot;type&quot;: &quot;tendermint/PubKeySecp256k1&quot;,
+          &quot;value&quot;: &quot;Ax2d8cCfC60NjIS7G6J8hHTPPf6JvxgPRjSVpL+83Qkr&quot;
+        },
+        &quot;voting_power&quot;: &quot;10&quot;,
+        &quot;proposer_priority&quot;: &quot;0&quot;
+      }
+    ],
+    &quot;count&quot;: &quot;1&quot;,
+    &quot;total&quot;: &quot;1&quot;
+}
+</code></pre>
+<ul>
+<li><code>block_height</code>: 블록 번호.</li>
+<li><code>validators</code>: Validator 목록.</li>
+<li><code>address</code>: Validator 계정의 주소.</li>
+<li><code>pub_key</code>: Validator 의 Public Key. Base64 인코딩.</li>
+<li><code>voting_power</code>: Validator의 지분.</li>
+<li><code>proposer_proiority</code>: Validator 가 블록 제안자(Proposer)가 될 수 있는 우선 순위.</li>
+<li><code>count</code>: <code>validators</code> 의 개수.</li>
+<li><code>total</code>: 현재(<code>block_height</code>) 시점의 총 Validator 수.</li>
+</ul>
 <hr />
 <h2 id="querystakes">queryStakes</h2>
+<pre><code class="language-ts">static queryStakes(addr: string|Bytes)
+</code></pre>
+<pre><code class="language-ts"> ACNet.queryStakes(&quot;8DC41A86B91EB88D82489C4D037AE9FFCA65CFBF&quot;).then (resp =&gt; {
+     console.log(resp)
+ }
+</code></pre>
+<h3 id="returns_3">Returns</h3>
+<pre><code class="language-json">{
+    ...
+    &quot;value&quot;: [
+      {
+        &quot;owner&quot;: &quot;8DC41A86B91EB88D82489C4D037AE9FFCA65CFBF&quot;,
+        &quot;to&quot;: &quot;8DC41A86B91EB88D82489C4D037AE9FFCA65CFBF&quot;,
+        &quot;amount&quot;: 10000000000000000000,
+        &quot;power&quot;: &quot;10&quot;,
+        &quot;blockRewardUnit&quot;: 10000000000,
+        &quot;ReceivedReward&quot;: 0,
+        &quot;txhash&quot;: &quot;0000000000000000000000000000000000000000000000000000000000000000&quot;,
+        &quot;startHeight&quot;: &quot;0&quot;,
+        &quot;refundHeight&quot;: &quot;0&quot;
+      },
+      ...
+    ]
+}
+</code></pre>
+<ul>
+<li><code>owner</code>: </li>
+<li><code>to</code>:</li>
+<li><code>amount</code>:</li>
+<li><code>power</code>:</li>
+<li><code>blockRewardUnit</code>:</li>
+<li><code>txhash</code>:</li>
+<li><code>startHeight</code>:</li>
+<li><code>refundHeight</code>:</li>
+</ul>
 <hr />
 <h2 id="querydelegatee">queryDelegatee</h2>
 <hr />
