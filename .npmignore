@@ -3,6 +3,7 @@
 documents/
 examples/
 node_modules/
+dist/
 src/
 tests/
 .gitignore
