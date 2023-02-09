@@ -2,15 +2,15 @@
   "name": "arcanex-sdk-js",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
-  "version": "0.0.10",
+  "version": "0.0.11",
   "description": "Javascript SDK for ARCANEX",
-  "keyword": [
+  "keywords": [
     "arcanex",
     "arcanexio",
     "blockchain",
     "dapp"
   ],
-  "homepage": "https://arcanexio.github.io/arcanex-sdk-js/",
+  "homepage": "https://github.com/arcanexio/arcanex-sdk-js",
   "bugs": {
     "url": "https://github.com/arcanexio/arcanex-sdk-js",
     "email": "kyle.kwon@themedium.io"
