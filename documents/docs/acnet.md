@@ -1,281 +1,12 @@
 # ACNet
 
-`ACNet` API를 사용하여 지정된 ARCANEX 노드의 JSONRPC 서버로 요청 작업을 수행할 수 있다.
+`ACNet` API 는 ARCANEX 노드에 접속하여 JSONRPC 요청 작업을 수행 한다.
 
 ---
 
-## queryAccount
+## Block
 
-```ts
-static queryAccount(addr: string|Bytes)
-```
-
-```ts
-
-ACNet.queryAccount("DF976A96545DAD0E0B14FED615587A89BA980B84").then(resp => {
-    console.log(resp)
-})
-```
-
-`addr`로 지정된 주소의 `Account` 최신 상태 정보를 조회 한다.
-
-### Parameters
-
-- `addr`: 조회 대상 `Account`의 주소. (20bytes 또는 40chars hex-string)
-
-### Returns
-
-`value` 객체의 값이 실질적인 조회 결과에 해당된다.
-
-```json
-{
-    ...
-    "value": {
-        "address": "DF976A96545DAD0E0B14FED615587A89BA980B84",
-        "nonce": 0,
-        "balance": "0"
-    }
-    ...
-}    
-```
-
-- `address`: 조회한 계정의 주소. `key` 값과 동일한 값.
-- `nonce`: 현재 계정으로 발행한 트랜잭션 수.
-- `balance`: 계정의 잔액.
-
-
-
-
----
-
-## syncAccount
-
-```ts
-static syncAccount(acct: Account, cb?:(_:any)=>void) 
-```
-
-```ts
-let acct = Account.New("test-0")
-
-    ...
-
-ACNet.syncAccount(acct, resp => {
-    console.log(acct) // `acct` is not updated.
-})
-.then( resp => {
-    console.log(acct) // `acct` is updated.
-})
-```
-
-블록체인상에 기록된 `acct`의 최신 상태 정보(`nonce`, `balance`) 를 동기화 한다.
-
-### Parameters
-
-- `acct`: 조회 대상 `Account` 객체.
-
-### Returns
-
-`queryAccount` 의 리턴값과 동일하다.
-
----
-
-## queryValidators
-
-```ts
-static queryValidators(height:number|string)
-```
-
-```ts
-ACNet.queryValidators().then( resp => {
-    console.log(resp)
-})
-```
-
-지정된 블록 번호 시점의 Validator 목록을 조회한다.
-
-### Parameters
-
-- `height`: 블록 번호. 
-
-### Returns
-
-```json
-{
-    "block_height": "1153",
-    "validators": [
-      {
-        "address": "8DC41A86B91EB88D82489C4D037AE9FFCA65CFBF",
-        "pub_key": {
-          "type": "tendermint/PubKeySecp256k1",
-          "value": "Ax2d8cCfC60NjIS7G6J8hHTPPf6JvxgPRjSVpL+83Qkr"
-        },
-        "voting_power": "10",
-        "proposer_priority": "0"
-      }
-    ],
-    "count": "1",
-    "total": "1"
-}
-```
-
-- `block_height`: 블록 번호.
-- `validators`: Validator 목록.
-  - `address`: Validator 계정의 주소.
-  - `pub_key`: Validator의 Public Key. (Base64 인코딩)
-  - `voting_power`: Validator의 지분.
-  - `proposer_proiority`: Validator 가 블록 제안자(Proposer)가 될 수 있는 우선 순위.  
-  지분이 클 수록, 마지막 블록 제안이후 경과 시간이 클 수록 우선 순위는 높아진다.
-- `count`: `validators` 의 개수.
-- `total`: 현재(`block_height`) 시점의 총 Validator 수.
----
-
-## queryStakes
-
-```ts
-static queryStakes(addr: string|Bytes)
-```
-
-```ts
- ACNet.queryStakes("8DC41A86B91EB88D82489C4D037AE9FFCA65CFBF").then (resp => {
-     console.log(resp)
- }
-```
-### Returns
-
-```json
-{
-    ...
-    "value": [
-      {
-        "owner": "8DC41A86B91EB88D82489C4D037AE9FFCA65CFBF",
-        "to": "8DC41A86B91EB88D82489C4D037AE9FFCA65CFBF",
-        "amount": 10000000000000000000,
-        "power": "10",
-        "blockRewardUnit": 10000000000,
-        "ReceivedReward": 0,
-        "txhash": "0000000000000000000000000000000000000000000000000000000000000000",
-        "startHeight": "0",
-        "refundHeight": "0"
-      },
-      ...
-    ]
-}
-```
-
-- `owner`: 
-- `to`:
-- `amount`:
-- `power`:
-- `blockRewardUnit`:
-- `txhash`:
-- `startHeight`:
-- `refundHeight`:
----
-
-## queryDelegatee
-
----
-
-## broadcastTrxSync
-
----
-
-## queryTrx
-
-```ts
-static queryTrx(txhash: string|Uint8Array)
-```
-
-```ts
-ACNet.queryTrx("AD10C104B8E3B3DBE357CF4133B8376B6EB48E44AE28260D42F7A0B53E1B34F1").then(resp => {
-  console.log(resp)
-})
-```
-
-### Parameters
-
-- `txhash`: 조회하고자 하는 트랜잭션의 해시. (32bytes or 64chars Hex-string)
-
-### Returns
-
-```json
-{
-    "hash": "AD10C104B8E3B3DBE357CF4133B8376B6EB48E44AE28260D42F7A0B53E1B34F1",
-    "height": "6980",
-    "index": 0,
-    "tx_result": {
-        "code": 0,
-        "data": null,
-        "log": "",
-        "info": "",
-        "gas_wanted": "10",
-        "gas_used": "10",
-        "events": [
-            {
-                "type": "tx",
-                "attributes": [
-                    {
-                        "key": "dHgudHlwZQ==",
-                        "value": "dHJhbnNmZXI=",
-                        "index": true
-                    },
-                    {
-                        "key": "dHguc2VuZGVy",
-                        "value": "MjkwMzZBQjAwRDE4QjFCNzI3NDQ0ODJGNUEwOUZEREU4QzZGMTk2RQ==",
-                        "index": true
-                    },
-                    {
-                        "key": "dHgucmVjZWl2ZXI=",
-                        "value": "OERDNDFBODZCOTFFQjg4RDgyNDg5QzREMDM3QUU5RkZDQTY1Q0ZCRg==",
-                        "index": true
-                    },
-                    {
-                        "key": "dHguYWRkcnBhaXI=",
-                        "value": "MjkwMzZBQjAwRDE4QjFCNzI3NDQ0ODJGNUEwOUZEREU4QzZGMTk2RThEQzQxQTg2QjkxRUI4OEQ4MjQ4OUM0RDAzN0FFOUZGQ0E2NUNGQkY=",
-                        "index": true
-                    }
-                ]
-            }
-        ],
-        "codespace": ""
-    },
-    "tx": {
-        "hash": "ad10c104b8e3b3dbe357cf4133b8376b6eb48e44ae28260d42f7a0b53e1b34f1",
-        "version": 1,
-        "time": "1675752794424000000",
-        "nonce": "3",
-        "from": "29036ab00d18b1b72744482f5a09fdde8c6f196e",
-        "to": "8dc41a86b91eb88d82489c4d037ae9ffca65cfbf",
-        "amount": "1",
-        "gas": "10",
-        "type": 1,
-        "sig": "89122638fef0e2793a0f3fba18fa9884690d8f1ac957fb1437e9b282f74909c04aae758bd118e7f324f25fbecedfc61e9c90fe6749fd1f0905945571f8360d0500"
-    },
-    "proof": {
-        "root_hash": "D27A3C02E3618E16982ED008703381BB43A84C44A12ECE2600E271200E42099E",
-        "data": "CAEQgPyK2JuJ3qAXGAMiFCkDarANGLG3J0RIL1oJ/d6MbxluKhSNxBqGuR64jYJInE0Deun/ymXPvzIBAToBCkABUkGJEiY4/vDieToPP7oY+piEaQ2PGslX+xQ36bKC90kJwEqudYvRGOfzJPJfvs7fxh6ckP5nSf0fCQWUVXH4Ng0FAA==",
-        "proof": {
-            "total": "1",
-            "index": "0",
-            "leaf_hash": "0no8AuNhjhaYLtAIcDOBu0OoTEShLs4mAOJxIA5CCZ4=",
-            "aunts": []
-        }
-    },
-    "encoded": "CAEQgPyK2JuJ3qAXGAMiFCkDarANGLG3J0RIL1oJ/d6MbxluKhSNxBqGuR64jYJInE0Deun/ymXPvzIBAToBCkABUkGJEiY4/vDieToPP7oY+piEaQ2PGslX+xQ36bKC90kJwEqudYvRGOfzJPJfvs7fxh6ckP5nSf0fCQWUVXH4Ng0FAA=="
-}
-```
-
-- `hash`: 트랜잭션 해시
-- `height`: 트랜잭션이 포함된 블록의 높이(번호)
-- `index`: 블록내에서 트랜잭션의 순번
-- `tx_result`: 트랜잭션 처리 결과.  `tx_result.code`가 `0` 이면 성공, 그렇지 않으면 실패에 해당된다.  
-- `tx`: 처리된 트랜잭션.
-- `encoded`: Protobuf v3 로 인코딩된 트랜잭션 데이터의 base64 형식.
-- `proof`:
-
----
-
-## queryBlockByHeight
+### queryBlockByHeight
 
 ```ts
 static queryBlockByHeight(height: number|string): PromiseLike<any>
@@ -289,11 +20,11 @@ ACNet.queryBlockByHeight(10818).then(resp => {
 
 블록 높이(번호)로 블록을 조회 한다.
 
-### Parameters
+#### Parameters
 
 - `height`: 블록 높이(번호).
 
-### Returns
+#### Returns
 
 ```json
 {
@@ -375,7 +106,7 @@ ACNet.queryBlockByHeight(10818).then(resp => {
 
 ---
 
-## queryBlockByHash
+### queryBlockByHash
 
 ```ts
 static queryBlockByHash(hash: string|Uint8Array): PromiseLike<any>
@@ -389,17 +120,298 @@ ACNet.queryBlockByHash("2227E9F1505C98EE0360A953735623FC3FD74A6E81ADFC9D7EF3BE89
 
 블록 해시 값으로 블록을 조회 한다.
 
-### Parameters
+#### Parameters
 
 - `hash`: 블록 해시 값. (32bytes or 64chars hex-string)
 
-### Returns
+#### Returns
 
 `queryBlockByHeight` 와 동일
 
 ---
 
-## queryRule
+## Transactions
+
+
+### broadcastTrxSync
+
+---
+
+### queryTrx
+
+```ts
+static queryTrx(txhash: string|Uint8Array)
+```
+
+```ts
+ACNet.queryTrx("AD10C104B8E3B3DBE357CF4133B8376B6EB48E44AE28260D42F7A0B53E1B34F1").then(resp => {
+  console.log(resp)
+})
+```
+
+#### Parameters
+
+- `txhash`: 조회하고자 하는 트랜잭션의 해시. (32bytes or 64chars Hex-string)
+
+#### Returns
+
+```json
+{
+    "hash": "AD10C104B8E3B3DBE357CF4133B8376B6EB48E44AE28260D42F7A0B53E1B34F1",
+    "height": "6980",
+    "index": 0,
+    "tx_result": {
+        "code": 0,
+        "data": null,
+        "log": "",
+        "info": "",
+        "gas_wanted": "10",
+        "gas_used": "10",
+        "events": [
+            {
+                "type": "tx",
+                "attributes": [
+                    {
+                        "key": "dHgudHlwZQ==",
+                        "value": "dHJhbnNmZXI=",
+                        "index": true
+                    },
+                    {
+                        "key": "dHguc2VuZGVy",
+                        "value": "MjkwMzZBQjAwRDE4QjFCNzI3NDQ0ODJGNUEwOUZEREU4QzZGMTk2RQ==",
+                        "index": true
+                    },
+                    {
+                        "key": "dHgucmVjZWl2ZXI=",
+                        "value": "OERDNDFBODZCOTFFQjg4RDgyNDg5QzREMDM3QUU5RkZDQTY1Q0ZCRg==",
+                        "index": true
+                    },
+                    {
+                        "key": "dHguYWRkcnBhaXI=",
+                        "value": "MjkwMzZBQjAwRDE4QjFCNzI3NDQ0ODJGNUEwOUZEREU4QzZGMTk2RThEQzQxQTg2QjkxRUI4OEQ4MjQ4OUM0RDAzN0FFOUZGQ0E2NUNGQkY=",
+                        "index": true
+                    }
+                ]
+            }
+        ],
+        "codespace": ""
+    },
+    "tx": {
+        "hash": "ad10c104b8e3b3dbe357cf4133b8376b6eb48e44ae28260d42f7a0b53e1b34f1",
+        "version": 1,
+        "time": "1675752794424000000",
+        "nonce": "3",
+        "from": "29036ab00d18b1b72744482f5a09fdde8c6f196e",
+        "to": "8dc41a86b91eb88d82489c4d037ae9ffca65cfbf",
+        "amount": "1",
+        "gas": "10",
+        "type": 1,
+        "sig": "89122638fef0e2793a0f3fba18fa9884690d8f1ac957fb1437e9b282f74909c04aae758bd118e7f324f25fbecedfc61e9c90fe6749fd1f0905945571f8360d0500"
+    },
+    "proof": {
+        "root_hash": "D27A3C02E3618E16982ED008703381BB43A84C44A12ECE2600E271200E42099E",
+        "data": "CAEQgPyK2JuJ3qAXGAMiFCkDarANGLG3J0RIL1oJ/d6MbxluKhSNxBqGuR64jYJInE0Deun/ymXPvzIBAToBCkABUkGJEiY4/vDieToPP7oY+piEaQ2PGslX+xQ36bKC90kJwEqudYvRGOfzJPJfvs7fxh6ckP5nSf0fCQWUVXH4Ng0FAA==",
+        "proof": {
+            "total": "1",
+            "index": "0",
+            "leaf_hash": "0no8AuNhjhaYLtAIcDOBu0OoTEShLs4mAOJxIA5CCZ4=",
+            "aunts": []
+        }
+    },
+    "encoded": "CAEQgPyK2JuJ3qAXGAMiFCkDarANGLG3J0RIL1oJ/d6MbxluKhSNxBqGuR64jYJInE0Deun/ymXPvzIBAToBCkABUkGJEiY4/vDieToPP7oY+piEaQ2PGslX+xQ36bKC90kJwEqudYvRGOfzJPJfvs7fxh6ckP5nSf0fCQWUVXH4Ng0FAA=="
+}
+```
+
+- `hash`: 트랜잭션 해시
+- `height`: 트랜잭션이 포함된 블록의 높이(번호)
+- `index`: 블록내에서 트랜잭션의 순번
+- `tx_result`: 트랜잭션 처리 결과.  `tx_result.code`가 `0` 이면 성공, 그렇지 않으면 실패에 해당된다.
+- `tx`: 처리된 트랜잭션.
+- `encoded`: Protobuf v3 로 인코딩된 트랜잭션 데이터의 base64 형식.
+- `proof`:
+
+---
+
+## Account
+
+### queryAccount
+
+```ts
+static queryAccount(addr: string|Bytes)
+```
+
+```ts
+
+ACNet.queryAccount("DF976A96545DAD0E0B14FED615587A89BA980B84").then(resp => {
+    console.log(resp)
+})
+```
+
+`addr`로 지정된 주소의 `Account` 최신 상태 정보를 조회 한다.
+
+#### Parameters
+
+- `addr`: 조회 대상 `Account`의 주소. (20bytes 또는 40chars hex-string)
+
+#### Returns
+
+`value` 객체의 값이 실질적인 조회 결과에 해당된다.
+
+```json
+{
+    ...
+    "value": {
+        "address": "DF976A96545DAD0E0B14FED615587A89BA980B84",
+        "nonce": 0,
+        "balance": "0"
+    }
+    ...
+}    
+```
+
+- `address`: 조회한 계정의 주소. `key` 값과 동일한 값.
+- `nonce`: 현재 계정으로 발행한 트랜잭션 수.
+- `balance`: 계정의 잔액.
+
+
+
+
+---
+
+### syncAccount
+
+```ts
+static syncAccount(acct: Account, cb?:(_:any)=>void) 
+```
+
+```ts
+let acct = Account.New("test-0")
+
+    ...
+
+ACNet.syncAccount(acct, resp => {
+    console.log(acct) // `acct` is not updated.
+})
+.then( resp => {
+    console.log(acct) // `acct` is updated.
+})
+```
+
+블록체인상에 기록된 `acct`의 최신 상태 정보(`nonce`, `balance`) 를 동기화 한다.
+
+#### Parameters
+
+- `acct`: 조회 대상 `Account` 객체.
+
+#### Returns
+
+`queryAccount` 의 리턴값과 동일하다.
+
+---
+
+## Stakes
+
+### queryValidators
+
+```ts
+static queryValidators(height:number|string)
+```
+
+```ts
+ACNet.queryValidators().then( resp => {
+    console.log(resp)
+})
+```
+
+지정된 블록 번호 시점의 Validator 목록을 조회한다.
+
+#### Parameters
+
+- `height`: 블록 번호.
+
+#### Returns
+
+```json
+{
+    "block_height": "1153",
+    "validators": [
+      {
+        "address": "8DC41A86B91EB88D82489C4D037AE9FFCA65CFBF",
+        "pub_key": {
+          "type": "tendermint/PubKeySecp256k1",
+          "value": "Ax2d8cCfC60NjIS7G6J8hHTPPf6JvxgPRjSVpL+83Qkr"
+        },
+        "voting_power": "10",
+        "proposer_priority": "0"
+      }
+    ],
+    "count": "1",
+    "total": "1"
+}
+```
+
+- `block_height`: 블록 번호.
+- `validators`: Validator 목록.
+  - `address`: Validator 계정의 주소.
+  - `pub_key`: Validator의 Public Key. (Base64 인코딩)
+  - `voting_power`: Validator의 지분.
+  - `proposer_proiority`: Validator 가 블록 제안자(Proposer)가 될 수 있는 우선 순위.  
+    지분이 클 수록, 마지막 블록 제안이후 경과 시간이 클 수록 우선 순위는 높아진다.
+- `count`: `validators` 의 개수.
+- `total`: 현재(`block_height`) 시점의 총 Validator 수.
+---
+
+### queryStakes
+
+```ts
+static queryStakes(addr: string|Bytes)
+```
+
+```ts
+ ACNet.queryStakes("8DC41A86B91EB88D82489C4D037AE9FFCA65CFBF").then (resp => {
+     console.log(resp)
+ }
+```
+#### Returns
+
+```json
+{
+    ...
+    "value": [
+      {
+        "owner": "8DC41A86B91EB88D82489C4D037AE9FFCA65CFBF",
+        "to": "8DC41A86B91EB88D82489C4D037AE9FFCA65CFBF",
+        "amount": 10000000000000000000,
+        "power": "10",
+        "blockRewardUnit": 10000000000,
+        "ReceivedReward": 0,
+        "txhash": "0000000000000000000000000000000000000000000000000000000000000000",
+        "startHeight": "0",
+        "refundHeight": "0"
+      },
+      ...
+    ]
+}
+```
+
+- `owner`:
+- `to`:
+- `amount`:
+- `power`:
+- `blockRewardUnit`:
+- `txhash`:
+- `startHeight`:
+- `refundHeight`:
+---
+
+### queryDelegatee
+
+---
+
+
+### Governance
+
+### queryRule
 
 ```ts
 static queryRule(): PromiseLike<any>
@@ -413,7 +425,7 @@ ACNet.queryRule().then(resp => {
 
 현재 적용된 governance rule 을 조회한다.
 
-### Returns
+#### Returns
 
 ```json
 {
@@ -443,11 +455,13 @@ ACNet.queryRule().then(resp => {
 
 ---
 
-## getClient
+## Node
+
+### getClient
 
 ---
 
-## setUrl
+### setUrl
 
 ```ts
 static setUrl(url:string)
@@ -458,13 +472,13 @@ ACNet.setUrl('http://localhost:26657')
 
 `ACNet` API 호출시 접속하게 될 ARCANEX 노드의 RPC 서버 URL을 설정한다.
 
-### Parameters
+#### Parameters
 
 - `url`: ARCANEX 노드의 RPC 서버 URL
 
 ---
 
-## getUrl
+### getUrl
 
 ```ts
 static getUrl():string
@@ -475,3 +489,6 @@ console.log(nodeUrl) // 'http://localhost:26657'
 ```
 
 현재 사용중인 ARCANEX 노드 RPC Server URL.
+
+
+---
