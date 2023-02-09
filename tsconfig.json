@@ -1,17 +1,19 @@
 {
   "compilerOptions": {
-    "module": "commonjs",
     "target": "es6",
-    "outDir": "build",
+    "module": "commonjs",
     "moduleResolution": "node",
-    "sourceMap": true,
-    "esModuleInterop": true
+    //"strict": true /* Enable all strict type-checking options. */,
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "declaration": true,
+    "outDir": "lib"
   },
-  "lib": ["es6","dom"],
   "exclude": [
     "node_modules"
   ],
   "include": [
-    "src/**/*"
+    "src/**/*.ts"
   ]
 }

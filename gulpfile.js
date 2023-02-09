@@ -1,6 +1,7 @@
 const gulp = require('gulp');
 const uglify = require('gulp-uglify');
-const rename = require('gulp-rename')
+const rename = require('gulp-rename');
+const ts = require("gulp-typescript");
 const babelify = require('babelify');
 const tsify = require('tsify');
 const browserify = require('browserify');
@@ -8,6 +9,7 @@ const source = require('vinyl-source-stream');
 const buffer = require('vinyl-buffer');
 const log = require('fancy-log');
 const childproc = require('child_process');
+
 
 gulp.task('protoc', function (cb) {
     return childproc.exec('protoc' +
@@ -22,7 +24,7 @@ gulp.task('protoc', function (cb) {
         cb(err);
     })
 })
-gulp.task('build', function () {
+gulp.task('dist', function () {
     return browserify(['src/index.ts'])
         .plugin(tsify, {noImplicitAny:true})
         .transform(babelify, {global: true, presets: ["@babel/preset-env"]})
@@ -30,11 +32,18 @@ gulp.task('build', function () {
         .on('error', function(e) {log.error('Error when updating the Bundle: \n' + e);})
         .on('end', function() {log("➡️  Build is finished")})
         .pipe(source('arcanex.js'))
-        .pipe(gulp.dest('build'))
+        .pipe(gulp.dest('dist'))
         .pipe(rename('arcanex.min.js'))
         .pipe(buffer())
         .pipe(uglify())
-        .pipe(gulp.dest('build'));
+        .pipe(gulp.dest('dist'));
 });
 
-gulp.task('default', gulp.series('protoc', 'build'));
+gulp.task("tsc", function () {
+    const tsProject = ts.createProject("tsconfig.json", {});
+    return tsProject.src()
+        .pipe(tsProject())
+        .dts.pipe(gulp.dest(tsProject.config.compilerOptions.outDir));
+});
+
+gulp.task('default', gulp.series('protoc', 'dist'));

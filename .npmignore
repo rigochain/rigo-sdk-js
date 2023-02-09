@@ -1,0 +1,10 @@
+.idea/
+.git/
+documents/
+examples/
+node_modules/
+src/
+tests/
+.gitignore
+tsconfig.json
+gulpfile.js

@@ -1,4 +1,26 @@
 {
+  "name": "arcanex-sdk-js",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "version": "0.0.6",
+  "description": "Javascript SDK for ARCANEX",
+  "keyword": [
+    "arcanex",
+    "arcanexio",
+    "blockchain",
+    "dapp"
+  ],
+  "homepage": "https://arcanexio.github.io/arcanex-sdk-js/",
+  "bugs": {
+    "url": "https://github.com/arcanexio/arcanex-sdk-js",
+    "email": "kyle.kwon@themedium.io"
+  },
+  "author": {
+    "name": "Kyle Kwon",
+    "email": "kyle.kwon@themedium.io",
+    "url": "https://github.com/arcanexio"
+  },
+  "license": "Apache-2.0",
   "dependencies": {
     "@types/axios": "^0.14.0",
     "@types/bn.js": "^5.1.1",
@@ -35,6 +57,7 @@
     "fancy-log": "^2.0.0",
     "gulp": "^4.0.2",
     "gulp-rename": "^2.0.0",
+    "gulp-typescript": "^6.0.0-alpha.1",
     "gulp-uglify": "^3.0.2",
     "ts-node": "^10.9.1",
     "vinyl-buffer": "^1.0.1",

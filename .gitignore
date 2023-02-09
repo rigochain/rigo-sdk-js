@@ -5,6 +5,8 @@
 node_modules/
 any_test/
 build/
+dist/
+lib/
 examples/arcanex.js
 examples/arcanex.min.js
 documents/site

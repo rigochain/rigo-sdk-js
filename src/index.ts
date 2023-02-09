@@ -20,6 +20,18 @@ window.Bytes = Bytes
 window.Time = Time
 window.Utils = {Bytes, Time, LocalSto, SessSto}
 
+export {
+    PrvKey,
+    PubKey,
+    ACNet,
+    Subscriber,
+    Account,
+    Trx,
+    LocalSto,
+    SessSto,
+    Bytes,
+    Time
+}
 //
 // let kstr = '0x1697a1a03ff374c6df5005a1574618b0b598d339eddc530614a968972fd948e7'
 // let prvKey = PrvKey.import(kstr)
