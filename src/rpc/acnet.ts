@@ -2,7 +2,7 @@ import Account from "../account/account";
 import ACNClient from "./acn_client";
 import Bytes from "../utils/bytes";
 import {TrxProto} from "../proto/trx";
-import {decodeTrx} from '../trxs/trx';
+import {decodeTrx} from '../trx/trx';
 
 export default class ACNet {
     static client:ACNClient

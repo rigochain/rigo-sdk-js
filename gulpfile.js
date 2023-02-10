@@ -16,8 +16,8 @@ gulp.task('protoc', function (cb) {
         ' --plugin="./node_modules/.bin/protoc-gen-ts_proto"' +
         ' --ts_proto_opt=esModuleInterop=true'  +
         ' --ts_proto_opt=forceLong=long'  +
-        ' --ts_proto_out="src/proto"' +
-        ' -I src/proto trx.proto',
+        ' --ts_proto_out="src/trx"' +
+        ' -I src/trx trx_pb.proto',
         function (err, stdout, stderr) {
         if(stdout) console.log(stdout);
         if(stderr) console.log(stderr);

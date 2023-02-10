@@ -4,7 +4,7 @@ import Bytes from "./utils/bytes";
 import * as Time from "./utils/time"
 import {LocalSto, SessSto} from './utils/storage';
 import Account from "./account/account";
-import * as Trx from "./trxs/trx"
+import * as Trx from "./trx/trx"
 import ACNet from "./rpc/acnet";
 import Subscriber from "./rpc/subscriber";
 

@@ -1,5 +1,5 @@
-import {buildTransferTrx, buildUndelegateTrx, signTrx, verifyTrx} from "../src/trxs/trx";
-import {TrxProto} from '../src/proto/trx'
+import {buildTransferTrx, buildUndelegateTrx, signTrx, verifyTrx} from "../src/trx/trx";
+import {TrxProto} from '../src/trx/trx_pb'
 import Account from "../src/account/account"
 import Bytes from "../src/utils/bytes";
 import ACNet from "../src/rpc/acnet";
