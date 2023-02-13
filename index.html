@@ -43,15 +43,11 @@
               <ul class="current">
                 <li class="toctree-l1 current"><a class="reference internal current" href=".">Overview</a>
     <ul class="current">
-    <li class="toctree-l2"><a class="reference internal" href="#rpc-api">RPC API</a>
-    </li>
-    <li class="toctree-l2"><a class="reference internal" href="#event-subscription">Event Subscription</a>
-    </li>
     </ul>
                 </li>
               </ul>
               <ul>
-                <li class="toctree-l1"><a class="reference internal" href="acnet/">RPC APIs - ACNet</a>
+                <li class="toctree-l1"><a class="reference internal" href="acnet/">ACNet</a>
                 </li>
               </ul>
               <ul>
@@ -88,18 +84,70 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
             <div class="section" itemprop="articleBody">
               
-                <h1 id="overview">Overview</h1>
-<p>This document describes the JavaScript SDK for ARCANEX.</p>
-<h2 id="rpc-api">RPC API</h2>
-<p><code>arcanex-sdk-js</code> 는 ARCANEX 노드가 제공하는 JSONRPC 를 호출하는 API 집합을 제공한다. 이에 대한 자세한 사항은 <a href="acnet/">RPC</a> 를 참고한다.</p>
-<h2 id="event-subscription">Event Subscription</h2>
-<p><code>arcanex-sdk-js</code> 는 ARCANEX 네트워크에서 발생하는 다양한 이벤트를 websocket 을 사용하여 실시간 구독하기 위한 API 집합을 제공한다.
+                <h2 id="overview">Overview</h2>
+<pre><code class="language-plantuml">@startuml
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Component.puml
+
+Container_Boundary(app, &quot;Application&quot;) {
+    Component(app0, &quot;Components of application&quot;, &quot;js&quot;)
+    Component(sdk, &quot;arcanex-sdk-js&quot;, &quot;js&quot;)
+
+    Rel_U(sdk, app0, &quot;Events&quot;, &quot;Push events from ARCANEX Node&quot;)
+    Rel_D(app0, sdk, &quot;Call APIs&quot;, &quot;Query, Tx publishing and Subscribing to events from ARCANEX network ...&quot;)
+}
+Container(node, &quot;ARCANEX Node&quot;)
+Rel_R(sdk, node, &quot;RPC&quot;, &quot;HTTP/JSONRPC&quot;)
+Rel_L(node, sdk, &quot;Events&quot;, &quot;Websocket&quot;)
+@enduml
+</code></pre>
+<p>블록체인을 활용하는 모든 응용 프로그램 또는 서비스는 블록체인 네트워크와 연결되어 다양한 정보를 요청하고 이에 대한 응답을 수신/처리 함으로서 구현 된다.<br />
+ARCANEX 노드는 이러한 기능을 제공하기 위하여 HTTP/JSONRPC 기반의 서버 시스템을 포함하고 있으며, 
+이를 활용하여 월렛, 블록 탐색기(Block Explorer) 등과 같은 다양한 응용 프로그램 및 서비스를 개발 할 수 있다.<br />
+그러나 ARCANEX 노드가 제공하는 RPC를 직접 호출하는 것은 경우에 따라 매우 번거로운 작업이 될 수도 있다. 
+블록체인 네트워크에 트랜잭션을 제출 하기 위한 작업과 같은 경우가 그러하다.  <br />
+트랜잭션을 제출하기 위해서는 우선 트랜잭션을 생성하고 이를 적절한 방식(Protobuf v3) 으로 인코딩 한 후, JSONRPC 요청으로 포함하여 전송하여야 하는데,
+여기에는 ARCANEX 노드를 포함하여 모든 서비스/응용 프로그램에서 공통적으로 그리고 결정론적으로 정확하게 일치 되어야 과정이 포함된다.</p>
+<p>이와 같이 ARCANEX 노드와의 통신을 포함하여 모든 응용 프로그램 및 서비스가 공통적으로 구현해야할 모듈 또는 기능 집합을
+Javascript 환경에서 사용할 수 있는 라이브러리 형태로 구현한 것이 <code>arcanex-sdk-js</code> 이다.</p>
+<p><code>arcanex-sdk-js</code> 는 ARCANEX 노드로의 JSONRPC 요청과 이에 대한 응답 수신을 통해 다음과 같은 기능을 수행하는 API 집합을 제공한다.</p>
+<h2 id="account-management">Account management</h2>
+<ul>
+<li><code>Account</code> 생성</li>
+<li><code>Account</code> 가져오기</li>
+<li><code>Account</code> 내보내기</li>
+</ul>
+<h2 id="query-state">Query state</h2>
+<p>블록체인에 기록된 다음과 같은 정보를 조회 한다.</p>
+<ul>
+<li>블록 및 트랜잭션.</li>
+<li>계정의 잔액 및 nonce.</li>
+<li>Validator 계정 목록 및 지분 정보.</li>
+<li>위임 받은 계정 목록 및 지분 정보.</li>
+<li>거버넌스 규칙.</li>
+</ul>
+<p>조회 기능에 대한 보다 자세한 사항은 <a href="acnet/">API</a> 를 참고한다.</p>
+<h2 id="build-and-send-transactions">Build and send transactions</h2>
+<p>특정 기능을 수행하는 트랜잭션을 구성하고 블록체인 네트워크에 제출 한다.<br />
+현재 ARCANEX 에서 제공하는 트랜잭션 종류는 다음과 같다.</p>
+<ul>
+<li>Transfer</li>
+<li>Staking</li>
+<li>Unstaking</li>
+<li>Governance Rule Proposal</li>
+<li>Voting to proposal</li>
+</ul>
+<p>트랜잭션 발행에 대한 보다 자세한 사항은 <a href="acnet/">API</a> 를 참고한다.</p>
+<h2 id="subscribing-to-events">Subscribing to events</h2>
+<p>ARCANEX 네트워크에서 발생되는 상태 변경 사항을 이벤트 구독 형식으로 수신할 수 있다.<br />
+이벤트 구독은, ARCANEX 노드와 websocket 연결 생성, 구독 조건을 명시한 쿼리문 전송 으로 이루어지고,<br />
+구독 조건에 맞는 이벤트 발생시 websocket 연결을 통해 실시간으로 해당 이벤트를 수신 할 수 있다.  </p>
+<p><code>arcanex-sdk-js</code> 는 ARCANEX 네트워크에서 발생하는 다양한 이벤트의 실시간 구독을 위한 API 를 제공한다.
 이에 대한 자세한 사항은 <a href="subscriber/">Event Subscription</a>를 참고한다.</p>
               
             </div>
           </div><footer>
     <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
-        <a href="acnet/" class="btn btn-neutral float-right" title="RPC APIs - ACNet">Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="acnet/" class="btn btn-neutral float-right" title="ACNet">Next <span class="icon icon-circle-arrow-right"></span></a>
     </div>
 
   <hr/>
@@ -142,5 +190,5 @@
 
 <!--
 MkDocs version : 1.4.2
-Build Date UTC : 2023-02-09 02:13:22.833904+00:00
+Build Date UTC : 2023-02-13 04:27:06.663475+00:00
 -->

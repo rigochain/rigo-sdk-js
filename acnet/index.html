@@ -5,14 +5,14 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       <link rel="shortcut icon" href="../img/favicon.ico" />
-    <title>RPC APIs - ACNet - arcanex-sdk-js</title>
+    <title>ACNet - arcanex-sdk-js</title>
     <link rel="stylesheet" href="../css/theme.css" />
     <link rel="stylesheet" href="../css/theme_extra.css" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css" />
     
       <script>
         // Current page data
-        var mkdocs_page_name = "RPC APIs - ACNet";
+        var mkdocs_page_name = "ACNet";
         var mkdocs_page_input_path = "acnet.md";
         var mkdocs_page_url = null;
       </script>
@@ -45,81 +45,103 @@
                 </li>
               </ul>
               <ul class="current">
-                <li class="toctree-l1 current"><a class="reference internal current" href="./">RPC APIs - ACNet</a>
+                <li class="toctree-l1 current"><a class="reference internal current" href="./">ACNet</a>
     <ul class="current">
-    <li class="toctree-l2"><a class="reference internal" href="#queryaccount">queryAccount</a>
+    <li class="toctree-l2"><a class="reference internal" href="#block">Block</a>
         <ul>
-    <li class="toctree-l3"><a class="reference internal" href="#parameters">Parameters</a>
+    <li class="toctree-l3"><a class="reference internal" href="#queryblockbyheight">queryBlockByHeight</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#parameters">Parameters</a>
     </li>
-    <li class="toctree-l3"><a class="reference internal" href="#returns">Returns</a>
+    <li class="toctree-l4"><a class="reference internal" href="#returns">Returns</a>
     </li>
         </ul>
     </li>
-    <li class="toctree-l2"><a class="reference internal" href="#syncaccount">syncAccount</a>
+    <li class="toctree-l3"><a class="reference internal" href="#queryblockbyhash">queryBlockByHash</a>
         <ul>
-    <li class="toctree-l3"><a class="reference internal" href="#parameters_1">Parameters</a>
+    <li class="toctree-l4"><a class="reference internal" href="#parameters_1">Parameters</a>
     </li>
-    <li class="toctree-l3"><a class="reference internal" href="#returns_1">Returns</a>
+    <li class="toctree-l4"><a class="reference internal" href="#returns_1">Returns</a>
     </li>
         </ul>
     </li>
-    <li class="toctree-l2"><a class="reference internal" href="#queryvalidators">queryValidators</a>
-        <ul>
-    <li class="toctree-l3"><a class="reference internal" href="#parameters_2">Parameters</a>
+        </ul>
     </li>
-    <li class="toctree-l3"><a class="reference internal" href="#returns_2">Returns</a>
+    <li class="toctree-l2"><a class="reference internal" href="#transactions">Transactions</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#broadcasttrxsync">broadcastTrxSync</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#querytrx">queryTrx</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#parameters_2">Parameters</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#returns_2">Returns</a>
     </li>
         </ul>
     </li>
-    <li class="toctree-l2"><a class="reference internal" href="#querystakes">queryStakes</a>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#account">Account</a>
         <ul>
-    <li class="toctree-l3"><a class="reference internal" href="#returns_3">Returns</a>
+    <li class="toctree-l3"><a class="reference internal" href="#queryaccount">queryAccount</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#parameters_3">Parameters</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#returns_3">Returns</a>
     </li>
         </ul>
     </li>
-    <li class="toctree-l2"><a class="reference internal" href="#querydelegatee">queryDelegatee</a>
-    </li>
-    <li class="toctree-l2"><a class="reference internal" href="#broadcasttrxsync">broadcastTrxSync</a>
-    </li>
-    <li class="toctree-l2"><a class="reference internal" href="#querytrx">queryTrx</a>
+    <li class="toctree-l3"><a class="reference internal" href="#syncaccount">syncAccount</a>
         <ul>
-    <li class="toctree-l3"><a class="reference internal" href="#parameters_3">Parameters</a>
+    <li class="toctree-l4"><a class="reference internal" href="#parameters_4">Parameters</a>
     </li>
-    <li class="toctree-l3"><a class="reference internal" href="#returns_4">Returns</a>
+    <li class="toctree-l4"><a class="reference internal" href="#returns_4">Returns</a>
     </li>
         </ul>
     </li>
-    <li class="toctree-l2"><a class="reference internal" href="#queryblockbyheight">queryBlockByHeight</a>
-        <ul>
-    <li class="toctree-l3"><a class="reference internal" href="#parameters_4">Parameters</a>
+        </ul>
     </li>
-    <li class="toctree-l3"><a class="reference internal" href="#returns_5">Returns</a>
+    <li class="toctree-l2"><a class="reference internal" href="#stakes">Stakes</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#queryvalidators">queryValidators</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#parameters_5">Parameters</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#returns_5">Returns</a>
     </li>
         </ul>
     </li>
-    <li class="toctree-l2"><a class="reference internal" href="#queryblockbyhash">queryBlockByHash</a>
+    <li class="toctree-l3"><a class="reference internal" href="#querystakes">queryStakes</a>
         <ul>
-    <li class="toctree-l3"><a class="reference internal" href="#parameters_5">Parameters</a>
-    </li>
-    <li class="toctree-l3"><a class="reference internal" href="#returns_6">Returns</a>
+    <li class="toctree-l4"><a class="reference internal" href="#returns_6">Returns</a>
     </li>
         </ul>
     </li>
-    <li class="toctree-l2"><a class="reference internal" href="#queryrule">queryRule</a>
+    <li class="toctree-l3"><a class="reference internal" href="#querydelegatee">queryDelegatee</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#governance">Governance</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#queryrule">queryRule</a>
         <ul>
-    <li class="toctree-l3"><a class="reference internal" href="#returns_7">Returns</a>
+    <li class="toctree-l4"><a class="reference internal" href="#returns_7">Returns</a>
     </li>
         </ul>
     </li>
-    <li class="toctree-l2"><a class="reference internal" href="#getclient">getClient</a>
+        </ul>
     </li>
-    <li class="toctree-l2"><a class="reference internal" href="#seturl">setUrl</a>
+    <li class="toctree-l2"><a class="reference internal" href="#node">Node</a>
         <ul>
-    <li class="toctree-l3"><a class="reference internal" href="#parameters_6">Parameters</a>
+    <li class="toctree-l3"><a class="reference internal" href="#getclient">getClient</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#seturl">setUrl</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#parameters_6">Parameters</a>
     </li>
         </ul>
     </li>
-    <li class="toctree-l2"><a class="reference internal" href="#geturl">getUrl</a>
+    <li class="toctree-l3"><a class="reference internal" href="#geturl">getUrl</a>
+    </li>
+        </ul>
     </li>
     </ul>
                 </li>
@@ -149,7 +171,7 @@
         <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
   <ul class="wy-breadcrumbs">
     <li><a href=".." class="icon icon-home" alt="Docs"></a> &raquo;</li>
-      <li>RPC APIs - ACNet</li>
+      <li>ACNet</li>
     <li class="wy-breadcrumbs-aside">
     </li>
   </ul>
@@ -159,232 +181,10 @@
             <div class="section" itemprop="articleBody">
               
                 <h1 id="acnet">ACNet</h1>
-<p><code>ACNet</code> API를 사용하여 지정된 ARCANEX 노드의 JSONRPC 서버로 요청 작업을 수행할 수 있다.</p>
+<p><code>ACNet</code> API 는 ARCANEX 노드에 접속하여 JSONRPC 요청 작업을 수행 한다.</p>
 <hr />
-<h2 id="queryaccount">queryAccount</h2>
-<pre><code class="language-ts">static queryAccount(addr: string|Bytes)
-</code></pre>
-<pre><code class="language-ts">
-ACNet.queryAccount(&quot;DF976A96545DAD0E0B14FED615587A89BA980B84&quot;).then(resp =&gt; {
-    console.log(resp)
-})
-</code></pre>
-<p><code>addr</code>로 지정된 주소의 <code>Account</code> 최신 상태 정보를 조회 한다.</p>
-<h3 id="parameters">Parameters</h3>
-<ul>
-<li><code>addr</code>: 조회 대상 <code>Account</code>의 주소. (20bytes 또는 40chars hex-string)</li>
-</ul>
-<h3 id="returns">Returns</h3>
-<p><code>value</code> 객체의 값이 실질적인 조회 결과에 해당된다.</p>
-<pre><code class="language-json">{
-    ...
-    &quot;value&quot;: {
-        &quot;address&quot;: &quot;DF976A96545DAD0E0B14FED615587A89BA980B84&quot;,
-        &quot;nonce&quot;: 0,
-        &quot;balance&quot;: &quot;0&quot;
-    }
-    ...
-}    
-</code></pre>
-<ul>
-<li><code>address</code>: 조회한 계정의 주소. <code>key</code> 값과 동일한 값.</li>
-<li><code>nonce</code>: 현재 계정으로 발행한 트랜잭션 수.</li>
-<li><code>balance</code>: 계정의 잔액.</li>
-</ul>
-<hr />
-<h2 id="syncaccount">syncAccount</h2>
-<pre><code class="language-ts">static syncAccount(acct: Account, cb?:(_:any)=&gt;void) 
-</code></pre>
-<pre><code class="language-ts">let acct = Account.New(&quot;test-0&quot;)
-
-    ...
-
-ACNet.syncAccount(acct, resp =&gt; {
-    console.log(acct) // `acct` is not updated.
-})
-.then( resp =&gt; {
-    console.log(acct) // `acct` is updated.
-})
-</code></pre>
-<p>블록체인상에 기록된 <code>acct</code>의 최신 상태 정보(<code>nonce</code>, <code>balance</code>) 를 동기화 한다.</p>
-<h3 id="parameters_1">Parameters</h3>
-<ul>
-<li><code>acct</code>: 조회 대상 <code>Account</code> 객체.</li>
-</ul>
-<h3 id="returns_1">Returns</h3>
-<p><code>queryAccount</code> 의 리턴값과 동일하다.</p>
-<hr />
-<h2 id="queryvalidators">queryValidators</h2>
-<pre><code class="language-ts">static queryValidators(height:number|string)
-</code></pre>
-<pre><code class="language-ts">ACNet.queryValidators().then( resp =&gt; {
-    console.log(resp)
-})
-</code></pre>
-<p>지정된 블록 번호 시점의 Validator 목록을 조회한다.</p>
-<h3 id="parameters_2">Parameters</h3>
-<ul>
-<li><code>height</code>: 블록 번호. </li>
-</ul>
-<h3 id="returns_2">Returns</h3>
-<pre><code class="language-json">{
-    &quot;block_height&quot;: &quot;1153&quot;,
-    &quot;validators&quot;: [
-      {
-        &quot;address&quot;: &quot;8DC41A86B91EB88D82489C4D037AE9FFCA65CFBF&quot;,
-        &quot;pub_key&quot;: {
-          &quot;type&quot;: &quot;tendermint/PubKeySecp256k1&quot;,
-          &quot;value&quot;: &quot;Ax2d8cCfC60NjIS7G6J8hHTPPf6JvxgPRjSVpL+83Qkr&quot;
-        },
-        &quot;voting_power&quot;: &quot;10&quot;,
-        &quot;proposer_priority&quot;: &quot;0&quot;
-      }
-    ],
-    &quot;count&quot;: &quot;1&quot;,
-    &quot;total&quot;: &quot;1&quot;
-}
-</code></pre>
-<ul>
-<li><code>block_height</code>: 블록 번호.</li>
-<li><code>validators</code>: Validator 목록.</li>
-<li><code>address</code>: Validator 계정의 주소.</li>
-<li><code>pub_key</code>: Validator의 Public Key. (Base64 인코딩)</li>
-<li><code>voting_power</code>: Validator의 지분.</li>
-<li><code>proposer_proiority</code>: Validator 가 블록 제안자(Proposer)가 될 수 있는 우선 순위.<br />
-  지분이 클 수록, 마지막 블록 제안이후 경과 시간이 클 수록 우선 순위는 높아진다.</li>
-<li><code>count</code>: <code>validators</code> 의 개수.</li>
-<li><code>total</code>: 현재(<code>block_height</code>) 시점의 총 Validator 수.</li>
-</ul>
-<hr />
-<h2 id="querystakes">queryStakes</h2>
-<pre><code class="language-ts">static queryStakes(addr: string|Bytes)
-</code></pre>
-<pre><code class="language-ts"> ACNet.queryStakes(&quot;8DC41A86B91EB88D82489C4D037AE9FFCA65CFBF&quot;).then (resp =&gt; {
-     console.log(resp)
- }
-</code></pre>
-<h3 id="returns_3">Returns</h3>
-<pre><code class="language-json">{
-    ...
-    &quot;value&quot;: [
-      {
-        &quot;owner&quot;: &quot;8DC41A86B91EB88D82489C4D037AE9FFCA65CFBF&quot;,
-        &quot;to&quot;: &quot;8DC41A86B91EB88D82489C4D037AE9FFCA65CFBF&quot;,
-        &quot;amount&quot;: 10000000000000000000,
-        &quot;power&quot;: &quot;10&quot;,
-        &quot;blockRewardUnit&quot;: 10000000000,
-        &quot;ReceivedReward&quot;: 0,
-        &quot;txhash&quot;: &quot;0000000000000000000000000000000000000000000000000000000000000000&quot;,
-        &quot;startHeight&quot;: &quot;0&quot;,
-        &quot;refundHeight&quot;: &quot;0&quot;
-      },
-      ...
-    ]
-}
-</code></pre>
-<ul>
-<li><code>owner</code>: </li>
-<li><code>to</code>:</li>
-<li><code>amount</code>:</li>
-<li><code>power</code>:</li>
-<li><code>blockRewardUnit</code>:</li>
-<li><code>txhash</code>:</li>
-<li><code>startHeight</code>:</li>
-<li><code>refundHeight</code>:</li>
-</ul>
-<hr />
-<h2 id="querydelegatee">queryDelegatee</h2>
-<hr />
-<h2 id="broadcasttrxsync">broadcastTrxSync</h2>
-<hr />
-<h2 id="querytrx">queryTrx</h2>
-<pre><code class="language-ts">static queryTrx(txhash: string|Uint8Array)
-</code></pre>
-<pre><code class="language-ts">ACNet.queryTrx(&quot;AD10C104B8E3B3DBE357CF4133B8376B6EB48E44AE28260D42F7A0B53E1B34F1&quot;).then(resp =&gt; {
-  console.log(resp)
-})
-</code></pre>
-<h3 id="parameters_3">Parameters</h3>
-<ul>
-<li><code>txhash</code>: 조회하고자 하는 트랜잭션의 해시. (32bytes or 64chars Hex-string)</li>
-</ul>
-<h3 id="returns_4">Returns</h3>
-<pre><code class="language-json">{
-    &quot;hash&quot;: &quot;AD10C104B8E3B3DBE357CF4133B8376B6EB48E44AE28260D42F7A0B53E1B34F1&quot;,
-    &quot;height&quot;: &quot;6980&quot;,
-    &quot;index&quot;: 0,
-    &quot;tx_result&quot;: {
-        &quot;code&quot;: 0,
-        &quot;data&quot;: null,
-        &quot;log&quot;: &quot;&quot;,
-        &quot;info&quot;: &quot;&quot;,
-        &quot;gas_wanted&quot;: &quot;10&quot;,
-        &quot;gas_used&quot;: &quot;10&quot;,
-        &quot;events&quot;: [
-            {
-                &quot;type&quot;: &quot;tx&quot;,
-                &quot;attributes&quot;: [
-                    {
-                        &quot;key&quot;: &quot;dHgudHlwZQ==&quot;,
-                        &quot;value&quot;: &quot;dHJhbnNmZXI=&quot;,
-                        &quot;index&quot;: true
-                    },
-                    {
-                        &quot;key&quot;: &quot;dHguc2VuZGVy&quot;,
-                        &quot;value&quot;: &quot;MjkwMzZBQjAwRDE4QjFCNzI3NDQ0ODJGNUEwOUZEREU4QzZGMTk2RQ==&quot;,
-                        &quot;index&quot;: true
-                    },
-                    {
-                        &quot;key&quot;: &quot;dHgucmVjZWl2ZXI=&quot;,
-                        &quot;value&quot;: &quot;OERDNDFBODZCOTFFQjg4RDgyNDg5QzREMDM3QUU5RkZDQTY1Q0ZCRg==&quot;,
-                        &quot;index&quot;: true
-                    },
-                    {
-                        &quot;key&quot;: &quot;dHguYWRkcnBhaXI=&quot;,
-                        &quot;value&quot;: &quot;MjkwMzZBQjAwRDE4QjFCNzI3NDQ0ODJGNUEwOUZEREU4QzZGMTk2RThEQzQxQTg2QjkxRUI4OEQ4MjQ4OUM0RDAzN0FFOUZGQ0E2NUNGQkY=&quot;,
-                        &quot;index&quot;: true
-                    }
-                ]
-            }
-        ],
-        &quot;codespace&quot;: &quot;&quot;
-    },
-    &quot;tx&quot;: {
-        &quot;hash&quot;: &quot;ad10c104b8e3b3dbe357cf4133b8376b6eb48e44ae28260d42f7a0b53e1b34f1&quot;,
-        &quot;version&quot;: 1,
-        &quot;time&quot;: &quot;1675752794424000000&quot;,
-        &quot;nonce&quot;: &quot;3&quot;,
-        &quot;from&quot;: &quot;29036ab00d18b1b72744482f5a09fdde8c6f196e&quot;,
-        &quot;to&quot;: &quot;8dc41a86b91eb88d82489c4d037ae9ffca65cfbf&quot;,
-        &quot;amount&quot;: &quot;1&quot;,
-        &quot;gas&quot;: &quot;10&quot;,
-        &quot;type&quot;: 1,
-        &quot;sig&quot;: &quot;89122638fef0e2793a0f3fba18fa9884690d8f1ac957fb1437e9b282f74909c04aae758bd118e7f324f25fbecedfc61e9c90fe6749fd1f0905945571f8360d0500&quot;
-    },
-    &quot;proof&quot;: {
-        &quot;root_hash&quot;: &quot;D27A3C02E3618E16982ED008703381BB43A84C44A12ECE2600E271200E42099E&quot;,
-        &quot;data&quot;: &quot;CAEQgPyK2JuJ3qAXGAMiFCkDarANGLG3J0RIL1oJ/d6MbxluKhSNxBqGuR64jYJInE0Deun/ymXPvzIBAToBCkABUkGJEiY4/vDieToPP7oY+piEaQ2PGslX+xQ36bKC90kJwEqudYvRGOfzJPJfvs7fxh6ckP5nSf0fCQWUVXH4Ng0FAA==&quot;,
-        &quot;proof&quot;: {
-            &quot;total&quot;: &quot;1&quot;,
-            &quot;index&quot;: &quot;0&quot;,
-            &quot;leaf_hash&quot;: &quot;0no8AuNhjhaYLtAIcDOBu0OoTEShLs4mAOJxIA5CCZ4=&quot;,
-            &quot;aunts&quot;: []
-        }
-    },
-    &quot;encoded&quot;: &quot;CAEQgPyK2JuJ3qAXGAMiFCkDarANGLG3J0RIL1oJ/d6MbxluKhSNxBqGuR64jYJInE0Deun/ymXPvzIBAToBCkABUkGJEiY4/vDieToPP7oY+piEaQ2PGslX+xQ36bKC90kJwEqudYvRGOfzJPJfvs7fxh6ckP5nSf0fCQWUVXH4Ng0FAA==&quot;
-}
-</code></pre>
-<ul>
-<li><code>hash</code>: 트랜잭션 해시</li>
-<li><code>height</code>: 트랜잭션이 포함된 블록의 높이(번호)</li>
-<li><code>index</code>: 블록내에서 트랜잭션의 순번</li>
-<li><code>tx_result</code>: 트랜잭션 처리 결과.  <code>tx_result.code</code>가 <code>0</code> 이면 성공, 그렇지 않으면 실패에 해당된다.  </li>
-<li><code>tx</code>: 처리된 트랜잭션.</li>
-<li><code>encoded</code>: Protobuf v3 로 인코딩된 트랜잭션 데이터의 base64 형식.</li>
-<li><code>proof</code>:</li>
-</ul>
-<hr />
-<h2 id="queryblockbyheight">queryBlockByHeight</h2>
+<h2 id="block">Block</h2>
+<h3 id="queryblockbyheight">queryBlockByHeight</h3>
 <pre><code class="language-ts">static queryBlockByHeight(height: number|string): PromiseLike&lt;any&gt;
 </code></pre>
 <pre><code class="language-ts">ACNet.queryBlockByHeight(10818).then(resp =&gt; {
@@ -392,11 +192,11 @@ ACNet.syncAccount(acct, resp =&gt; {
 }
 </code></pre>
 <p>블록 높이(번호)로 블록을 조회 한다.</p>
-<h3 id="parameters_4">Parameters</h3>
+<h4 id="parameters">Parameters</h4>
 <ul>
 <li><code>height</code>: 블록 높이(번호).</li>
 </ul>
-<h3 id="returns_5">Returns</h3>
+<h4 id="returns">Returns</h4>
 <pre><code class="language-json">{
   &quot;block_id&quot;: {
     &quot;hash&quot;: &quot;2227E9F1505C98EE0360A953735623FC3FD74A6E81ADFC9D7EF3BE8927F9136E&quot;,
@@ -475,7 +275,7 @@ ACNet.syncAccount(acct, resp =&gt; {
 <li><code>data.txs</code>: 블록에 포함된 트랜잭션 배열. 각각의 트랜잭션 데이터는 Protobuf v3 인코딩 데이터의 base64 형식.</li>
 </ul>
 <hr />
-<h2 id="queryblockbyhash">queryBlockByHash</h2>
+<h3 id="queryblockbyhash">queryBlockByHash</h3>
 <pre><code class="language-ts">static queryBlockByHash(hash: string|Uint8Array): PromiseLike&lt;any&gt;
 </code></pre>
 <pre><code class="language-ts">ACNet.queryBlockByHash(&quot;2227E9F1505C98EE0360A953735623FC3FD74A6E81ADFC9D7EF3BE8927F9136E&quot;).then(resp =&gt; {
@@ -483,14 +283,241 @@ ACNet.syncAccount(acct, resp =&gt; {
 }
 </code></pre>
 <p>블록 해시 값으로 블록을 조회 한다.</p>
-<h3 id="parameters_5">Parameters</h3>
+<h4 id="parameters_1">Parameters</h4>
 <ul>
 <li><code>hash</code>: 블록 해시 값. (32bytes or 64chars hex-string)</li>
 </ul>
-<h3 id="returns_6">Returns</h3>
+<h4 id="returns_1">Returns</h4>
 <p><code>queryBlockByHeight</code> 와 동일</p>
 <hr />
-<h2 id="queryrule">queryRule</h2>
+<h2 id="transactions">Transactions</h2>
+<h3 id="broadcasttrxsync">broadcastTrxSync</h3>
+<hr />
+<h3 id="querytrx">queryTrx</h3>
+<pre><code class="language-ts">static queryTrx(txhash: string|Uint8Array)
+</code></pre>
+<pre><code class="language-ts">ACNet.queryTrx(&quot;AD10C104B8E3B3DBE357CF4133B8376B6EB48E44AE28260D42F7A0B53E1B34F1&quot;).then(resp =&gt; {
+  console.log(resp)
+})
+</code></pre>
+<h4 id="parameters_2">Parameters</h4>
+<ul>
+<li><code>txhash</code>: 조회하고자 하는 트랜잭션의 해시. (32bytes or 64chars Hex-string)</li>
+</ul>
+<h4 id="returns_2">Returns</h4>
+<pre><code class="language-json">{
+    &quot;hash&quot;: &quot;AD10C104B8E3B3DBE357CF4133B8376B6EB48E44AE28260D42F7A0B53E1B34F1&quot;,
+    &quot;height&quot;: &quot;6980&quot;,
+    &quot;index&quot;: 0,
+    &quot;tx_result&quot;: {
+        &quot;code&quot;: 0,
+        &quot;data&quot;: null,
+        &quot;log&quot;: &quot;&quot;,
+        &quot;info&quot;: &quot;&quot;,
+        &quot;gas_wanted&quot;: &quot;10&quot;,
+        &quot;gas_used&quot;: &quot;10&quot;,
+        &quot;events&quot;: [
+            {
+                &quot;type&quot;: &quot;tx&quot;,
+                &quot;attributes&quot;: [
+                    {
+                        &quot;key&quot;: &quot;dHgudHlwZQ==&quot;,
+                        &quot;value&quot;: &quot;dHJhbnNmZXI=&quot;,
+                        &quot;index&quot;: true
+                    },
+                    {
+                        &quot;key&quot;: &quot;dHguc2VuZGVy&quot;,
+                        &quot;value&quot;: &quot;MjkwMzZBQjAwRDE4QjFCNzI3NDQ0ODJGNUEwOUZEREU4QzZGMTk2RQ==&quot;,
+                        &quot;index&quot;: true
+                    },
+                    {
+                        &quot;key&quot;: &quot;dHgucmVjZWl2ZXI=&quot;,
+                        &quot;value&quot;: &quot;OERDNDFBODZCOTFFQjg4RDgyNDg5QzREMDM3QUU5RkZDQTY1Q0ZCRg==&quot;,
+                        &quot;index&quot;: true
+                    },
+                    {
+                        &quot;key&quot;: &quot;dHguYWRkcnBhaXI=&quot;,
+                        &quot;value&quot;: &quot;MjkwMzZBQjAwRDE4QjFCNzI3NDQ0ODJGNUEwOUZEREU4QzZGMTk2RThEQzQxQTg2QjkxRUI4OEQ4MjQ4OUM0RDAzN0FFOUZGQ0E2NUNGQkY=&quot;,
+                        &quot;index&quot;: true
+                    }
+                ]
+            }
+        ],
+        &quot;codespace&quot;: &quot;&quot;
+    },
+    &quot;tx&quot;: {
+        &quot;hash&quot;: &quot;ad10c104b8e3b3dbe357cf4133b8376b6eb48e44ae28260d42f7a0b53e1b34f1&quot;,
+        &quot;version&quot;: 1,
+        &quot;time&quot;: &quot;1675752794424000000&quot;,
+        &quot;nonce&quot;: &quot;3&quot;,
+        &quot;from&quot;: &quot;29036ab00d18b1b72744482f5a09fdde8c6f196e&quot;,
+        &quot;to&quot;: &quot;8dc41a86b91eb88d82489c4d037ae9ffca65cfbf&quot;,
+        &quot;amount&quot;: &quot;1&quot;,
+        &quot;gas&quot;: &quot;10&quot;,
+        &quot;type&quot;: 1,
+        &quot;sig&quot;: &quot;89122638fef0e2793a0f3fba18fa9884690d8f1ac957fb1437e9b282f74909c04aae758bd118e7f324f25fbecedfc61e9c90fe6749fd1f0905945571f8360d0500&quot;
+    },
+    &quot;proof&quot;: {
+        &quot;root_hash&quot;: &quot;D27A3C02E3618E16982ED008703381BB43A84C44A12ECE2600E271200E42099E&quot;,
+        &quot;data&quot;: &quot;CAEQgPyK2JuJ3qAXGAMiFCkDarANGLG3J0RIL1oJ/d6MbxluKhSNxBqGuR64jYJInE0Deun/ymXPvzIBAToBCkABUkGJEiY4/vDieToPP7oY+piEaQ2PGslX+xQ36bKC90kJwEqudYvRGOfzJPJfvs7fxh6ckP5nSf0fCQWUVXH4Ng0FAA==&quot;,
+        &quot;proof&quot;: {
+            &quot;total&quot;: &quot;1&quot;,
+            &quot;index&quot;: &quot;0&quot;,
+            &quot;leaf_hash&quot;: &quot;0no8AuNhjhaYLtAIcDOBu0OoTEShLs4mAOJxIA5CCZ4=&quot;,
+            &quot;aunts&quot;: []
+        }
+    },
+    &quot;encoded&quot;: &quot;CAEQgPyK2JuJ3qAXGAMiFCkDarANGLG3J0RIL1oJ/d6MbxluKhSNxBqGuR64jYJInE0Deun/ymXPvzIBAToBCkABUkGJEiY4/vDieToPP7oY+piEaQ2PGslX+xQ36bKC90kJwEqudYvRGOfzJPJfvs7fxh6ckP5nSf0fCQWUVXH4Ng0FAA==&quot;
+}
+</code></pre>
+<ul>
+<li><code>hash</code>: 트랜잭션 해시</li>
+<li><code>height</code>: 트랜잭션이 포함된 블록의 높이(번호)</li>
+<li><code>index</code>: 블록내에서 트랜잭션의 순번</li>
+<li><code>tx_result</code>: 트랜잭션 처리 결과.  <code>tx_result.code</code>가 <code>0</code> 이면 성공, 그렇지 않으면 실패에 해당된다.</li>
+<li><code>tx</code>: 처리된 트랜잭션.</li>
+<li><code>encoded</code>: Protobuf v3 로 인코딩된 트랜잭션 데이터의 base64 형식.</li>
+<li><code>proof</code>:</li>
+</ul>
+<hr />
+<h2 id="account">Account</h2>
+<h3 id="queryaccount">queryAccount</h3>
+<pre><code class="language-ts">static queryAccount(addr: string|Bytes)
+</code></pre>
+<pre><code class="language-ts">
+ACNet.queryAccount(&quot;DF976A96545DAD0E0B14FED615587A89BA980B84&quot;).then(resp =&gt; {
+    console.log(resp)
+})
+</code></pre>
+<p><code>addr</code>로 지정된 주소의 <code>Account</code> 최신 상태 정보를 조회 한다.</p>
+<h4 id="parameters_3">Parameters</h4>
+<ul>
+<li><code>addr</code>: 조회 대상 <code>Account</code>의 주소. (20bytes 또는 40chars hex-string)</li>
+</ul>
+<h4 id="returns_3">Returns</h4>
+<p><code>value</code> 객체의 값이 실질적인 조회 결과에 해당된다.</p>
+<pre><code class="language-json">{
+    ...
+    &quot;value&quot;: {
+        &quot;address&quot;: &quot;DF976A96545DAD0E0B14FED615587A89BA980B84&quot;,
+        &quot;nonce&quot;: 0,
+        &quot;balance&quot;: &quot;0&quot;
+    }
+    ...
+}    
+</code></pre>
+<ul>
+<li><code>address</code>: 조회한 계정의 주소. <code>key</code> 값과 동일한 값.</li>
+<li><code>nonce</code>: 현재 계정으로 발행한 트랜잭션 수.</li>
+<li><code>balance</code>: 계정의 잔액.</li>
+</ul>
+<hr />
+<h3 id="syncaccount">syncAccount</h3>
+<pre><code class="language-ts">static syncAccount(acct: Account, cb?:(_:any)=&gt;void) 
+</code></pre>
+<pre><code class="language-ts">let acct = Account.New(&quot;test-0&quot;)
+
+    ...
+
+ACNet.syncAccount(acct, resp =&gt; {
+    console.log(acct) // `acct` is not updated.
+})
+.then( resp =&gt; {
+    console.log(acct) // `acct` is updated.
+})
+</code></pre>
+<p>블록체인상에 기록된 <code>acct</code>의 최신 상태 정보(<code>nonce</code>, <code>balance</code>) 를 동기화 한다.</p>
+<h4 id="parameters_4">Parameters</h4>
+<ul>
+<li><code>acct</code>: 조회 대상 <code>Account</code> 객체.</li>
+</ul>
+<h4 id="returns_4">Returns</h4>
+<p><code>queryAccount</code> 의 리턴값과 동일하다.</p>
+<hr />
+<h2 id="stakes">Stakes</h2>
+<h3 id="queryvalidators">queryValidators</h3>
+<pre><code class="language-ts">static queryValidators(height:number|string)
+</code></pre>
+<pre><code class="language-ts">ACNet.queryValidators().then( resp =&gt; {
+    console.log(resp)
+})
+</code></pre>
+<p>지정된 블록 번호 시점의 Validator 목록을 조회한다.</p>
+<h4 id="parameters_5">Parameters</h4>
+<ul>
+<li><code>height</code>: 블록 번호.</li>
+</ul>
+<h4 id="returns_5">Returns</h4>
+<pre><code class="language-json">{
+    &quot;block_height&quot;: &quot;1153&quot;,
+    &quot;validators&quot;: [
+      {
+        &quot;address&quot;: &quot;8DC41A86B91EB88D82489C4D037AE9FFCA65CFBF&quot;,
+        &quot;pub_key&quot;: {
+          &quot;type&quot;: &quot;tendermint/PubKeySecp256k1&quot;,
+          &quot;value&quot;: &quot;Ax2d8cCfC60NjIS7G6J8hHTPPf6JvxgPRjSVpL+83Qkr&quot;
+        },
+        &quot;voting_power&quot;: &quot;10&quot;,
+        &quot;proposer_priority&quot;: &quot;0&quot;
+      }
+    ],
+    &quot;count&quot;: &quot;1&quot;,
+    &quot;total&quot;: &quot;1&quot;
+}
+</code></pre>
+<ul>
+<li><code>block_height</code>: 블록 번호.</li>
+<li><code>validators</code>: Validator 목록.</li>
+<li><code>address</code>: Validator 계정의 주소.</li>
+<li><code>pub_key</code>: Validator의 Public Key. (Base64 인코딩)</li>
+<li><code>voting_power</code>: Validator의 지분.</li>
+<li><code>proposer_proiority</code>: Validator 가 블록 제안자(Proposer)가 될 수 있는 우선 순위.<br />
+    지분이 클 수록, 마지막 블록 제안이후 경과 시간이 클 수록 우선 순위는 높아진다.</li>
+<li><code>count</code>: <code>validators</code> 의 개수.</li>
+<li><code>total</code>: 현재(<code>block_height</code>) 시점의 총 Validator 수.</li>
+</ul>
+<hr />
+<h3 id="querystakes">queryStakes</h3>
+<pre><code class="language-ts">static queryStakes(addr: string|Bytes)
+</code></pre>
+<pre><code class="language-ts"> ACNet.queryStakes(&quot;8DC41A86B91EB88D82489C4D037AE9FFCA65CFBF&quot;).then (resp =&gt; {
+     console.log(resp)
+ }
+</code></pre>
+<h4 id="returns_6">Returns</h4>
+<pre><code class="language-json">{
+    ...
+    &quot;value&quot;: [
+      {
+        &quot;owner&quot;: &quot;8DC41A86B91EB88D82489C4D037AE9FFCA65CFBF&quot;,
+        &quot;to&quot;: &quot;8DC41A86B91EB88D82489C4D037AE9FFCA65CFBF&quot;,
+        &quot;amount&quot;: 10000000000000000000,
+        &quot;power&quot;: &quot;10&quot;,
+        &quot;blockRewardUnit&quot;: 10000000000,
+        &quot;ReceivedReward&quot;: 0,
+        &quot;txhash&quot;: &quot;0000000000000000000000000000000000000000000000000000000000000000&quot;,
+        &quot;startHeight&quot;: &quot;0&quot;,
+        &quot;refundHeight&quot;: &quot;0&quot;
+      },
+      ...
+    ]
+}
+</code></pre>
+<ul>
+<li><code>owner</code>:</li>
+<li><code>to</code>:</li>
+<li><code>amount</code>:</li>
+<li><code>power</code>:</li>
+<li><code>blockRewardUnit</code>:</li>
+<li><code>txhash</code>:</li>
+<li><code>startHeight</code>:</li>
+<li><code>refundHeight</code>:</li>
+</ul>
+<hr />
+<h3 id="querydelegatee">queryDelegatee</h3>
+<hr />
+<h3 id="governance">Governance</h3>
+<h3 id="queryrule">queryRule</h3>
 <pre><code class="language-ts">static queryRule(): PromiseLike&lt;any&gt;
 </code></pre>
 <pre><code class="language-ts">ACNet.queryRule().then(resp =&gt; {
@@ -498,7 +525,7 @@ ACNet.syncAccount(acct, resp =&gt; {
 })
 </code></pre>
 <p>현재 적용된 governance rule 을 조회한다.</p>
-<h3 id="returns_7">Returns</h3>
+<h4 id="returns_7">Returns</h4>
 <pre><code class="language-json">{
     &quot;value&quot;: {
       &quot;version&quot;: &quot;0&quot;,
@@ -525,26 +552,28 @@ ACNet.syncAccount(acct, resp =&gt; {
 <li><code>maxVotingPeriodBlocks</code>: 최대 투표 기간(블록 수).</li>
 </ul>
 <hr />
-<h2 id="getclient">getClient</h2>
+<h2 id="node">Node</h2>
+<h3 id="getclient">getClient</h3>
 <hr />
-<h2 id="seturl">setUrl</h2>
+<h3 id="seturl">setUrl</h3>
 <pre><code class="language-ts">static setUrl(url:string)
 </code></pre>
 <pre><code class="language-ts">ACNet.setUrl('http://localhost:26657')
 </code></pre>
 <p><code>ACNet</code> API 호출시 접속하게 될 ARCANEX 노드의 RPC 서버 URL을 설정한다.</p>
-<h3 id="parameters_6">Parameters</h3>
+<h4 id="parameters_6">Parameters</h4>
 <ul>
 <li><code>url</code>: ARCANEX 노드의 RPC 서버 URL</li>
 </ul>
 <hr />
-<h2 id="geturl">getUrl</h2>
+<h3 id="geturl">getUrl</h3>
 <pre><code class="language-ts">static getUrl():string
 </code></pre>
 <pre><code class="language-ts">const nodeUrl = ACNet.getUrl()
 console.log(nodeUrl) // 'http://localhost:26657'
 </code></pre>
 <p>현재 사용중인 ARCANEX 노드 RPC Server URL.</p>
+<hr />
               
             </div>
           </div><footer>

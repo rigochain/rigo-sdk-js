@@ -45,7 +45,7 @@
                 </li>
               </ul>
               <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../../acnet/">RPC APIs - ACNet</a>
+                <li class="toctree-l1"><a class="reference internal" href="../../acnet/">ACNet</a>
                 </li>
               </ul>
               <ul>
@@ -58,10 +58,8 @@
                   </li>
                   <li class="toctree-l1 current"><a class="reference internal current" href="./">Transaction</a>
     <ul class="current">
-    <li class="toctree-l2"><a class="reference internal" href="#data-structure">Data structure</a>
+    <li class="toctree-l2"><a class="reference internal" href="#description">Description</a>
         <ul>
-    <li class="toctree-l3"><a class="reference internal" href="#trxproto">TrxProto</a>
-    </li>
     <li class="toctree-l3"><a class="reference internal" href="#transaction-payload">Transaction Payload</a>
         <ul>
     <li class="toctree-l4"><a class="reference internal" href="#trxpayloadtransferproto">TrxPayloadTransferProto</a>
@@ -78,7 +76,57 @@
     </li>
         </ul>
     </li>
-    <li class="toctree-l2"><a class="reference internal" href="#_1"></a>
+    <li class="toctree-l2"><a class="reference internal" href="#apis01">APIs01</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#buildtransfertrx">buildTransferTrx</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#parameters">Parameters</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#returns">Returns</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#examples">Examples</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#api-name">API Name</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#parameters_1">Parameters</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#returns_1">Returns</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#examples_1">Examples</a>
+    </li>
+        </ul>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#apis01_1">APIs01</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#api-name_1">API Name</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#parameters_2">Parameters</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#returns_2">Returns</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#examples_2">Examples</a>
+    </li>
+        </ul>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#apis01_2">APIs01</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#api-name_2">API Name</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#parameters_3">Parameters</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#returns_3">Returns</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#examples_3">Examples</a>
+    </li>
+        </ul>
+    </li>
+        </ul>
     </li>
     </ul>
                   </li>
@@ -108,8 +156,11 @@
             <div class="section" itemprop="articleBody">
               
                 <h1 id="transactions">Transactions</h1>
-<h2 id="data-structure">Data structure</h2>
-<h3 id="trxproto">TrxProto</h3>
+<h2 id="description">Description</h2>
+<p>블록체인에 기록된 상태 정보를 변경하는 방법은, 트랜잭션(Transaction: Tx)을 블록체인 네트워크에 제출하고 이것이 모든 노드들에 의하여 실행되어야 한다.
+제출되는 Tx은 상태의 변경 내용과 함께, 제출하는 계정(Account)의 전자서명을 포함한다.</p>
+<p><code>arcanex-sdk-js</code> 는 트랜잭션의 생성, 서명, 인코딩을 위한 API를 제공한다.</p>
+<p>ARCANEX 의 트랜잭션은 다음과 같이 구성된다.</p>
 <pre><code class="language-ts">export interface TrxProto {
   version: number;
   time: Long;
@@ -123,6 +174,19 @@
   sig: Uint8Array;
 }
 </code></pre>
+<ul>
+<li>
+<p><code>version</code>: 
+ARCANEX 네트워크의 트랜잭션 종류는 다음과 같다.</p>
+</li>
+<li>
+<p><strong>Transfer</strong> : ARCANEX 의 자산(Native Cryptocurrency)을 전송.</p>
+</li>
+<li><strong>Staking</strong> : ARCANEX 의 자산(Native Cryptocurrency)을 지분(Stake)로 전환.</li>
+<li><strong>Unstaking</strong> : ARCANEX 의 지분(Stake)를 자산으로 전환.</li>
+<li><strong>Governance Proposal</strong> : ARCANEX 의 거버넌스 규칙 변경을 제안.</li>
+<li><strong>Voting to proposal</strong> : 거버넌스 규칙 제안에 대하여 투표.</li>
+</ul>
 <h3 id="transaction-payload">Transaction Payload</h3>
 <h4 id="trxpayloadtransferproto">TrxPayloadTransferProto</h4>
 <p>It is equal to <code>TrxProto</code></p>
@@ -138,7 +202,31 @@
 </ul>
 <h4 id="trxpayloadproposalproto">TrxPayloadProposalProto</h4>
 <h4 id="trxpayloadvotingproto">TrxPayloadVotingProto</h4>
-<h2 id="_1"></h2>
+<hr />
+<h2 id="apis01">APIs01</h2>
+<h3 id="buildtransfertrx">buildTransferTrx</h3>
+<pre><code class="language-ts">export function buildTransferTrx(object:any): TrxProto
+</code></pre>
+<h4 id="parameters">Parameters</h4>
+<h4 id="returns">Returns</h4>
+<h4 id="examples">Examples</h4>
+<hr />
+<h3 id="api-name">API Name</h3>
+<h4 id="parameters_1">Parameters</h4>
+<h4 id="returns_1">Returns</h4>
+<h4 id="examples_1">Examples</h4>
+<hr />
+<h2 id="apis01_1">APIs01</h2>
+<h3 id="api-name_1">API Name</h3>
+<h4 id="parameters_2">Parameters</h4>
+<h4 id="returns_2">Returns</h4>
+<h4 id="examples_2">Examples</h4>
+<hr />
+<h2 id="apis01_2">APIs01</h2>
+<h3 id="api-name_2">API Name</h3>
+<h4 id="parameters_3">Parameters</h4>
+<h4 id="returns_3">Returns</h4>
+<h4 id="examples_3">Examples</h4>
               
             </div>
           </div><footer>
