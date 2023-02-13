@@ -72,7 +72,7 @@ N/A
 
 ## Listen
 
-`Subscriber` 객체의 생성(`constructor`) 와 구독 시작(`start`)을 `Listener` API 하나로 수행할 수 있다.
+`Subscriber` 객체의 생성(`constructor`) 와 구독 시작(`start`)을 `Listen` API 하나로 수행할 수 있다.
 
 ### Parameters
 

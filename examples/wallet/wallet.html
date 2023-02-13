@@ -93,7 +93,7 @@
 
             if(activeAddrStr === acct.address) {
                 opt.selected = 'selected';
-                ACNet.syncAccount(acct)
+                ACNRPC.syncAccount(acct)
                     .then( () => {
                         displayAccount(acct);
                         // console.log("sync", acct.name);
@@ -127,7 +127,7 @@
                             ${errmark}${acnUtil.shortString(retTx.hash, 20, 0)}
                         </div>
                         <div class="text_label" style="display:block;">
-                            ${retTx.height} @ ${Utils.Time.dateFromNano(retTx.tx.time)}
+                            ${retTx.height} @ ${retTx.tx.time.toString()}
                         </div>
                     </div>
                 </div>
@@ -201,7 +201,7 @@
         <script type='text/javascript'>
             btn_set_url.onclick = () => {
                 LocalSto.Write('url', node_url.value)
-                ACNet.setUrl(node_url.value)
+                ACNRPC.setUrl(node_url.value)
             }
             btn_create.onclick = () => {
                 showCreateLayout(true);
@@ -238,7 +238,7 @@
                 sel_acct_name.onchange = () => {
                     const addr = sel_acct_name.options[sel_acct_name.selectedIndex].value;
                     const acct = Account.Unmarshal(LocalSto.Read(addr));
-                    ACNet.syncAccount(acct)
+                    ACNRPC.syncAccount(acct)
                     .then( () => {
                         LocalSto.Write('default', acct.address)
                         activeAddrStr = acct.address;
@@ -318,7 +318,7 @@
                     DelegateAsset(recver_addr.value, send_amt.value)
                 }
                 btn_unstaking.onclick = () => {
-                    ACNet.queryStakes(activeAcct.address).then (ret => {
+                    ACNRPC.queryStakes(activeAcct.address).then (ret => {
                         let list = ''
                         ret.value.forEach(s => {
                             list += `
@@ -481,7 +481,7 @@
         if(!url) {
             url = 'http://localhost:26657'
         }
-        ACNet.setUrl(url)
+        ACNRPC.setUrl(url)
         node_url.value = url
 
         if(!SessSto.Read('secret')) {
@@ -504,7 +504,7 @@
 
         // // todo: Search by activeAddr
         // // To search by address, event attribute for address should be defined and recorded by 'tychaind'
-        // Trx.SearchTx("tx.height >= 15000", true, 1, 10, "asc")
+        // TrxBuilder.decodeSearchTx("tx.height >= 15000", true, 1, 10, "asc")
         // .then( retTxs => {
         //     console.log('SearchTx returns', retTxs.total_count);
         //     for(let i=0; i<retTxs.total_count; i++) {
@@ -531,13 +531,13 @@
     }
 
     function TransferAsset(to, amt) {
-        ACNet.syncAccount(activeAcct)
+        ACNRPC.syncAccount(activeAcct)
             .then( () => {
                 activeAcct.unlock();
 
                 //
                 // build a tx.
-                const tx = Trx.buildTransferTrx({
+                const tx = TrxBuilder.BuildTransferTrx({
                     from: activeAcct.address,
                     to: to,
                     nonce: activeAcct.nonce + 1,
@@ -546,11 +546,11 @@
                 })
 
                 // sign the tx.
-                Trx.signTrx(tx, activeAcct);
+                TrxBuilder.SignTrx(tx, activeAcct);
 
                 //
                 // broadcast a tx.
-                ACNet.broadcastTrxSync(tx)
+                ACNRPC.broadcastTrxSync(tx)
                     .then( ret => {
                         if(ret.code != 0) {
                             console.error(ret.log);
@@ -574,13 +574,13 @@
     }
 
     function DelegateAsset(to, amt) {
-        ACNet.syncAccount(activeAcct)
+        ACNRPC.syncAccount(activeAcct)
             .then( () => {
                 activeAcct.unlock();
 
                 //
-                // build a tx.
-                const tx = Trx.buildDelegateTrx({
+                // Build a tx.
+                const tx = TrxBuilder.BuildDelegateTrx({
                     from: activeAcct.address,
                     to: to,
                     nonce: activeAcct.nonce + 1,
@@ -589,14 +589,14 @@
                 })
 
                 // sign the tx.
-                const sig = Trx.signTrx(tx, activeAcct);
+                const sig = TrxBuilder.SignTrx(tx, activeAcct);
                 // Assert.notNull(sig);
                 // Assert.equal(65, sig.length);
                 // Assert.notNull(tx.getHeader().getSig());
 
                 //
                 // broadcast a tx.
-                ACNet.broadcastTrxSync(tx)
+                ACNRPC.broadcastTrxSync(tx)
                     .then( ret => {
                         if(ret.code != 0) {
                             console.error(ret.log);
@@ -620,19 +620,19 @@
     }
 
     function UndelegateAsset(txhash) {
-        ACNet.queryTrx(txhash).then( retTx => {
+        ACNRPC.queryTrx(txhash).then( retTx => {
             const txbytes = acnUtil.b64ToU8Array(retTx.tx);
-            const tx = Trx.decodeTrx(txbytes);
+            const tx = TrxBuilder.DecodeTrx(txbytes);
 
             recver_addr.value = tx.to
 
-            ACNet.syncAccount(activeAcct)
+            ACNRPC.syncAccount(activeAcct)
                 .then( () => {
                     activeAcct.unlock();
 
                     //
-                    // build a tx.
-                    const tx = Trx.buildUndelegateTrx({
+                    // Build a tx.
+                    const tx = TrxBuilder.BuildUndelegateTrx({
                         from: activeAcct.address,
                         to: recver_addr.value,
                         nonce: activeAcct.nonce + 1,
@@ -642,14 +642,14 @@
                     })
 
                     // sign the tx.
-                    const sig = Trx.signTrx(tx, activeAcct);
+                    const sig = TrxBuilder.SignTrx(tx, activeAcct);
                     // Assert.notNull(sig);
                     // Assert.equal(65, sig.length);
                     // Assert.notNull(tx.getHeader().getSig());
 
                     //
                     // broadcast a tx.
-                    ACNet.broadcastTrxSync(tx, resp => {
+                    ACNRPC.broadcastTrxSync(tx, resp => {
                         console.log('debug', resp)
                     })
                         .then( ret => {
@@ -679,7 +679,7 @@
     function CheckTx(hash) {
         try {
             setTimeout( () => {
-                ACNet.queryTrx(hash).then( retTx => {
+                ACNRPC.queryTrx(hash).then( retTx => {
                     ProcessResultTx(retTx);
                 });
             }, 1500)
@@ -691,7 +691,7 @@
 
     function ProcessResultTx(retTx) {
         if(retTx.tx_result.code == 0) {
-            ACNet.syncAccount(activeAcct).then( () => {
+            ACNRPC.syncAccount(activeAcct).then( () => {
                 displayAccount(activeAcct);
             }).catch(err => {
                 console.error(err);
@@ -702,7 +702,7 @@
     }
 
     function ShowTx(hash) {
-        ACNet.queryTrx(hash)
+        ACNRPC.queryTrx(hash)
             .then(retTx => {
                 console.log(JSON.stringify(retTx.tx, null, 4))
                 showAlert(JSON.stringify(retTx.tx, null, 4))

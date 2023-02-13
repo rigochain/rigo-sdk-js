@@ -1,18 +1,13 @@
 import Long from "long";
 
-export function getNanoSecond():Long {
-    return Long.fromNumber(Date.now()).mul(1000000) // its over Number.MAX_SAFE_...
-}
-
-export function fromNanoSecond(nsec: Long): number {
-    return nsec.div(1000000).toNumber()
-}
-
-
-export function dateFromNano(nsec: string|Long):string {
-    if (typeof nsec === 'string') {
-        nsec = Long.fromString(nsec)
+export function getNanoSecond(dt?: Date):Long {
+    if (!dt) {
+        dt = new Date()
     }
-    let msec = fromNanoSecond(nsec)
-    return new Date(msec).toLocaleString();
+    return Long.fromNumber(dt.getTime()).mul(1000000) // its over Number.MAX_SAFE_...
+}
+
+export function fromNanoSecond(nsec: Long): Date {
+    const tmstp = nsec.div(1000000).toNumber()
+    return new Date(tmstp)
 }

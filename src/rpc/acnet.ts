@@ -1,8 +1,8 @@
 import Account from "../account/account";
 import ACNClient from "./acn_client";
 import Bytes from "../utils/bytes";
-import {TrxProto} from "../proto/trx";
-import {decodeTrx} from '../trx/trx';
+import {TrxProto} from "../trx/trx_pb";
+import {TrxBuilder} from '../trx/trx';
 
 export default class ACNet {
     static client:ACNClient
@@ -65,7 +65,7 @@ export default class ACNet {
             .then(resp => {
                 const txbytes = Bytes.b64ToBytes(resp.tx);
                 resp.encoded = resp.tx;
-                resp.tx = decodeTrx(txbytes);
+                resp.tx = TrxBuilder.DecodeTrx(txbytes);
                 return resp
             })
     }

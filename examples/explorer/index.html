@@ -18,11 +18,11 @@
             if(!url) {
                 url = 'http://localhost:26657'
             }
-            ACNet.setUrl(url)
+            ACNRPC.setUrl(url)
 
 
             const blockItems = []
-            ACNetListener.Listen('ws://localhost:26657/websocket', "tm.event='NewBlockHeader'", (resp) => {
+            ACNEvent.Listen('ws://localhost:26657/websocket', "tm.event='NewBlockHeader'", (resp) => {
                 if(!resp.data) {
                     return
                 }
@@ -68,19 +68,19 @@
 
             function showBlock(height) {
 
-                window.open(ACNet.getUrl() + `/block?height=${height}`, 'block')
+                window.open(ACNRPC.getUrl() + `/block?height=${height}`, 'block')
             }
 
 
             function displayTxs(height) {
-                ACNet.queryBlockByHeight(height).then(block => {
+                ACNRPC.queryBlockByHeight(height).then(block => {
                     const bid = block.block_id
                     const body = block.block
 
                     div_txs.innerHTML = ''
                     body.data.txs.forEach( b64Val => {
                         const txu8arr = acnUtil.b64ToU8Array(b64Val)
-                        const tx = Trx.decodeTrx(txu8arr)
+                        const tx = TrxBuilder.DecodeTrx(txu8arr)
                         const errmark = ''
                         const txitem = `
                         <div class="flex_area" style="margin:8px 0;">
@@ -92,7 +92,7 @@
                                         ${errmark}${acnUtil.shortString(tx.hash, 20, 0)}
                                     </div>
                                     <div class="text_label" style="display:block;">
-                                        ${body.header.height} @ ${Utils.Time.dateFromNano(tx.time)}
+                                        ${body.header.height} @ ${tx.time}
                                     </div>
                                 </div>
                             </div>
@@ -124,13 +124,13 @@
             }
 
             function showTx(hash) {
-                window.open(ACNet.getUrl() + `/tx?hash=0x${hash}`, 'tx')
+                window.open(ACNRPC.getUrl() + `/tx?hash=0x${hash}`, 'tx')
             }
 
             displayValidators()
 
             function displayValidators() {
-                ACNet.queryValidators().then( resp => {
+                ACNRPC.queryValidators().then( resp => {
                     let totalPower = 0
                     resp.validators.forEach( val => {
                         totalPower += Number.parseInt(val.voting_power)
@@ -140,7 +140,7 @@
             }
 
             function showValidators() {
-                window.open(ACNet.getUrl() + '/validators', 'validators')
+                window.open(ACNRPC.getUrl() + '/validators', 'validators')
             }
 
         </script>

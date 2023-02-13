@@ -3,10 +3,10 @@ declare global {
     interface Window {
         PrvKey: any; // 👈️ turn off type checking
         PubKey: any;
-        ACNet: any;
-        ACNetListener: any;
+        ACNRPC: any;
+        ACNEvent: any;
         Account: any;
-        Trx: any;
+        TrxBuilder: any;
         LocalSto: any;
         SessSto: any;
         Bytes: any;
