@@ -139,34 +139,98 @@ listener.stop()
 
 **key** 의 값에 해당한다.
 
-### Example
+### Examples
+
+#### Block event
 
 ```ts
 import Subscriber from "./subscriber";
 
-// 신규로 블록이 생성될 때 마다 블록 정보 구독
+
+// 블록 생성 이벤트 구독 요청
 var sub = new Subscriber("ws://localhost:26657/websocket", "tm.event = 'NewBlock'")
 sub.start( resp => console.log(resp) )
         ...
 
-// 트랜잭션 hash 가 'A7FC574491B18ADD8E3DD60E7442CB34D90A4862E30E9E9B5412154EBFB0E100' 인 
-// 트랜잭션이 처리되었을 때, 해당 트랜잭션 정보 수신.
+// 수신된 이벤트 정보
+{
+    "query": "tm.event='NewBlockHeader'",
+    "data": {
+        "type": "tendermint/event/NewBlockHeader",
+        "value": {
+            "header": {
+                "version": {
+                    "block": "11",
+                    "app": "4294967296"
+                },
+                "chain_id": "localnet",
+                "height": "92175",
+                "time": "2023-02-13T13:27:58.840771Z",
+                "last_block_id": {
+                    "hash": "525B7E1B39ABFF6643D5CA0AF2B4C080AA69B8F6E6B88F5D96FA1C4B669EDA57",
+                    "parts": {
+                        "total": 1,
+                        "hash": "518791BB1F931395B3036C8E9AEC40E92498FE30A582F8DF871790A6A48CCD33"
+                    }
+                },
+                "last_commit_hash": "CC16D8C757360897B9682646F2D910ECC77A2A80EED54AE06D0539E365B77164",
+                "data_hash": "E3B0C44298FC1C149AFBF4C8996FB92427AE41E4649B934CA495991B7852B855",
+                "validators_hash": "FE36DFA0965A3207F370004FD5A35B0D9CFE22C1E5EC6282B11E0A078E022C11",
+                "next_validators_hash": "FE36DFA0965A3207F370004FD5A35B0D9CFE22C1E5EC6282B11E0A078E022C11",
+                "consensus_hash": "048091BC7DDC283F77BFBF91D73C44DA58C3DF8A9CBC867405D8B7F3DAADA22F",
+                "app_hash": "F05DE653A484B266512480747A80522450D9241D3AE43E5FB49FBB6613FB07CF",
+                "last_results_hash": "E3B0C44298FC1C149AFBF4C8996FB92427AE41E4649B934CA495991B7852B855",
+                "evidence_hash": "E3B0C44298FC1C149AFBF4C8996FB92427AE41E4649B934CA495991B7852B855",
+                "proposer_address": "8DC41A86B91EB88D82489C4D037AE9FFCA65CFBF"
+            },
+            "num_txs": "0",
+            "result_begin_block": {},
+            "result_end_block": {
+                "validator_updates": []
+            }
+        }
+    },
+    "events": {
+        "tm.event": [
+            "NewBlockHeader"
+        ]
+    }
+}
+```
+
+#### Transaction event
+
+```ts
+// 
+// 트랜잭션 hash 'A7FC574491B18ADD8E3DD60E7442CB34D90A4862E30E9E9B5412154EBFB0E100' 인 
+// 트랜잭션 처리완료 이벤트 구독 요청
 var sub = new Subscriber("ws://localhost:26657/websocket", "tm.event = 'Tx' AND tx.hash='A7FC574491B18ADD8E3DD60E7442CB34D90A4862E30E9E9B5412154EBFB0E100'")
 sub.start( resp => console.log(resp) )
         ...
 
+// 수신된 이벤트 정보
+
+```
+
+```ts
 // 트랜잭션 타입이 'transfer' 이고, 
 // sender 주소가 'D8C2C3D121696F51B733F7CF36C8AE60F8F264CC' 인 
-// 트랜잭션이 처리되었을 때, 해당 트랜잭션 정보 수신.
+// 트랜잭션 처리완료 이벤트 구독 요청.
 var sub = new Subscriber("ws://localhost:26657/websocket", "tm.event = 'Tx' AND tx.type='transfer' AND tx.sender='D8C2C3D121696F51B733F7CF36C8AE60F8F264CC'")
 sub.start( resp => console.log(resp) )
         ...
 
+// 수신된 이벤트 정보
+```
+
+```ts
 // 트랜잭션 타입이 'transfer' 이고, 
 // sender 주소가 'D8C2C3D121696F51B733F7CF36C8AE60F8F264CC' 인 
-// 트랜잭션이 처리되었을 때, 해당 트랜잭션 정보 수신.
+// 트랜잭션 처리완료 이벤트 구독 요청.
 var sub = new Subscriber("ws://localhost:26657/websocket", "tm.event = 'Tx' AND tx.type='transfer' AND tx.sender='D8C2C3D121696F51B733F7CF36C8AE60F8F264CC'")
 sub.start( resp => console.log(resp) )
         ...
+
+// 수신된 이벤트 정보
 
 ```

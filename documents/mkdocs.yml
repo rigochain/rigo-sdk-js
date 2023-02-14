@@ -1,12 +1,19 @@
 site_name: arcanex-sdk-js
 
 theme: readthedocs
+
 markdown_extensions:
   - admonition
+
 nav:
   - Overview: index.md
   - ACNet: acnet.md
   - Event Subscription - Subscriber: subscriber.md
+  - developers:
+      - Explorer:
+          - SRS: examples/explorer/srs.md
+      - Wallet:
+          - SRS: examples/wallet/srs.md
   - internals:
       - Account: internals/account.md
       - Transaction: internals/transactions.md
