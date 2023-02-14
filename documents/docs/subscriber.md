@@ -148,7 +148,7 @@ import Subscriber from "./subscriber";
 
 
 // 블록 생성 이벤트 구독 요청
-var sub = new Subscriber("ws://localhost:26657/websocket", "tm.event = 'NewBlock'")
+var sub = new Subscriber("ws://localhost:26657/websocket", "tm.event = 'NewBlockHeader'")
 sub.start( resp => console.log(resp) )
         ...
 
