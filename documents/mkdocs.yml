@@ -8,8 +8,9 @@ markdown_extensions:
 nav:
   - Overview: index.md
   - ACNet: acnet.md
-  - Event Subscription - Subscriber: subscriber.md
-  - developers:
+  - Event Subscription: subscriber.md
+  - RPC: rpc.md
+  - examples:
       - Explorer:
           - SRS: examples/explorer/srs.md
       - Wallet:
