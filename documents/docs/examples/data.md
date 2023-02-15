@@ -146,3 +146,41 @@ interface Trx {
 ```
 
 ### Protobuf messages
+
+```protobuf
+message TrxProto {
+  uint32 version = 1;
+  int64 time = 2;
+  uint64 nonce = 3;
+  bytes from = 4;
+  bytes to = 5;
+  bytes _amount = 6;
+  bytes _gas = 7;
+  int32 type = 8;
+  bytes _payload = 9;
+  bytes sig = 10;
+}
+
+message TrxPayloadStakingProto {}
+
+message TrxPayloadUnstakingProto {
+  bytes tx_hash = 1;
+}
+
+message TrxPayloadExecContractProto {
+  bytes _code = 1;
+}
+
+message TrxPayloadProposalProto {
+  string message = 1;
+  int64 start_voting_height = 2;
+  int64 voting_blocks = 3;
+  int32 opt_type = 4;
+  repeated bytes options = 5;
+}
+
+message TrxPayloadVotingProto {
+  bytes tx_hash = 1;
+  int32 choice = 2;
+}
+```

@@ -7,14 +7,14 @@ markdown_extensions:
 
 nav:
   - Overview: index.md
+  - RPC: rpc.md
   - ACNet: acnet.md
   - Event Subscription: subscriber.md
-  - RPC: rpc.md
-  - examples:
-      - Explorer:
-          - SRS: examples/explorer/srs.md
-      - Wallet:
-          - SRS: examples/wallet/srs.md
   - internals:
       - Account: internals/account.md
       - Transaction: internals/transactions.md
+  - examples:
+      - Explorer:
+          - Requirements: examples/explorer/srs.md
+      - Wallet:
+          - Requirements: examples/wallet/srs.md
