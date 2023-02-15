@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="shortcut icon" href="../../../img/favicon.ico" />
+    <title>Requirements - arcanex-sdk-js</title>
+    <link rel="stylesheet" href="../../../css/theme.css" />
+    <link rel="stylesheet" href="../../../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Requirements";
+        var mkdocs_page_input_path = "examples/explorer/srs.md";
+        var mkdocs_page_url = null;
+      </script>
+    
+    <script src="../../../js/jquery-3.6.0.min.js" defer></script>
+    <!--[if lt IE 9]>
+      <script src="../../../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
+      <script>hljs.initHighlightingOnLoad();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href="../../.." class="icon icon-home"> arcanex-sdk-js
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../../..">Overview</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../../../rpc/">RPC</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../../../acnet/">ACNet</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../../../subscriber/">Event Subscription</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">internals</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../internals/account/">Account</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../internals/transactions/">Transaction</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">examples</span></p>
+              <ul class="current">
+                  <li class="toctree-l1 current"><a class="reference internal current" href="#">Explorer</a>
+    <ul class="current">
+                <li class="toctree-l2 current"><a class="reference internal current" href="./">Requirements</a>
+    <ul class="current">
+    <li class="toctree-l3"><a class="reference internal" href="#genesis">Genesis</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#synchronization">Synchronization</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#block-sync">Block Sync.</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#transaction-sync">Transaction Sync.</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#runtime-synchronization">Runtime Synchronization</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#history-synchronization">History Synchronization</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#user-requests">User Requests</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#lastest-block-height">Lastest Block Height</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#total-block-list">Total Block List</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#latest-block-list">Latest Block List</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#block-details">Block Details</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#total-transactions">Total Transactions</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#total-transaction-list">Total Transaction List</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#latest-transaction-list">Latest Transaction List</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#search">Search</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#validators">Validators</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#governance">Governance</a>
+    </li>
+        </ul>
+    </li>
+    </ul>
+                </li>
+    </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="#">Wallet</a>
+    <ul>
+                <li class="toctree-l2"><a class="reference internal" href="../../wallet/srs/">Requirements</a>
+                </li>
+    </ul>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../..">arcanex-sdk-js</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../.." class="icon icon-home" alt="Docs"></a> &raquo;</li>
+          <li>examples &raquo;</li>
+          <li>Explorer &raquo;</li>
+      <li>Requirements</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="overview">Overview</h1>
+<p>이 문서는 ARCANEX Blockhcain 의 Block Explorer 인 <strong>ArcaScan</strong> 에 대한 구성 요구사항 및 기능 요구사항에 대하여 기술한다.</p>
+<pre><code class="language-plantuml">@startuml
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Component.puml
+
+Container_Ext(browser, &quot;Browser&quot;)
+System_Boundary(explorer, &quot;Block Explorer&quot;) {
+    Container(fe, &quot;FrontEnd&quot;)
+    Container(be, &quot;BackEnd&quot;) {
+        Component(bzl, &quot;Controller&quot;)
+        Component(sdk, &quot;SDK&quot;)
+    }
+
+    Container(db, &quot;Database&quot;)
+}
+Container(node, &quot;ARCANEX Node&quot;)
+
+BiRel_R(browser, fe, &quot;Request&quot;, &quot;HTTP/HTTPS&quot;)
+Rel_D(fe, bzl, &quot;API&quot;, &quot;&quot;)
+Rel_R(bzl, sdk, &quot;API&quot;, &quot;&quot;)
+Rel_D(bzl, db, &quot;CRUD&quot;, &quot;&quot;)
+BiRel_R(sdk, node, &quot;RPC&quot;, &quot;HTTP/JSONRPC, Websocket&quot;)
+@enduml
+</code></pre>
+<p>ArcaScan 은 ARCANEX 네트워크에서 생성되는 블록, 트랜잭션 그리고 계정 관련 상태 변경 정보를
+실시간으로 사용자에게 제공하기 위한 웹 서비스 시스템이다.  </p>
+<p>일반적인 Block Explorer 시스템은 블록체인 노드에 접속하여 필요한 정보를 획득 하고, 
+이를 적절한 구조로 변형하여 DB 에 저장함으로서 블록체인 원장과 Explorer DB 를 동기화 한 후.
+그리고 사용자로 부터 요청을 수신하였을 때, DB 데이터를 기반으로 응답을 생산하는 것을 기본 기능으로 구현된다.  </p>
+<p>ArcaScan 역시 일반적인 Block Explorer 와 유사한 구조로 구현된다.
+ARCANEX 네트워크와의 연결을 동한 정보 획득, 획득된 정보의 DB 저장을 통한 동기화, 그리고 DB 정보에 기반한 사용자 요청 응답으로 기본 기능을 구성한다.</p>
+<h2 id="genesis">Genesis</h2>
+<p>ARCANEX 블록체인 원장의 최초 상태 정보가 ArcaScan DB에 반영되어야 한다.</p>
+<pre><code class="language-json">genesis.json
+</code></pre>
+<h2 id="synchronization">Synchronization</h2>
+<p>ArcaScan DB는 ARCANEX 블록체인 원장과 동기화 되어야 한다.  </p>
+<p>ARCANEX 블록체인 원장과의 동기화는 ARCANEX 블록체인 원장에 기록되는 모든 상태 변경 정보를 수신하여 이를 ArcaScan DB에 재구성함을 의미 하는 것으로,
+ArcaScan 이 사용자에게 제공해야 할 기능을 수행하는데 가장 최적화된 형태로 재구성 하여 <strong>ArcaScan DB에 누적 반영</strong> 한다.</p>
+<p>ArcaScan 은 이벤트 구독 방식과 RPC 호출 방식을 통해 동기화에 필요한 정보를 획득 한다.  </p>
+<ul>
+<li>
+<p>이벤트 구독 (Event Subscription)  <br />
+현재 발생되는 정보를 실시간에 가깝게 획득하가 위하여 사용된다. <br />
+ArcaScan은 ARCANEX 네트워크를 구성하는 노드 중 하나로 Websocket 연결을 생성하고,
+이 연결을 통해 <a href="../../../subscriber/#event-query">이벤트 쿼리문</a>을 포함한 구독 요청 메시지를 전송함으로서, 블록과 트랜잭션 정보가 포함된 이벤트를 실시간으로 수신 할 수 있다.
+이벤트 구독 대한 자세한 사항은 <a href="../../../subscriber/">Event Subscribe</a>를 참조한다.</p>
+</li>
+<li>
+<p>HTTP/JSONRCP 호출<br />
+이미 발생한 정보를 획득하기 위하여 사용된다.
+이벤트 구독 메커니즘을 통해 수신되는 정보는 현재 시점의 정보로 제한된다. (과거 정보 수신 불가)<br />
+따라서 과거 시점에 발생한 정보를 조회 하기 위해서는 ARCANEX 노드가 제공하는 RPC 호출을 통해 해당 정보를 획득해야 한다.
+ARCANEX RPC 호출을 위한 API 에 대한 자세한 정보는 <a href="../../../acnet/">ACNet</a> 를 참조한다.</p>
+</li>
+</ul>
+<p>ArcaScan DB 동기화를 위해 위와 같은 방법으로 획득 해야 하는 정보는 <strong>블록</strong> 과 <strong>트랜잭션</strong> 정보 이다. </p>
+<h3 id="block-sync">Block Sync.</h3>
+<p>ArcaScan 은 <code>NewBlock</code> (또는 <code>NewBlockHeader</code>) 이벤트 구독을 요청하고, 해당 이벤트가 수신되면 이를 ArcaScan DB에 반영한다.<br />
+<a href="../../data/#newblock-event"><code>NewBlock</code> 이벤트</a>에 포함되는 블록 정보는 트랜잭션 정보 까지 포함한다.<br />
+반면에 <a href="../../data/#newblockheader-event"><code>NewBlockHeader</code> 이벤트</a>는 해당 블록의 트랜잭션 수를 포함하며 트랜잭션 자체는 포함하지 않는다.
+때문에 트랜잭션이 포함된 블록 정보를 획득하기 위하여 추가적인 RPC 호출이 필요하다.<br />
+따라서 본 문서에서는 <code>NewBlock</code> 이벤트 구독을 전제로 하여 요구사항을 기술 한다.</p>
+<pre><code class="language-plantuml">@startuml
+
+!theme cerulean
+hide footbox
+skinparam ArrowThickness 1
+skinparam BackgroundColor white
+skinparam participant&lt;&lt;Extern&gt;&gt; {
+  BackgroundColor lightblue
+}
+
+actor &quot;User&quot; as user
+
+participant &quot;ArcaScan\nFrontEnd&quot; as fe
+box &quot;ArcaScan&quot;
+participant &quot;ArcaScan\Controller&quot; as be
+participant &quot;arcanex-sdk-js&quot; as sdk
+end box
+database &quot;ArcaScan\nDB&quot; as db
+participant &quot;ARCANEX\nNode&quot; as node&lt;&lt;Extern&gt;&gt;
+
+
+== Event 구독 요청 Context ==
+
+be -&gt; sdk: ACNEvent.Listen(..., &quot;tm.event = 'NewBlock'&quot;, callback_)
+sdk -&gt; node: register subscribing to `NewBlock` events
+
+|||
+
+== Event 수신 Context ==
+
+loop &quot;subscribing to events&quot;
+node --&gt; sdk: `NewBlock`
+sdk -&gt; be: callback(`NewBlock`)
+be --&gt; db: apply the block in `NewBlock`
+be --&gt; db: apply transactions in the block
+be --&gt; fe: notify
+fe --&gt; user: update ui (e.g. update block list)
+end loop
+
+|||
+|||
+|||
+
+== 사용자 요청 처리 Context ==
+
+user -&gt; fe: query block by height h
+activate fe
+fe -&gt; be: request block[h]
+activate be
+be -&gt; db: read block[h]
+activate db
+return block[h]
+return block[h]
+return rendering block details of block[h]
+@enduml
+</code></pre>
+<h3 id="transaction-sync">Transaction Sync.</h3>
+<p><code>NewBlock</code> 이벤트에 포함된 블록 정보에는 트랜잭션이 <code>protobuf v3</code>로 직렬화 된 후 base64로 한번더 인코딩 된 형태로 존재한다.
+때문에 트랜잭션 동기화를 위해서 <code>TrxBuild.DecodeTrx</code> API를 사용한 디코딩 과정이 필요하다.<br />
+<code>TrxBuild.DecodeTrx</code> API 는 <a href="../../data/#trx"><code>Trx</code></a> 를 리턴한다.<br />
+획득된 정보를 재구성하여 ArcaScan DB에 반영한다.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>트랜잭션 protobuf message 는 <a href="../../data/#protobuf-messages">Data structure</a>를 참조한다.</p>
+</div>
+<p>이벤트 구독을 통해 획득한 모든 블록과 트랜잭션 정보를 DB에 반영함 으로서 블록체인 원장과 DB 사이의 동기화는 완료된다.</p>
+<h3 id="runtime-synchronization">Runtime Synchronization</h3>
+<p>ArcaScan 실행 중 ARCANEX 네트워크에서 신규로 생성되는 모든 블록과 트랜잭션은 <strong>이벤트 구독</strong> 방식을 통해 실시간에 가깝게 ArcaScan DB 와 동기화 되어야 한다.</p>
+<h3 id="history-synchronization">History Synchronization</h3>
+<p>ArcaScan 이 중지된 기간 동안 발생된 블록과 트랜잭션 정보 역시 ArcaScan DB와 동기화 되어야 한다.</p>
+<p>ArcaScan 이 최초 구동 또는 일시 정지 후 재구동될 때, 
+ArcaScan DB 와 ARCANEX 블록체인 원장은 동기화 되지 않은 상태이다.
+예를 들어 ArcaScan 이 시작 되었을 때, ArcaScan DB 는 블록번호 <code>bn0</code> 까지의 정보를 적용한 상태인데 반하여,
+ARCANEX 블록체인은 이미 블록번호 <code>bn1</code> 까지 생성된 상황이 가능하다.<br />
+때문에 ArcaScan 는 시작시, 
+DB에 반영된 마지막 블록 번호(<code>bn0</code>)와 
+현재 ARCANEX 블록체인의 마지막 블록 번호(<code>bn1</code>) 를 조회 하여,
+그 사이에 발생한 모든 블록 정보가 DB에 반영(동기화) 되도록 해야 한다.</p>
+<p>ArcaScan 이 구동되지 않은 시간동안 생성된 블록에 대한 정보는 이벤트 구독 방식으로는 획득이 불가능하고,
+<a href="../../../acnet/#block">RPC 호출을 수행하는 ACNet의 API</a>를 호출 하는 것으로만 획득이 가능하다.</p>
+<p>History Sync. 시 누락되는 블록이 발생하지 않도록 구현되어야 한다.
+예를 들어, DB에 반영된 마지막 블록 번호가 <code>m</code> 이고, ARCANEX 블록체인의 마지막 블록 번호가 <code>n, (n&gt;m)</code> 으로 조회 되었을 경우, 
+블록 <code>n</code>까지 블록을 조회 하여 이를 DB에 반영하는 사이에 ARCANEX 네트워크에서 블록 <code>n+1</code> 이 생성될 가능성이 있다.<br />
+이 경우, 다음 두가지를 문제를 해결 해야 한다.</p>
+<ol>
+<li>이벤트 구독 요청을 먼저 해 두지 않은 경우, 블록 <code>n+1</code>은 DB에 적용될 기회를 영원히 잃게 된다.</li>
+<li>이벤트 구독 요청을 하여 블록 <code>n+1</code>을 수신하였더라도, 이를 DB에 반영하는 것은 블록 <code>n</code> DB 반영 이후가 되어야 한다.</li>
+</ol>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>이벤트 구독으로 수신되는 블록 정보를 바로 DB 반영 하지 않고 큐(메모리)에 적재 한다. <br />
+- ArcaScan DB 에 반영된 마지막 블록 번호가 <code>m</code> 이라 하고, <br />
+- 첫번째 적재된 블록의 번호를 <code>n</code> 이라 할 때,
+<code>m+1</code> 부터 <code>n-1</code> 까지의 블록을 RPC 호출을 통해 획득하고 이를 ArcaScan DB에 반영(동기화) 해야 한다.
+(과거 블록 동기화 중에도 큐에는 지속적으로 신규 블록이 적재될 것이다.)<br />
+과거 블록 동기화가 완료되면, 큐에 적재된 신규 블록(블록 <code>n</code> 부터)의 DB 반영을 시작한다.</p>
+</div>
+<pre><code class="language-plantuml">@startuml
+
+!theme cerulean
+hide footbox
+skinparam ArrowThickness 1
+skinparam BackgroundColor white
+skinparam participant&lt;&lt;Extern&gt;&gt; {
+  BackgroundColor lightblue
+}
+
+database &quot;ArcaScan\nDB&quot; as db
+box &quot;ArcaScan BackEnd&quot;
+participant &quot;Controller&quot; as be
+participant &quot;arcanex-sdk-js&quot; as sdk
+end box
+participant &quot;ARCANEX\nNode&quot; as node&lt;&lt;Extern&gt;&gt;
+
+par &quot;NewBlock 이벤트 구독&quot;
+be -&gt; sdk: ACNEvent.Listen(..., &quot;tm.event=NewBlock&quot;, callback)
+sdk -&gt; node: register subscribing to `NewBlock` events
+end
+|||
+|||
+|||
+== Event 수신 Context ==
+par &quot;NewBlock 이벤트 수신&quot;
+    node ---&gt; sdk: `NewBlock`
+    sdk -&gt; be: callback(`NewBlock`)
+    activate be
+        be -&gt; be : [only first event] bn1 &lt;- block height of `NewBlock` 
+end par
+    deactivate
+|||
+|||
+|||
+== Main Context ==
+be -&gt; be: start history sync.
+activate be
+    be -&gt; db: bn0 &lt;- last block height
+    be -&gt; be: i = bn0
+    loop &quot;Synchronize bloks between bn0 and bn1&quot;
+        be -&gt; sdk: ACNet.queryBlockByHeight(i)
+        activate sdk
+            sdk -&gt; node: block &lt;- query block[i]
+        return block
+        be -&gt; db: apply block
+    be -&gt; be: i++
+    end loop
+deactivate be
+
+@enduml
+</code></pre>
+<h2 id="user-requests">User Requests</h2>
+<p>ArcaScan 은 동기화된 DB 의 내용을 기반으로 다음과 같은 정보를 사용자에게 제공 한다.</p>
+<h3 id="lastest-block-height">Lastest Block Height</h3>
+<p>사용자 브라우저에 최신 블록 번호(Block Height) 가 실시간으로 출력 된다.<br />
+이는 블록 생성 이벤트를 수신할 때 마다 이벤트에 포함된 블록 번호로 사용자 브라우저의 화면을 업데이트 하도록 구현 한다. </p>
+<h3 id="total-block-list">Total Block List</h3>
+<p>전체 블록이 생성 시간 역순으로, X개 단위로, 페이징 처리되어 표시된다.
+X 는 해당 화면에서 선택할 수 있다.</p>
+<p>하나의 블록당 표시되어야 하는 최소 정보는 다음과 같다.</p>
+<ul>
+<li>블록 번호</li>
+<li>블록 해시</li>
+<li>블록 생성 시간 (생성후 경과 시간이 1시간 이내인 경우, 경과 시간 표시)</li>
+<li>블록이 포함하는 트랜잭션 개수</li>
+<li>블록의 수수료</li>
+<li>블록의 수수료 수신 계정 주소.</li>
+<li>그 외 정보</li>
+</ul>
+<p><code>블록 번호</code> 와 <code>블록 해시</code> 를 선택할 경우, 해당 <a href="#block-details">Block Details</a> 화면 으로 이동 한다.</p>
+<p><em>Ref: https://etherscan.io/blocks</em></p>
+<h3 id="latest-block-list">Latest Block List</h3>
+<p>최근 블록 X개 가 목록 형태로 출력된다.
+블록 생성 이벤트가 수신될 때 마다 이 목록은 업데이트 되어야 한다.</p>
+<h3 id="block-details">Block Details</h3>
+<p>사용자로 부터 블록 번호(height) 또는 블록 해시를 입력받아, 해당 블록의 상세 정보를 보여 준다.
+블록 정보중 최소 다음의 정보가 표시되어야 한다.</p>
+<ul>
+<li><code>block.header.height</code> : 블록 번호</li>
+<li><code>block_id.hash</code>: 블록 해시</li>
+<li><code>block.header.version.block</code> : 블록 버전</li>
+<li><code>block.header.chain_id</code> : 체인 ID</li>
+<li><code>block.header.time</code> : 블록 생성 시간</li>
+<li><code>block.header.proposer_address</code> : 블록 제안자 주소 (Block proposer's address)</li>
+<li><code>length of block.data.txs</code> : 블록에 포함된 트랜잭션 개수</li>
+<li><code>block.last_commit.hegith</code> : 이전 블록 번호</li>
+<li><code>block.last_commit.block_id.hash</code> : 이전 블록 해시</li>
+</ul>
+<p><em>Ref: https://etherscan.io/block/16630992</em></p>
+<h3 id="total-transactions">Total Transactions</h3>
+<p>전체 트랜잭션 개수 정보를 제공 한다.</p>
+<h3 id="total-transaction-list">Total Transaction List</h3>
+<p>전체 트랜잭션이 생성 역순으로, X개 단위로, 페이징 처리되어 표시된다.
+X 는 해당 화면에서 선택할 수 있다.</p>
+<p><em>Ref: https://etherscan.io/txs</em></p>
+<h3 id="latest-transaction-list">Latest Transaction List</h3>
+<p>트랜잭션 생성 역순으로 X개를 출력한다.
+블록 생성 이벤트에 트랜잭션이 포함되어 있을 경우, 이 목록은 업데이트 되어야 한다.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><strong>트랜잭션 생성 순서</strong> 는 트랜잭션내 시간 정보가 아닌, 블록 번호와 블록내 인덱스 정보가 기준이 되어야 한다.</p>
+</div>
+<h4 id="transaction-details">Transaction Details</h4>
+<p><em>Ref: https://etherscan.io/tx/0xd4e938f9065ff75b69ce079c3cfc82a447baab138f945cef7e12ab1dae1f955f</em></p>
+<h3 id="search">Search</h3>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>블록 해시, 트랜잭션 해시 등 모든 해시 값은 64chars hex-string (32bytes) 형식으로 별도의 특별한 구분자를 포함하지 않는다.
+따라서, 조회 조건으로 64chars hex-string 이 입력된 경우, 어떤 종류의 데이터에 대한 해시인지를 판단 해야 한다.
+<a href="https://etherscan.io/">Etherscan</a>의 검색 기능 참조.</p>
+</div>
+<h4 id="block">Block</h4>
+<p>다음과 같은 경우, 입력된 조건에 맞는 블록 정보를 조회 한다.</p>
+<ul>
+<li>검색창에 블록 번호 또는 해시가 입력되어 검색 요청되었을 경우.</li>
+<li>블록 번호가 클릭 되었을 경우.</li>
+<li>블록 해시가 크릭 되었을 경우.</li>
+</ul>
+<p>조회 결과는 <a href="#block-details">Block Details</a> 화면 또는 동일 형식으로 출력한다.</p>
+<h4 id="transaction">Transaction</h4>
+<p>트랜잭션은 해시 값으로 조회 될 수 있다.
+다음과 같은 경우에 주어진 해시값으로 트랜잭션 정보를 조회 한다.
+* 트랜잭션 해시가 클릭 되었을 때,
+* 검색창에 트랜잭션 해시가 입력되었을 때</p>
+<p>조회 결과는 <a href="#transaction-details">Transaction Details</a> 화면 또는 동일 형식으로 출력되어야 한다.</p>
+<h4 id="account-details">Account Details</h4>
+<p><em>Ref: https://etherscan.io/address/0x690b9a9e9aa1c9db991c7721a92d351db4fac990</em></p>
+<h3 id="validators">Validators</h3>
+<ul>
+<li>validators at now</li>
+<li>total delegatees at now</li>
+<li>vaidators at the block height</li>
+</ul>
+<h3 id="governance">Governance</h3>
+<ul>
+<li>proposal list at now</li>
+<li>proposal list at the block height</li>
+<li>proposal details (+ voting status and result)</li>
+</ul>
+<h4 id="reference">Reference</h4>
+<ul>
+<li></li>
+<li>https://etherscan.io/</li>
+<li>https://alpha.aergoscan.io/</li>
+</ul>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="../../../internals/transactions/" class="btn btn-neutral float-left" title="Transaction"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../../wallet/srs/" class="btn btn-neutral float-right" title="Requirements">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+    
+      <span><a href="../../../internals/transactions/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../../wallet/srs/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script>var base_url = '../../..';</script>
+    <script src="../../../js/theme_extra.js" defer></script>
+    <script src="../../../js/theme.js" defer></script>
+      <script src="../../../search/main.js" defer></script>
+    <script defer>
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
+
+</body>
+</html>

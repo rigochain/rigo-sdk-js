@@ -5,14 +5,14 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       <link rel="shortcut icon" href="../img/favicon.ico" />
-    <title>Event Subscription - Subscriber - arcanex-sdk-js</title>
+    <title>Event Subscription - arcanex-sdk-js</title>
     <link rel="stylesheet" href="../css/theme.css" />
     <link rel="stylesheet" href="../css/theme_extra.css" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css" />
     
       <script>
         // Current page data
-        var mkdocs_page_name = "Event Subscription - Subscriber";
+        var mkdocs_page_name = "Event Subscription";
         var mkdocs_page_input_path = "subscriber.md";
         var mkdocs_page_url = null;
       </script>
@@ -45,11 +45,15 @@
                 </li>
               </ul>
               <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../rpc/">RPC</a>
+                </li>
+              </ul>
+              <ul>
                 <li class="toctree-l1"><a class="reference internal" href="../acnet/">ACNet</a>
                 </li>
               </ul>
               <ul class="current">
-                <li class="toctree-l1 current"><a class="reference internal current" href="./">Event Subscription - Subscriber</a>
+                <li class="toctree-l1 current"><a class="reference internal current" href="./">Event Subscription</a>
     <ul class="current">
     <li class="toctree-l2"><a class="reference internal" href="#constructor">constructor</a>
         <ul>
@@ -93,7 +97,13 @@
     </li>
     <li class="toctree-l3"><a class="reference internal" href="#operand">operand</a>
     </li>
-    <li class="toctree-l3"><a class="reference internal" href="#example">Example</a>
+    <li class="toctree-l3"><a class="reference internal" href="#examples_1">Examples</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#block-event">Block event</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#transaction-event">Transaction event</a>
+    </li>
+        </ul>
     </li>
         </ul>
     </li>
@@ -105,6 +115,21 @@
                   <li class="toctree-l1"><a class="reference internal" href="../internals/account/">Account</a>
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../internals/transactions/">Transaction</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">examples</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="#">Explorer</a>
+    <ul>
+                <li class="toctree-l2"><a class="reference internal" href="../examples/explorer/srs/">Requirements</a>
+                </li>
+    </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="#">Wallet</a>
+    <ul>
+                <li class="toctree-l2"><a class="reference internal" href="../examples/wallet/srs/">Requirements</a>
+                </li>
+    </ul>
                   </li>
               </ul>
       </div>
@@ -121,7 +146,7 @@
         <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
   <ul class="wy-breadcrumbs">
     <li><a href=".." class="icon icon-home" alt="Docs"></a> &raquo;</li>
-      <li>Event Subscription - Subscriber</li>
+      <li>Event Subscription</li>
     <li class="wy-breadcrumbs-aside">
     </li>
   </ul>
@@ -240,33 +265,89 @@ listener.stop()
 <code>=</code>, <code>&lt;</code>, <code>&lt;=</code>, <code>&gt;</code>, <code>&gt;=</code>, <code>CONTAINS</code>, <code>EXISTS</code> 값을 가질 수 있다.</p>
 <h3 id="operand">operand</h3>
 <p><strong>key</strong> 의 값에 해당한다.</p>
-<h3 id="example">Example</h3>
+<h3 id="examples_1">Examples</h3>
+<h4 id="block-event">Block event</h4>
 <pre><code class="language-ts">import Subscriber from &quot;./subscriber&quot;;
 
-// 신규로 블록이 생성될 때 마다 블록 정보 구독
-var sub = new Subscriber(&quot;ws://localhost:26657/websocket&quot;, &quot;tm.event = 'NewBlock'&quot;)
+
+// 블록 생성 이벤트 구독 요청
+var sub = new Subscriber(&quot;ws://localhost:26657/websocket&quot;, &quot;tm.event = 'NewBlockHeader'&quot;)
 sub.start( resp =&gt; console.log(resp) )
         ...
 
-// 트랜잭션 hash 가 'A7FC574491B18ADD8E3DD60E7442CB34D90A4862E30E9E9B5412154EBFB0E100' 인 
-// 트랜잭션이 처리되었을 때, 해당 트랜잭션 정보 수신.
+// 수신된 이벤트 정보
+{
+    &quot;query&quot;: &quot;tm.event='NewBlockHeader'&quot;,
+    &quot;data&quot;: {
+        &quot;type&quot;: &quot;tendermint/event/NewBlockHeader&quot;,
+        &quot;value&quot;: {
+            &quot;header&quot;: {
+                &quot;version&quot;: {
+                    &quot;block&quot;: &quot;11&quot;,
+                    &quot;app&quot;: &quot;4294967296&quot;
+                },
+                &quot;chain_id&quot;: &quot;localnet&quot;,
+                &quot;height&quot;: &quot;92175&quot;,
+                &quot;time&quot;: &quot;2023-02-13T13:27:58.840771Z&quot;,
+                &quot;last_block_id&quot;: {
+                    &quot;hash&quot;: &quot;525B7E1B39ABFF6643D5CA0AF2B4C080AA69B8F6E6B88F5D96FA1C4B669EDA57&quot;,
+                    &quot;parts&quot;: {
+                        &quot;total&quot;: 1,
+                        &quot;hash&quot;: &quot;518791BB1F931395B3036C8E9AEC40E92498FE30A582F8DF871790A6A48CCD33&quot;
+                    }
+                },
+                &quot;last_commit_hash&quot;: &quot;CC16D8C757360897B9682646F2D910ECC77A2A80EED54AE06D0539E365B77164&quot;,
+                &quot;data_hash&quot;: &quot;E3B0C44298FC1C149AFBF4C8996FB92427AE41E4649B934CA495991B7852B855&quot;,
+                &quot;validators_hash&quot;: &quot;FE36DFA0965A3207F370004FD5A35B0D9CFE22C1E5EC6282B11E0A078E022C11&quot;,
+                &quot;next_validators_hash&quot;: &quot;FE36DFA0965A3207F370004FD5A35B0D9CFE22C1E5EC6282B11E0A078E022C11&quot;,
+                &quot;consensus_hash&quot;: &quot;048091BC7DDC283F77BFBF91D73C44DA58C3DF8A9CBC867405D8B7F3DAADA22F&quot;,
+                &quot;app_hash&quot;: &quot;F05DE653A484B266512480747A80522450D9241D3AE43E5FB49FBB6613FB07CF&quot;,
+                &quot;last_results_hash&quot;: &quot;E3B0C44298FC1C149AFBF4C8996FB92427AE41E4649B934CA495991B7852B855&quot;,
+                &quot;evidence_hash&quot;: &quot;E3B0C44298FC1C149AFBF4C8996FB92427AE41E4649B934CA495991B7852B855&quot;,
+                &quot;proposer_address&quot;: &quot;8DC41A86B91EB88D82489C4D037AE9FFCA65CFBF&quot;
+            },
+            &quot;num_txs&quot;: &quot;0&quot;,
+            &quot;result_begin_block&quot;: {},
+            &quot;result_end_block&quot;: {
+                &quot;validator_updates&quot;: []
+            }
+        }
+    },
+    &quot;events&quot;: {
+        &quot;tm.event&quot;: [
+            &quot;NewBlockHeader&quot;
+        ]
+    }
+}
+</code></pre>
+<h4 id="transaction-event">Transaction event</h4>
+<pre><code class="language-ts">// 
+// 트랜잭션 hash 'A7FC574491B18ADD8E3DD60E7442CB34D90A4862E30E9E9B5412154EBFB0E100' 인 
+// 트랜잭션 처리완료 이벤트 구독 요청
 var sub = new Subscriber(&quot;ws://localhost:26657/websocket&quot;, &quot;tm.event = 'Tx' AND tx.hash='A7FC574491B18ADD8E3DD60E7442CB34D90A4862E30E9E9B5412154EBFB0E100'&quot;)
 sub.start( resp =&gt; console.log(resp) )
         ...
 
-// 트랜잭션 타입이 'transfer' 이고, 
+// 수신된 이벤트 정보
+
+</code></pre>
+<pre><code class="language-ts">// 트랜잭션 타입이 'transfer' 이고, 
 // sender 주소가 'D8C2C3D121696F51B733F7CF36C8AE60F8F264CC' 인 
-// 트랜잭션이 처리되었을 때, 해당 트랜잭션 정보 수신.
+// 트랜잭션 처리완료 이벤트 구독 요청.
 var sub = new Subscriber(&quot;ws://localhost:26657/websocket&quot;, &quot;tm.event = 'Tx' AND tx.type='transfer' AND tx.sender='D8C2C3D121696F51B733F7CF36C8AE60F8F264CC'&quot;)
 sub.start( resp =&gt; console.log(resp) )
         ...
 
-// 트랜잭션 타입이 'transfer' 이고, 
+// 수신된 이벤트 정보
+</code></pre>
+<pre><code class="language-ts">// 트랜잭션 타입이 'transfer' 이고, 
 // sender 주소가 'D8C2C3D121696F51B733F7CF36C8AE60F8F264CC' 인 
-// 트랜잭션이 처리되었을 때, 해당 트랜잭션 정보 수신.
+// 트랜잭션 처리완료 이벤트 구독 요청.
 var sub = new Subscriber(&quot;ws://localhost:26657/websocket&quot;, &quot;tm.event = 'Tx' AND tx.type='transfer' AND tx.sender='D8C2C3D121696F51B733F7CF36C8AE60F8F264CC'&quot;)
 sub.start( resp =&gt; console.log(resp) )
         ...
+
+// 수신된 이벤트 정보
 
 </code></pre>
               

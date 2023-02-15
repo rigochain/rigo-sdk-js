@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="shortcut icon" href="../../img/favicon.ico" />
+    <title>Data structures - arcanex-sdk-js</title>
+    <link rel="stylesheet" href="../../css/theme.css" />
+    <link rel="stylesheet" href="../../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Data structures";
+        var mkdocs_page_input_path = "examples/data.md";
+        var mkdocs_page_url = null;
+      </script>
+    
+    <script src="../../js/jquery-3.6.0.min.js" defer></script>
+    <!--[if lt IE 9]>
+      <script src="../../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
+      <script>hljs.initHighlightingOnLoad();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href="../.." class="icon icon-home"> arcanex-sdk-js
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../..">Overview</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../../rpc/">RPC</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../../acnet/">ACNet</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../../subscriber/">Event Subscription</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">internals</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../internals/account/">Account</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../internals/transactions/">Transaction</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">examples</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="#">Explorer</a>
+    <ul>
+                <li class="toctree-l2"><a class="reference internal" href="../explorer/srs/">Requirements</a>
+                </li>
+    </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="#">Wallet</a>
+    <ul>
+                <li class="toctree-l2"><a class="reference internal" href="../wallet/srs/">Requirements</a>
+                </li>
+    </ul>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../..">arcanex-sdk-js</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../.." class="icon icon-home" alt="Docs"></a> &raquo;</li>
+      <li>Data structures</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="data-structures">Data structures</h1>
+<h2 id="newblock-event">NewBlock event</h2>
+<pre><code class="language-json">{
+  &quot;block_id&quot;: {
+    &quot;hash&quot;: &quot;18711607956F44E83677F90D1BEEDCD5EA44BB27CBFB382A4DA64EE06189343D&quot;,
+    &quot;parts&quot;: {
+      &quot;total&quot;: 1,
+      &quot;hash&quot;: &quot;F1D3B921EFD098157598A810DC6CB0C04D3AA475B293D23F15B1FC2073C44774&quot;
+    }
+  },
+  &quot;block&quot;: {
+    &quot;header&quot;: {
+      &quot;version&quot;: {
+        &quot;block&quot;: &quot;11&quot;,
+        &quot;app&quot;: &quot;4294967296&quot;
+      },
+      &quot;chain_id&quot;: &quot;localnet&quot;,
+      &quot;height&quot;: &quot;79040&quot;,
+      &quot;time&quot;: &quot;2023-02-13T04:56:07.98802Z&quot;,
+      &quot;last_block_id&quot;: {
+        &quot;hash&quot;: &quot;6021C2A2CD2438FF61CE476B76D97997E6AE19AB30BCDE40C4BB7137F53AC30E&quot;,
+        &quot;parts&quot;: {
+          &quot;total&quot;: 1,
+          &quot;hash&quot;: &quot;2F35010188F2F313F00B9374E329A71249ECDEEBA5E5ADBD2BDAE386DC3101B2&quot;
+        }
+      },
+      &quot;last_commit_hash&quot;: &quot;BA6B2B6E9A4603C86F5DDE683E63C48DC3EBD83EEBEB63D1D70DE694443884C5&quot;,
+      &quot;data_hash&quot;: &quot;E3B0C44298FC1C149AFBF4C8996FB92427AE41E4649B934CA495991B7852B855&quot;,
+      &quot;validators_hash&quot;: &quot;FE36DFA0965A3207F370004FD5A35B0D9CFE22C1E5EC6282B11E0A078E022C11&quot;,
+      &quot;next_validators_hash&quot;: &quot;FE36DFA0965A3207F370004FD5A35B0D9CFE22C1E5EC6282B11E0A078E022C11&quot;,
+      &quot;consensus_hash&quot;: &quot;048091BC7DDC283F77BFBF91D73C44DA58C3DF8A9CBC867405D8B7F3DAADA22F&quot;,
+      &quot;app_hash&quot;: &quot;0E1AD984FD0FE8A1B2C4B0D23A610C9787F56D563BF8157C188E99BA4064D852&quot;,
+      &quot;last_results_hash&quot;: &quot;E3B0C44298FC1C149AFBF4C8996FB92427AE41E4649B934CA495991B7852B855&quot;,
+      &quot;evidence_hash&quot;: &quot;E3B0C44298FC1C149AFBF4C8996FB92427AE41E4649B934CA495991B7852B855&quot;,
+      &quot;proposer_address&quot;: &quot;8DC41A86B91EB88D82489C4D037AE9FFCA65CFBF&quot;
+    },
+    &quot;data&quot;: {
+      &quot;txs&quot;: [
+        &quot;CAEQwKK/6piI36AXGJoIIhTEYfux+YzfUycqPFBZp2SsYziBXCoUrjsLNQASnt99xA4njqI1k3RaF4QyAgLEOgEKQAFSQdLVXe+ELBnuS2vF0OwYlfDNgurj0IWiBXGdq8cpaO81M6qvwyiGb8Mr6ZWOnD3/nDvWEkKCSKVWuS+Ld4bXg1wA&quot;,
+        &quot;CAEQkK/A6piI36AXGJoIIhQAQCOcw9QIFDgBqNRXMYBk7BBd/yoUfEskb4RzA8QqK4B2H39FIVpmxAUyAgLEOgEKQAFSQVPT9NJZ426c89CotpatqndouTxORCt94204obWs6RlXa1e2vSpZwrFkfCn409SsoIkPrQUoXm29K/dWzoJvatIB&quot;,
+        &quot;CAEQkKbD6piI36AXGJoIIhSNFO5EqCyixc74BbcNjB0kDbooISoUMLAlEfyMyew1LDPiOyR8dqPntqgyAgLEOgEKQAFSQcz4UOU5qT9H8txblik9sYiCBrS3dkO7/v/AwPgjR31HIdK1RFd7Gvi5aNOC12WBDVNrPzX/s14zwH9vG9LEXJsB&quot;,
+        &quot;CAEQ+KfF6piI36AXGJoIIhQRkD2yGoCJ2LplnWugmZteVqGJLCoUb6EpBDEV3C1kjGLETUsdVClZmnkyAgLEOgEKQAFSQUTYppjNZzJiv73eBd4iVL0MZRFefI27+1F7DclBN/PUVgO3ymip5wo9oDmjujjX+JRug0WJZ75Huyuc9229CoAA&quot;,
+        &quot;CAEQmKbQ6piI36AXGJoIIhQ923KOXCHGdek8olfpLuS6Bq8RjyoUcdqwpyeP8PU+s7QVP+ZaIv3NXqgyAgLEOgEKQAFSQXdmLY21GvElXS54SMShK+VTGhn5y+6DbayWD4NMBeM2A9E3Fuus5PjQgYuofZNN6BOS3zUuTogdCj5jMIRMTV0A&quot;,
+        &quot;CAEQoMrR6piI36AXGJoIIhTtwwfQPUjSDuS+fNE8FfLD1GJXlyoUZxMNYNR9J+jqpNUFkBClkG8XqS0yAgLEOgEKQAFSQcRZEHGNiMQuxh6rYucuLb6w3LP9x4pYGq54f3XP/654Fxf2zANuO01cPkQTZdhi0Y2JaTEnjJ5OCpY+ctOs1wwA&quot;,
+        &quot;CAEQiNjP6piI36AXGJoIIhQUFOQiWO8r7++FWhg7jOkucHR/SyoU2KU7DNCsqsSOEWZTjtrittYSBlkyAgLEOgEKQAFSQU04aE+ZAJ7W7V9Kv5zu7Rz7e1CDuUtq3kSOc1FedKSQaCCuXqF2/x5RSc1Ix19ksY89UBUbxf9J4QBp/0D/saAA&quot;,
+        &quot;CAEQkPPT6piI36AXGJoIIhSzK8vw2EZt+BNCYr7RCMa6SCvtdyoUssY9flobuPJRnY9xdsLa3slx40AyAgLEOgEKQAFSQQA5/AS+cwqb7D89In8Qsnm1EYYkvJlLS/Iyt5qJlRy1SrVmBP+GRfv1H8m7pHGk1sdvv42EydP3sNZAcU3YccgA&quot;,
+        &quot;CAEQ6KbV6piI36AXGJoIIhRh8JfNVC+0RFKIvBUuxz+WEstDHioUNiw81aRP6L6KD03GCBVLCmiU814yAgLEOgEKQAFSQWy45CDU57VHi4O7AmZuCpd5HYfJCATP651y4ZIQi+uYUHojMZgcDsG7euId5oqKX4+1BN/Zplw6/IcL8hTANgAB&quot;
+      ]
+    },
+    &quot;evidence&quot;: {
+      &quot;evidence&quot;: []
+    },
+    &quot;last_commit&quot;: {
+      &quot;height&quot;: &quot;79039&quot;,
+      &quot;round&quot;: 0,
+      &quot;block_id&quot;: {
+        &quot;hash&quot;: &quot;6021C2A2CD2438FF61CE476B76D97997E6AE19AB30BCDE40C4BB7137F53AC30E&quot;,
+        &quot;parts&quot;: {
+          &quot;total&quot;: 1,
+          &quot;hash&quot;: &quot;2F35010188F2F313F00B9374E329A71249ECDEEBA5E5ADBD2BDAE386DC3101B2&quot;
+        }
+      },
+      &quot;signatures&quot;: [
+        {
+          &quot;block_id_flag&quot;: 2,
+          &quot;validator_address&quot;: &quot;8DC41A86B91EB88D82489C4D037AE9FFCA65CFBF&quot;,
+          &quot;timestamp&quot;: &quot;2023-02-13T04:56:07.98802Z&quot;,
+          &quot;signature&quot;: &quot;fZSeqx8Ut+6yfoPl3bN5uX8hCF7p8i9H1a73EyOcdExH70SYmmqiybdFym64kImk2oW868R+8lI/ulYj3Uu0Xg==&quot;
+        }
+      ]
+    }
+  }
+}
+</code></pre>
+<h2 id="newblockheader-event">NewBlockHeader event</h2>
+<pre><code class="language-json">{
+    &quot;query&quot;: &quot;tm.event='NewBlockHeader'&quot;,
+    &quot;data&quot;: {
+        &quot;type&quot;: &quot;tendermint/event/NewBlockHeader&quot;,
+        &quot;value&quot;: {
+            &quot;header&quot;: {
+                &quot;version&quot;: {
+                    &quot;block&quot;: &quot;11&quot;,
+                    &quot;app&quot;: &quot;4294967296&quot;
+                },
+                &quot;chain_id&quot;: &quot;localnet&quot;,
+                &quot;height&quot;: &quot;92175&quot;,
+                &quot;time&quot;: &quot;2023-02-13T13:27:58.840771Z&quot;,
+                &quot;last_block_id&quot;: {
+                    &quot;hash&quot;: &quot;525B7E1B39ABFF6643D5CA0AF2B4C080AA69B8F6E6B88F5D96FA1C4B669EDA57&quot;,
+                    &quot;parts&quot;: {
+                        &quot;total&quot;: 1,
+                        &quot;hash&quot;: &quot;518791BB1F931395B3036C8E9AEC40E92498FE30A582F8DF871790A6A48CCD33&quot;
+                    }
+                },
+                &quot;last_commit_hash&quot;: &quot;CC16D8C757360897B9682646F2D910ECC77A2A80EED54AE06D0539E365B77164&quot;,
+                &quot;data_hash&quot;: &quot;E3B0C44298FC1C149AFBF4C8996FB92427AE41E4649B934CA495991B7852B855&quot;,
+                &quot;validators_hash&quot;: &quot;FE36DFA0965A3207F370004FD5A35B0D9CFE22C1E5EC6282B11E0A078E022C11&quot;,
+                &quot;next_validators_hash&quot;: &quot;FE36DFA0965A3207F370004FD5A35B0D9CFE22C1E5EC6282B11E0A078E022C11&quot;,
+                &quot;consensus_hash&quot;: &quot;048091BC7DDC283F77BFBF91D73C44DA58C3DF8A9CBC867405D8B7F3DAADA22F&quot;,
+                &quot;app_hash&quot;: &quot;F05DE653A484B266512480747A80522450D9241D3AE43E5FB49FBB6613FB07CF&quot;,
+                &quot;last_results_hash&quot;: &quot;E3B0C44298FC1C149AFBF4C8996FB92427AE41E4649B934CA495991B7852B855&quot;,
+                &quot;evidence_hash&quot;: &quot;E3B0C44298FC1C149AFBF4C8996FB92427AE41E4649B934CA495991B7852B855&quot;,
+                &quot;proposer_address&quot;: &quot;8DC41A86B91EB88D82489C4D037AE9FFCA65CFBF&quot;
+            },
+            &quot;num_txs&quot;: &quot;0&quot;,
+            &quot;result_begin_block&quot;: {},
+            &quot;result_end_block&quot;: {
+                &quot;validator_updates&quot;: []
+            }
+        }
+    },
+    &quot;events&quot;: {
+        &quot;tm.event&quot;: [
+            &quot;NewBlockHeader&quot;
+        ]
+    }
+}
+</code></pre>
+<h2 id="transaction">Transaction</h2>
+<h3 id="trx">Trx</h3>
+<pre><code class="language-ts">interface Trx {
+  hash?: string;
+  version?: number;
+  time?: Date;
+  nonce?: number;
+  from: string;
+  to: string;
+  amount: string;
+  gas: string;
+  type?: number;
+  payload?: object|TrxPayloadUndelegating;
+  sig?: string;
+}
+</code></pre>
+<h3 id="protobuf-messages">Protobuf messages</h3>
+<pre><code class="language-protobuf">message TrxProto {
+  uint32 version = 1;
+  int64 time = 2;
+  uint64 nonce = 3;
+  bytes from = 4;
+  bytes to = 5;
+  bytes _amount = 6;
+  bytes _gas = 7;
+  int32 type = 8;
+  bytes _payload = 9;
+  bytes sig = 10;
+}
+
+message TrxPayloadStakingProto {}
+
+message TrxPayloadUnstakingProto {
+  bytes tx_hash = 1;
+}
+
+message TrxPayloadExecContractProto {
+  bytes _code = 1;
+}
+
+message TrxPayloadProposalProto {
+  string message = 1;
+  int64 start_voting_height = 2;
+  int64 voting_blocks = 3;
+  int32 opt_type = 4;
+  repeated bytes options = 5;
+}
+
+message TrxPayloadVotingProto {
+  bytes tx_hash = 1;
+  int32 choice = 2;
+}
+</code></pre>
+              
+            </div>
+          </div><footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+    
+    
+  </span>
+</div>
+    <script>var base_url = '../..';</script>
+    <script src="../../js/theme_extra.js" defer></script>
+    <script src="../../js/theme.js" defer></script>
+      <script src="../../search/main.js" defer></script>
+    <script defer>
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
+
+</body>
+</html>
