@@ -10,7 +10,7 @@ Container_Ext(browser, "Browser")
 System_Boundary(explorer, "Block Explorer") {
     Container(fe, "FrontEnd")
     Container(be, "BackEnd") {
-        Component(bzl, "Controller")
+        Component(bzl, "Controllers")
         Component(sdk, "SDK")
     }
     
@@ -36,10 +36,104 @@ ArcaScan 은 ARCANEX 네트워크에서 생성되는 블록, 트랜잭션 그리
 ArcaScan 역시 일반적인 Block Explorer 와 유사한 구조로 구현된다.
 ARCANEX 네트워크와의 연결을 동한 정보 획득, 획득된 정보의 DB 저장을 통한 동기화, 그리고 DB 정보에 기반한 사용자 요청 응답으로 기본 기능을 구성한다.
 
-## Genesis
-ARCANEX 블록체인 원장의 최초 상태 정보가 ArcaScan DB에 반영되어야 한다.
+## Initialization from Genesis
+ARCANEX 블록체인 원장의 최초 상태 정보(Genesis)가 ArcaScan DB에 반영되어야 한다.  
+ARCANEX Genesis 에는 블록체인 시작 시점에서의 검증노드(Validator), 계정(Account)별 자산(Balance) 정보등이 포함되어 있다.
+따라서 ArcaScan 최초 실행시, 스캔 대상이 되는 ARCANEX 블록체인 네트워크의 Genesis 정보로 ArcaScan DB의 초기 상태를 구성해야 한다.
+
 ```json
-genesis.json
+{
+  "genesis_time": "2023-02-06T09:10:28.016371Z",
+  "chain_id": "local-test-chain",
+  "initial_height": "0",
+  "consensus_params": {
+    "block": {
+      "max_bytes": "22020096",
+      "max_gas": "-1",
+      "time_iota_ms": "1000"
+    },
+    "evidence": {
+      "max_age_num_blocks": "100000",
+      "max_age_duration": "172800000000000",
+      "max_bytes": "1048576"
+    },
+    "validator": {
+      "pub_key_types": [
+        "secp256k1"
+      ]
+    },
+    "version": {
+      "app_version": "1"
+    }
+  },
+  "validators": [
+    {
+      "address": "8DC41A86B91EB88D82489C4D037AE9FFCA65CFBF",
+      "pub_key": {
+        "type": "tendermint/PubKeySecp256k1",
+        "value": "Ax2d8cCfC60NjIS7G6J8hHTPPf6JvxgPRjSVpL+83Qkr"
+      },
+      "power": "10",
+      "name": ""
+    }
+  ],
+  "app_hash": "C7CBB5035E73E16304224DAD8251CC74A3723A3C69304208C1B4FD8AB121BBFB",
+  "app_state": {
+    "assetHolders": [
+      {
+        "address": "3DDB728E5C21C675E93CA257E92EE4BA06AF118F",
+        "balance": "100000000000000000000000000"
+      },
+      {
+        "address": "11903DB21A8089D8BA659D6BA0999B5E56A1892C",
+        "balance": "100000000000000000000000000"
+      },
+      {
+        "address": "0040239CC3D408143801A8D457318064EC105DFF",
+        "balance": "100000000000000000000000000"
+      },
+      {
+        "address": "8D14EE44A82CA2C5CEF805B70D8C1D240DBA2821",
+        "balance": "100000000000000000000000000"
+      },
+      {
+        "address": "EDC307D03D48D20EE4BE7CD13C15F2C3D4625797",
+        "balance": "100000000000000000000000000"
+      },
+      {
+        "address": "B32BCBF0D8466DF8134262BED108C6BA482BED77",
+        "balance": "100000000000000000000000000"
+      },
+      {
+        "address": "1414E42258EF2BEFEF855A183B8CE92E70747F4B",
+        "balance": "100000000000000000000000000"
+      },
+      {
+        "address": "C461FBB1F98CDF53272A3C5059A764AC6338815C",
+        "balance": "100000000000000000000000000"
+      },
+      {
+        "address": "61F097CD542FB4445288BC152EC73F9612CB431E",
+        "balance": "100000000000000000000000000"
+      },
+      {
+        "address": "8DC41A86B91EB88D82489C4D037AE9FFCA65CFBF",
+        "balance": "100000000000000000000000000"
+      }
+    ],
+    "govRule": {
+      "version": "0",
+      "maxValidatorCnt": "21",
+      "amountPerPower": "1000000000000000000",
+      "rewardPerPower": "1000000000",
+      "lazyRewardBlocks": "20",
+      "lazyApplyingBlocks": "10",
+      "minTrxFee": "10",
+      "minVotingPeriodBlocks": "259200",
+      "maxVotingPeriodBlocks": "2592000"
+    }
+  }
+}
 ```
 ## Synchronization
 
@@ -310,6 +404,7 @@ X 는 해당 화면에서 선택할 수 있다.
 
 #### Block
 다음과 같은 경우, 입력된 조건에 맞는 블록 정보를 조회 한다.
+조회 결과는 [Block Details](#block-details) 화면 또는 동일한 형식으로 출력되어야 한다.
 
 - 검색창에 블록 번호 또는 해시가 입력되어 검색 요청되었을 경우.
 - 블록 번호가 클릭 되었을 경우.
@@ -327,19 +422,35 @@ X 는 해당 화면에서 선택할 수 있다.
 
 #### Account Details
 
+- address
+- balance
+- transactions list (+paging)
+- total stake and stakes list (+delegatees)
+
 *Ref: https://etherscan.io/address/0x690b9a9e9aa1c9db991c7721a92d351db4fac990*
 
 ### Validators
 
-- validators at now
-- total delegatees at now
-- vaidators at the block height
+- validators list at now
+- delegatees list at now
+- vaidators list at a block height
+- delegatees list at a block height
 
 ### Governance
 
+- show current governance rule
 - proposal list at now
-- proposal list at the block height
-- proposal details (+ voting status and result)
+- proposal list at block height
+- proposal details
+- proposal status(voting status) at block height
+
+
+### Configuration
+
+- Target Chain ID
+- Asset Symbol
+- Asset Decimals
+- 
 
 #### Reference
 * 
