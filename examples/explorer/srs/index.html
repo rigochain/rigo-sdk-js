@@ -69,7 +69,7 @@
     <ul class="current">
                 <li class="toctree-l2 current"><a class="reference internal current" href="./">Requirements</a>
     <ul class="current">
-    <li class="toctree-l3"><a class="reference internal" href="#genesis">Genesis</a>
+    <li class="toctree-l3"><a class="reference internal" href="#initialization-from-genesis">Initialization from Genesis</a>
     </li>
     <li class="toctree-l3"><a class="reference internal" href="#synchronization">Synchronization</a>
         <ul>
@@ -104,6 +104,8 @@
     <li class="toctree-l4"><a class="reference internal" href="#validators">Validators</a>
     </li>
     <li class="toctree-l4"><a class="reference internal" href="#governance">Governance</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#configuration">Configuration</a>
     </li>
         </ul>
     </li>
@@ -152,7 +154,7 @@ Container_Ext(browser, &quot;Browser&quot;)
 System_Boundary(explorer, &quot;Block Explorer&quot;) {
     Container(fe, &quot;FrontEnd&quot;)
     Container(be, &quot;BackEnd&quot;) {
-        Component(bzl, &quot;Controller&quot;)
+        Component(bzl, &quot;Controllers&quot;)
         Component(sdk, &quot;SDK&quot;)
     }
 
@@ -174,9 +176,102 @@ BiRel_R(sdk, node, &quot;RPC&quot;, &quot;HTTP/JSONRPC, Websocket&quot;)
 그리고 사용자로 부터 요청을 수신하였을 때, DB 데이터를 기반으로 응답을 생산하는 것을 기본 기능으로 구현된다.  </p>
 <p>ArcaScan 역시 일반적인 Block Explorer 와 유사한 구조로 구현된다.
 ARCANEX 네트워크와의 연결을 동한 정보 획득, 획득된 정보의 DB 저장을 통한 동기화, 그리고 DB 정보에 기반한 사용자 요청 응답으로 기본 기능을 구성한다.</p>
-<h2 id="genesis">Genesis</h2>
-<p>ARCANEX 블록체인 원장의 최초 상태 정보가 ArcaScan DB에 반영되어야 한다.</p>
-<pre><code class="language-json">genesis.json
+<h2 id="initialization-from-genesis">Initialization from Genesis</h2>
+<p>ARCANEX 블록체인 원장의 최초 상태 정보(Genesis)가 ArcaScan DB에 반영되어야 한다.<br />
+ARCANEX Genesis 에는 블록체인 시작 시점에서의 검증노드(Validator), 계정(Account)별 자산(Balance) 정보등이 포함되어 있다.
+따라서 ArcaScan 최초 실행시, 스캔 대상이 되는 ARCANEX 블록체인 네트워크의 Genesis 정보로 ArcaScan DB의 초기 상태를 구성해야 한다.</p>
+<pre><code class="language-json">{
+  &quot;genesis_time&quot;: &quot;2023-02-06T09:10:28.016371Z&quot;,
+  &quot;chain_id&quot;: &quot;local-test-chain&quot;,
+  &quot;initial_height&quot;: &quot;0&quot;,
+  &quot;consensus_params&quot;: {
+    &quot;block&quot;: {
+      &quot;max_bytes&quot;: &quot;22020096&quot;,
+      &quot;max_gas&quot;: &quot;-1&quot;,
+      &quot;time_iota_ms&quot;: &quot;1000&quot;
+    },
+    &quot;evidence&quot;: {
+      &quot;max_age_num_blocks&quot;: &quot;100000&quot;,
+      &quot;max_age_duration&quot;: &quot;172800000000000&quot;,
+      &quot;max_bytes&quot;: &quot;1048576&quot;
+    },
+    &quot;validator&quot;: {
+      &quot;pub_key_types&quot;: [
+        &quot;secp256k1&quot;
+      ]
+    },
+    &quot;version&quot;: {
+      &quot;app_version&quot;: &quot;1&quot;
+    }
+  },
+  &quot;validators&quot;: [
+    {
+      &quot;address&quot;: &quot;8DC41A86B91EB88D82489C4D037AE9FFCA65CFBF&quot;,
+      &quot;pub_key&quot;: {
+        &quot;type&quot;: &quot;tendermint/PubKeySecp256k1&quot;,
+        &quot;value&quot;: &quot;Ax2d8cCfC60NjIS7G6J8hHTPPf6JvxgPRjSVpL+83Qkr&quot;
+      },
+      &quot;power&quot;: &quot;10&quot;,
+      &quot;name&quot;: &quot;&quot;
+    }
+  ],
+  &quot;app_hash&quot;: &quot;C7CBB5035E73E16304224DAD8251CC74A3723A3C69304208C1B4FD8AB121BBFB&quot;,
+  &quot;app_state&quot;: {
+    &quot;assetHolders&quot;: [
+      {
+        &quot;address&quot;: &quot;3DDB728E5C21C675E93CA257E92EE4BA06AF118F&quot;,
+        &quot;balance&quot;: &quot;100000000000000000000000000&quot;
+      },
+      {
+        &quot;address&quot;: &quot;11903DB21A8089D8BA659D6BA0999B5E56A1892C&quot;,
+        &quot;balance&quot;: &quot;100000000000000000000000000&quot;
+      },
+      {
+        &quot;address&quot;: &quot;0040239CC3D408143801A8D457318064EC105DFF&quot;,
+        &quot;balance&quot;: &quot;100000000000000000000000000&quot;
+      },
+      {
+        &quot;address&quot;: &quot;8D14EE44A82CA2C5CEF805B70D8C1D240DBA2821&quot;,
+        &quot;balance&quot;: &quot;100000000000000000000000000&quot;
+      },
+      {
+        &quot;address&quot;: &quot;EDC307D03D48D20EE4BE7CD13C15F2C3D4625797&quot;,
+        &quot;balance&quot;: &quot;100000000000000000000000000&quot;
+      },
+      {
+        &quot;address&quot;: &quot;B32BCBF0D8466DF8134262BED108C6BA482BED77&quot;,
+        &quot;balance&quot;: &quot;100000000000000000000000000&quot;
+      },
+      {
+        &quot;address&quot;: &quot;1414E42258EF2BEFEF855A183B8CE92E70747F4B&quot;,
+        &quot;balance&quot;: &quot;100000000000000000000000000&quot;
+      },
+      {
+        &quot;address&quot;: &quot;C461FBB1F98CDF53272A3C5059A764AC6338815C&quot;,
+        &quot;balance&quot;: &quot;100000000000000000000000000&quot;
+      },
+      {
+        &quot;address&quot;: &quot;61F097CD542FB4445288BC152EC73F9612CB431E&quot;,
+        &quot;balance&quot;: &quot;100000000000000000000000000&quot;
+      },
+      {
+        &quot;address&quot;: &quot;8DC41A86B91EB88D82489C4D037AE9FFCA65CFBF&quot;,
+        &quot;balance&quot;: &quot;100000000000000000000000000&quot;
+      }
+    ],
+    &quot;govRule&quot;: {
+      &quot;version&quot;: &quot;0&quot;,
+      &quot;maxValidatorCnt&quot;: &quot;21&quot;,
+      &quot;amountPerPower&quot;: &quot;1000000000000000000&quot;,
+      &quot;rewardPerPower&quot;: &quot;1000000000&quot;,
+      &quot;lazyRewardBlocks&quot;: &quot;20&quot;,
+      &quot;lazyApplyingBlocks&quot;: &quot;10&quot;,
+      &quot;minTrxFee&quot;: &quot;10&quot;,
+      &quot;minVotingPeriodBlocks&quot;: &quot;259200&quot;,
+      &quot;maxVotingPeriodBlocks&quot;: &quot;2592000&quot;
+    }
+  }
+}
 </code></pre>
 <h2 id="synchronization">Synchronization</h2>
 <p>ArcaScan DB는 ARCANEX 블록체인 원장과 동기화 되어야 한다.  </p>
@@ -430,18 +525,34 @@ X 는 해당 화면에서 선택할 수 있다.</p>
 * 검색창에 트랜잭션 해시가 입력되었을 때</p>
 <p>조회 결과는 <a href="#transaction-details">Transaction Details</a> 화면 또는 동일 형식으로 출력되어야 한다.</p>
 <h4 id="account-details">Account Details</h4>
+<ul>
+<li>address</li>
+<li>balance</li>
+<li>transactions list (+paging)</li>
+<li>total stake and stakes list (+delegatees)</li>
+</ul>
 <p><em>Ref: https://etherscan.io/address/0x690b9a9e9aa1c9db991c7721a92d351db4fac990</em></p>
 <h3 id="validators">Validators</h3>
 <ul>
-<li>validators at now</li>
-<li>total delegatees at now</li>
-<li>vaidators at the block height</li>
+<li>validators list at now</li>
+<li>delegatees list at now</li>
+<li>vaidators list at a block height</li>
+<li>delegatees list at a block height</li>
 </ul>
 <h3 id="governance">Governance</h3>
 <ul>
+<li>show current governance rule</li>
 <li>proposal list at now</li>
-<li>proposal list at the block height</li>
-<li>proposal details (+ voting status and result)</li>
+<li>proposal list at block height</li>
+<li>proposal details</li>
+<li>proposal status(voting status) at block height</li>
+</ul>
+<h3 id="configuration">Configuration</h3>
+<ul>
+<li>Target Chain ID</li>
+<li>Asset Symbol</li>
+<li>Asset Decimals</li>
+<li></li>
 </ul>
 <h4 id="reference">Reference</h4>
 <ul>
