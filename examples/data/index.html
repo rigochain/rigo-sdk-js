@@ -273,6 +273,42 @@ message TrxPayloadVotingProto {
   int32 choice = 2;
 }
 </code></pre>
+<h3 id="arcanex-wallet-format-awf">ARCANEX Wallet Format (AWF)</h3>
+<pre><code class="language-json">{
+  &quot;version&quot;: &quot;1&quot;,
+  &quot;address&quot;: &quot;8DC41A86B91EB88D82489C4D037AE9FFCA65CFBF&quot;,
+  &quot;algo&quot;: &quot;secp256k1&quot;,
+  &quot;cp&quot;: {
+    &quot;ca&quot;: &quot;aes-256-cbc&quot;,
+    &quot;ct&quot;: &quot;zL2fwrCM4gqlkqL8UZuCCP02oJpjNtKiN9+A30naJhguHYlL+BiPqWYz90r/QHpU&quot;,
+    &quot;ci&quot;: &quot;Pz7lnrRweRJRY5n7so0/0g==&quot;
+  },
+  &quot;dkp&quot;: {
+    &quot;ka&quot;: &quot;pbkdf2&quot;,
+    &quot;kh&quot;: &quot;sha256&quot;,
+    &quot;kc&quot;: &quot;20205&quot;,
+    &quot;ks&quot;: &quot;zfJuR9h9pD3iB9OGDUCw5pJP5xZWxKtb41iJTGhHBeQ=&quot;,
+    &quot;kl&quot;: &quot;32&quot;
+  }
+}
+</code></pre>
+<ul>
+<li><code>version</code>:</li>
+<li><code>address</code>: 계정 주소.</li>
+<li><code>algo</code>: ECDSA curve 이름. (현재는 무조건 'secp256k1' 사용)</li>
+<li><code>cp</code>: Private Key 암호화 알고리즘 및 암호화 결과.</li>
+<li><code>ca</code>: Private key 암호화시 사용한 대칭키 암호화 알고리즘.</li>
+<li><code>ct</code>: Private key 를 암호화 하고 이를 다시 base64로 인코딩한 값.</li>
+<li><code>ci</code>: Private key 암호화시 사용한 IV의 base64로 인코딩된 값.</li>
+<li><code>dkp</code>: Private Key 암호화시 사용한 암호화키 유도를 위한 정보.<br />
+사용자 입력 비밀번호 기반 암호화키 유도 방식으로 암호화 된 경우 필요하다.
+모바일 디바이스의 보안 영역을 통해 암호화 키를 관리할 경우, 필요 없을 수 있다.</li>
+<li><code>ka</code>: 대칭키 유도 알고리즘.</li>
+<li><code>kh</code>: 대팅키 유도에 사용한 해시 알고리즘.</li>
+<li><code>kc</code>: 해시 반복 횟수.</li>
+<li><code>ks</code>: 키유도시 사용된 salt 의 base64 인코딩 값.</li>
+<li><code>kl</code>: 바이트 단위의 키 길이.</li>
+</ul>
               
             </div>
           </div><footer>
