@@ -34,8 +34,8 @@ MAuthWallet 에서 다루는 Confidential Data 는 다음과 같다.
     Programming Language, VM 등 에서 제공하는 Garbage Collection 에 의존하지 마라.
 
 !!! warning
-    Confidential Data 가 함수의 파라메터로 사용되는 경우, 보다 특별한 주의가 필요하다.  
-    예를 들어 다음과 같은 코드를 살펴보자면,  
+    Confidential Data 가 Call-By-Value 방식의 함수 파라메터로 전달 될 때, 보다 특별한 주의가 필요하다.  
+    예를 들어 다음과 같은 코드에서,  
     slice 가 아닌 array 를 요구하는 함수 `B`에 전달할 인자 `passA` 를 구성하고,
     함수 `B` 호출후 더이상 사용이 완료되었기에 `passA`와 `pass` 를 폐기(`clearBytes`호출) 하였다.  
     그러나 golang 의 array 는 call by value 로 전달 되기 때문에,
@@ -64,7 +64,6 @@ MAuthWallet 에서 다루는 Confidential Data 는 다음과 같다.
     }
 ```
 
-다음과 같이 Confidential Data 가 배열에 담겨 넘겨지고 사용이 끝난후 폐기 되었
 ---
 
 ## Create Account
