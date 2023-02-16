@@ -184,3 +184,40 @@ message TrxPayloadVotingProto {
   int32 choice = 2;
 }
 ```
+
+### ARCANEX Wallet Format (AWF)
+```json
+{
+  "version": "1",
+  "address": "8DC41A86B91EB88D82489C4D037AE9FFCA65CFBF",
+  "algo": "secp256k1",
+  "cp": {
+    "ca": "aes-256-cbc",
+    "ct": "zL2fwrCM4gqlkqL8UZuCCP02oJpjNtKiN9+A30naJhguHYlL+BiPqWYz90r/QHpU",
+    "ci": "Pz7lnrRweRJRY5n7so0/0g=="
+  },
+  "dkp": {
+    "ka": "pbkdf2",
+    "kh": "sha256",
+    "kc": "20205",
+    "ks": "zfJuR9h9pD3iB9OGDUCw5pJP5xZWxKtb41iJTGhHBeQ=",
+    "kl": "32"
+  }
+}
+```
+
+- `version`:
+- `address`: 계정 주소.
+- `algo`: ECDSA curve 이름. (현재는 무조건 'secp256k1' 사용)
+- `cp`: Private Key 암호화 알고리즘 및 암호화 결과.
+  - `ca`: Private key 암호화시 사용한 대칭키 암호화 알고리즘.
+  - `ct`: Private key 를 암호화 하고 이를 다시 base64로 인코딩한 값.
+  - `ci`: Private key 암호화시 사용한 IV의 base64로 인코딩된 값.
+- `dkp`: Private Key 암호화시 사용한 암호화키 유도를 위한 정보.  
+사용자 입력 비밀번호 기반 암호화키 유도 방식으로 암호화 된 경우 필요하다.
+모바일 디바이스의 보안 영역을 통해 암호화 키를 관리할 경우, 필요 없을 수 있다.
+  - `ka`: 대칭키 유도 알고리즘.
+  - `kh`: 대팅키 유도에 사용한 해시 알고리즘.
+  - `kc`: 해시 반복 횟수.
+  - `ks`: 키유도시 사용된 salt 의 base64 인코딩 값.
+  - `kl`: 바이트 단위의 키 길이.
