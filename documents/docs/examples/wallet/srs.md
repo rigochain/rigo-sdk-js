@@ -69,10 +69,12 @@ Account 는 [AWF](../data.md#arcanex-wallet-format--awf-) 형식으로 저장되
 '**잠금상태**' 란 Account 의 Private Key가 암호화된 상태여야 함을 의미한다.
 즉, 의도된 시점을 제외한 어떤 때라도 복화화된 평문 Private Key가 메모리상에 존재해서는 안된다.
 
-!!! tip
-    AWF 가 암호화된 형태이기 때문에 이를 메모리상에 로드한 Account 객체는 이미 잠금 상태이다.  
-    필요시 AWF 의 Private Key를 복호화 하여 사용되는데, 결국 잠금상태란 복호화된 Private Key 를 메모리상에서 제거하는 것을 의미한다.
-    그리고 복호화된 Private Key 란, 평문 형태의 Private Key 가 점유한 메모리 영역을 zero값(또는 의미 없는 쓰레기 값) 으로 overwriting 함을 의미한다.
+AWF 가 암호화된 형태이기 때문에 이를 메모리상에 로드한 Account 객체는 이미 잠금 상태이다.  
+필요시 AWF 의 Private Key를 복호화 하여 사용되는데, 결국 **잠금상태**란 복호화된 Private Key 를 메모리상에서 제거하는 것을 의미하며,
+이는 곧 평문 형태의 Private Key 가 점유한 모든 메모리 영역을 zero값(또는 의미 없는 쓰레기 값) 으로 overwriting 함을 의미한다.
+
+!!! note
+    프로그래밍 언어에서 지원하는 가비지 컬랙션을 믿지 마라.
 
 ## Unlock Account
 전자서명 생성을 위해 Private Key 가 복호화 되어야 할 경우,
