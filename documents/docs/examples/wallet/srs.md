@@ -1,5 +1,5 @@
 # Overview
-이 문서는 MAuthWallet 이 갖추어야 할 최소한의 요구사항을 기술한다.
+이 문서는 MAuthWallet 이 갖추어야 할 최소 요구사항을 One-page 형식으로 기술한다.
 
 MAuthWallet 은 MDL, ARCANEX 상의 자산을 관리하기 위하여 개발되는 모바일 앱 형태의 월렛 이다.
 
@@ -13,56 +13,8 @@ MAuthWallet 은 MDL, ARCANEX 상의 자산을 관리하기 위하여 개발되�
 MAuthWallet 역시 위 기본 기능을 제공함과 동시에, ARCANEX 의 합의 알고리즘인 DPoS 의 특성에 따른 추가 기능과, 
 하이퍼렛지 기반의 MDL 상에서의 위 기본 기능을 함께 제공하도록 구현되어야 한다.
 
-이러한 MAuthWallet 의 기능은 사용자 인증 용도로 개발된 MAuth App의 기능을 확장하는 형태로 개발 된다. 
-즉 MAuth App 에 아래 기술되는 월렛 기능을 추가 구현 하여 MAuthWallet 을 개발 한다.
-
----
-
-## Clear Confidential Data
-암호화를 수행하는데 있어서 절대 외부로 노출되어서는 안되는 기밀 데이터(Confidential Data)는 사용 직후 바로 폐기되어야 한다.  
-MAuthWallet 에서 다루는 Confidential Data 는 다음과 같다.
-
-- **PrivateKey** : PublicKey에 대응되는 PrivateKey.
-- **SecretKey** : 대칭키 암호화 알고리즘에서 사용되는 암복호화 키.  
-  디바이스의 보안영역을 사용하면 MAuthWallet 에서 직접 다루지 않을 수도 있다.
-- **Passphrase** : SecretKey 를 유도하기 위하여 사용자가 입력하는 데이터. (e.g. 사용자 비밀번호)
-
-위와 같은 Confidential Data 가 메모리상에 존재하는 시간은 최소화 되어야 하며, 사용 완료 즉시 메모리상에서 폐기 되어야 한다.  
-**메모리상에서 폐기**란 해당 데이터가 점유했던 모든 메모리 영역을 `0x00`로 초기화 함을 의미한다.
-
-!!! note
-    Programming Language, VM 등 에서 제공하는 Garbage Collection 에 의존하지 마라.
-
-!!! warning
-    Confidential Data 가 Call-By-Value 방식의 함수 파라메터로 전달 될 때, 보다 특별한 주의가 필요하다.  
-    예를 들어 다음과 같은 코드에서,  
-    slice 가 아닌 array 를 요구하는 함수 `B`에 전달할 인자 `passA` 를 구성하고,
-    함수 `B` 호출후 더이상 사용이 완료되었기에 `passA`와 `pass` 를 폐기(`clearBytes`호출) 하였다.  
-    그러나 golang 의 array 는 call by value 로 전달 되기 때문에,
-    `passA`와 `passB`는 각자 서로 다른 메모리 영역을 갖고 있다. 
-    때문에 `passB`의 메모리 영역에는 여전히 Confidential Data 가 남아 있게 된다.
-
-```
-    func A(pass []byte) {
-        var passA [32]byte
-        copy(passA[:], pass)
-        
-        B(passA)
-        
-        clearFunc(pass)
-        clearFunc(passA[:])
-    }
-    
-    func B(passB [32]byte) {
-        ...
-    }
-
-    func clearFunc(d []byte) {
-        for i, _ := range d {
-            d[i] = byte(0x00)
-        }
-    }
-```
+이러한 MAuthWallet 의 기능은 사용자 인증 용도로 개발된 MAuth App의 기능을 확장하는 형태로 개발 한다. 
+즉 MAuth App 에 아래 기술되는 월렛 기능을 추가 하여 MAuthWallet 을 개발 한다.
 
 ---
 
@@ -128,6 +80,64 @@ PrivateKey 사용이 필요할 때 마다 AWF 의 PrivateKey를 복호화 하여
 
 ---
 
+## Clear Confidential Data
+MAuthWallet 은 암호화 기능을 구현하면서, 다양한 기밀 데이터(Confidential Data)를 처리하게 되는데,
+이러한 Confidential Data 들은 사용 직후 메모리상에서 바로 폐기되어야 한다.  
+즉, Confidential Data 가 메모리상에 존재하는 시간은 최소화 되어야 하며, 사용 완료 즉시 메모리상에서 복구 불가능한 형태로 폐기 되도록 구현하여야 한다.  
+MAuthWallet 에서 다루는 Confidential Data 는 다음과 같다.
+
+- **PrivateKey** : PublicKey에 대응되는 PrivateKey.
+- **SecretKey** : 대칭키 암호화 알고리즘에서 사용되는 암복호화 키.  
+  디바이스의 보안영역을 사용하면 MAuthWallet 에서 직접 다루지 않을 수도 있다.
+- **Passphrase** : SecretKey 를 유도하기 위하여 사용자가 입력하는 데이터. (e.g. 사용자 비밀번호)
+
+**메모리상에서 폐기**란 해당 데이터가 점유했던 모든 메모리 영역을 `0x00`로 초기화 함을 의미한다.
+
+!!! note
+Programming Language, VM 등 에서 제공하는 Garbage Collector 에 의존하지 마라.
+
+!!! warning
+Confidential Data 가 Call-By-Value 방식의 함수 파라메터로 전달 될 때, 특별한 주의가 필요하다.  
+예를 들어 아래와 같은 코드에서,  
+slice 가 아닌 array 를 요구하는 함수 `B`에 전달할 인자 `arrPass` 를 구성하고,
+함수 `B` 호출후 사용 완료 시점에서 `arrPass`와 `arrSlice` 를 폐기(`clearBytes`호출) 하였다.  
+그러나 golang 의 array 는 Call-By-Value 방식으로 전달 되기 때문에,
+`arrPass`와 `arrPassArg`는 각자 서로 다른 메모리 영역을 갖고 있다.
+때문에 `arrPassArg`의 메모리 영역에는 여전히 Confidential Data 가 남아 있게 된다.
+<br><br>
+또한 함수 `A`로 전달 받은 `pass` 역시 초기화 대상이다. 이를 초기화 하기 위하여 `clearString` 을 호출하였다. 어떻게 될까?
+(hint: Golang 에서 `string`은 value 이다.)
+
+```
+    func A(pass string) {
+        arrSlice := []byte(pass)
+        
+        var arrPass [32]byte
+        copy(passA[:], arrSlice)
+        
+        B(passA)
+        
+        clearBytes(arrSlice)
+        clearBytes(passA[:])
+        clearString(pass)
+    }
+    
+    func B(arrPassArg [32]byte) {
+        ...
+    }
+
+    func clearBytes(d []byte) {
+        for i, _ := range d {
+            d[i] = byte(0x00)
+        }
+    }
+    func clearString(s string) {
+        s = ""
+    }
+```
+
+---
+
 ## MAuthDoc 자동 등록
 신규 생성 및 가져오기([Import](#import-account)) 로 디바이스에 생성되는 모든 Account 의 PublicKey 는 'MAuthDoc' 으로 자동 등록되어야 한다.
 
@@ -178,6 +188,8 @@ MAuthWallet 은 설정된 노드에 접속하여 해당 네트워크에서 선�
 선택계정이 발행자(sender) 또는 수신자(receiver) 로 지정된 트랜잭션 목록을 리스트 형태로 보여준다.  
 이 목록은 트랜잭션 발생 역순으로 최근 X개로 구성되며 페이징 처리는 옵션이다.
 
+---
+
 ## External Transaction Signing
 외부에서 생성된 트랜잭션에 대한 전자서명이 요청될 수 있다.
 외부에서 요청된 트랜잭션을 사용자가 확인하고 이에 대한 전자서명 후,
@@ -185,13 +197,26 @@ MAuthWallet 은 설정된 노드에 접속하여 해당 네트워크에서 선�
 
 ---
 
-## Blockchain Network Monitoring
-Sprint2
+## Authentication methods
+MAuthWallet 은 다음과 같은 사용자 인증 수단을 제공해야 한다.
+
+- 비밀번호  
+  사용자로 부터 보안 키보드를 통해 입력 받는 문자열.
+- 지문  
+  디바이스 지원 여부를 확인하여 해당 기능 활성화 여부를 결정한다.
+- 안면인식  
+  디바이스 지원 여부를 확인하여 해당 기능 활성화 여부를 결정한다.
+
+디바이스가 지원한다면 가급적 생체 정보를 사용하도록 유도하는 사용 시나리오를 적용, 구현한다.
 
 ---
 
 ## Assets Swapping
-Sprint2
+
+---
+
+
+## Blockchain Network Monitoring
 
 ---
 
@@ -202,14 +227,6 @@ MAuthWallet 이 접속할 블록체인 네트워크의 노드 URL 을 추가 할
 
 ---
 
-## Authentication methods
-MAuthWallet 은 다음과 같은 사용자 인증 수단을 제공해야 한다.
+## SDK
 
-- 비밀번호  
-사용자로 부터 보안 키보드를 통해 입력 받는 문자열.
-- 지문  
-디바이스 지원 여부를 확인하여 해당 기능 활성화 여부를 결정한다.
-- 안면인식  
-디바이스 지원 여부를 확인하여 해당 기능 활성화 여부를 결정한다.
-
-디바이스가 지원한다면 가급적 생체 정보를 사용하도록 유도하는 사용 시나리오를 적용한다.
+*ARCANEX 노드와 통신하는 부분을 모듈화 -> 별도의 프로젝트로 -> SDK 확보 ?*
