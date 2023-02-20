@@ -201,17 +201,17 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
             <div class="section" itemprop="articleBody">
               
-                <h1 id="acnrpc">ACNRPC</h1>
-<p><code>ACNRPC</code> API 는 ARCANEX 노드에 접속하여 JSONRPC 요청 작업을 수행 한다.</p>
+                <h1 id="acnet">ACNet</h1>
+<p><code>ACNet</code> API 는 ARCANEX 노드에 접속하여 JSONRPC 요청 작업을 수행 한다.</p>
 <hr />
 <h2 id="node">Node</h2>
 <hr />
 <h3 id="seturl">setUrl</h3>
 <pre><code class="language-ts">static setUrl(url:string)
 </code></pre>
-<pre><code class="language-ts">ACNRPC.setUrl('http://localhost:26657')
+<pre><code class="language-ts">ACNet.setUrl('http://localhost:26657')
 </code></pre>
-<p><code>ACNRPC</code> API 호출시 접속하게 될 ARCANEX 노드의 RPC 서버 URL을 설정한다.</p>
+<p><code>ACNet</code> API 호출시 접속하게 될 ARCANEX 노드의 RPC 서버 URL을 설정한다.</p>
 <h4 id="parameters">Parameters</h4>
 <ul>
 <li><code>url</code>: ARCANEX 노드의 RPC 서버 URL</li>
@@ -220,7 +220,7 @@
 <h3 id="geturl">getUrl</h3>
 <pre><code class="language-ts">static getUrl():string
 </code></pre>
-<pre><code class="language-ts">const nodeUrl = ACNRPC.getUrl()
+<pre><code class="language-ts">const nodeUrl = ACNet.getUrl()
 console.log(nodeUrl) // 'http://localhost:26657'
 </code></pre>
 <p>현재 사용중인 ARCANEX 노드 RPC Server URL.</p>
@@ -231,7 +231,7 @@ console.log(nodeUrl) // 'http://localhost:26657'
 <h3 id="queryblockbyheight">queryBlockByHeight</h3>
 <pre><code class="language-ts">static queryBlockByHeight(height: number|string): PromiseLike&lt;any&gt;
 </code></pre>
-<pre><code class="language-ts">ACNRPC.queryBlockByHeight(10818).then(resp =&gt; {
+<pre><code class="language-ts">ACNet.queryBlockByHeight(10818).then(resp =&gt; {
     console.log(resp)
 }
 </code></pre>
@@ -322,7 +322,7 @@ console.log(nodeUrl) // 'http://localhost:26657'
 <h3 id="queryblockbyhash">queryBlockByHash</h3>
 <pre><code class="language-ts">static queryBlockByHash(hash: string|Uint8Array): PromiseLike&lt;any&gt;
 </code></pre>
-<pre><code class="language-ts">ACNRPC.queryBlockByHash(&quot;2227E9F1505C98EE0360A953735623FC3FD74A6E81ADFC9D7EF3BE8927F9136E&quot;).then(resp =&gt; {
+<pre><code class="language-ts">ACNet.queryBlockByHash(&quot;2227E9F1505C98EE0360A953735623FC3FD74A6E81ADFC9D7EF3BE8927F9136E&quot;).then(resp =&gt; {
     console.log(resp)
 }
 </code></pre>
@@ -340,7 +340,7 @@ console.log(nodeUrl) // 'http://localhost:26657'
 <h3 id="querytrx">queryTrx</h3>
 <pre><code class="language-ts">static queryTrx(txhash: string|Uint8Array)
 </code></pre>
-<pre><code class="language-ts">ACNRPC.queryTrx(&quot;AD10C104B8E3B3DBE357CF4133B8376B6EB48E44AE28260D42F7A0B53E1B34F1&quot;).then(resp =&gt; {
+<pre><code class="language-ts">ACNet.queryTrx(&quot;AD10C104B8E3B3DBE357CF4133B8376B6EB48E44AE28260D42F7A0B53E1B34F1&quot;).then(resp =&gt; {
   console.log(resp)
 })
 </code></pre>
@@ -429,7 +429,7 @@ console.log(nodeUrl) // 'http://localhost:26657'
 <pre><code class="language-ts">static queryAccount(addr: string|Bytes)
 </code></pre>
 <pre><code class="language-ts">
-ACNRPC.queryAccount(&quot;DF976A96545DAD0E0B14FED615587A89BA980B84&quot;).then(resp =&gt; {
+ACNet.queryAccount(&quot;DF976A96545DAD0E0B14FED615587A89BA980B84&quot;).then(resp =&gt; {
     console.log(resp)
 })
 </code></pre>
@@ -463,7 +463,7 @@ ACNRPC.queryAccount(&quot;DF976A96545DAD0E0B14FED615587A89BA980B84&quot;).then(r
 
     ...
 
-ACNRPC.syncAccount(acct, resp =&gt; {
+ACNet.syncAccount(acct, resp =&gt; {
     console.log(acct) // `acct` is not updated.
 })
 .then( resp =&gt; {
@@ -482,7 +482,7 @@ ACNRPC.syncAccount(acct, resp =&gt; {
 <h3 id="queryvalidators">queryValidators</h3>
 <pre><code class="language-ts">static queryValidators(height:number|string)
 </code></pre>
-<pre><code class="language-ts">ACNRPC.queryValidators().then( resp =&gt; {
+<pre><code class="language-ts">ACNet.queryValidators().then( resp =&gt; {
     console.log(resp)
 })
 </code></pre>
@@ -524,7 +524,7 @@ ACNRPC.syncAccount(acct, resp =&gt; {
 <h3 id="querystakes">queryStakes</h3>
 <pre><code class="language-ts">static queryStakes(addr: string|Bytes)
 </code></pre>
-<pre><code class="language-ts"> ACNRPC.queryStakes(&quot;8DC41A86B91EB88D82489C4D037AE9FFCA65CFBF&quot;).then (resp =&gt; {
+<pre><code class="language-ts"> ACNet.queryStakes(&quot;8DC41A86B91EB88D82489C4D037AE9FFCA65CFBF&quot;).then (resp =&gt; {
      console.log(resp)
  }
 </code></pre>
@@ -564,7 +564,7 @@ ACNRPC.syncAccount(acct, resp =&gt; {
 <h3 id="queryrule">queryRule</h3>
 <pre><code class="language-ts">static queryRule(): PromiseLike&lt;any&gt;
 </code></pre>
-<pre><code class="language-ts">ACNRPC.queryRule().then(resp =&gt; {
+<pre><code class="language-ts">ACNet.queryRule().then(resp =&gt; {
     console.log(resp)
 })
 </code></pre>

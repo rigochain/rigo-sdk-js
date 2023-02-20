@@ -313,16 +313,16 @@ slice 가 아닌 array 를 요구하는 함수 <code>B</code>에 전달할 인�
 <h2 id="build-and-submit-transactions">Build and submit Transactions</h2>
 <p>트랜잭션을 생성하고 제출하기 위해서는 다음과 같은 단계를 수행해야 한다.</p>
 <ol>
-<li>트랜잭션 생성 계정 동기화 : <code>ACNRPC.syncAccount</code> API 사용</li>
+<li>트랜잭션 생성 계정 동기화 : <code>ACNet.syncAccount</code> API 사용</li>
 <li>트랜잭션 생성: <code>TrxBuilder.BuildXXX</code> API 사용</li>
 <li>트랜잭션 전자서명: <code>TrxBuilder.SignTrx</code> API 사용</li>
-<li>트랜잭션 제출 : <code>ACNRPC.broadcastTrxSync</code> API 사용</li>
-<li>트랜잭션 커밋(Commit) 확인 : <code>ACNRPC.queryTrx</code> API 사용</li>
+<li>트랜잭션 제출 : <code>ACNet.broadcastTrxSync</code> API 사용</li>
+<li>트랜잭션 커밋(Commit) 확인 : <code>ACNet.queryTrx</code> API 사용</li>
 </ol>
 <p>트랜잭션 제출이 성공하였음이 <strong>블록체인에 기록(Commit) 되었음을 의미하지는 않는다</strong>. 
 때문에 트랜잭션 제출 이후 해당 트랜잭션이 블록체인 원장에 기록되었음을 확인하는 절차가 필요하다.</p>
 <pre><code class="language-ts">// sync. account
-ACNRPC.syncAccount(acct).then( () =&gt; {
+ACNet.syncAccount(acct).then( () =&gt; {
   // build a tx.
     const tx = TrxBuilder.BuildTransferTrx({
       from: acct.address,
@@ -334,7 +334,7 @@ ACNRPC.syncAccount(acct).then( () =&gt; {
 
   // sign the tx.
   TrxBuilder.SignTrx(tx, acct);
-  ACNRPC.broadcastTrxSync(tx).then (resp =&gt; {
+  ACNet.broadcastTrxSync(tx).then (resp =&gt; {
     if(resp.code != 0) {
       console.error(resp.log)
     }
@@ -359,12 +359,12 @@ ACNRPC.syncAccount(acct).then( () =&gt; {
 <p>MDL에 대하여 동일한 기능을 구현 해야 하며, 구현 방법은 MDL 명세를 따른다.</p>
 </div>
 <h2 id="check-transactions-commit">Check Transaction's Commit</h2>
-<p>트랜잭션이 블록체인에 기록(커밋)되었음을 확인하기 위해 <code>ACNRPC.queryTrx</code> API 를 사용한다.<br />
+<p>트랜잭션이 블록체인에 기록(커밋)되었음을 확인하기 위해 <code>ACNet.queryTrx</code> API 를 사용한다.<br />
 앞서 <a href="#build-and-submit-transactions">Build and submit Transactions</a> 에서 
-응답으로 수신한 데이터중 <code>resp.hash</code> 를 인자로 하여 <code>ACNRPC.queryTrx</code>를 호출한다.  </p>
+응답으로 수신한 데이터중 <code>resp.hash</code> 를 인자로 하여 <code>ACNet.queryTrx</code>를 호출한다.  </p>
 <pre><code class="language-ts">try {
     setTimeout( () =&gt; {
-        ACNRPC.queryTrx(resp.hash).then( retTx =&gt; {
+        ACNet.queryTrx(resp.hash).then( retTx =&gt; {
             ...
         });
     }, 1500)

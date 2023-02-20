@@ -292,7 +292,7 @@ ArcaScan은 ARCANEX 네트워크를 구성하는 노드 중 하나로 Websocket 
 이미 발생한 정보를 획득하기 위하여 사용된다.
 이벤트 구독 메커니즘을 통해 수신되는 정보는 현재 시점의 정보로 제한된다. (과거 정보 수신 불가)<br />
 따라서 과거 시점에 발생한 정보를 조회 하기 위해서는 ARCANEX 노드가 제공하는 RPC 호출을 통해 해당 정보를 획득해야 한다.
-ARCANEX RPC 호출을 위한 API 에 대한 자세한 정보는 <a href="../../../api/acnrpc/">ACNRPC</a> 를 참조한다.</p>
+ARCANEX RPC 호출을 위한 API 에 대한 자세한 정보는 <a href="../../../api/acnrpc/">ACNet</a> 를 참조한다.</p>
 </li>
 </ul>
 <p>ArcaScan DB 동기화를 위해 위와 같은 방법으로 획득 해야 하는 정보는 <strong>블록</strong> 과 <strong>트랜잭션</strong> 정보 이다. </p>
@@ -381,7 +381,7 @@ DB에 반영된 마지막 블록 번호(<code>bn0</code>)와
 현재 ARCANEX 블록체인의 마지막 블록 번호(<code>bn1</code>) 를 조회 하여,
 그 사이에 발생한 모든 블록 정보가 DB에 반영(동기화) 되도록 해야 한다.</p>
 <p>ArcaScan 이 구동되지 않은 시간동안 생성된 블록에 대한 정보는 이벤트 구독 방식으로는 획득이 불가능하고,
-<a href="../../../api/acnrpc/#block">RPC 호출을 수행하는 ACNRPC의 API</a>를 호출 하는 것으로만 획득이 가능하다.</p>
+<a href="../../../api/acnrpc/#block">RPC 호출을 수행하는 ACNet의 API</a>를 호출 하는 것으로만 획득이 가능하다.</p>
 <p>History Sync. 시 누락되는 블록이 발생하지 않도록 구현되어야 한다.
 예를 들어, DB에 반영된 마지막 블록 번호가 <code>m</code> 이고, ARCANEX 블록체인의 마지막 블록 번호가 <code>n, (n&gt;m)</code> 으로 조회 되었을 경우, 
 블록 <code>n</code>까지 블록을 조회 하여 이를 DB에 반영하는 사이에 ARCANEX 네트워크에서 블록 <code>n+1</code> 이 생성될 가능성이 있다.<br />
@@ -440,7 +440,7 @@ activate be
     be -&gt; db: bn0 &lt;- last block height
     be -&gt; be: i = bn0
     loop &quot;Synchronize bloks between bn0 and bn1&quot;
-        be -&gt; sdk: ACNRPC.queryBlockByHeight(i)
+        be -&gt; sdk: ACNet.queryBlockByHeight(i)
         activate sdk
             sdk -&gt; node: block &lt;- query block[i]
         return block
