@@ -147,22 +147,22 @@ ArcaScan 은 이벤트 구독 방식과 RPC 호출 방식을 통해 동기화에
 - 이벤트 구독 (Event Subscription)    
 현재 발생되는 정보를 실시간에 가깝게 획득하가 위하여 사용된다.   
 ArcaScan은 ARCANEX 네트워크를 구성하는 노드 중 하나로 Websocket 연결을 생성하고,
-이 연결을 통해 [이벤트 쿼리문](../../subscriber.md#event-query)을 포함한 구독 요청 메시지를 전송함으로서, 블록과 트랜잭션 정보가 포함된 이벤트를 실시간으로 수신 할 수 있다.
-이벤트 구독 대한 자세한 사항은 [Event Subscribe](../../subscriber.md)를 참조한다.
+이 연결을 통해 [이벤트 쿼리문](../../api/subscriber.md#event-query)을 포함한 구독 요청 메시지를 전송함으로서, 블록과 트랜잭션 정보가 포함된 이벤트를 실시간으로 수신 할 수 있다.
+이벤트 구독 대한 자세한 사항은 [Event Subscribe](../../api/subscriber.md)를 참조한다.
 
 - HTTP/JSONRCP 호출  
 이미 발생한 정보를 획득하기 위하여 사용된다.
 이벤트 구독 메커니즘을 통해 수신되는 정보는 현재 시점의 정보로 제한된다. (과거 정보 수신 불가)  
 따라서 과거 시점에 발생한 정보를 조회 하기 위해서는 ARCANEX 노드가 제공하는 RPC 호출을 통해 해당 정보를 획득해야 한다.
-ARCANEX RPC 호출을 위한 API 에 대한 자세한 정보는 [ACNet](../../acnet.md) 를 참조한다.
+ARCANEX RPC 호출을 위한 API 에 대한 자세한 정보는 [ACNet](../../api/acnet.md) 를 참조한다.
 
 ArcaScan DB 동기화를 위해 위와 같은 방법으로 획득 해야 하는 정보는 **블록** 과 **트랜잭션** 정보 이다. 
 
 ### Block Sync.
 
 ArcaScan 은 `NewBlock` (또는 `NewBlockHeader`) 이벤트 구독을 요청하고, 해당 이벤트가 수신되면 이를 ArcaScan DB에 반영한다.  
-[`NewBlock` 이벤트](../data.md#newblock-event)에 포함되는 블록 정보는 트랜잭션 정보 까지 포함한다.  
-반면에 [`NewBlockHeader` 이벤트](../data.md#newblockheader-event)는 해당 블록의 트랜잭션 수를 포함하며 트랜잭션 자체는 포함하지 않는다.
+[`NewBlock` 이벤트](../../internals/data.md#newblock-event)에 포함되는 블록 정보는 트랜잭션 정보 까지 포함한다.  
+반면에 [`NewBlockHeader` 이벤트](../../internals/data.md#newblockheader-event)는 해당 블록의 트랜잭션 수를 포함하며 트랜잭션 자체는 포함하지 않는다.
 때문에 트랜잭션이 포함된 블록 정보를 획득하기 위하여 추가적인 RPC 호출이 필요하다.  
 따라서 본 문서에서는 `NewBlock` 이벤트 구독을 전제로 하여 요구사항을 기술 한다.
 
@@ -229,11 +229,11 @@ return rendering block details of block[h]
 
 `NewBlock` 이벤트에 포함된 블록 정보에는 트랜잭션이 `protobuf v3`로 직렬화 된 후 base64로 한번더 인코딩 된 형태로 존재한다.
 때문에 트랜잭션 동기화를 위해서 `TrxBuild.DecodeTrx` API를 사용한 디코딩 과정이 필요하다.  
-`TrxBuild.DecodeTrx` API 는 [`Trx`](../data.md#trx) 를 리턴한다.  
+`TrxBuild.DecodeTrx` API 는 [`Trx`](../../internals/data.md#trx) 를 리턴한다.  
 획득된 정보를 재구성하여 ArcaScan DB에 반영한다.
 
 !!! note
-    트랜잭션 protobuf message 는 [Data structure](../data.md#protobuf-messages)를 참조한다.
+    트랜잭션 protobuf message 는 [Data structure](../../internals/data.md#protobuf-messages)를 참조한다.
 
 
 
@@ -257,7 +257,7 @@ DB에 반영된 마지막 블록 번호(`bn0`)와
 그 사이에 발생한 모든 블록 정보가 DB에 반영(동기화) 되도록 해야 한다.
 
 ArcaScan 이 구동되지 않은 시간동안 생성된 블록에 대한 정보는 이벤트 구독 방식으로는 획득이 불가능하고,
-[RPC 호출을 수행하는 ACNet의 API](../../acnet.md#block)를 호출 하는 것으로만 획득이 가능하다.
+[RPC 호출을 수행하는 ACNet의 API](../../api/acnet.md#block)를 호출 하는 것으로만 획득이 가능하다.
 
 History Sync. 시 누락되는 블록이 발생하지 않도록 구현되어야 한다.
 예를 들어, DB에 반영된 마지막 블록 번호가 `m` 이고, ARCANEX 블록체인의 마지막 블록 번호가 `n, (n>m)` 으로 조회 되었을 경우, 

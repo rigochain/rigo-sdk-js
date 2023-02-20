@@ -4,6 +4,45 @@
 
 ---
 
+## Node
+
+---
+
+### setUrl
+
+```ts
+static setUrl(url:string)
+```
+```ts
+ACNet.setUrl('http://localhost:26657')
+```
+
+`ACNet` API 호출시 접속하게 될 ARCANEX 노드의 RPC 서버 URL을 설정한다.
+
+#### Parameters
+
+- `url`: ARCANEX 노드의 RPC 서버 URL
+
+---
+
+### getUrl
+
+```ts
+static getUrl():string
+```
+```ts
+const nodeUrl = ACNet.getUrl()
+console.log(nodeUrl) // 'http://localhost:26657'
+```
+
+현재 사용중인 ARCANEX 노드 RPC Server URL.
+
+---
+
+### getClient
+
+---
+
 ## Block
 
 ### queryBlockByHeight
@@ -455,40 +494,6 @@ ACNet.queryRule().then(resp => {
 
 ---
 
-## Node
-
-### getClient
-
----
-
-### setUrl
-
-```ts
-static setUrl(url:string)
-```
-```ts
-ACNet.setUrl('http://localhost:26657')
-```
-
-`ACNet` API 호출시 접속하게 될 ARCANEX 노드의 RPC 서버 URL을 설정한다.
-
-#### Parameters
-
-- `url`: ARCANEX 노드의 RPC 서버 URL
-
----
-
-### getUrl
-
-```ts
-static getUrl():string
-```
-```ts
-const nodeUrl = ACNet.getUrl()
-console.log(nodeUrl) // 'http://localhost:26657'
-```
-
-현재 사용중인 ARCANEX 노드 RPC Server URL.
+# Event
 
 
----

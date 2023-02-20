@@ -206,8 +206,8 @@ message TrxPayloadVotingProto {
 }
 ```
 
-- `version`:
-- `address`: 계정 주소.
+- `version`: AWF의 버전 정보.
+- `address`: 계정 주소. PublicKey 로 부터 유도된다.
 - `algo`: ECDSA curve 이름. (현재는 무조건 'secp256k1' 사용)
 - `cp`: Private Key 암호화 알고리즘 및 암호화 결과.
   - `ca`: Private key 암호화시 사용한 대칭키 암호화 알고리즘.
@@ -221,3 +221,8 @@ message TrxPayloadVotingProto {
   - `kc`: 해시 반복 횟수.
   - `ks`: 키유도시 사용된 salt 의 base64 인코딩 값.
   - `kl`: 바이트 단위의 키 길이.
+
+!!! note "PublicKey to Address"
+    - Bitcoin Style
+      
+    - Ethereum Style

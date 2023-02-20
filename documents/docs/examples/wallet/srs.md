@@ -3,11 +3,13 @@
 
 MAuthWallet 은 MDL, ARCANEX 상의 자산을 관리하기 위하여 개발되는 모바일 앱 형태의 월렛 이다.
 
-일반적인 월렛 어플리케이션은, 
+일반적인 월렛 어플리케이션은,
+
 1. 계정(지갑) 생성
 2. 자산 확인
 3. 자산 전송
 4. 전송 내역 확인
+
 을 기본 기능으로 제공한다.
 
 MAuthWallet 역시 위 기본 기능을 제공함과 동시에, ARCANEX 의 합의 알고리즘인 DPoS 의 특성에 따른 추가 기능과, 
@@ -22,7 +24,7 @@ MAuthWallet 역시 위 기본 기능을 제공함과 동시에, ARCANEX 의 합�
 사용자 요청시 새로운 Account 를 생성한다.  
 여기서 Account 생성은 Private/Public KeyPair 생성을 의미하는데,
 MAuthWallet 은 ECDSA Secp256K1 커브를 사용하여  PrivateKey/PublicKey 를 생성하고 저장 한다.  
-Account 저장은 [AWF](../data.md#arcanex-wallet-format--awf-) 형식으로 구성되어 저장되어야 하는데, 
+Account 저장은 [ARCANEX Wallet Format (AWF)](../../internals/data.md#arcanex-wallet-format--awf-) 형식으로 구성되어 저장되어야 하는데, 
 자세한 사항은 [Save Account](#save-account) 를 참조한다.
 
 ---
@@ -33,14 +35,14 @@ Account 저장은 [AWF](../data.md#arcanex-wallet-format--awf-) 형식으로 구
 ---
 
 ## Export Account
-사용자 요청시 Account 는 [AWF](../data.md#arcanex-wallet-format--awf-) 형식으로 내보내기 될 수 있다.
+사용자 요청시 Account 는 [AWF](../../internals/data.md#arcanex-wallet-format--awf-) 형식으로 내보내기 될 수 있다.
 AWF 는 QR 코드 또는 텍스트 형식으로 노출 될 수 있으며,
 텍스트 형식으로 노출될 경우, 복사 기능을 추가적으로 지원한다.
 
 ---
 
 ## Save Account
-Account 는 [AWF](../data.md#arcanex-wallet-format--awf-) 형식으로 저장되어야 한다.  
+Account 는 [AWF](../../internals/data.md#arcanex-wallet-format--awf-) 형식으로 저장되어야 한다.  
 AWF 는 PrivateKey를 암호화한 데이터와, 암호화에 사용된 암호화키(SecretKey) 유도에 필요한 파라메터를 담고 있다.
 MAuthWallet 이 구동되는 디바이스 환경에 따라 다음과 같은 암호화 저장 방법이 구현 가능하다.  
 
@@ -97,16 +99,16 @@ MAuthWallet 에서 다루는 Confidential Data 는 다음과 같다.
 Programming Language, VM 등 에서 제공하는 Garbage Collector 에 의존하지 마라.
 
 !!! warning
-Confidential Data 가 Call-By-Value 방식의 함수 파라메터로 전달 될 때, 특별한 주의가 필요하다.  
-예를 들어 아래와 같은 코드에서,  
-slice 가 아닌 array 를 요구하는 함수 `B`에 전달할 인자 `arrPass` 를 구성하고,
-함수 `B` 호출후 사용 완료 시점에서 `arrPass`와 `arrSlice` 를 폐기(`clearBytes`호출) 하였다.  
-그러나 golang 의 array 는 Call-By-Value 방식으로 전달 되기 때문에,
-`arrPass`와 `arrPassArg`는 각자 서로 다른 메모리 영역을 갖고 있다.
-때문에 `arrPassArg`의 메모리 영역에는 여전히 Confidential Data 가 남아 있게 된다.
-<br><br>
-또한 함수 `A`로 전달 받은 `pass` 역시 초기화 대상이다. 이를 초기화 하기 위하여 `clearString` 을 호출하였다. 어떻게 될까?
-(hint: Golang 에서 `string`은 value 이다.)
+    Confidential Data 가 Call-By-Value 방식의 함수 파라메터로 전달 될 때, 특별한 주의가 필요하다.  
+    예를 들어 아래와 같은 코드에서,  
+    slice 가 아닌 array 를 요구하는 함수 `B`에 전달할 인자 `arrPass` 를 구성하고,
+    함수 `B` 호출후 사용 완료 시점에서 `arrPass`와 `arrSlice` 를 폐기(`clearBytes`호출) 하였다.  
+    그러나 golang 의 array 는 Call-By-Value 방식으로 전달 되기 때문에,
+    `arrPass`와 `arrPassArg`는 각자 서로 다른 메모리 영역을 갖고 있다.
+    때문에 `arrPassArg`의 메모리 영역에는 여전히 Confidential Data 가 남아 있게 된다.
+    <br><br>
+    또한 함수 `A`로 전달 받은 `pass` 역시 초기화 대상이다. 이를 초기화 하기 위하여 `clearString` 을 호출하였다. 어떻게 될까?
+    (hint: Golang 에서 `string`은 value 이다.)
 
 ```
     func A(pass string) {
@@ -143,29 +145,26 @@ slice 가 아닌 array 를 요구하는 함수 `B`에 전달할 인자 `arrPass`
 
 ---
 
-## Remove Account
-*Sprint2*
-
----
-
-## Account Backup
-*Sprint2*
-
----
-
 ## Account List
-디바이스에 저장된 Account 는 목록으로 사용자에게 제공된다.
-이 목록에서 사용자가 선택한 계정을 본 문서에서 **선택계정** 이라는 용어로 명시하기로 한다.
+디바이스에 저장된 Accounts 는 목록으로 사용자에게 제공된다.
+이 목록에서 사용자가 선택한 계정을 가리키기 위하여 본 문서에서 **선택계정** 이라는 용어를 사용한다.
 
 ---
 
 ## Assets Balance
-MAuthWallet 은 설정된 노드에 접속하여 해당 네트워크에서 선택계정의 잔액 정보를 보여준다.
+MAuthWallet 은 설정된 노드에 접속하여 해당 네트워크에서 선택계정의 잔액 정보를 보여준다.  
+선택계정 조회는 [queryAccount](../../api/acnet.md#queryaccount),
+동기화는 [syncAccount](../../api/acnet.md#syncaccount) 를 참조한다.
 
 ---
 
 ## Transferring
-선택계정의 자산을, 사용자가 지정한 주소의 계정으로, 사용자가 지정한 수량 만큼 전송 할 수 있는 기능을 제공한다.  
+선택계정의 자산을, 사용자가 지정한 주소의 계정으로, 사용자가 지정한 수량 만큼 전송 할 수 있는 기능을 제공한다. 
+
+이 기능은 블록체인 원장의 기록을 변경하는 것으로서, 트랜잭션 발생이 필요하다. 
+
+!!! TIP "MDL"
+    MDL에 대하여 동일한 기능을 구현 해야 하며, 구현 방법은 MDL 명세를 따른다.
 
 ---
 
@@ -173,6 +172,8 @@ MAuthWallet 은 설정된 노드에 접속하여 해당 네트워크에서 선�
 선택계정의 자산을사용자가 지정한 수량 만큼 지분으로 전환 할 수 있는 기능을 제공한다.
 선택계정 자신의 지분으로 전환하는 것을 **지분전환 (Staking)** 이라 하고, 다른 계정의 지분으로 전환 하는 것을 **지분위임 (Delegating)** 이라 한다.
 자신의 지분 또는 위임 지분 내역은 ArcaScan 을 통해 확인 할 수 있다.
+
+이 기능은 블록체인 원장의 기록을 변경하는 것으로서, 트랜잭션 발생이 필요하다.
 
 ---
 
@@ -182,11 +183,220 @@ MAuthWallet 은 설정된 노드에 접속하여 해당 네트워크에서 선�
 거버넌스에서 정한 일정기간이 지난 후에 사용(전송) 가능한 자산으로 전환된다.
 즉 일종의 '해동기간' 이 필요한데, 이 상태의 자산 정보를 확인 할 수 있는 별도의 UI/UX가 제공되어야 한다.
 
+이 기능은 블록체인 원장의 기록을 변경하는 것으로서, 트랜잭션 발생이 필요하다.
+
 ---
+
+## Build and submit Transactions
+
+트랜잭션을 생성하고 제출하기 위해서는 다음과 같은 단계를 수행해야 한다.
+
+1. 트랜잭션 생성 계정 동기화 : `ACNet.syncAccount` API 사용
+2. 트랜잭션 생성: `TrxBuilder.BuildXXX` API 사용
+3. 트랜잭션 전자서명: `TrxBuilder.SignTrx` API 사용
+4. 트랜잭션 제출 : `ACNet.broadcastTrxSync` API 사용
+5. 트랜잭션 커밋(Commit) 확인 : `ACNet.queryTrx` API 사용
+
+트랜잭션 제출이 성공하였음이 **블록체인에 기록(Commit) 되었음을 의미하지는 않는다**. 
+때문에 트랜잭션 제출 이후 해당 트랜잭션이 블록체인 원장에 기록되었음을 확인하는 절차가 필요하다.
+
+```ts
+// sync. account
+ACNet.syncAccount(acct).then( () => {
+  // build a tx.
+    const tx = TrxBuilder.BuildTransferTrx({
+      from: acct.address,
+      to: acct.address,
+      nonce: acct.nonce + 1,
+      gas: "10",
+      amount: "1000000"}
+  })
+  
+  // sign the tx.
+  TrxBuilder.SignTrx(tx, acct);
+  ACNet.broadcastTrxSync(tx).then (resp => {
+    if(resp.code != 0) {
+      console.error(resp.log)
+    }
+    console.log(resp)
+  })
+})
+.catch( err => {
+  console.error(err);
+});
+```
+
+위와 같은 코드를 실행하면, 성공시 다음과 같은 응답값이 출력된다.
+
+```json
+{
+  "code": 0,
+  "data": "",
+  "log": "",
+  "codespace": "",
+  "hash": "C24E840F65CBD187B6757F57F014A620588C85F99C3E613E1E696FE7870956A6"
+}
+```
+
+!!! TIP "MDL"
+    MDL에 대하여 동일한 기능을 구현 해야 하며, 구현 방법은 MDL 명세를 따른다.
+
+## Check Transaction's Commit
+
+트랜잭션이 블록체인에 기록(커밋)되었음을 확인하기 위해 `ACNet.queryTrx` API 를 사용한다.  
+앞서 [Build and submit Transactions](#build-and-submit-transactions) 에서 
+응답으로 수신한 데이터중 `resp.hash` 를 인자로 하여 `ACNet.queryTrx`를 호출한다.  
+
+```ts
+try {
+    setTimeout( () => {
+        ACNRPC.queryTrx(resp.hash).then( retTx => {
+            ...
+        });
+    }, 1500)
+
+} catch(e) {
+    console.error('this is catched at html', e)
+}
+```
+
+트랜잭션이 아직 커밋 전이면, 위 예제에서 `catch` 블록으로 떨어지게 될 것이다.
+이는 트랜잭션이 블록체인 네트워크에서 처리 중에 발생할 수 있는 에러이기 때문에, 일정 시간(e.g. 1500ms) 후에 다시 시도한다.
+앞서 트랜잭셩 생성 및 제출이 성공하였다면, 언젠가는 아래와 같은 응답을 수신하게 될 것이다.
+
+```json
+{
+    "hash": "C24E840F65CBD187B6757F57F014A620588C85F99C3E613E1E696FE7870956A6",
+    "height": "111022",
+    "index": 0,
+    "tx_result": {
+        "code": 0,
+        "data": null,
+        "log": "",
+        "info": "",
+        "gas_wanted": "10",
+        "gas_used": "10",
+        "events": [
+            {
+                "type": "tx",
+                "attributes": [
+                    {
+                        "key": "dHgudHlwZQ==",
+                        "value": "dHJhbnNmZXI=",
+                        "index": true
+                    },
+                    {
+                        "key": "dHguc2VuZGVy",
+                        "value": "OERDNDFBODZCOTFFQjg4RDgyNDg5QzREMDM3QUU5RkZDQTY1Q0ZCRg==",
+                        "index": true
+                    },
+                    {
+                        "key": "dHgucmVjZWl2ZXI=",
+                        "value": "MUM2QzcxRDNCMERCMEM0NTM3RjdFQ0REMkM5RkU2Rjg2QkI5QzE1RQ==",
+                        "index": true
+                    },
+                    {
+                        "key": "dHguYWRkcnBhaXI=",
+                        "value": "OERDNDFBODZCOTFFQjg4RDgyNDg5QzREMDM3QUU5RkZDQTY1Q0ZCRjFDNkM3MUQzQjBEQjBDNDUzN0Y3RUNERDJDOUZFNkY4NkJCOUMxNUU=",
+                        "index": true
+                    }
+                ]
+            }
+        ],
+        "codespace": ""
+    },
+    "tx": {
+        "hash": "c24e840f65cbd187b6757f57f014a620588c85f99c3e613e1e696fe7870956a6",
+        "version": 1,
+        "time": "2023-02-20T02:43:30.452Z",
+        "nonce": 14,
+        "from": "8dc41a86b91eb88d82489c4d037ae9ffca65cfbf",
+        "to": "1c6c71d3b0db0c4537f7ecdd2c9fe6f86bb9c15e",
+        "amount": "1000000",
+        "gas": "10",
+        "type": 1,
+        "sig": "cf8529647120464811e6d63e98b2697a5b78ffac7e6e95e4f97fe30420e9cc50725c009aa64fd3b1b232031b55516d89a0d28f7f4202c6698213054a4d00771b01"
+    },
+    "proof": {
+        "root_hash": "DDC2FF8F8662EC2FED57C62F3262A95B90C3C7869D5A4E5D788B86A8116E269B",
+        "data": "CAEQgNrGjcaG2qIXGA4iFI3EGoa5HriNgkicTQN66f/KZc+/KhQcbHHTsNsMRTf37N0sn+b4a7nBXjIDD0JAOgEKQAFSQc+FKWRxIEZIEebWPpiyaXpbeP+sfm6V5Pl/4wQg6cxQclwAmqZP07GyMgMbVVFtiaDSj39CAsZpghMFSk0AdxsB",
+        "proof": {
+            "total": "1",
+            "index": "0",
+            "leaf_hash": "3cL/j4Zi7C/tV8YvMmKpW5DDx4adWk5deIuGqBFuJps=",
+            "aunts": []
+        }
+    },
+    "encoded": "CAEQgNrGjcaG2qIXGA4iFI3EGoa5HriNgkicTQN66f/KZc+/KhQcbHHTsNsMRTf37N0sn+b4a7nBXjIDD0JAOgEKQAFSQc+FKWRxIEZIEebWPpiyaXpbeP+sfm6V5Pl/4wQg6cxQclwAmqZP07GyMgMbVVFtiaDSj39CAsZpghMFSk0AdxsB"
+}
+```
+
+!!! note
+    **트랜잭션이 커밋에 성공한 것과, 트랜잭션 실행이 성공한 것과는 다르다.**  
+    즉 트랜잭션이 블록체인에 기록되었지만, 실패 상태로 기록되는 상황이 얼마든지 가능하다.  
+    트랜잭션 실행 성공 여부는 위 응답값의 `tx_result.code` 가 `0` 임을 확인한다.
+    그 외의 값은 실행 실패를 의미하며 이 때 `tx_result.log`는 발생한 에러에 대한 메시지를 담고 있다.
+
+---
+
+!!! TIP "MDL"
+    MDL에 대하여 동일한 기능을 구현 해야 하며, 구현 방법은 MDL 명세를 따른다.
 
 ## Transaction History
 선택계정이 발행자(sender) 또는 수신자(receiver) 로 지정된 트랜잭션 목록을 리스트 형태로 보여준다.  
 이 목록은 트랜잭션 발생 역순으로 최근 X개로 구성되며 페이징 처리는 옵션이다.
+
+!!! TIP "MDL"
+    MDL에 대하여 동일한 기능을 구현 해야 하며, 구현 방법은 MDL 명세를 따른다.
+---
+
+## Add and select Node URL
+MAuthWallet 이 접속할 블록체인 네트워크의 노드 URL 을 추가 할 수 있어야 한다.
+이미 추가된 노드 URL 은 목록 형태로 제공되어 선택 가능해야 한다.  
+[External Transaction Signing](#external-transaction-signing) 이 외의 모든 트랜잭션은 현재 선택된 Node 로 제출 되어야 한다.
+
+!!! TIP "MDL"
+    MDL에 대하여 동일한 기능을 구현 해야 하며, 구현 방법은 MDL 명세를 따른다.
+
+---
+
+## Authentication methods
+MAuthWallet 은 다음과 같은 사용자 인증 수단을 제공해야 한다.
+
+- 비밀 번호  
+  사용자로 부터 보안 키보드를 통해 입력 받는 문자열.
+- 생체 정보  
+  지문, 안면인식 등 디바이스에서 지원하는 생체 인식 메커니즘.
+
+디바이스가 지원한다면 가급적 생체 정보를 사용하도록 유도하는 사용 시나리오를 적용, 구현한다.
+
+---
+
+## SDK
+
+*ARCANEX 노드와 통신하는 부분을 모듈화 -> 별도의 프로젝트로 -> SDK 확보 ?*
+
+
+## ETC.
+
+Sprint_N
+
+
+---
+
+## Remove Account
+
+---
+
+## Account Backup
+
+---
+
+## Assets Swapping
+
+---
+
+## Blockchain Network Monitoring
 
 ---
 
@@ -196,37 +406,3 @@ MAuthWallet 은 설정된 노드에 접속하여 해당 네트워크에서 선�
 특정된 블록체인 네트워크로 전송하기 위한 사용 시나리오를 정의하고 이를 구현하여야 한다.
 
 ---
-
-## Authentication methods
-MAuthWallet 은 다음과 같은 사용자 인증 수단을 제공해야 한다.
-
-- 비밀번호  
-  사용자로 부터 보안 키보드를 통해 입력 받는 문자열.
-- 지문  
-  디바이스 지원 여부를 확인하여 해당 기능 활성화 여부를 결정한다.
-- 안면인식  
-  디바이스 지원 여부를 확인하여 해당 기능 활성화 여부를 결정한다.
-
-디바이스가 지원한다면 가급적 생체 정보를 사용하도록 유도하는 사용 시나리오를 적용, 구현한다.
-
----
-
-## Assets Swapping
-
----
-
-
-## Blockchain Network Monitoring
-
----
-
-## ARCANEX / MDL Node Setting
-MAuthWallet 이 접속할 블록체인 네트워크의 노드 URL 을 추가 할 수 있어야 한다.
-이미 추가된 노드 URL 은 목록 형태로 제공되어 선택 가능해야 한다.
-[External Transaction Signing](#external-transaction-signing) 이 외의 모든 트랜잭션은 현재 선택된 Node 로 제출 되어야 한다.
-
----
-
-## SDK
-
-*ARCANEX 노드와 통신하는 부분을 모듈화 -> 별도의 프로젝트로 -> SDK 확보 ?*
