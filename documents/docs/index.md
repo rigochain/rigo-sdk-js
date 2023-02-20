@@ -1,4 +1,4 @@
-## Overview
+# Overview
 
 ```plantuml
 @startuml
@@ -30,13 +30,40 @@ Javascript 환경에서 사용할 수 있는 라이브러리 형태로 구현한
 
 `arcanex-sdk-js` 는 ARCANEX 노드로의 JSONRPC 요청과 이에 대한 응답 수신을 통해 다음과 같은 기능을 수행하는 API 집합을 제공한다.
 
-## Account management
+---
+
+## Quick Start
+
+### Browserify
+
+```bash
+git clone https://github.com/arcanexio/arcanex-sdk-js.git
+cd arcanex-sdk-js
+npm install
+gulp
+```
+
+```html
+<script type='text/javascript' src='./dist/arcanex.min.js'></script>
+```
+
+### NodeJS
+
+```bash
+npm i arcanex-sdk-js
+```
+
+---
+
+## Features
+
+### Account management
 
 - `Account` 생성
 - `Account` 가져오기
 - `Account` 내보내기
 
-## Query state
+### Query state
 블록체인에 기록된 다음과 같은 정보를 조회 한다.
 
 - 블록 및 트랜잭션.
@@ -47,7 +74,7 @@ Javascript 환경에서 사용할 수 있는 라이브러리 형태로 구현한
 
 조회 기능에 대한 보다 자세한 사항은 [ACNet API](api/acnrpc.md) 를 참고한다.
 
-## Build and send transactions
+### Build and send transactions
 
 특정 기능을 수행하는 트랜잭션을 구성하고 블록체인 네트워크에 제출 한다.  
 현재 ARCANEX 에서 제공하는 트랜잭션 종류는 다음과 같다.
@@ -58,9 +85,9 @@ Javascript 환경에서 사용할 수 있는 라이브러리 형태로 구현한
 - Governance Rule Proposal
 - Voting to proposal
 
-트랜잭션 발행에 대한 보다 자세한 사항은 [ACNet API](api/acnrpc.md) 를 참고한다.
+트랜잭션 발행에 대한 보다 자세한 사항은 [TrxBuilder API](api/trxbuilder.md) 를 참고한다.
 
-## Subscribing to events
+### Subscribing to events
 
 ARCANEX 네트워크에서 발생되는 상태 변경 사항을 이벤트 구독 형식으로 수신할 수 있다.  
 이벤트 구독은, ARCANEX 노드와 websocket 연결 생성, 구독 조건을 명시한 쿼리문 전송 으로 이루어지고,  

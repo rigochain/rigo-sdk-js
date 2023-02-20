@@ -115,12 +115,12 @@ Programming Language, VM 등 에서 제공하는 Garbage Collector 에 의존하
         arrSlice := []byte(pass)
         
         var arrPass [32]byte
-        copy(passA[:], arrSlice)
+        copy(arrPass[:], arrSlice)
         
-        B(passA)
+        B(arrPass)
         
         clearBytes(arrSlice)
-        clearBytes(passA[:])
+        clearBytes(arrPass[:])
         clearString(pass)
     }
     
