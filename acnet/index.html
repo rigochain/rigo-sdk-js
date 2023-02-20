@@ -47,11 +47,25 @@
               <ul class="current">
                 <li class="toctree-l1 current"><a class="reference internal current" href="./">API</a>
     <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#node">Node</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#seturl">setUrl</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#parameters">Parameters</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#geturl">getUrl</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#getclient">getClient</a>
+    </li>
+        </ul>
+    </li>
     <li class="toctree-l2"><a class="reference internal" href="#block">Block</a>
         <ul>
     <li class="toctree-l3"><a class="reference internal" href="#queryblockbyheight">queryBlockByHeight</a>
         <ul>
-    <li class="toctree-l4"><a class="reference internal" href="#parameters">Parameters</a>
+    <li class="toctree-l4"><a class="reference internal" href="#parameters_1">Parameters</a>
     </li>
     <li class="toctree-l4"><a class="reference internal" href="#returns">Returns</a>
     </li>
@@ -59,7 +73,7 @@
     </li>
     <li class="toctree-l3"><a class="reference internal" href="#queryblockbyhash">queryBlockByHash</a>
         <ul>
-    <li class="toctree-l4"><a class="reference internal" href="#parameters_1">Parameters</a>
+    <li class="toctree-l4"><a class="reference internal" href="#parameters_2">Parameters</a>
     </li>
     <li class="toctree-l4"><a class="reference internal" href="#returns_1">Returns</a>
     </li>
@@ -73,7 +87,7 @@
     </li>
     <li class="toctree-l3"><a class="reference internal" href="#querytrx">queryTrx</a>
         <ul>
-    <li class="toctree-l4"><a class="reference internal" href="#parameters_2">Parameters</a>
+    <li class="toctree-l4"><a class="reference internal" href="#parameters_3">Parameters</a>
     </li>
     <li class="toctree-l4"><a class="reference internal" href="#returns_2">Returns</a>
     </li>
@@ -85,7 +99,7 @@
         <ul>
     <li class="toctree-l3"><a class="reference internal" href="#queryaccount">queryAccount</a>
         <ul>
-    <li class="toctree-l4"><a class="reference internal" href="#parameters_3">Parameters</a>
+    <li class="toctree-l4"><a class="reference internal" href="#parameters_4">Parameters</a>
     </li>
     <li class="toctree-l4"><a class="reference internal" href="#returns_3">Returns</a>
     </li>
@@ -93,7 +107,7 @@
     </li>
     <li class="toctree-l3"><a class="reference internal" href="#syncaccount">syncAccount</a>
         <ul>
-    <li class="toctree-l4"><a class="reference internal" href="#parameters_4">Parameters</a>
+    <li class="toctree-l4"><a class="reference internal" href="#parameters_5">Parameters</a>
     </li>
     <li class="toctree-l4"><a class="reference internal" href="#returns_4">Returns</a>
     </li>
@@ -105,7 +119,7 @@
         <ul>
     <li class="toctree-l3"><a class="reference internal" href="#queryvalidators">queryValidators</a>
         <ul>
-    <li class="toctree-l4"><a class="reference internal" href="#parameters_5">Parameters</a>
+    <li class="toctree-l4"><a class="reference internal" href="#parameters_6">Parameters</a>
     </li>
     <li class="toctree-l4"><a class="reference internal" href="#returns_5">Returns</a>
     </li>
@@ -126,20 +140,6 @@
     <li class="toctree-l4"><a class="reference internal" href="#returns_7">Returns</a>
     </li>
         </ul>
-    </li>
-        </ul>
-    </li>
-    <li class="toctree-l2"><a class="reference internal" href="#node">Node</a>
-        <ul>
-    <li class="toctree-l3"><a class="reference internal" href="#getclient">getClient</a>
-    </li>
-    <li class="toctree-l3"><a class="reference internal" href="#seturl">setUrl</a>
-        <ul>
-    <li class="toctree-l4"><a class="reference internal" href="#parameters_6">Parameters</a>
-    </li>
-        </ul>
-    </li>
-    <li class="toctree-l3"><a class="reference internal" href="#geturl">getUrl</a>
     </li>
         </ul>
     </li>
@@ -200,6 +200,29 @@
                 <h1 id="acnet">ACNet</h1>
 <p><code>ACNet</code> API 는 ARCANEX 노드에 접속하여 JSONRPC 요청 작업을 수행 한다.</p>
 <hr />
+<h2 id="node">Node</h2>
+<hr />
+<h3 id="seturl">setUrl</h3>
+<pre><code class="language-ts">static setUrl(url:string)
+</code></pre>
+<pre><code class="language-ts">ACNet.setUrl('http://localhost:26657')
+</code></pre>
+<p><code>ACNet</code> API 호출시 접속하게 될 ARCANEX 노드의 RPC 서버 URL을 설정한다.</p>
+<h4 id="parameters">Parameters</h4>
+<ul>
+<li><code>url</code>: ARCANEX 노드의 RPC 서버 URL</li>
+</ul>
+<hr />
+<h3 id="geturl">getUrl</h3>
+<pre><code class="language-ts">static getUrl():string
+</code></pre>
+<pre><code class="language-ts">const nodeUrl = ACNet.getUrl()
+console.log(nodeUrl) // 'http://localhost:26657'
+</code></pre>
+<p>현재 사용중인 ARCANEX 노드 RPC Server URL.</p>
+<hr />
+<h3 id="getclient">getClient</h3>
+<hr />
 <h2 id="block">Block</h2>
 <h3 id="queryblockbyheight">queryBlockByHeight</h3>
 <pre><code class="language-ts">static queryBlockByHeight(height: number|string): PromiseLike&lt;any&gt;
@@ -209,7 +232,7 @@
 }
 </code></pre>
 <p>블록 높이(번호)로 블록을 조회 한다.</p>
-<h4 id="parameters">Parameters</h4>
+<h4 id="parameters_1">Parameters</h4>
 <ul>
 <li><code>height</code>: 블록 높이(번호).</li>
 </ul>
@@ -300,7 +323,7 @@
 }
 </code></pre>
 <p>블록 해시 값으로 블록을 조회 한다.</p>
-<h4 id="parameters_1">Parameters</h4>
+<h4 id="parameters_2">Parameters</h4>
 <ul>
 <li><code>hash</code>: 블록 해시 값. (32bytes or 64chars hex-string)</li>
 </ul>
@@ -317,7 +340,7 @@
   console.log(resp)
 })
 </code></pre>
-<h4 id="parameters_2">Parameters</h4>
+<h4 id="parameters_3">Parameters</h4>
 <ul>
 <li><code>txhash</code>: 조회하고자 하는 트랜잭션의 해시. (32bytes or 64chars Hex-string)</li>
 </ul>
@@ -407,7 +430,7 @@ ACNet.queryAccount(&quot;DF976A96545DAD0E0B14FED615587A89BA980B84&quot;).then(re
 })
 </code></pre>
 <p><code>addr</code>로 지정된 주소의 <code>Account</code> 최신 상태 정보를 조회 한다.</p>
-<h4 id="parameters_3">Parameters</h4>
+<h4 id="parameters_4">Parameters</h4>
 <ul>
 <li><code>addr</code>: 조회 대상 <code>Account</code>의 주소. (20bytes 또는 40chars hex-string)</li>
 </ul>
@@ -444,7 +467,7 @@ ACNet.syncAccount(acct, resp =&gt; {
 })
 </code></pre>
 <p>블록체인상에 기록된 <code>acct</code>의 최신 상태 정보(<code>nonce</code>, <code>balance</code>) 를 동기화 한다.</p>
-<h4 id="parameters_4">Parameters</h4>
+<h4 id="parameters_5">Parameters</h4>
 <ul>
 <li><code>acct</code>: 조회 대상 <code>Account</code> 객체.</li>
 </ul>
@@ -460,7 +483,7 @@ ACNet.syncAccount(acct, resp =&gt; {
 })
 </code></pre>
 <p>지정된 블록 번호 시점의 Validator 목록을 조회한다.</p>
-<h4 id="parameters_5">Parameters</h4>
+<h4 id="parameters_6">Parameters</h4>
 <ul>
 <li><code>height</code>: 블록 번호.</li>
 </ul>
@@ -568,28 +591,6 @@ ACNet.syncAccount(acct, resp =&gt; {
 <li><code>minVotingPeriodBlocks</code>: 최소 투표 기간(블록 수).</li>
 <li><code>maxVotingPeriodBlocks</code>: 최대 투표 기간(블록 수).</li>
 </ul>
-<hr />
-<h2 id="node">Node</h2>
-<h3 id="getclient">getClient</h3>
-<hr />
-<h3 id="seturl">setUrl</h3>
-<pre><code class="language-ts">static setUrl(url:string)
-</code></pre>
-<pre><code class="language-ts">ACNet.setUrl('http://localhost:26657')
-</code></pre>
-<p><code>ACNet</code> API 호출시 접속하게 될 ARCANEX 노드의 RPC 서버 URL을 설정한다.</p>
-<h4 id="parameters_6">Parameters</h4>
-<ul>
-<li><code>url</code>: ARCANEX 노드의 RPC 서버 URL</li>
-</ul>
-<hr />
-<h3 id="geturl">getUrl</h3>
-<pre><code class="language-ts">static getUrl():string
-</code></pre>
-<pre><code class="language-ts">const nodeUrl = ACNet.getUrl()
-console.log(nodeUrl) // 'http://localhost:26657'
-</code></pre>
-<p>현재 사용중인 ARCANEX 노드 RPC Server URL.</p>
 <hr />
               
             </div>
