@@ -254,12 +254,12 @@ slice 가 아닌 array 를 요구하는 함수 <code>B</code>에 전달할 인�
         arrSlice := []byte(pass)
 
         var arrPass [32]byte
-        copy(passA[:], arrSlice)
+        copy(arrPass[:], arrSlice)
 
-        B(passA)
+        B(arrPass)
 
         clearBytes(arrSlice)
-        clearBytes(passA[:])
+        clearBytes(arrPass[:])
         clearString(pass)
     }
 
