@@ -26,6 +26,6 @@ class Account {
 
 !!! note
     `nonce`와, `balance` 정보는 블록체인에 기록된 값으로 동기화가 이루어져야 한다.
-    `Account` 객체의 동기화는 [`ACNet.syncAccount`](../api/acnet.md#syncaccount) API를 사용한다.
+    `Account` 객체의 동기화는 [`ACNet.syncAccount`](../api/acnrpc.md#syncaccount) API를 사용한다.
 
 ---

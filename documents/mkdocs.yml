@@ -11,7 +11,7 @@ nav:
       - Account: api/account.md
       - TrxBuilder: api/trxbuilder.md
       - Event: api/subscriber.md
-      - ACNet: api/acnet.md
+      - ACNet: api/acnrpc.md
 
   - internals:
       - Account: internals/account.md

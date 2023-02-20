@@ -45,7 +45,7 @@ Javascript 환경에서 사용할 수 있는 라이브러리 형태로 구현한
 - 위임 받은 계정 목록 및 지분 정보.
 - 거버넌스 규칙.
 
-조회 기능에 대한 보다 자세한 사항은 [ACNet API](api/acnet.md) 를 참고한다.
+조회 기능에 대한 보다 자세한 사항은 [ACNet API](api/acnrpc.md) 를 참고한다.
 
 ## Build and send transactions
 
@@ -58,7 +58,7 @@ Javascript 환경에서 사용할 수 있는 라이브러리 형태로 구현한
 - Governance Rule Proposal
 - Voting to proposal
 
-트랜잭션 발행에 대한 보다 자세한 사항은 [ACNet API](api/acnet.md) 를 참고한다.
+트랜잭션 발행에 대한 보다 자세한 사항은 [ACNet API](api/acnrpc.md) 를 참고한다.
 
 ## Subscribing to events
 

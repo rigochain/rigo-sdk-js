@@ -153,8 +153,8 @@ Programming Language, VM 등 에서 제공하는 Garbage Collector 에 의존하
 
 ## Assets Balance
 MAuthWallet 은 설정된 노드에 접속하여 해당 네트워크에서 선택계정의 잔액 정보를 보여준다.  
-선택계정 조회는 [queryAccount](../../api/acnet.md#queryaccount),
-동기화는 [syncAccount](../../api/acnet.md#syncaccount) 를 참조한다.
+선택계정 조회는 [queryAccount](../../api/acnrpc.md#queryaccount),
+동기화는 [syncAccount](../../api/acnrpc.md#syncaccount) 를 참조한다.
 
 ---
 
@@ -250,7 +250,7 @@ ACNet.syncAccount(acct).then( () => {
 ```ts
 try {
     setTimeout( () => {
-        ACNRPC.queryTrx(resp.hash).then( retTx => {
+        ACNet.queryTrx(resp.hash).then( retTx => {
             ...
         });
     }, 1500)

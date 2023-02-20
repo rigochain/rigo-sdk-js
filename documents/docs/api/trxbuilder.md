@@ -1,10 +1,10 @@
 ## TrxBuilder
 
 
-### buildTransferTrx
+### BuildTransferTrx
 
 ```ts
-export function buildTransferTrx(object:any): TrxProto
+function BuildTransferTrx(obj: Trx): trxPb.TrxProto
 ```
 
 #### Parameters
@@ -16,7 +16,11 @@ export function buildTransferTrx(object:any): TrxProto
 ---
 
 
-### API Name
+### BuildDelegateTrx
+
+```ts
+function BuildDelegateTrx(obj: Trx): trxPb.TrxProto
+```
 
 #### Parameters
 
@@ -26,9 +30,11 @@ export function buildTransferTrx(object:any): TrxProto
 
 ---
 
-## APIs01
+### BuildUndelegateTrx
 
-### API Name
+```ts
+function BuildUndelegateTrx(obj: Trx): trxPb.TrxProto
+```
 
 #### Parameters
 
@@ -38,9 +44,25 @@ export function buildTransferTrx(object:any): TrxProto
 
 ---
 
-## APIs01
+### SignTrx
 
-### API Name
+```ts
+function SignTrx(tx:trxPb.TrxProto, acct:Account): [Bytes, Bytes]
+```
+
+#### Parameters
+
+#### Returns
+
+#### Examples
+
+---
+
+### DecodeTrx
+
+```ts
+function DecodeTrx(d: Bytes): Trx
+```
 
 #### Parameters
 
