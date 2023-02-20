@@ -50,7 +50,7 @@
                   </li>
                   <li class="toctree-l1 current"><a class="reference internal current" href="./">TrxBuilder</a>
     <ul class="current">
-    <li class="toctree-l2"><a class="reference internal" href="#buildtransfertrx">buildTransferTrx</a>
+    <li class="toctree-l2"><a class="reference internal" href="#buildtransfertrx">BuildTransferTrx</a>
         <ul>
     <li class="toctree-l3"><a class="reference internal" href="#parameters">Parameters</a>
     </li>
@@ -60,13 +60,43 @@
     </li>
         </ul>
     </li>
-    <li class="toctree-l2"><a class="reference internal" href="#api-name">API Name</a>
+    <li class="toctree-l2"><a class="reference internal" href="#builddelegatetrx">BuildDelegateTrx</a>
         <ul>
     <li class="toctree-l3"><a class="reference internal" href="#parameters_1">Parameters</a>
     </li>
     <li class="toctree-l3"><a class="reference internal" href="#returns_1">Returns</a>
     </li>
     <li class="toctree-l3"><a class="reference internal" href="#examples_1">Examples</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#buildundelegatetrx">BuildUndelegateTrx</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#parameters_2">Parameters</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#returns_2">Returns</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#examples_2">Examples</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#signtrx">SignTrx</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#parameters_3">Parameters</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#returns_3">Returns</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#examples_3">Examples</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#decodetrx">DecodeTrx</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#parameters_4">Parameters</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#returns_4">Returns</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#examples_4">Examples</a>
     </li>
         </ul>
     </li>
@@ -126,29 +156,40 @@
             <div class="section" itemprop="articleBody">
               
                 <h2 id="trxbuilder">TrxBuilder</h2>
-<h3 id="buildtransfertrx">buildTransferTrx</h3>
-<pre><code class="language-ts">export function buildTransferTrx(object:any): TrxProto
+<h3 id="buildtransfertrx">BuildTransferTrx</h3>
+<pre><code class="language-ts">function BuildTransferTrx(obj: Trx): trxPb.TrxProto
 </code></pre>
 <h4 id="parameters">Parameters</h4>
 <h4 id="returns">Returns</h4>
 <h4 id="examples">Examples</h4>
 <hr />
-<h3 id="api-name">API Name</h3>
+<h3 id="builddelegatetrx">BuildDelegateTrx</h3>
+<pre><code class="language-ts">function BuildDelegateTrx(obj: Trx): trxPb.TrxProto
+</code></pre>
 <h4 id="parameters_1">Parameters</h4>
 <h4 id="returns_1">Returns</h4>
 <h4 id="examples_1">Examples</h4>
 <hr />
-<h2 id="apis01">APIs01</h2>
-<h3 id="api-name_1">API Name</h3>
+<h3 id="buildundelegatetrx">BuildUndelegateTrx</h3>
+<pre><code class="language-ts">function BuildUndelegateTrx(obj: Trx): trxPb.TrxProto
+</code></pre>
 <h4 id="parameters_2">Parameters</h4>
 <h4 id="returns_2">Returns</h4>
 <h4 id="examples_2">Examples</h4>
 <hr />
-<h2 id="apis01_1">APIs01</h2>
-<h3 id="api-name_2">API Name</h3>
+<h3 id="signtrx">SignTrx</h3>
+<pre><code class="language-ts">function SignTrx(tx:trxPb.TrxProto, acct:Account): [Bytes, Bytes]
+</code></pre>
 <h4 id="parameters_3">Parameters</h4>
 <h4 id="returns_3">Returns</h4>
 <h4 id="examples_3">Examples</h4>
+<hr />
+<h3 id="decodetrx">DecodeTrx</h3>
+<pre><code class="language-ts">function DecodeTrx(d: Bytes): Trx
+</code></pre>
+<h4 id="parameters_4">Parameters</h4>
+<h4 id="returns_4">Returns</h4>
+<h4 id="examples_4">Examples</h4>
               
             </div>
           </div><footer>
