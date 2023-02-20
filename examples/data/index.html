@@ -45,11 +45,7 @@
                 </li>
               </ul>
               <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../../rpc/">RPC</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../../acnet/">ACNet</a>
+                <li class="toctree-l1"><a class="reference internal" href="../../acnet/">API</a>
                 </li>
               </ul>
               <ul>
@@ -61,6 +57,8 @@
                   <li class="toctree-l1"><a class="reference internal" href="../../internals/account/">Account</a>
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../../internals/transactions/">Transaction</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../rpc/">JSONRPC</a>
                   </li>
               </ul>
               <p class="caption"><span class="caption-text">examples</span></p>
@@ -293,7 +291,7 @@ message TrxPayloadVotingProto {
 }
 </code></pre>
 <ul>
-<li><code>version</code>:</li>
+<li><code>version</code>: AWF의 버전 정보.</li>
 <li><code>address</code>: 계정 주소. PublicKey 로 부터 유도된다.</li>
 <li><code>algo</code>: ECDSA curve 이름. (현재는 무조건 'secp256k1' 사용)</li>
 <li><code>cp</code>: Private Key 암호화 알고리즘 및 암호화 결과.</li>
@@ -309,7 +307,17 @@ message TrxPayloadVotingProto {
 <li><code>ks</code>: 키유도시 사용된 salt 의 base64 인코딩 값.</li>
 <li><code>kl</code>: 바이트 단위의 키 길이.</li>
 </ul>
-<h2 id="publickey-to-address">PublicKey to Address</h2>
+<div class="admonition note">
+<p class="admonition-title">PublicKey to Address</p>
+<ul>
+<li>
+<p>Bitcoin Style</p>
+</li>
+<li>
+<p>Ethereum Style</p>
+</li>
+</ul>
+</div>
               
             </div>
           </div><footer>

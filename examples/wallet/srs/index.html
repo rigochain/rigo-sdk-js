@@ -45,11 +45,7 @@
                 </li>
               </ul>
               <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../../../rpc/">RPC</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../../../acnet/">ACNet</a>
+                <li class="toctree-l1"><a class="reference internal" href="../../../acnet/">API</a>
                 </li>
               </ul>
               <ul>
@@ -61,6 +57,8 @@
                   <li class="toctree-l1"><a class="reference internal" href="../../../internals/account/">Account</a>
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../../../internals/transactions/">Transaction</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../rpc/">JSONRPC</a>
                   </li>
               </ul>
               <p class="caption"><span class="caption-text">examples</span></p>
@@ -158,11 +156,13 @@
                 <h1 id="overview">Overview</h1>
 <p>이 문서는 MAuthWallet 이 갖추어야 할 최소 요구사항을 One-page 형식으로 기술한다.</p>
 <p>MAuthWallet 은 MDL, ARCANEX 상의 자산을 관리하기 위하여 개발되는 모바일 앱 형태의 월렛 이다.</p>
-<p>일반적인 월렛 어플리케이션은, 
-1. 계정(지갑) 생성
-2. 자산 확인
-3. 자산 전송
-4. 전송 내역 확인</p>
+<p>일반적인 월렛 어플리케이션은,</p>
+<ol>
+<li>계정(지갑) 생성</li>
+<li>자산 확인</li>
+<li>자산 전송</li>
+<li>전송 내역 확인</li>
+</ol>
 <p>을 기본 기능으로 제공한다.</p>
 <p>MAuthWallet 역시 위 기본 기능을 제공함과 동시에, ARCANEX 의 합의 알고리즘인 DPoS 의 특성에 따른 추가 기능과, 
 하이퍼렛지 기반의 MDL 상에서의 위 기본 기능을 함께 제공하도록 구현되어야 한다.</p>
@@ -173,7 +173,7 @@
 <p>사용자 요청시 새로운 Account 를 생성한다.<br />
 여기서 Account 생성은 Private/Public KeyPair 생성을 의미하는데,
 MAuthWallet 은 ECDSA Secp256K1 커브를 사용하여  PrivateKey/PublicKey 를 생성하고 저장 한다.<br />
-Account 저장은 <a href="../../data/#arcanex-wallet-format--awf-">AWF</a> 형식으로 구성되어 저장되어야 하는데, 
+Account 저장은 <a href="../../data/#arcanex-wallet-format--awf-">ARCANEX Wallet Format (AWF)</a> 형식으로 구성되어 저장되어야 하는데, 
 자세한 사항은 <a href="#save-account">Save Account</a> 를 참조한다.</p>
 <hr />
 <h2 id="import-account">Import Account</h2>
@@ -289,8 +289,8 @@ slice 가 아닌 array 를 요구하는 함수 <code>B</code>에 전달할 인�
 <h2 id="transferring">Transferring</h2>
 <p>선택계정의 자산을, 사용자가 지정한 주소의 계정으로, 사용자가 지정한 수량 만큼 전송 할 수 있는 기능을 제공한다. </p>
 <p>이 기능은 블록체인 원장의 기록을 변경하는 것으로서, 트랜잭션 발생이 필요하다. </p>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
+<div class="admonition tip">
+<p class="admonition-title">MDL</p>
 <p>MDL에 대하여 동일한 기능을 구현 해야 하며, 구현 방법은 MDL 명세를 따른다.</p>
 </div>
 <hr />
@@ -351,12 +351,12 @@ ACNet.syncAccount(acct).then( () =&gt; {
   &quot;hash&quot;: &quot;C24E840F65CBD187B6757F57F014A620588C85F99C3E613E1E696FE7870956A6&quot;
 }
 </code></pre>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
+<div class="admonition tip">
+<p class="admonition-title">MDL</p>
 <p>MDL에 대하여 동일한 기능을 구현 해야 하며, 구현 방법은 MDL 명세를 따른다.</p>
 </div>
 <h2 id="check-transactions-commit">Check Transaction's Commit</h2>
-<p>트랜잭션이 블록체인에 기록되었음을 확인하기 위해 <code>ACNet.queryTrx</code> API 를 사용한다.<br />
+<p>트랜잭션이 블록체인에 기록(커밋)되었음을 확인하기 위해 <code>ACNet.queryTrx</code> API 를 사용한다.<br />
 앞서 <a href="#build-and-submit-transactions">Build and submit Transactions</a> 에서 
 응답으로 수신한 데이터중 <code>resp.hash</code> 를 인자로 하여 <code>ACNet.queryTrx</code>를 호출한다.  </p>
 <pre><code class="language-ts">try {
@@ -438,20 +438,23 @@ ACNet.syncAccount(acct).then( () =&gt; {
     &quot;encoded&quot;: &quot;CAEQgNrGjcaG2qIXGA4iFI3EGoa5HriNgkicTQN66f/KZc+/KhQcbHHTsNsMRTf37N0sn+b4a7nBXjIDD0JAOgEKQAFSQc+FKWRxIEZIEebWPpiyaXpbeP+sfm6V5Pl/4wQg6cxQclwAmqZP07GyMgMbVVFtiaDSj39CAsZpghMFSk0AdxsB&quot;
 }
 </code></pre>
-<p>트랜잭션이 커밋에 성공한 것과, 트랜잭션 실행이 성공한 것과는 다르다.
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><strong>트랜잭션이 커밋에 성공한 것과, 트랜잭션 실행이 성공한 것과는 다르다.</strong><br />
 즉 트랜잭션이 블록체인에 기록되었지만, 실패 상태로 기록되는 상황이 얼마든지 가능하다.<br />
 트랜잭션 실행 성공 여부는 위 응답값의 <code>tx_result.code</code> 가 <code>0</code> 임을 확인한다.
 그 외의 값은 실행 실패를 의미하며 이 때 <code>tx_result.log</code>는 발생한 에러에 대한 메시지를 담고 있다.</p>
+</div>
 <hr />
-<div class="admonition note">
-<p class="admonition-title">Note</p>
+<div class="admonition tip">
+<p class="admonition-title">MDL</p>
 <p>MDL에 대하여 동일한 기능을 구현 해야 하며, 구현 방법은 MDL 명세를 따른다.</p>
 </div>
 <h2 id="transaction-history">Transaction History</h2>
 <p>선택계정이 발행자(sender) 또는 수신자(receiver) 로 지정된 트랜잭션 목록을 리스트 형태로 보여준다.<br />
 이 목록은 트랜잭션 발생 역순으로 최근 X개로 구성되며 페이징 처리는 옵션이다.</p>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
+<div class="admonition tip">
+<p class="admonition-title">MDL</p>
 <p>MDL에 대하여 동일한 기능을 구현 해야 하며, 구현 방법은 MDL 명세를 따른다.</p>
 </div>
 <hr />
@@ -459,20 +462,18 @@ ACNet.syncAccount(acct).then( () =&gt; {
 <p>MAuthWallet 이 접속할 블록체인 네트워크의 노드 URL 을 추가 할 수 있어야 한다.
 이미 추가된 노드 URL 은 목록 형태로 제공되어 선택 가능해야 한다.<br />
 <a href="#external-transaction-signing">External Transaction Signing</a> 이 외의 모든 트랜잭션은 현재 선택된 Node 로 제출 되어야 한다.</p>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
+<div class="admonition tip">
+<p class="admonition-title">MDL</p>
 <p>MDL에 대하여 동일한 기능을 구현 해야 하며, 구현 방법은 MDL 명세를 따른다.</p>
 </div>
 <hr />
 <h2 id="authentication-methods">Authentication methods</h2>
 <p>MAuthWallet 은 다음과 같은 사용자 인증 수단을 제공해야 한다.</p>
 <ul>
-<li>비밀번호<br />
+<li>비밀 번호<br />
   사용자로 부터 보안 키보드를 통해 입력 받는 문자열.</li>
-<li>지문<br />
-  디바이스 지원 여부를 확인하여 해당 기능 활성화 여부를 결정한다.</li>
-<li>안면인식<br />
-  디바이스 지원 여부를 확인하여 해당 기능 활성화 여부를 결정한다.</li>
+<li>생체 정보<br />
+  지문, 안면인식 등 디바이스에서 지원하는 생체 인식 메커니즘.</li>
 </ul>
 <p>디바이스가 지원한다면 가급적 생체 정보를 사용하도록 유도하는 사용 시나리오를 적용, 구현한다.</p>
 <hr />
@@ -482,10 +483,8 @@ ACNet.syncAccount(acct).then( () =&gt; {
 <p>Sprint_N</p>
 <hr />
 <h2 id="remove-account">Remove Account</h2>
-<p><em>Sprint2</em></p>
 <hr />
 <h2 id="account-backup">Account Backup</h2>
-<p><em>Sprint2</em></p>
 <hr />
 <h2 id="assets-swapping">Assets Swapping</h2>
 <hr />
