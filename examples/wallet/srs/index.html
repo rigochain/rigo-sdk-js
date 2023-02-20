@@ -44,13 +44,16 @@
                 <li class="toctree-l1"><a class="reference internal" href="../../..">Overview</a>
                 </li>
               </ul>
+              <p class="caption"><span class="caption-text">API</span></p>
               <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../../../acnet/">API</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../../../subscriber/">Event Subscription</a>
-                </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../api/account/">Account</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../api/trxbuilder/">TrxBuilder</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../api/subscriber/">Event</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../api/acnet/">ACNet</a>
+                  </li>
               </ul>
               <p class="caption"><span class="caption-text">internals</span></p>
               <ul>
@@ -58,7 +61,7 @@
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../../../internals/transactions/">Transaction</a>
                   </li>
-                  <li class="toctree-l1"><a class="reference internal" href="../../../rpc/">JSONRPC</a>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../internals/rpc/">JSONRPC</a>
                   </li>
               </ul>
               <p class="caption"><span class="caption-text">examples</span></p>
@@ -173,19 +176,19 @@
 <p>사용자 요청시 새로운 Account 를 생성한다.<br />
 여기서 Account 생성은 Private/Public KeyPair 생성을 의미하는데,
 MAuthWallet 은 ECDSA Secp256K1 커브를 사용하여  PrivateKey/PublicKey 를 생성하고 저장 한다.<br />
-Account 저장은 <a href="../../data/#arcanex-wallet-format--awf-">ARCANEX Wallet Format (AWF)</a> 형식으로 구성되어 저장되어야 하는데, 
+Account 저장은 <a href="../../../internals/data/#arcanex-wallet-format--awf-">ARCANEX Wallet Format (AWF)</a> 형식으로 구성되어 저장되어야 하는데, 
 자세한 사항은 <a href="#save-account">Save Account</a> 를 참조한다.</p>
 <hr />
 <h2 id="import-account">Import Account</h2>
 <p>외부에서 PrivateKey 를 입력 받아 MAuthWallet Account 를 생성하고 이를 저장(<a href="#save-account">Save Account</a> 참조) 한다.</p>
 <hr />
 <h2 id="export-account">Export Account</h2>
-<p>사용자 요청시 Account 는 <a href="../../data/#arcanex-wallet-format--awf-">AWF</a> 형식으로 내보내기 될 수 있다.
+<p>사용자 요청시 Account 는 <a href="../../../internals/data/#arcanex-wallet-format--awf-">AWF</a> 형식으로 내보내기 될 수 있다.
 AWF 는 QR 코드 또는 텍스트 형식으로 노출 될 수 있으며,
 텍스트 형식으로 노출될 경우, 복사 기능을 추가적으로 지원한다.</p>
 <hr />
 <h2 id="save-account">Save Account</h2>
-<p>Account 는 <a href="../../data/#arcanex-wallet-format--awf-">AWF</a> 형식으로 저장되어야 한다.<br />
+<p>Account 는 <a href="../../../internals/data/#arcanex-wallet-format--awf-">AWF</a> 형식으로 저장되어야 한다.<br />
 AWF 는 PrivateKey를 암호화한 데이터와, 암호화에 사용된 암호화키(SecretKey) 유도에 필요한 파라메터를 담고 있다.
 MAuthWallet 이 구동되는 디바이스 환경에 따라 다음과 같은 암호화 저장 방법이 구현 가능하다.  </p>
 <ul>
@@ -283,8 +286,8 @@ slice 가 아닌 array 를 요구하는 함수 <code>B</code>에 전달할 인�
 <hr />
 <h2 id="assets-balance">Assets Balance</h2>
 <p>MAuthWallet 은 설정된 노드에 접속하여 해당 네트워크에서 선택계정의 잔액 정보를 보여준다.<br />
-선택계정 조회는 <a href="../../../acnet/#queryaccount">queryAccount</a>,
-동기화는 <a href="../../../acnet/#syncaccount">syncAccount</a> 를 참조한다.</p>
+선택계정 조회는 <a href="../../../api/acnet/#queryaccount">queryAccount</a>,
+동기화는 <a href="../../../api/acnet/#syncaccount">syncAccount</a> 를 참조한다.</p>
 <hr />
 <h2 id="transferring">Transferring</h2>
 <p>선택계정의 자산을, 사용자가 지정한 주소의 계정으로, 사용자가 지정한 수량 만큼 전송 할 수 있는 기능을 제공한다. </p>

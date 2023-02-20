@@ -44,13 +44,16 @@
                 <li class="toctree-l1"><a class="reference internal" href="../../..">Overview</a>
                 </li>
               </ul>
+              <p class="caption"><span class="caption-text">API</span></p>
               <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../../../acnet/">API</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../../../subscriber/">Event Subscription</a>
-                </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../api/account/">Account</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../api/trxbuilder/">TrxBuilder</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../api/subscriber/">Event</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../api/acnet/">ACNet</a>
+                  </li>
               </ul>
               <p class="caption"><span class="caption-text">internals</span></p>
               <ul>
@@ -58,7 +61,7 @@
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../../../internals/transactions/">Transaction</a>
                   </li>
-                  <li class="toctree-l1"><a class="reference internal" href="../../../rpc/">JSONRPC</a>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../internals/rpc/">JSONRPC</a>
                   </li>
               </ul>
               <p class="caption"><span class="caption-text">examples</span></p>
@@ -281,22 +284,22 @@ ArcaScan 이 사용자에게 제공해야 할 기능을 수행하는데 가장 �
 <p>이벤트 구독 (Event Subscription)  <br />
 현재 발생되는 정보를 실시간에 가깝게 획득하가 위하여 사용된다. <br />
 ArcaScan은 ARCANEX 네트워크를 구성하는 노드 중 하나로 Websocket 연결을 생성하고,
-이 연결을 통해 <a href="../../../subscriber/#event-query">이벤트 쿼리문</a>을 포함한 구독 요청 메시지를 전송함으로서, 블록과 트랜잭션 정보가 포함된 이벤트를 실시간으로 수신 할 수 있다.
-이벤트 구독 대한 자세한 사항은 <a href="../../../subscriber/">Event Subscribe</a>를 참조한다.</p>
+이 연결을 통해 <a href="../../../api/subscriber/#event-query">이벤트 쿼리문</a>을 포함한 구독 요청 메시지를 전송함으로서, 블록과 트랜잭션 정보가 포함된 이벤트를 실시간으로 수신 할 수 있다.
+이벤트 구독 대한 자세한 사항은 <a href="../../../api/subscriber/">Event Subscribe</a>를 참조한다.</p>
 </li>
 <li>
 <p>HTTP/JSONRCP 호출<br />
 이미 발생한 정보를 획득하기 위하여 사용된다.
 이벤트 구독 메커니즘을 통해 수신되는 정보는 현재 시점의 정보로 제한된다. (과거 정보 수신 불가)<br />
 따라서 과거 시점에 발생한 정보를 조회 하기 위해서는 ARCANEX 노드가 제공하는 RPC 호출을 통해 해당 정보를 획득해야 한다.
-ARCANEX RPC 호출을 위한 API 에 대한 자세한 정보는 <a href="../../../acnet/">ACNet</a> 를 참조한다.</p>
+ARCANEX RPC 호출을 위한 API 에 대한 자세한 정보는 <a href="../../../api/acnet/">ACNet</a> 를 참조한다.</p>
 </li>
 </ul>
 <p>ArcaScan DB 동기화를 위해 위와 같은 방법으로 획득 해야 하는 정보는 <strong>블록</strong> 과 <strong>트랜잭션</strong> 정보 이다. </p>
 <h3 id="block-sync">Block Sync.</h3>
 <p>ArcaScan 은 <code>NewBlock</code> (또는 <code>NewBlockHeader</code>) 이벤트 구독을 요청하고, 해당 이벤트가 수신되면 이를 ArcaScan DB에 반영한다.<br />
-<a href="../../data/#newblock-event"><code>NewBlock</code> 이벤트</a>에 포함되는 블록 정보는 트랜잭션 정보 까지 포함한다.<br />
-반면에 <a href="../../data/#newblockheader-event"><code>NewBlockHeader</code> 이벤트</a>는 해당 블록의 트랜잭션 수를 포함하며 트랜잭션 자체는 포함하지 않는다.
+<a href="../../../internals/data/#newblock-event"><code>NewBlock</code> 이벤트</a>에 포함되는 블록 정보는 트랜잭션 정보 까지 포함한다.<br />
+반면에 <a href="../../../internals/data/#newblockheader-event"><code>NewBlockHeader</code> 이벤트</a>는 해당 블록의 트랜잭션 수를 포함하며 트랜잭션 자체는 포함하지 않는다.
 때문에 트랜잭션이 포함된 블록 정보를 획득하기 위하여 추가적인 RPC 호출이 필요하다.<br />
 따라서 본 문서에서는 <code>NewBlock</code> 이벤트 구독을 전제로 하여 요구사항을 기술 한다.</p>
 <pre><code class="language-plantuml">@startuml
@@ -358,11 +361,11 @@ return rendering block details of block[h]
 <h3 id="transaction-sync">Transaction Sync.</h3>
 <p><code>NewBlock</code> 이벤트에 포함된 블록 정보에는 트랜잭션이 <code>protobuf v3</code>로 직렬화 된 후 base64로 한번더 인코딩 된 형태로 존재한다.
 때문에 트랜잭션 동기화를 위해서 <code>TrxBuild.DecodeTrx</code> API를 사용한 디코딩 과정이 필요하다.<br />
-<code>TrxBuild.DecodeTrx</code> API 는 <a href="../../data/#trx"><code>Trx</code></a> 를 리턴한다.<br />
+<code>TrxBuild.DecodeTrx</code> API 는 <a href="../../../internals/data/#trx"><code>Trx</code></a> 를 리턴한다.<br />
 획득된 정보를 재구성하여 ArcaScan DB에 반영한다.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>트랜잭션 protobuf message 는 <a href="../../data/#protobuf-messages">Data structure</a>를 참조한다.</p>
+<p>트랜잭션 protobuf message 는 <a href="../../../internals/data/#protobuf-messages">Data structure</a>를 참조한다.</p>
 </div>
 <p>이벤트 구독을 통해 획득한 모든 블록과 트랜잭션 정보를 DB에 반영함 으로서 블록체인 원장과 DB 사이의 동기화는 완료된다.</p>
 <h3 id="runtime-synchronization">Runtime Synchronization</h3>
@@ -378,7 +381,7 @@ DB에 반영된 마지막 블록 번호(<code>bn0</code>)와
 현재 ARCANEX 블록체인의 마지막 블록 번호(<code>bn1</code>) 를 조회 하여,
 그 사이에 발생한 모든 블록 정보가 DB에 반영(동기화) 되도록 해야 한다.</p>
 <p>ArcaScan 이 구동되지 않은 시간동안 생성된 블록에 대한 정보는 이벤트 구독 방식으로는 획득이 불가능하고,
-<a href="../../../acnet/#block">RPC 호출을 수행하는 ACNet의 API</a>를 호출 하는 것으로만 획득이 가능하다.</p>
+<a href="../../../api/acnet/#block">RPC 호출을 수행하는 ACNet의 API</a>를 호출 하는 것으로만 획득이 가능하다.</p>
 <p>History Sync. 시 누락되는 블록이 발생하지 않도록 구현되어야 한다.
 예를 들어, DB에 반영된 마지막 블록 번호가 <code>m</code> 이고, ARCANEX 블록체인의 마지막 블록 번호가 <code>n, (n&gt;m)</code> 으로 조회 되었을 경우, 
 블록 <code>n</code>까지 블록을 조회 하여 이를 DB에 반영하는 사이에 ARCANEX 네트워크에서 블록 <code>n+1</code> 이 생성될 가능성이 있다.<br />
@@ -563,7 +566,7 @@ X 는 해당 화면에서 선택할 수 있다.</p>
             </div>
           </div><footer>
     <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
-        <a href="../../../rpc/" class="btn btn-neutral float-left" title="JSONRPC"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../../../internals/rpc/" class="btn btn-neutral float-left" title="JSONRPC"><span class="icon icon-circle-arrow-left"></span> Previous</a>
         <a href="../../wallet/srs/" class="btn btn-neutral float-right" title="Requirements">Next <span class="icon icon-circle-arrow-right"></span></a>
     </div>
 
@@ -587,7 +590,7 @@ X 는 해당 화면에서 선택할 수 있다.</p>
   <span class="rst-current-version" data-toggle="rst-current-version">
     
     
-      <span><a href="../../../rpc/" style="color: #fcfcfc">&laquo; Previous</a></span>
+      <span><a href="../../../internals/rpc/" style="color: #fcfcfc">&laquo; Previous</a></span>
     
     
       <span><a href="../../wallet/srs/" style="color: #fcfcfc">Next &raquo;</a></span>
