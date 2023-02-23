@@ -8,15 +8,16 @@ markdown_extensions:
 nav:
   - Overview: index.md
   - API:
-      - Account: api/account.md
-      - TrxBuilder: api/trxbuilder.md
-      - Event: api/subscriber.md
-      - ACNet: api/acnrpc.md
+      - Javascript API:
+        - Account: api/account.md
+        - TrxBuilder: api/trxbuilder.md
+        - Event: api/subscriber.md
+        - ACNet: api/acnrpc.md
+      - RPC API: api/rpc.md
 
   - internals:
       - Account: internals/account.md
       - Transaction: internals/transactions.md
-      - JSONRPC: internals/rpc.md
   - examples:
       - Explorer:
           - Requirements: examples/explorer/srs.md

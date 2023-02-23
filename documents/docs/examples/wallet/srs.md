@@ -1,4 +1,4 @@
-# Overview
+## Overview
 이 문서는 MAuthWallet 이 갖추어야 할 최소 요구사항을 One-page 형식으로 기술한다.
 
 MAuthWallet 은 MDL, ARCANEX 상의 자산을 관리하기 위하여 개발되는 모바일 앱 형태의 월렛 이다.
@@ -20,7 +20,23 @@ MAuthWallet 역시 위 기본 기능을 제공함과 동시에, ARCANEX 의 합�
 
 ---
 
-## Create Account
+## Requirements
+
+### Add and select Node URL
+MAuthWallet 이 접속할 블록체인 네트워크의 노드 URL 을 추가 할 수 있어야 한다.
+이미 추가된 노드 URL 은 목록 형태로 제공되어 선택 가능해야 한다.
+
+노드를 설정 또는 선택하는 것은, 특정 블록체인 네트워크를 선택하는 것과 동일한 의미를 지닌다.
+특정 블록체인 네트워크 선택후 노출되는 모든 정보는(Assets, Tokens, Tx history 등) 해당 네트워크 상에서의 정보이어야 한다.  
+
+!!! note 
+    [External Transaction Signing](#external-transaction-signing) 이 외의 모든 트랜잭션은 현재 선택된 노드로 제출 되어야 한다.  
+    즉 현재 선택된 노드가 어떤 블록체인 네트워크의 노드인가에 따라서 생성해야 하는 트랜잭션이 달라 지게 된다.  
+
+---
+
+
+### Create Account
 사용자 요청시 새로운 Account 를 생성한다.  
 여기서 Account 생성은 Private/Public KeyPair 생성을 의미하는데,
 MAuthWallet 은 ECDSA Secp256K1 커브를 사용하여  PrivateKey/PublicKey 를 생성하고 저장 한다.  
@@ -29,19 +45,19 @@ Account 저장은 [ARCANEX Wallet Format (AWF)](../../internals/data.md#arcanex-
 
 ---
 
-## Import Account
+### Import Account
 외부에서 PrivateKey 를 입력 받아 MAuthWallet Account 를 생성하고 이를 저장([Save Account](#save-account) 참조) 한다.
 
 ---
 
-## Export Account
+### Export Account
 사용자 요청시 Account 는 [AWF](../../internals/data.md#arcanex-wallet-format--awf-) 형식으로 내보내기 될 수 있다.
 AWF 는 QR 코드 또는 텍스트 형식으로 노출 될 수 있으며,
 텍스트 형식으로 노출될 경우, 복사 기능을 추가적으로 지원한다.
 
 ---
 
-## Save Account
+### Save Account
 Account 는 [AWF](../../internals/data.md#arcanex-wallet-format--awf-) 형식으로 저장되어야 한다.  
 AWF 는 PrivateKey를 암호화한 데이터와, 암호화에 사용된 암호화키(SecretKey) 유도에 필요한 파라메터를 담고 있다.
 MAuthWallet 이 구동되는 디바이스 환경에 따라 다음과 같은 암호화 저장 방법이 구현 가능하다.  
@@ -61,7 +77,7 @@ PBKDF2 또는 Scrypt 알고리즘을 사용하여 사용자로 부터 입력된 
 
 ---
 
-## Lock Account
+### Lock Account
 모든 계정은 메모리상에 항상 '**잠금상태**' 로 존재하여야 한다.
 '**잠금상태**' 란 Account 의 PrivateKey가 암호화된 상태여야 함을 의미한다.
 즉, 의도된 시점을 제외한 어떤 때라도 복화화된 평문 PrivateKey가 메모리상에 존재해서는 안된다.
@@ -72,7 +88,7 @@ PrivateKey 사용이 필요할 때 마다 AWF 의 PrivateKey를 복호화 하여
 
 ---
 
-## Unlock Account
+### Unlock Account
 전자서명 생성을 위해 PrivateKey 사용이 필요할 경우,
 사용자의 기밀정보(passphrase, fingerprint, face id 등)를 이용한 인증 절차를 통해 PrivateKey를 복호화 한다.  
 
@@ -82,7 +98,7 @@ PrivateKey 사용이 필요할 때 마다 AWF 의 PrivateKey를 복호화 하여
 
 ---
 
-## Clear Confidential Data
+### Clear Confidential Data
 MAuthWallet 은 암호화 기능을 구현하면서, 다양한 기밀 데이터(Confidential Data)를 처리하게 되는데,
 이러한 Confidential Data 들은 사용 직후 메모리상에서 바로 폐기되어야 한다.  
 즉, Confidential Data 가 메모리상에 존재하는 시간은 최소화 되어야 하며, 사용 완료 즉시 메모리상에서 복구 불가능한 형태로 폐기 되도록 구현하여야 한다.  
@@ -140,26 +156,32 @@ Programming Language, VM 등 에서 제공하는 Garbage Collector 에 의존하
 
 ---
 
-## MAuthDoc 자동 등록
+### MAuthDoc 자동 등록
 신규 생성 및 가져오기([Import](#import-account)) 로 디바이스에 생성되는 모든 Account 의 PublicKey 는 'MAuthDoc' 으로 자동 등록되어야 한다.
 
 ---
 
-## Account List
+### Account List
 디바이스에 저장된 Accounts 는 목록으로 사용자에게 제공된다.
 이 목록에서 사용자가 선택한 계정을 가리키기 위하여 본 문서에서 **선택계정** 이라는 용어를 사용한다.
 
 ---
 
-## Assets Balance
-MAuthWallet 은 설정된 노드에 접속하여 해당 네트워크에서 선택계정의 잔액 정보를 보여준다.  
+### Assets Balance
+
+MAuthWallet 은 설정된 노드에 접속하여 해당 네트워크에서 선택계정의 자산의 잔액 정보를 보여준다.  
 선택계정 조회는 [queryAccount](../../api/acnrpc.md#queryaccount),
 동기화는 [syncAccount](../../api/acnrpc.md#syncaccount) 를 참조한다.
 
+!!! note
+    본 문서에서 **Asset** 이라는 용어는 블록체인 네트워크의 Native Coin 과 해당 네트워크 상에서 발행된 Token (e.g. ERC20) 을 통칭하는 용어로 사용된다.
+    선택계정의 자산 정보라 함은 특정 블록체인 네트워크 상의 Native Coin 과 Token 모두에 대한 정보를 의미한다.  
+    이중 Token 에대해서는 사용자가 직접 추가한 Token 에 대한 정보로 제한한다.
+
 ---
 
-## Transferring
-선택계정의 자산을, 사용자가 지정한 주소의 계정으로, 사용자가 지정한 수량 만큼 전송 할 수 있는 기능을 제공한다. 
+### Transferring
+선택계정의 자산을, 사용자가 지정한 주소의 계정으로, 사용자가 지정한 수량 만큼 전송 할 수 있는 기능을 제공한다.  
 
 이 기능은 블록체인 원장의 기록을 변경하는 것으로서, 트랜잭션 발생이 필요하다. 
 
@@ -168,8 +190,8 @@ MAuthWallet 은 설정된 노드에 접속하여 해당 네트워크에서 선�
 
 ---
 
-## Staking/Delegating
-선택계정의 자산을사용자가 지정한 수량 만큼 지분으로 전환 할 수 있는 기능을 제공한다.
+### Staking/Delegating
+선택계정의 자산(Coin)을 사용자가 지정한 수량 만큼 지분으로 전환 할 수 있는 기능을 제공한다.
 선택계정 자신의 지분으로 전환하는 것을 **지분전환 (Staking)** 이라 하고, 다른 계정의 지분으로 전환 하는 것을 **지분위임 (Delegating)** 이라 한다.
 자신의 지분 또는 위임 지분 내역은 ArcaScan 을 통해 확인 할 수 있다.
 
@@ -177,8 +199,8 @@ MAuthWallet 은 설정된 노드에 접속하여 해당 네트워크에서 선�
 
 ---
 
-## Unstaking/Undelegating
-선택계정의 지분(Stake)을 다시 자산(Asset)으로 전환 할 수 있는 기능을 제공한다.
+### Unstaking/Undelegating
+선택계정의 지분(Stake)을 다시 자산(Coin)으로 전환 할 수 있는 기능을 제공한다.
 지분 --> 자산 전환은 트랜잭션이 처리 되더라도 바로 전환되지 않는다. 
 거버넌스에서 정한 일정기간이 지난 후에 사용(전송) 가능한 자산으로 전환된다.
 즉 일종의 '해동기간' 이 필요한데, 이 상태의 자산 정보를 확인 할 수 있는 별도의 UI/UX가 제공되어야 한다.
@@ -187,7 +209,7 @@ MAuthWallet 은 설정된 노드에 접속하여 해당 네트워크에서 선�
 
 ---
 
-## Build and submit Transactions
+### Build and submit Transactions
 
 트랜잭션을 생성하고 제출하기 위해서는 다음과 같은 단계를 수행해야 한다.
 
@@ -241,7 +263,7 @@ ACNet.syncAccount(acct).then( () => {
 !!! TIP "MDL"
     MDL에 대하여 동일한 기능을 구현 해야 하며, 구현 방법은 MDL 명세를 따른다.
 
-## Check Transaction's Commit
+### Check Transaction's Commit
 
 트랜잭션이 블록체인에 기록(커밋)되었음을 확인하기 위해 `ACNet.queryTrx` API 를 사용한다.  
 앞서 [Build and submit Transactions](#build-and-submit-transactions) 에서 
@@ -342,7 +364,7 @@ try {
 !!! TIP "MDL"
     MDL에 대하여 동일한 기능을 구현 해야 하며, 구현 방법은 MDL 명세를 따른다.
 
-## Transaction History
+### Transaction History
 선택계정이 발행자(sender) 또는 수신자(receiver) 로 지정된 트랜잭션 목록을 리스트 형태로 보여준다.  
 이 목록은 트랜잭션 발생 역순으로 최근 X개로 구성되며 페이징 처리는 옵션이다.
 
@@ -350,17 +372,7 @@ try {
     MDL에 대하여 동일한 기능을 구현 해야 하며, 구현 방법은 MDL 명세를 따른다.
 ---
 
-## Add and select Node URL
-MAuthWallet 이 접속할 블록체인 네트워크의 노드 URL 을 추가 할 수 있어야 한다.
-이미 추가된 노드 URL 은 목록 형태로 제공되어 선택 가능해야 한다.  
-[External Transaction Signing](#external-transaction-signing) 이 외의 모든 트랜잭션은 현재 선택된 Node 로 제출 되어야 한다.
-
-!!! TIP "MDL"
-    MDL에 대하여 동일한 기능을 구현 해야 하며, 구현 방법은 MDL 명세를 따른다.
-
----
-
-## Authentication methods
+### Authentication methods
 MAuthWallet 은 다음과 같은 사용자 인증 수단을 제공해야 한다.
 
 - 비밀 번호  
@@ -372,7 +384,7 @@ MAuthWallet 은 다음과 같은 사용자 인증 수단을 제공해야 한다.
 
 ---
 
-## SDK
+### SDK
 
 *ARCANEX 노드와 통신하는 부분을 모듈화 -> 별도의 프로젝트로 -> SDK 확보 ?*
 
@@ -381,26 +393,33 @@ MAuthWallet 은 다음과 같은 사용자 인증 수단을 제공해야 한다.
 
 Sprint_N
 
+---
+
+### Remove Account
 
 ---
 
-## Remove Account
+### Account Backup
 
 ---
 
-## Account Backup
+### Assets Swapping
 
 ---
 
-## Assets Swapping
+### Add Tokens
+
+현재 선택된 네트워크상에 발행된 토큰을 추가 할 수 있다.
+토큰 추가는 해당 토큰에 대한 식별자(e.g. 토큰 컨트랙트 주소) 를 입력함으로서 이루어진다.
+토큰이 추가되면 해당 토큰의 잔액 정보 및 전송이 가능해야 한다.
 
 ---
 
-## Blockchain Network Monitoring
+### Blockchain Network Monitoring
 
 ---
 
-## External Transaction Signing
+### External Transaction Signing
 외부에서 생성된 트랜잭션에 대한 전자서명이 요청될 수 있다.
 외부에서 요청된 트랜잭션을 사용자가 확인하고 이에 대한 전자서명 후,
 특정된 블록체인 네트워크로 전송하기 위한 사용 시나리오를 정의하고 이를 구현하여야 한다.
