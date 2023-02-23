@@ -5,7 +5,7 @@
 
 ### HTTP
 ```bash
-curl localhost:26657/account?addr=0x68F9AACFAEC8B2EDC440FCB534F6F2BA4E7BA59F
+curl "localhost:26657/account?addr=0x68F9AACFAEC8B2EDC440FCB534F6F2BA4E7BA59F"
 ```
 
 ### JSONRPC
@@ -47,7 +47,7 @@ curl localhost:26657/account?addr=0x68F9AACFAEC8B2EDC440FCB534F6F2BA4E7BA59F
 
 ### HTTP
 ```bash
-curl localhost:26657/block?height=319
+curl "localhost:26657/block?height=319"
 ```
 
 ### JSONRPC
@@ -142,7 +142,7 @@ curl localhost:26657/block?height=319
 
 ### HTTP
 ```bash
-curl localhost:26657/block_by_hash?hash=0x239066BEDD1BD64D3776CEF980E6CBD9CA2F9965153250F0140F54081CC5D0B7
+curl "localhost:26657/block_by_hash?hash=0x239066BEDD1BD64D3776CEF980E6CBD9CA2F9965153250F0140F54081CC5D0B7"
 ```
 
 ### JSONRPC
@@ -238,7 +238,7 @@ curl localhost:26657/block_by_hash?hash=0x239066BEDD1BD64D3776CEF980E6CBD9CA2F99
 ### HTTP
 
 ```bash
-curl localhost:26657/tx?hash=0x5880e40956d1b274f7be9f15b5d8b9d5afdd69341ffef5fcc5d43d16c4627e4c
+curl "localhost:26657/tx?hash=0x5880e40956d1b274f7be9f15b5d8b9d5afdd69341ffef5fcc5d43d16c4627e4c"
 ```
 
 ### JSONRPC
@@ -320,7 +320,7 @@ Not supported
 
 ### HTTP
 ```json
-curl localhost:26657/broadcast_tx_sync?tx=0xABCDEF0123456789....
+curl "localhost:26657/broadcast_tx_sync?tx=0xABCDEF0123456789...."
 ```
 
 ### JSONRPC
@@ -353,6 +353,12 @@ HTTP/GET 방식으로 요청할 경우, hex-string(`"0x"` prefix 포함) 으로 
 }
 ```
 
+!!! note
+    `broadcast_tx_sync` API는 블록체인에 트랜잭션을 제출 하는 기능을 수행하는데, 
+    제출 성공이 리턴되었다고 해서 이를 블록체인에 해당 트랜잭션이 성공적으로 기록 되었음으로 해석해서는 안된다.  
+    제출 요청에 대한 리턴값의 해시 `result.hash` 로 반드시 기록(Commit) 여부를 확인해야 한다.  
+    트랜잭션 커밋 여부 확인은 Event Subscription 으로 할 수도 있고, 주기적인 폴링 방식 ([`tx`](#tx) API 호출) 으로 구현할 수도 있다.
+
 ---
 
 ## validators
@@ -361,7 +367,7 @@ HTTP/GET 방식으로 요청할 경우, hex-string(`"0x"` prefix 포함) 으로 
 
 ### HTTP
 ```bash
-curl localhost:26657/validators?height=5
+curl "localhost:26657/validators?height=5"
 ```
 
 ### JSONRPC
@@ -409,7 +415,7 @@ curl localhost:26657/validators?height=5
 
 ### HTTP
 ```bash
-curl localhost:26657/stakes?addr=0x8DC41A86B91EB88D82489C4D037AE9FFCA65CFBF
+curl "localhost:26657/stakes?addr=0x8DC41A86B91EB88D82489C4D037AE9FFCA65CFBF"
 ```
 
 ### JSONRPC
@@ -455,7 +461,7 @@ curl localhost:26657/stakes?addr=0x8DC41A86B91EB88D82489C4D037AE9FFCA65CFBF
 
 ### HTTP
 ```bash
-http://localhost:26657/delegatee?addr=0x8DC41A86B91EB88D82489C4D037AE9FFCA65CFBF
+curl "localhost:26657/delegatee?addr=0x8DC41A86B91EB88D82489C4D037AE9FFCA65CFBF"
 ```
 
 ### JSONRPC
@@ -511,7 +517,7 @@ http://localhost:26657/delegatee?addr=0x8DC41A86B91EB88D82489C4D037AE9FFCA65CFBF
 
 ### HTTP
 ```bash
-curl http://localhost:26657/rule
+curl "localhost:26657/rule"
 ```
 
 ### JSONRPC
@@ -551,6 +557,8 @@ N/A
 ---
 
 ## proposals
+
+Not supported yet.
 
 ---
 

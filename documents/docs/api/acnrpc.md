@@ -185,6 +185,8 @@ static queryTrx(txhash: string|Uint8Array)
 ```ts
 ACNet.queryTrx("AD10C104B8E3B3DBE357CF4133B8376B6EB48E44AE28260D42F7A0B53E1B34F1").then(resp => {
   console.log(resp)
+  console.log(resp.encoded) // base64(protobuf(tx object))
+  console.log(resp.tx) // tx object
 })
 ```
 
