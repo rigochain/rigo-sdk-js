@@ -2,19 +2,22 @@ import {createJSONRPCRequest} from "json-rpc-2.0";
 
 export default class Subscriber {
     #ws: WebSocket
-    constructor(public url:string, public query: string) {}
+    #query: string
 
-    start(cbFunc: (resp:string)=>void) {
+    constructor(public url:string) {}
+
+    start(query: string, cbFunc: (resp:string)=>void) {
         if(this.#ws) {
             console.error("already start.")
         }
+        this.#query = query
 
         this.#ws = new WebSocket(this.url)
         this.#ws.addEventListener('open', (evt) => {
             // console.log("this", this)
             console.log("websocket open:", this.url)
-            console.log("query         :", this.query)
-            const ret = createJSONRPCRequest("dontcare", 'subscribe', {query: this.query})
+            console.log("query         :", this.#query)
+            const ret = createJSONRPCRequest("dontcare", 'subscribe', {query: this.#query})
 
             const reqstr = JSON.stringify(ret)
             console.log("websocket request:", reqstr)
@@ -39,5 +42,9 @@ export default class Subscriber {
     stop() {
         this.#ws.close(0, "EventListener is closed by application")
         this.#ws = null
+    }
+
+    getQuery(): string {
+        return this.#query
     }
 }

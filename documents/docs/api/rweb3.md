@@ -1,47 +1,46 @@
 ## RWeb3
 
-`RWeb3` API 는 NRIGO 노드에 접속하여 JSONRPC 요청 작업을 수행 한다.
-
----
-
-### Constructor
-
-`RWeb3` 객체를 생성한다.
+`RWeb3` API 는 NRIGO Provider (NRIGO RPC 서버) 에 접속하여 JSONRPC 요청 작업을 수행 한다.
 
 ```ts
-constructor(public url: string)
-```
-```ts
+import RWeb3 from "rweb3";
 const rweb3 = new RWeb3('http://localhost:26657')
+
+...
+
 ```
 
 ---
 
-### setUrl
+### ~~setUrl~~
+*DEPRECATED*
 
 `RWeb3` API 호출시 접속하게 될 Provider(NRIGO 노드 RPC 서버) URL을 설정한다.
 
 ```ts
 setUrl(url:string)
 ```
+
+
+#### Parameters
+- `url`: NRIGO 노드의 RPC 서버 URL
+
+
+#### Example
 ```ts
 rweb3.setUrl('http://localhost:26657')
 ```
 
-
-#### Parameters
-
-- `url`: NRIGO 노드의 RPC 서버 URL
-
 ---
 
 ### getUrl
-
 현재 사용중인 Provider(NRIGO 노드 RPC 서버) URL 조회.
 
 ```ts
 static getUrl():string
 ```
+
+#### Example
 ```ts
 const nodeUrl = rweb3.getUrl()
 console.log(nodeUrl) // 'http://localhost:26657'
@@ -52,20 +51,23 @@ console.log(nodeUrl) // 'http://localhost:26657'
 
 ### queryBlockByHeight
 
-블록 높이(번호)로 블록을 조회 한다.
-
 ```ts
 queryBlockByHeight(height: number|string): PromiseLike<any>
 ```
-```ts
-rweb3.queryBlockByHeight(10818).then(resp => {
-    console.log(resp)
-}
-```
+
+블록 높이(번호)로 블록을 조회 한다.
 
 #### Parameters
 
 - `height`: 블록 높이(번호).
+
+#### Example
+```ts
+rweb3.queryBlockByHeight(10818).then(resp => {
+    console.log(resp)
+}
+
+```
 
 #### Returns
 
@@ -150,38 +152,48 @@ rweb3.queryBlockByHeight(10818).then(resp => {
 ---
 
 ### queryBlockByHash
-블록 해시 값으로 블록을 조회 한다.
-
 ```ts
 queryBlockByHash(hash: string|Uint8Array): PromiseLike<any>
 ```
+블록 해시 값으로 블록을 조회 한다.
+
+#### Parameters
+
+- `hash`: 블록 해시 값. (32bytes or 64chars hex-string)
+
+#### Example
 ```ts
 rweb3.queryBlockByHash("2227E9F1505C98EE0360A953735623FC3FD74A6E81ADFC9D7EF3BE8927F9136E").then(resp => {
     console.log(resp)
 }
 ```
 
-#### Parameters
-
-- `hash`: 블록 해시 값. (32bytes or 64chars hex-string)
-
 #### Returns
-
 `queryBlockByHeight` 와 동일
 
 ---
 
 ### broadcastTrxSync
+```ts
+broadcastTrxSync(tx: TrxProto): PromiseLike<any>
+```
+트랜잭션을 NRIGO 네트워크에 제출 한다.  
+
+#### Parameters
+- `tx`: 트랜잭션 객체. `TrxBuiler.BuildXXX` 로 생성. [TrxBuilder](./trxbuilder.md) 참조.
 
 ---
 
 ### queryTrx
-
-트랜잭션 해시로 트랜잭션을 조회한다.
-
 ```ts
 queryTrx(txhash: string|Uint8Array)
 ```
+트랜잭션 해시로 트랜잭션을 조회한다.
+
+#### Parameters
+- `txhash`: 조회하고자 하는 트랜잭션의 해시. (32bytes or 64chars Hex-string)
+
+#### Example
 ```ts
 rweb3.queryTrx("AD10C104B8E3B3DBE357CF4133B8376B6EB48E44AE28260D42F7A0B53E1B34F1").then(resp => {
   console.log(resp)
@@ -189,10 +201,6 @@ rweb3.queryTrx("AD10C104B8E3B3DBE357CF4133B8376B6EB48E44AE28260D42F7A0B53E1B34F1
   console.log(resp.tx) // tx object
 })
 ```
-
-#### Parameters
-
-- `txhash`: 조회하고자 하는 트랜잭션의 해시. (32bytes or 64chars Hex-string)
 
 #### Returns
 
@@ -274,25 +282,22 @@ rweb3.queryTrx("AD10C104B8E3B3DBE357CF4133B8376B6EB48E44AE28260D42F7A0B53E1B34F1
 ---
 
 ### queryAccount
-`addr`로 지정된 주소의 `Account` 최신 상태 정보를 조회 한다.
-
 ```ts
 queryAccount(addr: string|Bytes)
 ```
+`addr`로 지정된 주소의 `Account` 최신 상태 정보를 조회 한다.
+
+#### Parameters
+- `addr`: 조회 대상 `Account`의 주소. (20bytes 또는 40chars hex-string)
+
+#### Example
 ```ts
 rweb3.queryAccount("DF976A96545DAD0E0B14FED615587A89BA980B84").then(resp => {
     console.log(resp)
 })
 ```
 
-#### Parameters
-
-- `addr`: 조회 대상 `Account`의 주소. (20bytes 또는 40chars hex-string)
-
 #### Returns
-
-`value` 객체의 값이 실질적인 조회 결과에 해당된다.
-
 ```json
 {
     ...
@@ -304,6 +309,7 @@ rweb3.queryAccount("DF976A96545DAD0E0B14FED615587A89BA980B84").then(resp => {
     ...
 }    
 ```
+`value` 객체의 값이 실질적인 조회 결과에 해당된다.
 
 - `address`: 조회한 계정의 주소. `key` 값과 동일한 값.
 - `nonce`: 현재 계정으로 발행한 트랜잭션 수.
@@ -313,11 +319,15 @@ rweb3.queryAccount("DF976A96545DAD0E0B14FED615587A89BA980B84").then(resp => {
 ---
 
 ### syncAccount
-블록체인상에 기록된 `acct`의 최신 상태 정보(`nonce`, `balance`) 를 동기화 한다.
-
 ```ts
 syncAccount(acct: Account, cb?:(_:any)=>void) 
 ```
+블록체인상에 기록된 `acct`의 최신 상태 정보(`nonce`, `balance`) 를 동기화 한다.
+
+#### Parameters
+- `acct`: 조회 대상 `Account` 객체.
+
+#### Example
 ```ts
 let acct = Account.New("test-0")
 
@@ -331,37 +341,28 @@ rweb3.syncAccount(acct, resp => {
 })
 ```
 
-
-#### Parameters
-
-- `acct`: 조회 대상 `Account` 객체.
-
 #### Returns
-
 `queryAccount` 의 리턴값과 동일하다.
 
 ---
 
 ### queryValidators
-
 ```ts
 queryValidators(height:number|string)
 ```
+지정된 블록 번호 시점의 Validator 목록을 조회한다.
 
+#### Parameters
+- `height`: 블록 번호.
+
+#### Example
 ```ts
 rweb3.queryValidators().then( resp => {
     console.log(resp)
 })
 ```
 
-지정된 블록 번호 시점의 Validator 목록을 조회한다.
-
-#### Parameters
-
-- `height`: 블록 번호.
-
 #### Returns
-
 ```json
 {
     "block_height": "1153",
@@ -393,18 +394,21 @@ rweb3.queryValidators().then( resp => {
 ---
 
 ### queryStakes
-
 ```ts
 queryStakes(addr: string|Bytes)
 ```
+주소가 `addr`인 계정의 지분목록을 조회한다.
 
+#### Parameters
+- `addr`: 계정 주소.
+
+#### Example
 ```ts
  rweb3.queryStakes("8DC41A86B91EB88D82489C4D037AE9FFCA65CFBF").then (resp => {
      console.log(resp)
  }
 ```
 #### Returns
-
 ```json
 {
     ...
@@ -436,22 +440,23 @@ queryStakes(addr: string|Bytes)
 ---
 
 ### queryDelegatee
+*Not descripted yet*
 
 ---
 
 
 ### queryRule
-
 ```ts
 queryRule(): PromiseLike<any>
 ```
+현재 적용된 governance rule 을 조회한다.
+
+#### Example
 ```ts
 rweb3.queryRule().then(resp => {
     console.log(resp)
 })
 ```
-
-현재 적용된 governance rule 을 조회한다.
 
 #### Returns
 
@@ -484,11 +489,19 @@ rweb3.queryRule().then(resp => {
 ---
 
 ### subscribe
-NRIGO 네트워크에서 발생되는 이벤트 구독을 요청한다.
-
 ```ts
 subscribe(url:string, query: string, cb: (resp:string)=>void): Subscriber
 ```
+NRIGO 네트워크에서 발생되는 이벤트 구독을 요청한다.  
+구독 종료는 리턴되는 `Subscriber` 객체의 `stop` 메소드를 사용한다. 자세한 사항은 [Subscriber](subscriber.md)를 참조한다.
+
+#### Parameters
+
+1. `url` : NRIGO Node 의 websocket endpoint.
+2. `query` : 구독하고자 하는 이벤트 조건 지정.
+3. `cb` : 이벤트를 수신할 callback function.
+
+#### Example
 ```ts
 var sub = Subscriber.Listen('ws://localhost:26657/websocket', "tm.event='NewBlockHeader'", (resp) => {
     if(!resp.data) {
@@ -503,13 +516,6 @@ var sub = Subscriber.Listen('ws://localhost:26657/websocket', "tm.event='NewBloc
 listener.stop()
 ```
 
-#### Parameters
-
-1. `url` : NRIGO Node 의 websocket endpoint.
-2. `query` : 구독하고자 하는 이벤트 조건 지정.
-3. `cb` : 이벤트를 수신할 callback function.
-
 #### Returns
-
 `Subscriber` 객체.
 

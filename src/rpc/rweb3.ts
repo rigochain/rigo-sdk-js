@@ -116,8 +116,8 @@ export default class RWeb3 extends JSONRPCClient {
     }
 
     subscribe(url:string, query: string, cb: (resp:string)=>void): Subscriber {
-        const evtListener = new Subscriber(url, query)
-        evtListener.start(cb)
+        const evtListener = new Subscriber(url)
+        evtListener.start(query, cb)
         return evtListener
     }
 }
