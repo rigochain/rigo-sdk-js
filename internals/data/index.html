@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       <link rel="shortcut icon" href="../../img/favicon.ico" />
-    <title>Data structures - arcanex-sdk-js</title>
+    <title>Data structures - rigo-sdk-js</title>
     <link rel="stylesheet" href="../../css/theme.css" />
     <link rel="stylesheet" href="../../css/theme_extra.css" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css" />
@@ -31,7 +31,7 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
     <div class="wy-side-scroll">
       <div class="wy-side-nav-search">
-          <a href="../.." class="icon icon-home"> arcanex-sdk-js
+          <a href="../.." class="icon icon-home"> rigo-sdk-js
         </a><div role="search">
   <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
       <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
@@ -90,7 +90,7 @@
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
       <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="../..">arcanex-sdk-js</a>
+          <a href="../..">rigo-sdk-js</a>
         
       </nav>
       <div class="wy-nav-content">
@@ -297,7 +297,7 @@ message TrxPayloadVotingProto {
   int32 choice = 2;
 }
 </code></pre>
-<h3 id="rigo-wallet-format-awf">RIGO Wallet Format (AWF)</h3>
+<h2 id="rigo-wallet-format-rwf">RIGO Wallet Format (RWF)</h2>
 <pre><code class="language-json">{
   &quot;version&quot;: &quot;1&quot;,
   &quot;address&quot;: &quot;8DC41A86B91EB88D82489C4D037AE9FFCA65CFBF&quot;,
@@ -317,7 +317,7 @@ message TrxPayloadVotingProto {
 }
 </code></pre>
 <ul>
-<li><code>version</code>: AWF의 버전 정보.</li>
+<li><code>version</code>: RWF의 버전 정보.</li>
 <li><code>address</code>: 계정 주소. PublicKey 로 부터 유도된다.</li>
 <li><code>algo</code>: ECDSA curve 이름. (현재는 무조건 'secp256k1' 사용)</li>
 <li><code>cp</code>: Private Key 암호화 알고리즘 및 암호화 결과.</li>
