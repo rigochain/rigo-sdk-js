@@ -210,7 +210,7 @@ message TrxPayloadVotingProto {
 }
 ```
 
-### NRIGO Wallet Format (AWF)
+### RIGO Wallet Format (AWF)
 ```json
 {
   "version": "1",

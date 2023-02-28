@@ -1,7 +1,7 @@
 ## Overview
 이 문서는 MAuthWallet 이 갖추어야 할 최소 요구사항을 One-page 형식으로 기술한다.
 
-MAuthWallet 은 MDL, NRIGO 상의 자산을 관리하기 위하여 개발되는 모바일 앱 형태의 월렛 이다.
+MAuthWallet 은 MDL, RIGO 상의 자산을 관리하기 위하여 개발되는 모바일 앱 형태의 월렛 이다.
 
 일반적인 월렛 어플리케이션은,
 
@@ -12,7 +12,7 @@ MAuthWallet 은 MDL, NRIGO 상의 자산을 관리하기 위하여 개발되는 
 
 을 기본 기능으로 제공한다.
 
-MAuthWallet 역시 위 기본 기능을 제공함과 동시에, NRIGO 의 합의 알고리즘인 DPoS 의 특성에 따른 추가 기능과, 
+MAuthWallet 역시 위 기본 기능을 제공함과 동시에, RIGO 의 합의 알고리즘인 DPoS 의 특성에 따른 추가 기능과, 
 하이퍼렛지 기반의 MDL 상에서의 위 기본 기능을 함께 제공하도록 구현되어야 한다.
 
 이러한 MAuthWallet 의 기능은 사용자 인증 용도로 개발된 MAuth App의 기능을 확장하는 형태로 개발 한다. 
@@ -40,7 +40,7 @@ MAuthWallet 이 접속할 블록체인 네트워크의 노드 URL 을 추가 할
 사용자 요청시 새로운 Account 를 생성한다.  
 여기서 Account 생성은 Private/Public KeyPair 생성을 의미하는데,
 MAuthWallet 은 ECDSA Secp256K1 커브를 사용하여  PrivateKey/PublicKey 를 생성하고 저장 한다.  
-Account 저장은 [NRIGO Wallet Format (AWF)](../../internals/data.md#arcanex-wallet-format--awf-) 형식으로 구성되어 저장되어야 하는데, 
+Account 저장은 [RIGO Wallet Format (AWF)](../../internals/data.md#arcanex-wallet-format--awf-) 형식으로 구성되어 저장되어야 하는데, 
 자세한 사항은 [Save Account](#save-account) 를 참조한다.
 
 ---
@@ -390,7 +390,7 @@ MAuthWallet 은 다음과 같은 사용자 인증 수단을 제공해야 한다.
 
 ### SDK
 
-*NRIGO 노드와 통신하는 부분을 모듈화 -> 별도의 프로젝트로 -> SDK 확보 ?*
+*RIGO 노드와 통신하는 부분을 모듈화 -> 별도의 프로젝트로 -> SDK 확보 ?*
 
 
 ## ETC.

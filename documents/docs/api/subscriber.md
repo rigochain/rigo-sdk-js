@@ -1,6 +1,6 @@
 ## Subscriber
 
-`Subscriber` API 를 사용하여 NRIGO 네크워크에서 발생하는 특정 이벤트에 대한 정보를 구독할 수 있다.
+`Subscriber` API 를 사용하여 RIGO 네크워크에서 발생하는 특정 이벤트에 대한 정보를 구독할 수 있다.
 
 ```ts
 import Subscriber from "subscriber";
@@ -25,7 +25,7 @@ constructor (public url:string)
 
 #### Parameters
 
-- `url`: NRIGO Node 의 websocket endpoint. 
+- `url`: RIGO Node 의 websocket endpoint. 
 
 #### Returns
 

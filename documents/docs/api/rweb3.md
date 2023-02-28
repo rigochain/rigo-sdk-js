@@ -1,6 +1,6 @@
 ## RWeb3
 
-`RWeb3` API 는 NRIGO Provider (NRIGO RPC 서버) 에 접속하여 JSONRPC 요청 작업을 수행 한다.
+`RWeb3` API 는 RIGO Provider (RIGO RPC 서버) 에 접속하여 JSONRPC 요청 작업을 수행 한다.
 
 ```ts
 import RWeb3 from "rweb3";
@@ -15,7 +15,7 @@ const rweb3 = new RWeb3('http://localhost:26657')
 ### ~~setUrl~~
 *DEPRECATED*
 
-`RWeb3` API 호출시 접속하게 될 Provider(NRIGO 노드 RPC 서버) URL을 설정한다.
+`RWeb3` API 호출시 접속하게 될 Provider(RIGO 노드 RPC 서버) URL을 설정한다.
 
 ```ts
 setUrl(url:string)
@@ -23,7 +23,7 @@ setUrl(url:string)
 
 
 #### Parameters
-- `url`: NRIGO 노드의 RPC 서버 URL
+- `url`: RIGO 노드의 RPC 서버 URL
 
 
 #### Example
@@ -34,7 +34,7 @@ rweb3.setUrl('http://localhost:26657')
 ---
 
 ### getUrl
-현재 사용중인 Provider(NRIGO 노드 RPC 서버) URL 조회.
+현재 사용중인 Provider(RIGO 노드 RPC 서버) URL 조회.
 
 ```ts
 static getUrl():string
@@ -177,7 +177,7 @@ rweb3.queryBlockByHash("2227E9F1505C98EE0360A953735623FC3FD74A6E81ADFC9D7EF3BE89
 ```ts
 broadcastTrxSync(tx: TrxProto): PromiseLike<any>
 ```
-트랜잭션을 NRIGO 네트워크에 제출 한다.  
+트랜잭션을 RIGO 네트워크에 제출 한다.  
 
 #### Parameters
 - `tx`: 트랜잭션 객체. `TrxBuiler.BuildXXX` 로 생성. [TrxBuilder](./trxbuilder.md) 참조.
@@ -492,12 +492,12 @@ rweb3.queryRule().then(resp => {
 ```ts
 subscribe(url:string, query: string, cb: (resp:string)=>void): Subscriber
 ```
-NRIGO 네트워크에서 발생되는 이벤트 구독을 요청한다.  
+RIGO 네트워크에서 발생되는 이벤트 구독을 요청한다.  
 구독 종료는 리턴되는 `Subscriber` 객체의 `stop` 메소드를 사용한다. 자세한 사항은 [Subscriber](subscriber.md)를 참조한다.
 
 #### Parameters
 
-1. `url` : NRIGO Node 의 websocket endpoint.
+1. `url` : RIGO Node 의 websocket endpoint.
 2. `query` : 구독하고자 하는 이벤트 조건 지정.
 3. `cb` : 이벤트를 수신할 callback function.
 
