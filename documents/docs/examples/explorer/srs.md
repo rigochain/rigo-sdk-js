@@ -183,7 +183,7 @@ actor "User" as user
 participant "ArcaScan\nFrontEnd" as fe
 box "ArcaScan"
 participant "ArcaScan\Controller" as be
-participant "arcanex-sdk-js" as sdk
+participant "rigo-sdk-js" as sdk
 end box
 database "ArcaScan\nDB" as db
 participant "RIGO\nNode" as node<<Extern>>
@@ -290,7 +290,7 @@ skinparam participant<<Extern>> {
 database "ArcaScan\nDB" as db
 box "ArcaScan BackEnd"
 participant "Controller" as be
-participant "arcanex-sdk-js" as sdk
+participant "rigo-sdk-js" as sdk
 end box
 participant "RIGO\nNode" as node<<Extern>>
 

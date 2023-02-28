@@ -6,7 +6,7 @@
 
 Container_Boundary(app, "Application") {
     Component(app0, "Components of application", "js")
-    Component(sdk, "arcanex-sdk-js", "js")
+    Component(sdk, "rigo-sdk-js", "js")
 
     Rel_U(sdk, app0, "Events", "Push events from RIGO Node")
     Rel_D(app0, sdk, "Call APIs", "Query, Tx publishing and Subscribing to events from RIGO network ...")
@@ -26,9 +26,9 @@ RIGO 노드는 이러한 기능을 제공하기 위하여 HTTP/JSONRPC 기반의
 여기에는 RIGO 노드를 포함하여 모든 서비스/응용 프로그램에서 공통적으로 그리고 결정론적으로 정확하게 일치 되어야 과정이 포함된다.
 
 이와 같이 RIGO 노드와의 통신을 포함하여 모든 응용 프로그램 및 서비스가 공통적으로 구현해야할 모듈 또는 기능 집합을
-Javascript 환경에서 사용할 수 있는 라이브러리 형태로 구현한 것이 `arcanex-sdk-js` 이다.
+Javascript 환경에서 사용할 수 있는 라이브러리 형태로 구현한 것이 `rigo-sdk-js` 이다.
 
-`arcanex-sdk-js` 는 RIGO 노드로의 JSONRPC 요청과 이에 대한 응답 수신을 통해 다음과 같은 기능을 수행하는 API 집합을 제공한다.
+`rigo-sdk-js` 는 RIGO 노드로의 JSONRPC 요청과 이에 대한 응답 수신을 통해 다음과 같은 기능을 수행하는 API 집합을 제공한다.
 
 ---
 
@@ -37,20 +37,20 @@ Javascript 환경에서 사용할 수 있는 라이브러리 형태로 구현한
 ### Browserify
 
 ```bash
-git clone https://github.com/arcanexio/arcanex-sdk-js.git
-cd arcanex-sdk-js
+git clone https://github.com/rigochain/rigo-sdk-js.git
+cd rigo-sdk-js
 npm install
 gulp
 ```
 
 ```html
-<script type='text/javascript' src='./dist/arcanex.min.js'></script>
+<script type='text/javascript' src='./dist/rigo.min.js'></script>
 ```
 
 ### NodeJS
 
 ```bash
-npm i arcanex-sdk-js
+npm i rigo-sdk-js
 ```
 
 ---
@@ -93,5 +93,5 @@ RIGO 네트워크에서 발생되는 상태 변경 사항을 이벤트 구독 �
 이벤트 구독은, RIGO 노드와 websocket 연결 생성, 구독 조건을 명시한 쿼리문 전송 으로 이루어지고,  
 구독 조건에 맞는 이벤트 발생시 websocket 연결을 통해 실시간으로 해당 이벤트를 수신 할 수 있다.  
 
-`arcanex-sdk-js` 는 RIGO 네트워크에서 발생하는 다양한 이벤트의 실시간 구독을 위한 API 를 제공한다.
+`rigo-sdk-js` 는 RIGO 네트워크에서 발생하는 다양한 이벤트의 실시간 구독을 위한 API 를 제공한다.
 이에 대한 자세한 사항은 [Event API](api/subscriber.md)를 참고한다.

@@ -210,7 +210,7 @@ message TrxPayloadVotingProto {
 }
 ```
 
-### RIGO Wallet Format (AWF)
+### RIGO Wallet Format (RWF)
 ```json
 {
   "version": "1",
@@ -231,7 +231,7 @@ message TrxPayloadVotingProto {
 }
 ```
 
-- `version`: AWF의 버전 정보.
+- `version`: RWF의 버전 정보.
 - `address`: 계정 주소. PublicKey 로 부터 유도된다.
 - `algo`: ECDSA curve 이름. (현재는 무조건 'secp256k1' 사용)
 - `cp`: Private Key 암호화 알고리즘 및 암호화 결과.

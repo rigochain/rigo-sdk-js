@@ -40,7 +40,7 @@ MAuthWallet 이 접속할 블록체인 네트워크의 노드 URL 을 추가 할
 사용자 요청시 새로운 Account 를 생성한다.  
 여기서 Account 생성은 Private/Public KeyPair 생성을 의미하는데,
 MAuthWallet 은 ECDSA Secp256K1 커브를 사용하여  PrivateKey/PublicKey 를 생성하고 저장 한다.  
-Account 저장은 [RIGO Wallet Format (AWF)](../../internals/data.md#arcanex-wallet-format--awf-) 형식으로 구성되어 저장되어야 하는데, 
+Account 저장은 [RIGO Wallet Format (RWF)](../../internals/data.md#rigo-wallet-format--rwf-) 형식으로 구성되어 저장되어야 하는데, 
 자세한 사항은 [Save Account](#save-account) 를 참조한다.
 
 ---
@@ -51,29 +51,29 @@ Account 저장은 [RIGO Wallet Format (AWF)](../../internals/data.md#arcanex-wal
 ---
 
 ### Export Account
-사용자 요청시 Account 는 [AWF](../../internals/data.md#arcanex-wallet-format--awf-) 형식으로 내보내기 될 수 있다.
-AWF 는 QR 코드 또는 텍스트 형식으로 노출 될 수 있으며,
+사용자 요청시 Account 는 [RWF](../../internals/data.md#rigo-wallet-format--rwf-) 형식으로 내보내기 될 수 있다.
+RWF 는 QR 코드 또는 텍스트 형식으로 노출 될 수 있으며,
 텍스트 형식으로 노출될 경우, 복사 기능을 추가적으로 지원한다.
 
 ---
 
 ### Save Account
-Account 는 [AWF](../../internals/data.md#arcanex-wallet-format--awf-) 형식으로 저장되어야 한다.  
-AWF 는 PrivateKey를 암호화한 데이터와, 암호화에 사용된 암호화키(SecretKey) 유도에 필요한 파라메터를 담고 있다.
+Account 는 [RWF](../../internals/data.md#rigo-wallet-format--rwf-) 형식으로 저장되어야 한다.  
+RWF 는 PrivateKey를 암호화한 데이터와, 암호화에 사용된 암호화키(SecretKey) 유도에 필요한 파라메터를 담고 있다.
 MAuthWallet 이 구동되는 디바이스 환경에 따라 다음과 같은 암호화 저장 방법이 구현 가능하다.  
 
 - **보안영역(Secret Zone)이 지원 되는 경우**,  
 PrivateKey 암복호화(+암복호화를 위한 SecretKey 관리) 를 Secret Zone 에 위임한다.  
 이 경우, PrivateKey 암복호화를 위한 SecretKey 관리와 암복호화 수행 모두가 Secret Zone에 의해 이루어지며
 MAuthWallet 은 그 결과(암복호화된 PrivateKey) 만을 다룬다.  
-따라서, 암호화키(SecretKey) 유도 관련 파라메터 정보인 AWF 의 `dkp` 부분을 생략하고 그 외 부분만 저장하면 된다.  
+따라서, 암호화키(SecretKey) 유도 관련 파라메터 정보인 RWF 의 `dkp` 부분을 생략하고 그 외 부분만 저장하면 된다.  
 이 경우 보안 영역에 대한 접근제어가 곧 사용자 인증에 해당된다.
 즉 보안 영역에 접근할 권한을 획득 해야만 PrivateKey 복호화 및 사용이 가능 하게 된다.  
 <br>
 - **보안영역(Secret Zone)이 지원 되지 않는 경우**,  
 PBKDF2 또는 Scrypt 알고리즘을 사용하여 사용자로 부터 입력된 기밀정보(e.g. 패스워드) 로 부터 SecretKey를 유도하고,
 유도된 SecretKey로 암복호화를 MAuthWallet이 직접 수행해야 한다. 
-따라서, AWF 의 `dkp` 부분이 포함되어 파일로 저장되어야 한다.
+따라서, RWF 의 `dkp` 부분이 포함되어 파일로 저장되어야 한다.
 
 ---
 
@@ -82,8 +82,8 @@ PBKDF2 또는 Scrypt 알고리즘을 사용하여 사용자로 부터 입력된 
 '**잠금상태**' 란 Account 의 PrivateKey가 암호화된 상태여야 함을 의미한다.
 즉, 의도된 시점을 제외한 어떤 때라도 복화화된 평문 PrivateKey가 메모리상에 존재해서는 안된다.
 
-AWF 가 암호화된 형태이기 때문에 이를 메모리상에 로드한 Account 객체는 이미 잠금 상태이다.   
-PrivateKey 사용이 필요할 때 마다 AWF 의 PrivateKey를 복호화 하여 사용해야 하는데,
+RWF 가 암호화된 형태이기 때문에 이를 메모리상에 로드한 Account 객체는 이미 잠금 상태이다.   
+PrivateKey 사용이 필요할 때 마다 RWF 의 PrivateKey를 복호화 하여 사용해야 하는데,
 결국 **잠금상태**란 복호화된 PrivateKey (평문 Privatekey) 를 메모리상에서 제거하는 것을 의미한다.
 
 ---

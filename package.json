@@ -1,24 +1,24 @@
 {
-  "name": "arcanex-sdk-js",
+  "name": "rigo-sdk-js",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "version": "0.0.13",
   "description": "Javascript SDK for RIGO",
   "keywords": [
-    "arcanex",
-    "arcanexio",
+    "rigo",
+    "rigochain",
     "blockchain",
     "dapp"
   ],
-  "homepage": "https://github.com/arcanexio/arcanex-sdk-js",
+  "homepage": "https://github.com/rigochain/rigo-sdk-js",
   "bugs": {
-    "url": "https://github.com/arcanexio/arcanex-sdk-js",
+    "url": "https://github.com/rigochain/rigo-sdk-js",
     "email": "kyle.kwon@themedium.io"
   },
   "author": {
     "name": "Kyle Kwon",
     "email": "kyle.kwon@themedium.io",
-    "url": "https://github.com/arcanexio"
+    "url": "https://github.com/rigochain"
   },
   "license": "Apache-2.0",
   "dependencies": {

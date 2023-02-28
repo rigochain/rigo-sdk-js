@@ -31,9 +31,9 @@ gulp.task('dist', function () {
         .bundle()
         .on('error', function(e) {log.error('Error when updating the Bundle: \n' + e);})
         .on('end', function() {log("➡️  Build is finished")})
-        .pipe(source('arcanex.js'))
+        .pipe(source('rigo.js'))
         .pipe(gulp.dest('dist'))
-        .pipe(rename('arcanex.min.js'))
+        .pipe(rename('rigo.min.js'))
         .pipe(buffer())
         .pipe(uglify())
         .pipe(gulp.dest('dist'));

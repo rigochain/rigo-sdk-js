@@ -1,32 +1,32 @@
 # Javascript SDK for RIGO
 
-`arcanex-sdk-js` is Javascript SDK for RIGO blockhcain network.
+`rigo-sdk-js` is Javascript SDK for RIGO blockhcain network.
 
 ## Usages
 ### Browserify
 
 ```bash
-git clone https://github.com/arcanexio/arcanex-sdk-js.git
-cd arcanex-sdk-js
+git clone https://github.com/rigochain/rigo-sdk-js.git
+cd rigo-sdk-js
 npm install
 gulp
 ```
 
 ```html
-<script type='text/javascript' src='./dist/arcanex.min.js'></script>
+<script type='text/javascript' src='./dist/rigo.min.js'></script>
 ```
 
 ### NodeJS
 
 ```bash
-npm i arcanex-sdk-js
+npm i rigo-sdk-js
 ```
 
 ---
 
 ### API
 
-You can find documents at https://arcanexio.github.io/arcanex-sdk-js
+You can find documents at https://rigochain.github.io/rigo-sdk-js
 
 ---
 
