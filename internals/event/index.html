@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="shortcut icon" href="../../img/favicon.ico" />
+    <title>Event Subscription - arcanex-sdk-js</title>
+    <link rel="stylesheet" href="../../css/theme.css" />
+    <link rel="stylesheet" href="../../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Event Subscription";
+        var mkdocs_page_input_path = "internals/event.md";
+        var mkdocs_page_url = null;
+      </script>
+    
+    <script src="../../js/jquery-3.6.0.min.js" defer></script>
+    <!--[if lt IE 9]>
+      <script src="../../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
+      <script>hljs.initHighlightingOnLoad();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href="../.." class="icon icon-home"> arcanex-sdk-js
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../..">Overview</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">API</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="#">Javascript API</a>
+    <ul>
+                <li class="toctree-l2"><a class="reference internal" href="../../api/account/">Account</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../api/trxbuilder/">TrxBuilder</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../api/subscriber/">Subscriber</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../api/rweb3/">RWeb3</a>
+                </li>
+    </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../api/rpc/">RPC API</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">internals</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../account/">Account</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../transactions/">Transaction</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">examples</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="#">Explorer</a>
+    <ul>
+                <li class="toctree-l2"><a class="reference internal" href="../../examples/explorer/srs/">Requirements</a>
+                </li>
+    </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="#">Wallet</a>
+    <ul>
+                <li class="toctree-l2"><a class="reference internal" href="../../examples/wallet/srs/">Requirements</a>
+                </li>
+    </ul>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../..">arcanex-sdk-js</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../.." class="icon icon-home" alt="Docs"></a> &raquo;</li>
+      <li>Event Subscription</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="event-subscription">Event Subscription</h1>
+<h2 id="event-query">Event Query</h2>
+<p>이벤트 쿼리는 <strong>"key operator operand"</strong> 형식의 <code>string</code> 으로 구성되며, 복수의 쿼리문은 <code>AND</code> 로 연결될 수 있다.</p>
+<h3 id="key">key</h3>
+<p>구독할 이벤트의 종류를 제한하기 위하여 사용하며 NRIGO 에 사전 정의된 <strong>key</strong>는 다음과 같다.</p>
+<ul>
+<li>
+<p><code>tm.event</code> : 구독할 이벤트 종류를 제한 한다. 다음과 같이 값을 가질 수 있다.</p>
+<ul>
+<li><code>tm.event = 'NewBlock'</code></li>
+<li><code>tm.event = 'NewBlockHeader'</code></li>
+<li><code>tm.event = 'Tx'</code></li>
+</ul>
+</li>
+<li>
+<p><code>tx.hash</code> : 트랜잭션 hash. <code>tm.event='Tx'</code> 와 함께 사용된다.<br />
+  트랜잭션 hash는 <code>0x</code>를 제거한 대문자 Hex-String 으로 지정한다.</p>
+</li>
+<li>
+<p><code>tx.height</code> : 트랜잭션이 포함된 블록의 번호. <code>tm.event='Tx'</code> 와 함께 사용된다.</p>
+</li>
+<li>
+<p><code>tx.type</code> : 트랜잭션의 종류. <code>tm.event='Tx'</code> 와 함께 사용된다. 다음과 같은 값을 가질 수 있다.</p>
+<ul>
+<li><code>tx.type = 'transfer'</code></li>
+<li><code>tx.type = 'staking'</code></li>
+<li><code>tx.type = 'unstaking'</code></li>
+</ul>
+</li>
+<li>
+<p><code>tx.sender</code> : 트랜잭션의 <code>sender</code> 주소. <code>tm.event='Tx'</code> 와 함께 사용된다.<br />
+  주소는 <code>0x</code>를 제거한 대문자 Hex-String 으로 지정한다.</p>
+</li>
+<li><code>tx.receiver</code> - 트랜잭션의 <code>receiver</code> 주소. <code>tm.event='Tx'</code> 와 함께 사용된다.<br />
+  주소는 <code>0x</code>를 제거한 대문자 Hex-String 으로 지정한다.</li>
+<li><code>tx.addrpair</code> - 트랜잭션의 <code>sender | receiver</code> 주소 합성. <code>tm.event='Tx'</code> 와 함께 사용된다.</li>
+</ul>
+<h3 id="operation">operation</h3>
+<p><strong>key</strong> 와 <strong>operand</strong> 의 관계를 나타내며,
+<code>=</code>, <code>&lt;</code>, <code>&lt;=</code>, <code>&gt;</code>, <code>&gt;=</code>, <code>CONTAINS</code>, <code>EXISTS</code> 값을 가질 수 있다.</p>
+<h3 id="operand">operand</h3>
+<p><strong>key</strong> 의 값에 해당한다.</p>
+<h3 id="examples">Examples</h3>
+<h4 id="block-event">Block event</h4>
+<pre><code class="language-ts">import Subscriber from &quot;./subscriber&quot;;
+
+
+// 블록 생성 이벤트 구독 요청
+var sub = new Subscriber(&quot;ws://localhost:26657/websocket&quot;, &quot;tm.event = 'NewBlockHeader'&quot;)
+sub.start( resp =&gt; console.log(resp) )
+        ...
+
+// 수신된 이벤트 정보
+{
+    &quot;query&quot;: &quot;tm.event='NewBlockHeader'&quot;,
+    &quot;data&quot;: {
+        &quot;type&quot;: &quot;tendermint/event/NewBlockHeader&quot;,
+        &quot;value&quot;: {
+            &quot;header&quot;: {
+                &quot;version&quot;: {
+                    &quot;block&quot;: &quot;11&quot;,
+                    &quot;app&quot;: &quot;4294967296&quot;
+                },
+                &quot;chain_id&quot;: &quot;localnet&quot;,
+                &quot;height&quot;: &quot;92175&quot;,
+                &quot;time&quot;: &quot;2023-02-13T13:27:58.840771Z&quot;,
+                &quot;last_block_id&quot;: {
+                    &quot;hash&quot;: &quot;525B7E1B39ABFF6643D5CA0AF2B4C080AA69B8F6E6B88F5D96FA1C4B669EDA57&quot;,
+                    &quot;parts&quot;: {
+                        &quot;total&quot;: 1,
+                        &quot;hash&quot;: &quot;518791BB1F931395B3036C8E9AEC40E92498FE30A582F8DF871790A6A48CCD33&quot;
+                    }
+                },
+                &quot;last_commit_hash&quot;: &quot;CC16D8C757360897B9682646F2D910ECC77A2A80EED54AE06D0539E365B77164&quot;,
+                &quot;data_hash&quot;: &quot;E3B0C44298FC1C149AFBF4C8996FB92427AE41E4649B934CA495991B7852B855&quot;,
+                &quot;validators_hash&quot;: &quot;FE36DFA0965A3207F370004FD5A35B0D9CFE22C1E5EC6282B11E0A078E022C11&quot;,
+                &quot;next_validators_hash&quot;: &quot;FE36DFA0965A3207F370004FD5A35B0D9CFE22C1E5EC6282B11E0A078E022C11&quot;,
+                &quot;consensus_hash&quot;: &quot;048091BC7DDC283F77BFBF91D73C44DA58C3DF8A9CBC867405D8B7F3DAADA22F&quot;,
+                &quot;app_hash&quot;: &quot;F05DE653A484B266512480747A80522450D9241D3AE43E5FB49FBB6613FB07CF&quot;,
+                &quot;last_results_hash&quot;: &quot;E3B0C44298FC1C149AFBF4C8996FB92427AE41E4649B934CA495991B7852B855&quot;,
+                &quot;evidence_hash&quot;: &quot;E3B0C44298FC1C149AFBF4C8996FB92427AE41E4649B934CA495991B7852B855&quot;,
+                &quot;proposer_address&quot;: &quot;8DC41A86B91EB88D82489C4D037AE9FFCA65CFBF&quot;
+            },
+            &quot;num_txs&quot;: &quot;0&quot;,
+            &quot;result_begin_block&quot;: {},
+            &quot;result_end_block&quot;: {
+                &quot;validator_updates&quot;: []
+            }
+        }
+    },
+    &quot;events&quot;: {
+        &quot;tm.event&quot;: [
+            &quot;NewBlockHeader&quot;
+        ]
+    }
+}
+</code></pre>
+<h4 id="transaction-event">Transaction event</h4>
+<pre><code class="language-ts">// 
+// 트랜잭션 hash 'A7FC574491B18ADD8E3DD60E7442CB34D90A4862E30E9E9B5412154EBFB0E100' 인 
+// 트랜잭션 처리완료 이벤트 구독 요청
+var sub = new Subscriber(&quot;ws://localhost:26657/websocket&quot;, &quot;tm.event = 'Tx' AND tx.hash='A7FC574491B18ADD8E3DD60E7442CB34D90A4862E30E9E9B5412154EBFB0E100'&quot;)
+sub.start( resp =&gt; console.log(resp) )
+        ...
+
+// 수신된 이벤트 정보
+
+</code></pre>
+<pre><code class="language-ts">// 트랜잭션 타입이 'transfer' 이고, 
+// sender 주소가 'D8C2C3D121696F51B733F7CF36C8AE60F8F264CC' 인 
+// 트랜잭션 처리완료 이벤트 구독 요청.
+var sub = new Subscriber(&quot;ws://localhost:26657/websocket&quot;, &quot;tm.event = 'Tx' AND tx.type='transfer' AND tx.sender='D8C2C3D121696F51B733F7CF36C8AE60F8F264CC'&quot;)
+sub.start( resp =&gt; console.log(resp) )
+        ...
+
+// 수신된 이벤트 정보
+</code></pre>
+<pre><code class="language-ts">// 트랜잭션 타입이 'transfer' 이고, 
+// sender 주소가 'D8C2C3D121696F51B733F7CF36C8AE60F8F264CC' 인 
+// 트랜잭션 처리완료 이벤트 구독 요청.
+var sub = new Subscriber(&quot;ws://localhost:26657/websocket&quot;, &quot;tm.event = 'Tx' AND tx.type='transfer' AND tx.sender='D8C2C3D121696F51B733F7CF36C8AE60F8F264CC'&quot;)
+sub.start( resp =&gt; console.log(resp) )
+        ...
+
+// 수신된 이벤트 정보
+
+</code></pre>
+              
+            </div>
+          </div><footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+    
+    
+  </span>
+</div>
+    <script>var base_url = '../..';</script>
+    <script src="../../js/theme_extra.js" defer></script>
+    <script src="../../js/theme.js" defer></script>
+      <script src="../../search/main.js" defer></script>
+    <script defer>
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
+
+</body>
+</html>

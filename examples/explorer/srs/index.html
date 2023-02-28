@@ -46,13 +46,19 @@
               </ul>
               <p class="caption"><span class="caption-text">API</span></p>
               <ul>
-                  <li class="toctree-l1"><a class="reference internal" href="../../../api/account/">Account</a>
+                  <li class="toctree-l1"><a class="reference internal" href="#">Javascript API</a>
+    <ul>
+                <li class="toctree-l2"><a class="reference internal" href="../../../api/account/">Account</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../../api/trxbuilder/">TrxBuilder</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../../api/subscriber/">Subscriber</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../../api/rweb3/">RWeb3</a>
+                </li>
+    </ul>
                   </li>
-                  <li class="toctree-l1"><a class="reference internal" href="../../../api/trxbuilder/">TrxBuilder</a>
-                  </li>
-                  <li class="toctree-l1"><a class="reference internal" href="../../../api/subscriber/">Event</a>
-                  </li>
-                  <li class="toctree-l1"><a class="reference internal" href="../../../api/acnrpc/">ACNet</a>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../api/rpc/">RPC API</a>
                   </li>
               </ul>
               <p class="caption"><span class="caption-text">internals</span></p>
@@ -60,8 +66,6 @@
                   <li class="toctree-l1"><a class="reference internal" href="../../../internals/account/">Account</a>
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../../../internals/transactions/">Transaction</a>
-                  </li>
-                  <li class="toctree-l1"><a class="reference internal" href="../../../internals/rpc/">JSONRPC</a>
                   </li>
               </ul>
               <p class="caption"><span class="caption-text">examples</span></p>
@@ -147,7 +151,7 @@
             <div class="section" itemprop="articleBody">
               
                 <h1 id="overview">Overview</h1>
-<p>이 문서는 ARCANEX Blockhcain 의 Block Explorer 인 <strong>ArcaScan</strong> 에 대한 구성 요구사항 및 기능 요구사항에 대하여 기술한다.</p>
+<p>이 문서는 NRIGO Blockhcain 의 Block Explorer 인 <strong>ArcaScan</strong> 에 대한 구성 요구사항 및 기능 요구사항에 대하여 기술한다.</p>
 <pre><code class="language-plantuml">@startuml
 !include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Component.puml
 
@@ -161,7 +165,7 @@ System_Boundary(explorer, &quot;Block Explorer&quot;) {
 
     Container(db, &quot;Database&quot;)
 }
-Container(node, &quot;ARCANEX Node&quot;)
+Container(node, &quot;NRIGO Node&quot;)
 
 BiRel_R(browser, fe, &quot;Request&quot;, &quot;HTTP/HTTPS&quot;)
 Rel_D(fe, bzl, &quot;API&quot;, &quot;&quot;)
@@ -170,17 +174,17 @@ Rel_D(bzl, db, &quot;CRUD&quot;, &quot;&quot;)
 BiRel_R(sdk, node, &quot;RPC&quot;, &quot;HTTP/JSONRPC, Websocket&quot;)
 @enduml
 </code></pre>
-<p>ArcaScan 은 ARCANEX 네트워크에서 생성되는 블록, 트랜잭션 그리고 계정 관련 상태 변경 정보를
+<p>ArcaScan 은 NRIGO 네트워크에서 생성되는 블록, 트랜잭션 그리고 계정 관련 상태 변경 정보를
 실시간으로 사용자에게 제공하기 위한 웹 서비스 시스템이다.  </p>
 <p>일반적인 Block Explorer 시스템은 블록체인 노드에 접속하여 필요한 정보를 획득 하고, 
 이를 적절한 구조로 변형하여 DB 에 저장함으로서 블록체인 원장과 Explorer DB 를 동기화 한 후.
 그리고 사용자로 부터 요청을 수신하였을 때, DB 데이터를 기반으로 응답을 생산하는 것을 기본 기능으로 구현된다.  </p>
 <p>ArcaScan 역시 일반적인 Block Explorer 와 유사한 구조로 구현된다.
-ARCANEX 네트워크와의 연결을 동한 정보 획득, 획득된 정보의 DB 저장을 통한 동기화, 그리고 DB 정보에 기반한 사용자 요청 응답으로 기본 기능을 구성한다.</p>
+NRIGO 네트워크와의 연결을 동한 정보 획득, 획득된 정보의 DB 저장을 통한 동기화, 그리고 DB 정보에 기반한 사용자 요청 응답으로 기본 기능을 구성한다.</p>
 <h2 id="initialization-from-genesis">Initialization from Genesis</h2>
-<p>ARCANEX 블록체인 원장의 최초 상태 정보(Genesis)가 ArcaScan DB에 반영되어야 한다.<br />
-ARCANEX Genesis 에는 블록체인 시작 시점에서의 검증노드(Validator), 계정(Account)별 자산(Balance) 정보등이 포함되어 있다.
-따라서 ArcaScan 최초 실행시, 스캔 대상이 되는 ARCANEX 블록체인 네트워크의 Genesis 정보로 ArcaScan DB의 초기 상태를 구성해야 한다.</p>
+<p>NRIGO 블록체인 원장의 최초 상태 정보(Genesis)가 ArcaScan DB에 반영되어야 한다.<br />
+NRIGO Genesis 에는 블록체인 시작 시점에서의 검증노드(Validator), 계정(Account)별 자산(Balance) 정보등이 포함되어 있다.
+따라서 ArcaScan 최초 실행시, 스캔 대상이 되는 NRIGO 블록체인 네트워크의 Genesis 정보로 ArcaScan DB의 초기 상태를 구성해야 한다.</p>
 <pre><code class="language-json">{
   &quot;genesis_time&quot;: &quot;2023-02-06T09:10:28.016371Z&quot;,
   &quot;chain_id&quot;: &quot;local-test-chain&quot;,
@@ -275,15 +279,15 @@ ARCANEX Genesis 에는 블록체인 시작 시점에서의 검증노드(Validato
 }
 </code></pre>
 <h2 id="synchronization">Synchronization</h2>
-<p>ArcaScan DB는 ARCANEX 블록체인 원장과 동기화 되어야 한다.  </p>
-<p>ARCANEX 블록체인 원장과의 동기화는 ARCANEX 블록체인 원장에 기록되는 모든 상태 변경 정보를 수신하여 이를 ArcaScan DB에 재구성함을 의미 하는 것으로,
+<p>ArcaScan DB는 NRIGO 블록체인 원장과 동기화 되어야 한다.  </p>
+<p>NRIGO 블록체인 원장과의 동기화는 NRIGO 블록체인 원장에 기록되는 모든 상태 변경 정보를 수신하여 이를 ArcaScan DB에 재구성함을 의미 하는 것으로,
 ArcaScan 이 사용자에게 제공해야 할 기능을 수행하는데 가장 최적화된 형태로 재구성 하여 <strong>ArcaScan DB에 누적 반영</strong> 한다.</p>
 <p>ArcaScan 은 이벤트 구독 방식과 RPC 호출 방식을 통해 동기화에 필요한 정보를 획득 한다.  </p>
 <ul>
 <li>
 <p>이벤트 구독 (Event Subscription)  <br />
 현재 발생되는 정보를 실시간에 가깝게 획득하가 위하여 사용된다. <br />
-ArcaScan은 ARCANEX 네트워크를 구성하는 노드 중 하나로 Websocket 연결을 생성하고,
+ArcaScan은 NRIGO 네트워크를 구성하는 노드 중 하나로 Websocket 연결을 생성하고,
 이 연결을 통해 <a href="../../../api/subscriber/#event-query">이벤트 쿼리문</a>을 포함한 구독 요청 메시지를 전송함으로서, 블록과 트랜잭션 정보가 포함된 이벤트를 실시간으로 수신 할 수 있다.
 이벤트 구독 대한 자세한 사항은 <a href="../../../api/subscriber/">Event Subscribe</a>를 참조한다.</p>
 </li>
@@ -291,8 +295,8 @@ ArcaScan은 ARCANEX 네트워크를 구성하는 노드 중 하나로 Websocket 
 <p>HTTP/JSONRCP 호출<br />
 이미 발생한 정보를 획득하기 위하여 사용된다.
 이벤트 구독 메커니즘을 통해 수신되는 정보는 현재 시점의 정보로 제한된다. (과거 정보 수신 불가)<br />
-따라서 과거 시점에 발생한 정보를 조회 하기 위해서는 ARCANEX 노드가 제공하는 RPC 호출을 통해 해당 정보를 획득해야 한다.
-ARCANEX RPC 호출을 위한 API 에 대한 자세한 정보는 <a href="../../../api/acnrpc/">ACNet</a> 를 참조한다.</p>
+따라서 과거 시점에 발생한 정보를 조회 하기 위해서는 NRIGO 노드가 제공하는 RPC 호출을 통해 해당 정보를 획득해야 한다.
+NRIGO RPC 호출 대한 자세한 정보는 <a href="../../../api/rweb3/">RWeb3 API</a> 를 참조한다.</p>
 </li>
 </ul>
 <p>ArcaScan DB 동기화를 위해 위와 같은 방법으로 획득 해야 하는 정보는 <strong>블록</strong> 과 <strong>트랜잭션</strong> 정보 이다. </p>
@@ -320,12 +324,12 @@ participant &quot;ArcaScan\Controller&quot; as be
 participant &quot;arcanex-sdk-js&quot; as sdk
 end box
 database &quot;ArcaScan\nDB&quot; as db
-participant &quot;ARCANEX\nNode&quot; as node&lt;&lt;Extern&gt;&gt;
+participant &quot;NRIGO\nNode&quot; as node&lt;&lt;Extern&gt;&gt;
 
 
 == Event 구독 요청 Context ==
 
-be -&gt; sdk: ACNEvent.Listen(..., &quot;tm.event = 'NewBlock'&quot;, callback_)
+be -&gt; sdk: rweb3.subscribe(..., &quot;tm.event = 'NewBlock'&quot;, callback_)
 sdk -&gt; node: register subscribing to `NewBlock` events
 
 |||
@@ -369,22 +373,22 @@ return rendering block details of block[h]
 </div>
 <p>이벤트 구독을 통해 획득한 모든 블록과 트랜잭션 정보를 DB에 반영함 으로서 블록체인 원장과 DB 사이의 동기화는 완료된다.</p>
 <h3 id="runtime-synchronization">Runtime Synchronization</h3>
-<p>ArcaScan 실행 중 ARCANEX 네트워크에서 신규로 생성되는 모든 블록과 트랜잭션은 <strong>이벤트 구독</strong> 방식을 통해 실시간에 가깝게 ArcaScan DB 와 동기화 되어야 한다.</p>
+<p>ArcaScan 실행 중 NRIGO 네트워크에서 신규로 생성되는 모든 블록과 트랜잭션은 <strong>이벤트 구독</strong> 방식을 통해 실시간에 가깝게 ArcaScan DB 와 동기화 되어야 한다.</p>
 <h3 id="history-synchronization">History Synchronization</h3>
 <p>ArcaScan 이 중지된 기간 동안 발생된 블록과 트랜잭션 정보 역시 ArcaScan DB와 동기화 되어야 한다.</p>
 <p>ArcaScan 이 최초 구동 또는 일시 정지 후 재구동될 때, 
-ArcaScan DB 와 ARCANEX 블록체인 원장은 동기화 되지 않은 상태이다.
+ArcaScan DB 와 NRIGO 블록체인 원장은 동기화 되지 않은 상태이다.
 예를 들어 ArcaScan 이 시작 되었을 때, ArcaScan DB 는 블록번호 <code>bn0</code> 까지의 정보를 적용한 상태인데 반하여,
-ARCANEX 블록체인은 이미 블록번호 <code>bn1</code> 까지 생성된 상황이 가능하다.<br />
+NRIGO 블록체인은 이미 블록번호 <code>bn1</code> 까지 생성된 상황이 가능하다.<br />
 때문에 ArcaScan 는 시작시, 
 DB에 반영된 마지막 블록 번호(<code>bn0</code>)와 
-현재 ARCANEX 블록체인의 마지막 블록 번호(<code>bn1</code>) 를 조회 하여,
+현재 NRIGO 블록체인의 마지막 블록 번호(<code>bn1</code>) 를 조회 하여,
 그 사이에 발생한 모든 블록 정보가 DB에 반영(동기화) 되도록 해야 한다.</p>
 <p>ArcaScan 이 구동되지 않은 시간동안 생성된 블록에 대한 정보는 이벤트 구독 방식으로는 획득이 불가능하고,
-<a href="../../../api/acnrpc/#block">RPC 호출을 수행하는 ACNet의 API</a>를 호출 하는 것으로만 획득이 가능하다.</p>
+RPC 호출을 수행하는 <a href="../../../api/rweb3/#block">RWeb3 API</a>를 호출 하는 것으로만 획득이 가능하다.</p>
 <p>History Sync. 시 누락되는 블록이 발생하지 않도록 구현되어야 한다.
-예를 들어, DB에 반영된 마지막 블록 번호가 <code>m</code> 이고, ARCANEX 블록체인의 마지막 블록 번호가 <code>n, (n&gt;m)</code> 으로 조회 되었을 경우, 
-블록 <code>n</code>까지 블록을 조회 하여 이를 DB에 반영하는 사이에 ARCANEX 네트워크에서 블록 <code>n+1</code> 이 생성될 가능성이 있다.<br />
+예를 들어, DB에 반영된 마지막 블록 번호가 <code>m</code> 이고, NRIGO 블록체인의 마지막 블록 번호가 <code>n, (n&gt;m)</code> 으로 조회 되었을 경우, 
+블록 <code>n</code>까지 블록을 조회 하여 이를 DB에 반영하는 사이에 NRIGO 네트워크에서 블록 <code>n+1</code> 이 생성될 가능성이 있다.<br />
 이 경우, 다음 두가지를 문제를 해결 해야 한다.</p>
 <ol>
 <li>이벤트 구독 요청을 먼저 해 두지 않은 경우, 블록 <code>n+1</code>은 DB에 적용될 기회를 영원히 잃게 된다.</li>
@@ -414,10 +418,10 @@ box &quot;ArcaScan BackEnd&quot;
 participant &quot;Controller&quot; as be
 participant &quot;arcanex-sdk-js&quot; as sdk
 end box
-participant &quot;ARCANEX\nNode&quot; as node&lt;&lt;Extern&gt;&gt;
+participant &quot;NRIGO\nNode&quot; as node&lt;&lt;Extern&gt;&gt;
 
 par &quot;NewBlock 이벤트 구독&quot;
-be -&gt; sdk: ACNEvent.Listen(..., &quot;tm.event=NewBlock&quot;, callback)
+be -&gt; sdk: rweb3.subscribe(..., &quot;tm.event=NewBlock&quot;, callback)
 sdk -&gt; node: register subscribing to `NewBlock` events
 end
 |||
@@ -440,7 +444,7 @@ activate be
     be -&gt; db: bn0 &lt;- last block height
     be -&gt; be: i = bn0
     loop &quot;Synchronize bloks between bn0 and bn1&quot;
-        be -&gt; sdk: ACNet.queryBlockByHeight(i)
+        be -&gt; sdk: rweb3.queryBlockByHeight(i)
         activate sdk
             sdk -&gt; node: block &lt;- query block[i]
         return block
@@ -566,7 +570,7 @@ X 는 해당 화면에서 선택할 수 있다.</p>
             </div>
           </div><footer>
     <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
-        <a href="../../../internals/rpc/" class="btn btn-neutral float-left" title="JSONRPC"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../../../internals/transactions/" class="btn btn-neutral float-left" title="Transaction"><span class="icon icon-circle-arrow-left"></span> Previous</a>
         <a href="../../wallet/srs/" class="btn btn-neutral float-right" title="Requirements">Next <span class="icon icon-circle-arrow-right"></span></a>
     </div>
 
@@ -590,7 +594,7 @@ X 는 해당 화면에서 선택할 수 있다.</p>
   <span class="rst-current-version" data-toggle="rst-current-version">
     
     
-      <span><a href="../../../internals/rpc/" style="color: #fcfcfc">&laquo; Previous</a></span>
+      <span><a href="../../../internals/transactions/" style="color: #fcfcfc">&laquo; Previous</a></span>
     
     
       <span><a href="../../wallet/srs/" style="color: #fcfcfc">Next &raquo;</a></span>

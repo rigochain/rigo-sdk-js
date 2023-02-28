@@ -1,0 +1,757 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="shortcut icon" href="../../img/favicon.ico" />
+    <title>RPC API - arcanex-sdk-js</title>
+    <link rel="stylesheet" href="../../css/theme.css" />
+    <link rel="stylesheet" href="../../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "RPC API";
+        var mkdocs_page_input_path = "api/rpc.md";
+        var mkdocs_page_url = null;
+      </script>
+    
+    <script src="../../js/jquery-3.6.0.min.js" defer></script>
+    <!--[if lt IE 9]>
+      <script src="../../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
+      <script>hljs.initHighlightingOnLoad();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href="../.." class="icon icon-home"> arcanex-sdk-js
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../..">Overview</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">API</span></p>
+              <ul class="current">
+                  <li class="toctree-l1"><a class="reference internal" href="#">Javascript API</a>
+    <ul>
+                <li class="toctree-l2"><a class="reference internal" href="../account/">Account</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../trxbuilder/">TrxBuilder</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../subscriber/">Subscriber</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../rweb3/">RWeb3</a>
+                </li>
+    </ul>
+                  </li>
+                  <li class="toctree-l1 current"><a class="reference internal current" href="./">RPC API</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#account">account</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#http">HTTP</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#jsonrpc">JSONRPC</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#parameters">Parameters</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#returns">Returns</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#block">block</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#http_1">HTTP</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#jsonrpc_1">JSONRPC</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#parameters_1">Parameters</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#returns_1">Returns</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#block_by_hash">block_by_hash</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#http_2">HTTP</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#jsonrpc_2">JSONRPC</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#parameters_2">Parameters</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#returns_2">Returns</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#tx">tx</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#http_3">HTTP</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#jsonrpc_3">JSONRPC</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#parameters_3">Parameters</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#return">Return</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#tx_search">tx_search</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#broadcast_tx_sync">broadcast_tx_sync</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#http_4">HTTP</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#jsonrpc_4">JSONRPC</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#parameters_4">Parameters</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#returns_3">Returns</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#validators">validators</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#http_5">HTTP</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#jsonrpc_5">JSONRPC</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#parameters_5">Parameters</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#returns_4">Returns</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#stakes">stakes</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#http_6">HTTP</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#jsonrpc_6">JSONRPC</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#parameters_6">Parameters</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#returns_5">Returns</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#delegatee">delegatee</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#http_7">HTTP</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#jsonrpc_7">JSONRPC</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#parameters_7">Parameters</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#returns_6">Returns</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#rule">rule</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#http_8">HTTP</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#jsonrpc_8">JSONRPC</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#paramters">Paramters</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#returns_7">Returns</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#proposals">proposals</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#subscribe">subscribe</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#unsbscribe">unsbscribe</a>
+    </li>
+    </ul>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">internals</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../internals/account/">Account</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../internals/transactions/">Transaction</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">examples</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="#">Explorer</a>
+    <ul>
+                <li class="toctree-l2"><a class="reference internal" href="../../examples/explorer/srs/">Requirements</a>
+                </li>
+    </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="#">Wallet</a>
+    <ul>
+                <li class="toctree-l2"><a class="reference internal" href="../../examples/wallet/srs/">Requirements</a>
+                </li>
+    </ul>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../..">arcanex-sdk-js</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../.." class="icon icon-home" alt="Docs"></a> &raquo;</li>
+          <li>API &raquo;</li>
+      <li>RPC API</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="rpc">RPC</h1>
+<h2 id="account">account</h2>
+<p>주소를 키워드로 하여 계정 정보를 조회한다.</p>
+<h3 id="http">HTTP</h3>
+<pre><code class="language-bash">curl &quot;localhost:26657/account?addr=0x68F9AACFAEC8B2EDC440FCB534F6F2BA4E7BA59F&quot;
+</code></pre>
+<h3 id="jsonrpc">JSONRPC</h3>
+<pre><code class="language-json">{
+  &quot;jsonrpc&quot;: &quot;2.0&quot;,
+  &quot;id&quot;: -1,
+  &quot;method&quot;: &quot;account&quot;, 
+  &quot;params&quot;: {&quot;addr&quot;:  &quot;68F9AACFAEC8B2EDC440FCB534F6F2BA4E7BA59F&quot;}
+}
+</code></pre>
+<h3 id="parameters">Parameters</h3>
+<ul>
+<li><code>addr</code> : 계정 주소. 40chars hex-string (20bytes)</li>
+</ul>
+<h3 id="returns">Returns</h3>
+<pre><code class="language-json">{
+  &quot;jsonrpc&quot;: &quot;2.0&quot;,
+  &quot;id&quot;: -1,
+  &quot;result&quot;: {
+    &quot;key&quot;: &quot;68F9AACFAEC8B2EDC440FCB534F6F2BA4E7BA59F&quot;,
+    &quot;value&quot;: {
+      &quot;address&quot;: &quot;68F9AACFAEC8B2EDC440FCB534F6F2BA4E7BA59F&quot;,
+      &quot;nonce&quot;: 0,
+      &quot;balance&quot;: &quot;100000000000000000000000000&quot;
+    }
+  }
+}
+</code></pre>
+<hr />
+<h2 id="block">block</h2>
+<p>블록 높이로 블록 정보를 조회한다.</p>
+<h3 id="http_1">HTTP</h3>
+<pre><code class="language-bash">curl &quot;localhost:26657/block?height=319&quot;
+</code></pre>
+<h3 id="jsonrpc_1">JSONRPC</h3>
+<pre><code class="language-json">{
+  &quot;jsonrpc&quot;: &quot;2.0&quot;,
+  &quot;id&quot;: -1,
+  &quot;method&quot;: &quot;block&quot;, 
+  &quot;params&quot;: {&quot;height&quot;:  &quot;319&quot;}
+}
+</code></pre>
+<h3 id="parameters_1">Parameters</h3>
+<ul>
+<li><code>height</code> : 블록의 높이. 이 파리메터를 생략하면 마지막 블록이 조회 된다.</li>
+</ul>
+<h3 id="returns_1">Returns</h3>
+<pre><code class="language-json">{
+  &quot;jsonrpc&quot;: &quot;2.0&quot;,
+  &quot;id&quot;: -1,
+  &quot;result&quot;: {
+    &quot;block_id&quot;: {
+      &quot;hash&quot;: &quot;857DCD3AB898827436524DFAFC00B70D73056B5AD8FD59D5A8B6136AC5A14B07&quot;,
+      &quot;parts&quot;: {
+        &quot;total&quot;: 1,
+        &quot;hash&quot;: &quot;30129073FFA9018D20CF4FCFB6BA0B26F059624C07FF3F273C8A20E0AC11F348&quot;
+      }
+    },
+    &quot;block&quot;: {
+      &quot;header&quot;: {
+        &quot;version&quot;: {
+          &quot;block&quot;: &quot;11&quot;,
+          &quot;app&quot;: &quot;4294967296&quot;
+        },
+        &quot;chain_id&quot;: &quot;localnet&quot;,
+        &quot;height&quot;: &quot;319&quot;,
+        &quot;time&quot;: &quot;2023-02-22T07:48:44.166257Z&quot;,
+        &quot;last_block_id&quot;: {
+          &quot;hash&quot;: &quot;239066BEDD1BD64D3776CEF980E6CBD9CA2F9965153250F0140F54081CC5D0B7&quot;,
+          &quot;parts&quot;: {
+            &quot;total&quot;: 1,
+            &quot;hash&quot;: &quot;29B3B0F4AFF08A28DC40F8B82FF5C517584D7E2209E9D7C598D632F5E4CA8B21&quot;
+          }
+        },
+        &quot;last_commit_hash&quot;: &quot;B95DDD3C0DCB29994811BA3DF680BAAF367E5BF73EEAE89EE9CDCEC6C9C9F31E&quot;,
+        &quot;data_hash&quot;: &quot;E3B0C44298FC1C149AFBF4C8996FB92427AE41E4649B934CA495991B7852B855&quot;,
+        &quot;validators_hash&quot;: &quot;12A05F850516E918E1E15394D0623E22B5D2AA4576483CF5CA2CF637201DE338&quot;,
+        &quot;next_validators_hash&quot;: &quot;12A05F850516E918E1E15394D0623E22B5D2AA4576483CF5CA2CF637201DE338&quot;,
+        &quot;consensus_hash&quot;: &quot;048091BC7DDC283F77BFBF91D73C44DA58C3DF8A9CBC867405D8B7F3DAADA22F&quot;,
+        &quot;app_hash&quot;: &quot;3F2F36C85CE93707F9091E446266FA1C8B44B35C89A286491D65A78467C91475&quot;,
+        &quot;last_results_hash&quot;: &quot;E3B0C44298FC1C149AFBF4C8996FB92427AE41E4649B934CA495991B7852B855&quot;,
+        &quot;evidence_hash&quot;: &quot;E3B0C44298FC1C149AFBF4C8996FB92427AE41E4649B934CA495991B7852B855&quot;,
+        &quot;proposer_address&quot;: &quot;68F9AACFAEC8B2EDC440FCB534F6F2BA4E7BA59F&quot;
+      },
+      &quot;data&quot;: {
+        &quot;txs&quot;: []
+      },
+      &quot;evidence&quot;: {
+        &quot;evidence&quot;: []
+      },
+      &quot;last_commit&quot;: {
+        &quot;height&quot;: &quot;318&quot;,
+        &quot;round&quot;: 0,
+        &quot;block_id&quot;: {
+          &quot;hash&quot;: &quot;239066BEDD1BD64D3776CEF980E6CBD9CA2F9965153250F0140F54081CC5D0B7&quot;,
+          &quot;parts&quot;: {
+            &quot;total&quot;: 1,
+            &quot;hash&quot;: &quot;29B3B0F4AFF08A28DC40F8B82FF5C517584D7E2209E9D7C598D632F5E4CA8B21&quot;
+          }
+        },
+        &quot;signatures&quot;: [
+          {
+            &quot;block_id_flag&quot;: 2,
+            &quot;validator_address&quot;: &quot;68F9AACFAEC8B2EDC440FCB534F6F2BA4E7BA59F&quot;,
+            &quot;timestamp&quot;: &quot;2023-02-22T07:48:44.166257Z&quot;,
+            &quot;signature&quot;: &quot;mMWFCaCtoQBHZzWrdjITOqLpXgKH+xCcnYYI7iQAdKguJ2AwmKCXzUKyIT4yckJKfZ2aL5YPDx08fDRPQI7cWg==&quot;
+          }
+        ]
+      }
+    }
+  }
+}
+</code></pre>
+<hr />
+<h2 id="block_by_hash">block_by_hash</h2>
+<p>블록 해시값으로 블록 정보를 조회한다.</p>
+<h3 id="http_2">HTTP</h3>
+<pre><code class="language-bash">curl &quot;localhost:26657/block_by_hash?hash=0x239066BEDD1BD64D3776CEF980E6CBD9CA2F9965153250F0140F54081CC5D0B7&quot;
+</code></pre>
+<h3 id="jsonrpc_2">JSONRPC</h3>
+<pre><code class="language-json">{
+  &quot;jsonrpc&quot;: &quot;2.0&quot;,
+  &quot;id&quot;: -1,
+  &quot;method&quot;: &quot;block_by_hash&quot;,
+  &quot;params&quot;: {&quot;hash&quot;:  &quot;239066BEDD1BD64D3776CEF980E6CBD9CA2F9965153250F0140F54081CC5D0B7&quot;}
+}
+</code></pre>
+<h3 id="parameters_2">Parameters</h3>
+<ul>
+<li><code>hash</code> : 블록의 해시. 64chars hex-string (32bytes)</li>
+</ul>
+<h3 id="returns_2">Returns</h3>
+<pre><code class="language-json">{
+  &quot;jsonrpc&quot;: &quot;2.0&quot;,
+  &quot;id&quot;: -1,
+  &quot;result&quot;: {
+    &quot;block_id&quot;: {
+      &quot;hash&quot;: &quot;239066BEDD1BD64D3776CEF980E6CBD9CA2F9965153250F0140F54081CC5D0B7&quot;,
+      &quot;parts&quot;: {
+        &quot;total&quot;: 1,
+        &quot;hash&quot;: &quot;29B3B0F4AFF08A28DC40F8B82FF5C517584D7E2209E9D7C598D632F5E4CA8B21&quot;
+      }
+    },
+    &quot;block&quot;: {
+      &quot;header&quot;: {
+        &quot;version&quot;: {
+          &quot;block&quot;: &quot;11&quot;,
+          &quot;app&quot;: &quot;4294967296&quot;
+        },
+        &quot;chain_id&quot;: &quot;localnet&quot;,
+        &quot;height&quot;: &quot;318&quot;,
+        &quot;time&quot;: &quot;2023-02-22T07:48:42.029719Z&quot;,
+        &quot;last_block_id&quot;: {
+          &quot;hash&quot;: &quot;88CC3AB2150B9F5106E1B2B0791D1F2E871CADFB9CFCEE2B029EC7229288082F&quot;,
+          &quot;parts&quot;: {
+            &quot;total&quot;: 1,
+            &quot;hash&quot;: &quot;33A21FA1CC75F01B3DF81DBFA2EB850A515A817D5BFBC61707566AE1B924522E&quot;
+          }
+        },
+        &quot;last_commit_hash&quot;: &quot;ABB6276405AFAA374F3DED24B8717425448B33FC34DB8D4FDE0AB1149807FE07&quot;,
+        &quot;data_hash&quot;: &quot;E3B0C44298FC1C149AFBF4C8996FB92427AE41E4649B934CA495991B7852B855&quot;,
+        &quot;validators_hash&quot;: &quot;12A05F850516E918E1E15394D0623E22B5D2AA4576483CF5CA2CF637201DE338&quot;,
+        &quot;next_validators_hash&quot;: &quot;12A05F850516E918E1E15394D0623E22B5D2AA4576483CF5CA2CF637201DE338&quot;,
+        &quot;consensus_hash&quot;: &quot;048091BC7DDC283F77BFBF91D73C44DA58C3DF8A9CBC867405D8B7F3DAADA22F&quot;,
+        &quot;app_hash&quot;: &quot;3F2F36C85CE93707F9091E446266FA1C8B44B35C89A286491D65A78467C91475&quot;,
+        &quot;last_results_hash&quot;: &quot;E3B0C44298FC1C149AFBF4C8996FB92427AE41E4649B934CA495991B7852B855&quot;,
+        &quot;evidence_hash&quot;: &quot;E3B0C44298FC1C149AFBF4C8996FB92427AE41E4649B934CA495991B7852B855&quot;,
+        &quot;proposer_address&quot;: &quot;68F9AACFAEC8B2EDC440FCB534F6F2BA4E7BA59F&quot;
+      },
+      &quot;data&quot;: {
+        &quot;txs&quot;: []
+      },
+      &quot;evidence&quot;: {
+        &quot;evidence&quot;: []
+      },
+      &quot;last_commit&quot;: {
+        &quot;height&quot;: &quot;317&quot;,
+        &quot;round&quot;: 0,
+        &quot;block_id&quot;: {
+          &quot;hash&quot;: &quot;88CC3AB2150B9F5106E1B2B0791D1F2E871CADFB9CFCEE2B029EC7229288082F&quot;,
+          &quot;parts&quot;: {
+            &quot;total&quot;: 1,
+            &quot;hash&quot;: &quot;33A21FA1CC75F01B3DF81DBFA2EB850A515A817D5BFBC61707566AE1B924522E&quot;
+          }
+        },
+        &quot;signatures&quot;: [
+          {
+            &quot;block_id_flag&quot;: 2,
+            &quot;validator_address&quot;: &quot;68F9AACFAEC8B2EDC440FCB534F6F2BA4E7BA59F&quot;,
+            &quot;timestamp&quot;: &quot;2023-02-22T07:48:42.029719Z&quot;,
+            &quot;signature&quot;: &quot;+gqKKBguRPk49CDAjffa9dOAtyZlfD5E0WOl7ZAVxjQDoQ9WiazWgzzGMNU4BiGbQqEZG8P9cYA6jrdFkDRBQQ==&quot;
+          }
+        ]
+      }
+    }
+  }
+}
+</code></pre>
+<hr />
+<h2 id="tx">tx</h2>
+<p>트랜잭션 해시값으로 트랜잭션 정보를 조회한다.</p>
+<h3 id="http_3">HTTP</h3>
+<pre><code class="language-bash">curl &quot;localhost:26657/tx?hash=0x5880e40956d1b274f7be9f15b5d8b9d5afdd69341ffef5fcc5d43d16c4627e4c&quot;
+</code></pre>
+<h3 id="jsonrpc_3">JSONRPC</h3>
+<pre><code class="language-json">{
+  &quot;jsonrpc&quot;: &quot;2.0&quot;,
+  &quot;id&quot;: -1,
+  &quot;method&quot;: &quot;tx&quot;,
+  &quot;params&quot;: {&quot;hash&quot;: &quot;5880e40956d1b274f7be9f15b5d8b9d5afdd69341ffef5fcc5d43d16c4627e4c&quot;}
+}
+</code></pre>
+<h3 id="parameters_3">Parameters</h3>
+<ul>
+<li><code>hash</code>: 트랜잭션 해시. 64chars hex-string (32bytes)</li>
+</ul>
+<h3 id="return">Return</h3>
+<pre><code class="language-json">{
+  &quot;jsonrpc&quot;: &quot;2.0&quot;,
+  &quot;id&quot;: -1,
+  &quot;result&quot;: {
+    &quot;hash&quot;: &quot;5880E40956D1B274F7BE9F15B5D8B9D5AFDD69341FFEF5FCC5D43D16C4627E4C&quot;,
+    &quot;height&quot;: &quot;110440&quot;,
+    &quot;index&quot;: 0,
+    &quot;tx_result&quot;: {
+      &quot;code&quot;: 0,
+      &quot;data&quot;: null,
+      &quot;log&quot;: &quot;&quot;,
+      &quot;info&quot;: &quot;&quot;,
+      &quot;gas_wanted&quot;: &quot;10&quot;,
+      &quot;gas_used&quot;: &quot;10&quot;,
+      &quot;events&quot;: [
+        {
+          &quot;type&quot;: &quot;tx&quot;,
+          &quot;attributes&quot;: [
+            {
+              &quot;key&quot;: &quot;dHgudHlwZQ==&quot;,
+              &quot;value&quot;: &quot;dHJhbnNmZXI=&quot;,
+              &quot;index&quot;: true
+            },
+            {
+              &quot;key&quot;: &quot;dHguc2VuZGVy&quot;,
+              &quot;value&quot;: &quot;OERDNDFBODZCOTFFQjg4RDgyNDg5QzREMDM3QUU5RkZDQTY1Q0ZCRg==&quot;,
+              &quot;index&quot;: true
+            },
+            {
+              &quot;key&quot;: &quot;dHgucmVjZWl2ZXI=&quot;,
+              &quot;value&quot;: &quot;MUM2QzcxRDNCMERCMEM0NTM3RjdFQ0REMkM5RkU2Rjg2QkI5QzE1RQ==&quot;,
+              &quot;index&quot;: true
+            },
+            {
+              &quot;key&quot;: &quot;dHguYWRkcnBhaXI=&quot;,
+              &quot;value&quot;: &quot;OERDNDFBODZCOTFFQjg4RDgyNDg5QzREMDM3QUU5RkZDQTY1Q0ZCRjFDNkM3MUQzQjBEQjBDNDUzN0Y3RUNERDJDOUZFNkY4NkJCOUMxNUU=&quot;,
+              &quot;index&quot;: true
+            }
+          ]
+        }
+      ],
+      &quot;codespace&quot;: &quot;&quot;
+    },
+    &quot;tx&quot;: &quot;CAEQgJGLmKjz2aIXGAwiFI3EGoa5HriNgkicTQN66f/KZc+/KhQcbHHTsNsMRTf37N0sn+b4a7nBXjIEQjo1xzoBCkABUkEztR8Kh0ycBw63WZgWTR868mFFgjX9TDdpOS4951GGJk3s7H21SSPpuzh9xVvp4QjxyhetDFwfDhFxIgDclTV/AQ==&quot;
+  }
+}
+</code></pre>
+<hr />
+<h2 id="tx_search">tx_search</h2>
+<p>Not supported</p>
+<hr />
+<h2 id="broadcast_tx_sync">broadcast_tx_sync</h2>
+<p>블록체인 네트워크에 트랜잭션을 제출 한다.</p>
+<h3 id="http_4">HTTP</h3>
+<pre><code class="language-json">curl &quot;localhost:26657/broadcast_tx_sync?tx=0xABCDEF0123456789....&quot;
+</code></pre>
+<h3 id="jsonrpc_4">JSONRPC</h3>
+<pre><code class="language-json">{
+  &quot;jsonrpc&quot;: &quot;2.0&quot;,
+  &quot;id&quot;: -1,
+  &quot;method&quot;: &quot;broadcast_tx_sync&quot;,
+  &quot;params&quot;: {&quot;tx&quot;: &quot;CAEQgJGLmKjz2aIXGAwiFI3EGoa5HriNgkicTQN66f/KZc+/KhQcbHHTsNsMRTf37N0sn+b4a7nBXjIEQjo1xzoBCkABUkEztR8Kh0ycBw63WZgWTR868mFFgjX9TDdpOS4951GGJk3s7H21SSPpuzh9xVvp4QjxyhetDFwfDhFxIgDclTV/AQ==&quot;}
+}
+</code></pre>
+<h3 id="parameters_4">Parameters</h3>
+<ul>
+<li><code>tx</code>: 트랜잭션 데이터.<br />
+JSONRPC 로 요청하는 경우, base64 인코딩된 값을 사용 하고,<br />
+HTTP/GET 방식으로 요청할 경우, hex-string(<code>"0x"</code> prefix 포함) 으로 인코딩한 값을 사용한다.</li>
+</ul>
+<h3 id="returns_3">Returns</h3>
+<pre><code class="language-json">{
+  &quot;jsonrpc&quot;: &quot;2.0&quot;,
+  &quot;id&quot;: 0,
+  &quot;result&quot;: {
+    &quot;code&quot;: &quot;0&quot;,
+    &quot;data&quot;: &quot;&quot;,
+    &quot;log&quot;: &quot;&quot;,
+    &quot;hash&quot;: &quot;5880E40956D1B274F7BE9F15B5D8B9D5AFDD69341FFEF5FCC5D43D16C4627E4C&quot;
+  }
+}
+</code></pre>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><code>broadcast_tx_sync</code> API는 블록체인에 트랜잭션을 제출 하는 기능을 수행하는데, 
+제출 성공이 리턴되었다고 해서 이를 블록체인에 해당 트랜잭션이 성공적으로 기록 되었음으로 해석해서는 안된다.<br />
+제출 요청에 대한 리턴값의 해시 <code>result.hash</code> 로 반드시 기록(Commit) 여부를 확인해야 한다.<br />
+트랜잭션 커밋 여부 확인은 Event Subscription 으로 할 수도 있고, 주기적인 폴링 방식 (<a href="#tx"><code>tx</code></a> API 호출) 으로 구현할 수도 있다.</p>
+</div>
+<hr />
+<h2 id="validators">validators</h2>
+<p>현재 또는 특정 블록 높이 시점에서의 Validator 목록을 조회한다.</p>
+<h3 id="http_5">HTTP</h3>
+<pre><code class="language-bash">curl &quot;localhost:26657/validators?height=5&quot;
+</code></pre>
+<h3 id="jsonrpc_5">JSONRPC</h3>
+<pre><code class="language-json">{
+  &quot;jsonrpc&quot;: &quot;2.0&quot;,
+  &quot;id&quot;: -1,
+  &quot;method&quot;: &quot;validators&quot;,
+  &quot;params&quot;: {&quot;height&quot;: &quot;5&quot;}
+}
+</code></pre>
+<h3 id="parameters_5">Parameters</h3>
+<ul>
+<li><code>height</code>: 블록높이</li>
+</ul>
+<h3 id="returns_4">Returns</h3>
+<pre><code class="language-json">{
+  &quot;jsonrpc&quot;: &quot;2.0&quot;,
+  &quot;id&quot;: -1,
+  &quot;result&quot;: {
+    &quot;block_height&quot;: &quot;1&quot;,
+    &quot;validators&quot;: [
+      {
+        &quot;address&quot;: &quot;8DC41A86B91EB88D82489C4D037AE9FFCA65CFBF&quot;,
+        &quot;pub_key&quot;: {
+          &quot;type&quot;: &quot;tendermint/PubKeySecp256k1&quot;,
+          &quot;value&quot;: &quot;Ax2d8cCfC60NjIS7G6J8hHTPPf6JvxgPRjSVpL+83Qkr&quot;
+        },
+        &quot;voting_power&quot;: &quot;10&quot;,
+        &quot;proposer_priority&quot;: &quot;0&quot;
+      }
+    ],
+    &quot;count&quot;: &quot;1&quot;,
+    &quot;total&quot;: &quot;1&quot;
+  }
+}
+</code></pre>
+<hr />
+<h2 id="stakes">stakes</h2>
+<p>특정 계정의 지분(stakes) 를 조회 한다.</p>
+<h3 id="http_6">HTTP</h3>
+<pre><code class="language-bash">curl &quot;localhost:26657/stakes?addr=0x8DC41A86B91EB88D82489C4D037AE9FFCA65CFBF&quot;
+</code></pre>
+<h3 id="jsonrpc_6">JSONRPC</h3>
+<pre><code class="language-json">{
+  &quot;jsonrpc&quot;: &quot;2.0&quot;,
+  &quot;id&quot;: -1,
+  &quot;method&quot;: &quot;stakes&quot;,
+  &quot;params&quot;: {&quot;addr&quot;: &quot;8DC41A86B91EB88D82489C4D037AE9FFCA65CFBF&quot;}
+}
+</code></pre>
+<h3 id="parameters_6">Parameters</h3>
+<ul>
+<li><code>addr</code>: 조회하고자 하는 계정의 주소.</li>
+</ul>
+<h3 id="returns_5">Returns</h3>
+<pre><code class="language-json">{
+  &quot;jsonrpc&quot;: &quot;2.0&quot;,
+  &quot;id&quot;: -1,
+  &quot;result&quot;: {
+    &quot;key&quot;: &quot;8DC41A86B91EB88D82489C4D037AE9FFCA65CFBF&quot;,
+    &quot;value&quot;: [
+      {
+        &quot;owner&quot;: &quot;8DC41A86B91EB88D82489C4D037AE9FFCA65CFBF&quot;,
+        &quot;to&quot;: &quot;8DC41A86B91EB88D82489C4D037AE9FFCA65CFBF&quot;,
+        &quot;amount&quot;: 10000000000000000000,
+        &quot;power&quot;: &quot;10&quot;,
+        &quot;blockRewardUnit&quot;: 10000000000,
+        &quot;ReceivedReward&quot;: 22820000000000,
+        &quot;txhash&quot;: &quot;0000000000000000000000000000000000000000000000000000000000000000&quot;,
+        &quot;startHeight&quot;: &quot;0&quot;,
+        &quot;refundHeight&quot;: &quot;0&quot;
+      }
+    ]
+  }
+}
+</code></pre>
+<hr />
+<h2 id="delegatee">delegatee</h2>
+<p>특정 계정이 누구(계정)에게 지분 위임을 하였는지 조회</p>
+<h3 id="http_7">HTTP</h3>
+<pre><code class="language-bash">curl &quot;localhost:26657/delegatee?addr=0x8DC41A86B91EB88D82489C4D037AE9FFCA65CFBF&quot;
+</code></pre>
+<h3 id="jsonrpc_7">JSONRPC</h3>
+<pre><code class="language-json">{
+  &quot;jsonrpc&quot;: &quot;2.0&quot;,
+  &quot;id&quot;: -1,
+  &quot;method&quot;: &quot;delegatee&quot;,
+  &quot;params&quot;: {&quot;addr&quot;: &quot;8DC41A86B91EB88D82489C4D037AE9FFCA65CFBF&quot;}
+}
+</code></pre>
+<h3 id="parameters_7">Parameters</h3>
+<ul>
+<li><code>addr</code>: 조회하고자 하는 계정의 주소. <code>addr</code>로 부터 지분 위임 받은 계정 목록이 조회된다.</li>
+</ul>
+<h3 id="returns_6">Returns</h3>
+<pre><code class="language-json">{
+  &quot;jsonrpc&quot;: &quot;2.0&quot;,
+  &quot;id&quot;: -1,
+  &quot;result&quot;: {
+    &quot;key&quot;: &quot;8DC41A86B91EB88D82489C4D037AE9FFCA65CFBF&quot;,
+    &quot;value&quot;: {
+      &quot;address&quot;: &quot;8DC41A86B91EB88D82489C4D037AE9FFCA65CFBF&quot;,
+      &quot;pubKey&quot;: &quot;031D9DF1C09F0BAD0D8C84BB1BA27C8474CF3DFE89BF180F463495A4BFBCDD092B&quot;,
+      &quot;selfAmount&quot;: 10000000000000000000,
+      &quot;selfPower&quot;: &quot;10&quot;,
+      &quot;totalAmount&quot;: 10000000000000000000,
+      &quot;totalPower&quot;: &quot;10&quot;,
+      &quot;rewardAmount&quot;: 22820000000000,
+      &quot;stakes&quot;: [
+        {
+          &quot;owner&quot;: &quot;8DC41A86B91EB88D82489C4D037AE9FFCA65CFBF&quot;,
+          &quot;to&quot;: &quot;8DC41A86B91EB88D82489C4D037AE9FFCA65CFBF&quot;,
+          &quot;amount&quot;: 10000000000000000000,
+          &quot;power&quot;: &quot;10&quot;,
+          &quot;blockRewardUnit&quot;: 10000000000,
+          &quot;ReceivedReward&quot;: 22820000000000,
+          &quot;txhash&quot;: &quot;0000000000000000000000000000000000000000000000000000000000000000&quot;,
+          &quot;startHeight&quot;: &quot;0&quot;,
+          &quot;refundHeight&quot;: &quot;0&quot;
+        }
+      ]
+    }
+  }
+}
+</code></pre>
+<hr />
+<h2 id="rule">rule</h2>
+<p>현재 거버넌스 규칙을 조회 한다.</p>
+<h3 id="http_8">HTTP</h3>
+<pre><code class="language-bash">curl &quot;localhost:26657/rule&quot;
+</code></pre>
+<h3 id="jsonrpc_8">JSONRPC</h3>
+<pre><code class="language-json">{
+  &quot;jsonrpc&quot;: &quot;2.0&quot;,
+  &quot;id&quot;: -1,
+  &quot;method&quot;: &quot;rule&quot;,
+}
+</code></pre>
+<h3 id="paramters">Paramters</h3>
+<p>N/A</p>
+<h3 id="returns_7">Returns</h3>
+<pre><code class="language-json">{
+  &quot;jsonrpc&quot;: &quot;2.0&quot;,
+  &quot;id&quot;: -1,
+  &quot;result&quot;: {
+    &quot;value&quot;: {
+      &quot;version&quot;: &quot;0&quot;,
+      &quot;maxValidatorCnt&quot;: &quot;21&quot;,
+      &quot;amountPerPower&quot;: &quot;1000000000000000000&quot;,
+      &quot;rewardPerPower&quot;: &quot;1000000000&quot;,
+      &quot;lazyRewardBlocks&quot;: &quot;20&quot;,
+      &quot;lazyApplyingBlocks&quot;: &quot;10&quot;,
+      &quot;minTrxFee&quot;: &quot;10&quot;,
+      &quot;minVotingPeriodBlocks&quot;: &quot;259200&quot;,
+      &quot;maxVotingPeriodBlocks&quot;: &quot;2592000&quot;
+    }
+  }
+}
+</code></pre>
+<hr />
+<h2 id="proposals">proposals</h2>
+<p>Not supported yet.</p>
+<hr />
+<h2 id="subscribe">subscribe</h2>
+<p>Websocket 을 이용한 <a href="../subscriber/">Event Subscription</a> 을 참조한다.</p>
+<hr />
+<h2 id="unsbscribe">unsbscribe</h2>
+<p>Websocket 을 이용한 <a href="../subscriber/">Event Subscription</a> 을 참조한다.</p>
+<hr />
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="../rweb3/" class="btn btn-neutral float-left" title="RWeb3"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../../internals/account/" class="btn btn-neutral float-right" title="Account">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+    
+      <span><a href="../rweb3/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../../internals/account/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script>var base_url = '../..';</script>
+    <script src="../../js/theme_extra.js" defer></script>
+    <script src="../../js/theme.js" defer></script>
+      <script src="../../search/main.js" defer></script>
+    <script defer>
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
+
+</body>
+</html>

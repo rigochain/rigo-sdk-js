@@ -46,13 +46,19 @@
               </ul>
               <p class="caption"><span class="caption-text">API</span></p>
               <ul>
-                  <li class="toctree-l1"><a class="reference internal" href="../../api/account/">Account</a>
+                  <li class="toctree-l1"><a class="reference internal" href="#">Javascript API</a>
+    <ul>
+                <li class="toctree-l2"><a class="reference internal" href="../../api/account/">Account</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../api/trxbuilder/">TrxBuilder</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../api/subscriber/">Subscriber</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../api/rweb3/">RWeb3</a>
+                </li>
+    </ul>
                   </li>
-                  <li class="toctree-l1"><a class="reference internal" href="../../api/trxbuilder/">TrxBuilder</a>
-                  </li>
-                  <li class="toctree-l1"><a class="reference internal" href="../../api/subscriber/">Event</a>
-                  </li>
-                  <li class="toctree-l1"><a class="reference internal" href="../../api/acnrpc/">ACNet</a>
+                  <li class="toctree-l1"><a class="reference internal" href="../../api/rpc/">RPC API</a>
                   </li>
               </ul>
               <p class="caption"><span class="caption-text">internals</span></p>
@@ -60,8 +66,6 @@
                   <li class="toctree-l1"><a class="reference internal" href="../account/">Account</a>
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../transactions/">Transaction</a>
-                  </li>
-                  <li class="toctree-l1"><a class="reference internal" href="../rpc/">JSONRPC</a>
                   </li>
               </ul>
               <p class="caption"><span class="caption-text">examples</span></p>
@@ -237,7 +241,26 @@
   sig?: string;
 }
 </code></pre>
-<h3 id="protobuf-messages">Protobuf messages</h3>
+<h3 id="trxpayloadundelegating">TrxPayloadUndelegating</h3>
+<pre><code class="language-ts">interface TrxPayloadUndelegating {
+  txhash: string
+}
+</code></pre>
+<h3 id="trxproto">TrxProto</h3>
+<pre><code class="language-ts">interface TrxProto {
+  version: number;
+  time: Long;
+  nonce: Long;
+  from: Uint8Array;
+  to: Uint8Array;
+  Amount: Uint8Array;
+  Gas: Uint8Array;
+  type: number;
+  Payload: Uint8Array;
+  sig: Uint8Array;
+}
+</code></pre>
+<h3 id="protobuf-messages-for-transactions">Protobuf messages for transactions</h3>
 <pre><code class="language-protobuf">message TrxProto {
   uint32 version = 1;
   int64 time = 2;
@@ -274,7 +297,7 @@ message TrxPayloadVotingProto {
   int32 choice = 2;
 }
 </code></pre>
-<h3 id="arcanex-wallet-format-awf">ARCANEX Wallet Format (AWF)</h3>
+<h3 id="nrigo-wallet-format-awf">NRIGO Wallet Format (AWF)</h3>
 <pre><code class="language-json">{
   &quot;version&quot;: &quot;1&quot;,
   &quot;address&quot;: &quot;8DC41A86B91EB88D82489C4D037AE9FFCA65CFBF&quot;,
