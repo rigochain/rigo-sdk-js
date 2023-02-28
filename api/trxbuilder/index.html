@@ -161,7 +161,7 @@
             <div class="section" itemprop="articleBody">
               
                 <h2 id="trxbuilder">TrxBuilder</h2>
-<p>NRIGO 블록체인에 제출할 트랜잭션을 생성한다.<br />
+<p>RIGO 블록체인에 제출할 트랜잭션을 생성한다.<br />
 생성되는 트랜잭션 객체는 <a href="../../internals/data/#trxproto">TrxProto</a> 객체로 표현되며, 
 전자서명 및 인코딩 과정을 거쳐 네트워크에 제출 되어 질 수 있다.</p>
 <p>트랜잭션 객체 <code>TrxProto</code>은 <code>TrxBuilder.BuildXXXX</code> API를 통해 생성된다.
@@ -257,7 +257,7 @@ rweb3.broadcastTrxSync(tx).then(resp =&gt; {
 <hr />
 <h3 id="decodetrx">DecodeTrx</h3>
 <p>Protobuf v3 로 인코딩된 데이터로 부터 <code>Trx</code> 객체를 생성한다.<br />
-NRIGO 노드로 부터 수신한 트랜잭션 정보는 protobuf v3 로 인코딩한 값을 base64 로 다시 인코딩한 값이다.
+RIGO 노드로 부터 수신한 트랜잭션 정보는 protobuf v3 로 인코딩한 값을 base64 로 다시 인코딩한 값이다.
 이 값을 디코딩 하기 위해서는 우선 base64 디코딩이 필요하고 그 결과를 다시 <code>DecodeTrx</code> API로 디코딩 해야 한다.  </p>
 <div class="admonition tip">
 <p class="admonition-title">Tip</p>

@@ -221,7 +221,7 @@
             <div class="section" itemprop="articleBody">
               
                 <h2 id="rweb3">RWeb3</h2>
-<p><code>RWeb3</code> API 는 NRIGO Provider (NRIGO RPC 서버) 에 접속하여 JSONRPC 요청 작업을 수행 한다.</p>
+<p><code>RWeb3</code> API 는 RIGO Provider (RIGO RPC 서버) 에 접속하여 JSONRPC 요청 작업을 수행 한다.</p>
 <pre><code class="language-ts">import RWeb3 from &quot;rweb3&quot;;
 const rweb3 = new RWeb3('http://localhost:26657')
 
@@ -231,19 +231,19 @@ const rweb3 = new RWeb3('http://localhost:26657')
 <hr />
 <h3 id="seturl">~~setUrl~~</h3>
 <p><em>DEPRECATED</em></p>
-<p><code>RWeb3</code> API 호출시 접속하게 될 Provider(NRIGO 노드 RPC 서버) URL을 설정한다.</p>
+<p><code>RWeb3</code> API 호출시 접속하게 될 Provider(RIGO 노드 RPC 서버) URL을 설정한다.</p>
 <pre><code class="language-ts">setUrl(url:string)
 </code></pre>
 <h4 id="parameters">Parameters</h4>
 <ul>
-<li><code>url</code>: NRIGO 노드의 RPC 서버 URL</li>
+<li><code>url</code>: RIGO 노드의 RPC 서버 URL</li>
 </ul>
 <h4 id="example">Example</h4>
 <pre><code class="language-ts">rweb3.setUrl('http://localhost:26657')
 </code></pre>
 <hr />
 <h3 id="geturl">getUrl</h3>
-<p>현재 사용중인 Provider(NRIGO 노드 RPC 서버) URL 조회.</p>
+<p>현재 사용중인 Provider(RIGO 노드 RPC 서버) URL 조회.</p>
 <pre><code class="language-ts">static getUrl():string
 </code></pre>
 <h4 id="example_1">Example</h4>
@@ -363,7 +363,7 @@ console.log(nodeUrl) // 'http://localhost:26657'
 <h3 id="broadcasttrxsync">broadcastTrxSync</h3>
 <pre><code class="language-ts">broadcastTrxSync(tx: TrxProto): PromiseLike&lt;any&gt;
 </code></pre>
-<p>트랜잭션을 NRIGO 네트워크에 제출 한다.  </p>
+<p>트랜잭션을 RIGO 네트워크에 제출 한다.  </p>
 <h4 id="parameters_3">Parameters</h4>
 <ul>
 <li><code>tx</code>: 트랜잭션 객체. <code>TrxBuiler.BuildXXX</code> 로 생성. <a href="../trxbuilder/">TrxBuilder</a> 참조.</li>
@@ -642,11 +642,11 @@ rweb3.syncAccount(acct, resp =&gt; {
 <h3 id="subscribe">subscribe</h3>
 <pre><code class="language-ts">subscribe(url:string, query: string, cb: (resp:string)=&gt;void): Subscriber
 </code></pre>
-<p>NRIGO 네트워크에서 발생되는 이벤트 구독을 요청한다.<br />
+<p>RIGO 네트워크에서 발생되는 이벤트 구독을 요청한다.<br />
 구독 종료는 리턴되는 <code>Subscriber</code> 객체의 <code>stop</code> 메소드를 사용한다. 자세한 사항은 <a href="../subscriber/">Subscriber</a>를 참조한다.</p>
 <h4 id="parameters_9">Parameters</h4>
 <ol>
-<li><code>url</code> : NRIGO Node 의 websocket endpoint.</li>
+<li><code>url</code> : RIGO Node 의 websocket endpoint.</li>
 <li><code>query</code> : 구독하고자 하는 이벤트 조건 지정.</li>
 <li><code>cb</code> : 이벤트를 수신할 callback function.</li>
 </ol>

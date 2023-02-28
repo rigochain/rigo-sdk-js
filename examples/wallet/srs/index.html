@@ -112,7 +112,7 @@
               
                 <h2 id="overview">Overview</h2>
 <p>이 문서는 MAuthWallet 이 갖추어야 할 최소 요구사항을 One-page 형식으로 기술한다.</p>
-<p>MAuthWallet 은 MDL, NRIGO 상의 자산을 관리하기 위하여 개발되는 모바일 앱 형태의 월렛 이다.</p>
+<p>MAuthWallet 은 MDL, RIGO 상의 자산을 관리하기 위하여 개발되는 모바일 앱 형태의 월렛 이다.</p>
 <p>일반적인 월렛 어플리케이션은,</p>
 <ol>
 <li>계정(지갑) 생성</li>
@@ -121,7 +121,7 @@
 <li>전송 내역 확인</li>
 </ol>
 <p>을 기본 기능으로 제공한다.</p>
-<p>MAuthWallet 역시 위 기본 기능을 제공함과 동시에, NRIGO 의 합의 알고리즘인 DPoS 의 특성에 따른 추가 기능과, 
+<p>MAuthWallet 역시 위 기본 기능을 제공함과 동시에, RIGO 의 합의 알고리즘인 DPoS 의 특성에 따른 추가 기능과, 
 하이퍼렛지 기반의 MDL 상에서의 위 기본 기능을 함께 제공하도록 구현되어야 한다.</p>
 <p>이러한 MAuthWallet 의 기능은 사용자 인증 용도로 개발된 MAuth App의 기능을 확장하는 형태로 개발 한다. 
 즉 MAuth App 에 아래 기술되는 월렛 기능을 추가 하여 MAuthWallet 을 개발 한다.</p>
@@ -142,7 +142,7 @@
 <p>사용자 요청시 새로운 Account 를 생성한다.<br />
 여기서 Account 생성은 Private/Public KeyPair 생성을 의미하는데,
 MAuthWallet 은 ECDSA Secp256K1 커브를 사용하여  PrivateKey/PublicKey 를 생성하고 저장 한다.<br />
-Account 저장은 <a href="../../../internals/data/#arcanex-wallet-format--awf-">NRIGO Wallet Format (AWF)</a> 형식으로 구성되어 저장되어야 하는데, 
+Account 저장은 <a href="../../../internals/data/#arcanex-wallet-format--awf-">RIGO Wallet Format (AWF)</a> 형식으로 구성되어 저장되어야 하는데, 
 자세한 사항은 <a href="#save-account">Save Account</a> 를 참조한다.</p>
 <hr />
 <h3 id="import-account">Import Account</h3>
@@ -448,7 +448,7 @@ try {
 <p>디바이스가 지원한다면 가급적 생체 정보를 사용하도록 유도하는 사용 시나리오를 적용, 구현한다.</p>
 <hr />
 <h3 id="sdk">SDK</h3>
-<p><em>NRIGO 노드와 통신하는 부분을 모듈화 -&gt; 별도의 프로젝트로 -&gt; SDK 확보 ?</em></p>
+<p><em>RIGO 노드와 통신하는 부분을 모듈화 -&gt; 별도의 프로젝트로 -&gt; SDK 확보 ?</em></p>
 <h2 id="etc">ETC.</h2>
 <p>Sprint_N</p>
 <hr />
