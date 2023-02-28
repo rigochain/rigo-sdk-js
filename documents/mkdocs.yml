@@ -16,9 +16,9 @@ nav:
       - Subscriber: api/subscriber.md
       - RWeb3: api/rweb3.md
     - RPC API: api/rpc.md
-  - internals:
-      - Account: internals/account.md
-      - Transaction: internals/transactions.md
+#  - internals:
+#      - Account: internals/account.md
+#      - Transaction: internals/transactions.md
   - examples:
       - Explorer:
           - Requirements: examples/explorer/srs.md
