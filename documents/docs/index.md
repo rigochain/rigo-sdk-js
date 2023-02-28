@@ -1,4 +1,4 @@
-# Overview
+## Overview
 
 ```plantuml
 @startuml
@@ -32,29 +32,6 @@ Javascript 환경에서 사용할 수 있는 라이브러리 형태로 구현한
 
 ---
 
-## Quick Start
-
-### Browserify
-
-```bash
-git clone https://github.com/rigochain/rigo-sdk-js.git
-cd rigo-sdk-js
-npm install
-gulp
-```
-
-```html
-<script type='text/javascript' src='./dist/rigo.min.js'></script>
-```
-
-### NodeJS
-
-```bash
-npm i rigo-sdk-js
-```
-
----
-
 ## Features
 
 ### Account management
@@ -62,6 +39,8 @@ npm i rigo-sdk-js
 - `Account` 생성
 - `Account` 가져오기
 - `Account` 내보내기
+
+Account 관련 기능에 대한 자세한 사항은 [Account](api/account.md) 를 참조 한다.
 
 ### Query state
 블록체인에 기록된 다음과 같은 정보를 조회 한다.
@@ -91,7 +70,7 @@ npm i rigo-sdk-js
 
 RIGO 네트워크에서 발생되는 상태 변경 사항을 이벤트 구독 형식으로 수신할 수 있다.  
 이벤트 구독은, RIGO 노드와 websocket 연결 생성, 구독 조건을 명시한 쿼리문 전송 으로 이루어지고,  
-구독 조건에 맞는 이벤트 발생시 websocket 연결을 통해 실시간으로 해당 이벤트를 수신 할 수 있다.  
+구독 조건에 맞는 이벤트 발생시 websocket 연결을 통해 실시간으로 해당 이벤트를 수신 할 수 있다.
 
 `rigo-sdk-js` 는 RIGO 네트워크에서 발생하는 다양한 이벤트의 실시간 구독을 위한 API 를 제공한다.
 이에 대한 자세한 사항은 [Event API](api/subscriber.md)를 참고한다.
