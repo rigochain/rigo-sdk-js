@@ -1,6 +1,6 @@
-# Javascript SDK for ARCANEX
+# Javascript SDK for NRIGO
 
-`arcanex-sdk-js` is Javascript SDK for ARCANEX blockhcain network.
+`arcanex-sdk-js` is Javascript SDK for NRIGO blockhcain network.
 
 ## Usages
 ### Browserify

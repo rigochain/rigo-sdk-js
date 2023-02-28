@@ -1,63 +1,67 @@
-# ACNet
+## RWeb3
 
-`ACNet` API 는 ARCANEX 노드에 접속하여 JSONRPC 요청 작업을 수행 한다.
+`RWeb3` API 는 NRIGO 노드에 접속하여 JSONRPC 요청 작업을 수행 한다.
 
 ---
 
-## Node
+### Constructor
+
+`RWeb3` 객체를 생성한다.
+
+```ts
+constructor(public url: string)
+```
+```ts
+const rweb3 = new RWeb3('http://localhost:26657')
+```
 
 ---
 
 ### setUrl
 
+`RWeb3` API 호출시 접속하게 될 Provider(NRIGO 노드 RPC 서버) URL을 설정한다.
+
 ```ts
-static setUrl(url:string)
+setUrl(url:string)
 ```
 ```ts
-ACNet.setUrl('http://localhost:26657')
+rweb3.setUrl('http://localhost:26657')
 ```
 
-`ACNet` API 호출시 접속하게 될 ARCANEX 노드의 RPC 서버 URL을 설정한다.
 
 #### Parameters
 
-- `url`: ARCANEX 노드의 RPC 서버 URL
+- `url`: NRIGO 노드의 RPC 서버 URL
 
 ---
 
 ### getUrl
 
+현재 사용중인 Provider(NRIGO 노드 RPC 서버) URL 조회.
+
 ```ts
 static getUrl():string
 ```
 ```ts
-const nodeUrl = ACNet.getUrl()
+const nodeUrl = rweb3.getUrl()
 console.log(nodeUrl) // 'http://localhost:26657'
 ```
 
-현재 사용중인 ARCANEX 노드 RPC Server URL.
 
 ---
-
-### getClient
-
----
-
-## Block
 
 ### queryBlockByHeight
 
-```ts
-static queryBlockByHeight(height: number|string): PromiseLike<any>
-```
+블록 높이(번호)로 블록을 조회 한다.
 
 ```ts
-ACNet.queryBlockByHeight(10818).then(resp => {
+queryBlockByHeight(height: number|string): PromiseLike<any>
+```
+```ts
+rweb3.queryBlockByHeight(10818).then(resp => {
     console.log(resp)
 }
 ```
-
-블록 높이(번호)로 블록을 조회 한다.
 
 #### Parameters
 
@@ -146,18 +150,16 @@ ACNet.queryBlockByHeight(10818).then(resp => {
 ---
 
 ### queryBlockByHash
+블록 해시 값으로 블록을 조회 한다.
 
 ```ts
-static queryBlockByHash(hash: string|Uint8Array): PromiseLike<any>
+queryBlockByHash(hash: string|Uint8Array): PromiseLike<any>
 ```
-
 ```ts
-ACNet.queryBlockByHash("2227E9F1505C98EE0360A953735623FC3FD74A6E81ADFC9D7EF3BE8927F9136E").then(resp => {
+rweb3.queryBlockByHash("2227E9F1505C98EE0360A953735623FC3FD74A6E81ADFC9D7EF3BE8927F9136E").then(resp => {
     console.log(resp)
 }
 ```
-
-블록 해시 값으로 블록을 조회 한다.
 
 #### Parameters
 
@@ -169,21 +171,19 @@ ACNet.queryBlockByHash("2227E9F1505C98EE0360A953735623FC3FD74A6E81ADFC9D7EF3BE89
 
 ---
 
-## Transactions
-
-
 ### broadcastTrxSync
 
 ---
 
 ### queryTrx
 
-```ts
-static queryTrx(txhash: string|Uint8Array)
-```
+트랜잭션 해시로 트랜잭션을 조회한다.
 
 ```ts
-ACNet.queryTrx("AD10C104B8E3B3DBE357CF4133B8376B6EB48E44AE28260D42F7A0B53E1B34F1").then(resp => {
+queryTrx(txhash: string|Uint8Array)
+```
+```ts
+rweb3.queryTrx("AD10C104B8E3B3DBE357CF4133B8376B6EB48E44AE28260D42F7A0B53E1B34F1").then(resp => {
   console.log(resp)
   console.log(resp.encoded) // base64(protobuf(tx object))
   console.log(resp.tx) // tx object
@@ -273,22 +273,17 @@ ACNet.queryTrx("AD10C104B8E3B3DBE357CF4133B8376B6EB48E44AE28260D42F7A0B53E1B34F1
 
 ---
 
-## Account
-
 ### queryAccount
+`addr`로 지정된 주소의 `Account` 최신 상태 정보를 조회 한다.
 
 ```ts
-static queryAccount(addr: string|Bytes)
+queryAccount(addr: string|Bytes)
 ```
-
 ```ts
-
-ACNet.queryAccount("DF976A96545DAD0E0B14FED615587A89BA980B84").then(resp => {
+rweb3.queryAccount("DF976A96545DAD0E0B14FED615587A89BA980B84").then(resp => {
     console.log(resp)
 })
 ```
-
-`addr`로 지정된 주소의 `Account` 최신 상태 정보를 조회 한다.
 
 #### Parameters
 
@@ -315,22 +310,20 @@ ACNet.queryAccount("DF976A96545DAD0E0B14FED615587A89BA980B84").then(resp => {
 - `balance`: 계정의 잔액.
 
 
-
-
 ---
 
 ### syncAccount
+블록체인상에 기록된 `acct`의 최신 상태 정보(`nonce`, `balance`) 를 동기화 한다.
 
 ```ts
-static syncAccount(acct: Account, cb?:(_:any)=>void) 
+syncAccount(acct: Account, cb?:(_:any)=>void) 
 ```
-
 ```ts
 let acct = Account.New("test-0")
 
     ...
 
-ACNet.syncAccount(acct, resp => {
+rweb3.syncAccount(acct, resp => {
     console.log(acct) // `acct` is not updated.
 })
 .then( resp => {
@@ -338,7 +331,6 @@ ACNet.syncAccount(acct, resp => {
 })
 ```
 
-블록체인상에 기록된 `acct`의 최신 상태 정보(`nonce`, `balance`) 를 동기화 한다.
 
 #### Parameters
 
@@ -350,16 +342,14 @@ ACNet.syncAccount(acct, resp => {
 
 ---
 
-## Stakes
-
 ### queryValidators
 
 ```ts
-static queryValidators(height:number|string)
+queryValidators(height:number|string)
 ```
 
 ```ts
-ACNet.queryValidators().then( resp => {
+rweb3.queryValidators().then( resp => {
     console.log(resp)
 })
 ```
@@ -405,11 +395,11 @@ ACNet.queryValidators().then( resp => {
 ### queryStakes
 
 ```ts
-static queryStakes(addr: string|Bytes)
+queryStakes(addr: string|Bytes)
 ```
 
 ```ts
- ACNet.queryStakes("8DC41A86B91EB88D82489C4D037AE9FFCA65CFBF").then (resp => {
+ rweb3.queryStakes("8DC41A86B91EB88D82489C4D037AE9FFCA65CFBF").then (resp => {
      console.log(resp)
  }
 ```
@@ -450,16 +440,13 @@ static queryStakes(addr: string|Bytes)
 ---
 
 
-### Governance
-
 ### queryRule
 
 ```ts
-static queryRule(): PromiseLike<any>
+queryRule(): PromiseLike<any>
 ```
-
 ```ts
-ACNet.queryRule().then(resp => {
+rweb3.queryRule().then(resp => {
     console.log(resp)
 })
 ```
@@ -496,6 +483,33 @@ ACNet.queryRule().then(resp => {
 
 ---
 
-# Event
+### subscribe
+NRIGO 네트워크에서 발생되는 이벤트 구독을 요청한다.
 
+```ts
+subscribe(url:string, query: string, cb: (resp:string)=>void): Subscriber
+```
+```ts
+var sub = Subscriber.Listen('ws://localhost:26657/websocket', "tm.event='NewBlockHeader'", (resp) => {
+    if(!resp.data) {
+        return
+    }
+    console.log(resp)
+    // do something
+})
+
+...
+
+listener.stop()
+```
+
+#### Parameters
+
+1. `url` : NRIGO Node 의 websocket endpoint.
+2. `query` : 구독하고자 하는 이벤트 조건 지정.
+3. `cb` : 이벤트를 수신할 callback function.
+
+#### Returns
+
+`Subscriber` 객체.
 

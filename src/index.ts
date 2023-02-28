@@ -5,13 +5,13 @@ import * as Time from "./utils/time"
 import {LocalSto, SessSto} from './utils/storage';
 import Account from "./account/account";
 import {TrxBuilder} from "./trx/trx"
-import ACNet from "./rpc/acnet";
+import RWeb3 from "./rpc/rweb3";
 import Subscriber from "./rpc/subscriber";
 
 window.PrvKey = PrvKey
 window.PubKey = PubKey
-window.ACNRPC = ACNet
-window.ACNEvent = Subscriber
+window.RWeb3 = RWeb3
+window.RigoSubscriber = Subscriber
 window.Account = Account
 window.TrxBuilder = TrxBuilder
 window.LocalSto = LocalSto
@@ -23,7 +23,7 @@ window.Utils = {Bytes, Time, LocalSto, SessSto}
 export {
     PrvKey,
     PubKey,
-    ACNet,
+    RWeb3,
     Subscriber,
     Account,
     TrxBuilder,

@@ -1,7 +1,7 @@
 ## Overview
 이 문서는 MAuthWallet 이 갖추어야 할 최소 요구사항을 One-page 형식으로 기술한다.
 
-MAuthWallet 은 MDL, ARCANEX 상의 자산을 관리하기 위하여 개발되는 모바일 앱 형태의 월렛 이다.
+MAuthWallet 은 MDL, NRIGO 상의 자산을 관리하기 위하여 개발되는 모바일 앱 형태의 월렛 이다.
 
 일반적인 월렛 어플리케이션은,
 
@@ -12,7 +12,7 @@ MAuthWallet 은 MDL, ARCANEX 상의 자산을 관리하기 위하여 개발되�
 
 을 기본 기능으로 제공한다.
 
-MAuthWallet 역시 위 기본 기능을 제공함과 동시에, ARCANEX 의 합의 알고리즘인 DPoS 의 특성에 따른 추가 기능과, 
+MAuthWallet 역시 위 기본 기능을 제공함과 동시에, NRIGO 의 합의 알고리즘인 DPoS 의 특성에 따른 추가 기능과, 
 하이퍼렛지 기반의 MDL 상에서의 위 기본 기능을 함께 제공하도록 구현되어야 한다.
 
 이러한 MAuthWallet 의 기능은 사용자 인증 용도로 개발된 MAuth App의 기능을 확장하는 형태로 개발 한다. 
@@ -40,7 +40,7 @@ MAuthWallet 이 접속할 블록체인 네트워크의 노드 URL 을 추가 할
 사용자 요청시 새로운 Account 를 생성한다.  
 여기서 Account 생성은 Private/Public KeyPair 생성을 의미하는데,
 MAuthWallet 은 ECDSA Secp256K1 커브를 사용하여  PrivateKey/PublicKey 를 생성하고 저장 한다.  
-Account 저장은 [ARCANEX Wallet Format (AWF)](../../internals/data.md#arcanex-wallet-format--awf-) 형식으로 구성되어 저장되어야 하는데, 
+Account 저장은 [NRIGO Wallet Format (AWF)](../../internals/data.md#arcanex-wallet-format--awf-) 형식으로 구성되어 저장되어야 하는데, 
 자세한 사항은 [Save Account](#save-account) 를 참조한다.
 
 ---
@@ -170,8 +170,8 @@ Programming Language, VM 등 에서 제공하는 Garbage Collector 에 의존하
 ### Assets Balance
 
 MAuthWallet 은 설정된 노드에 접속하여 해당 네트워크에서 선택계정의 자산의 잔액 정보를 보여준다.  
-선택계정 조회는 [queryAccount](../../api/acnrpc.md#queryaccount),
-동기화는 [syncAccount](../../api/acnrpc.md#syncaccount) 를 참조한다.
+선택계정 조회는 [queryAccount](../../api/rweb3.md#queryaccount),
+동기화는 [syncAccount](../../api/rweb3.md#syncaccount) 를 참조한다.
 
 !!! note
     본 문서에서 **Asset** 이라는 용어는 블록체인 네트워크의 Native Coin 과 해당 네트워크 상에서 발행된 Token (e.g. ERC20) 을 통칭하는 용어로 사용된다.
@@ -213,18 +213,20 @@ MAuthWallet 은 설정된 노드에 접속하여 해당 네트워크에서 선�
 
 트랜잭션을 생성하고 제출하기 위해서는 다음과 같은 단계를 수행해야 한다.
 
-1. 트랜잭션 생성 계정 동기화 : `ACNet.syncAccount` API 사용
+1. 트랜잭션 생성 계정 동기화 : `RWeb3`의 `syncAccount` API 사용
 2. 트랜잭션 생성: `TrxBuilder.BuildXXX` API 사용
 3. 트랜잭션 전자서명: `TrxBuilder.SignTrx` API 사용
-4. 트랜잭션 제출 : `ACNet.broadcastTrxSync` API 사용
-5. 트랜잭션 커밋(Commit) 확인 : `ACNet.queryTrx` API 사용
+4. 트랜잭션 제출 : `RWeb3`의 `broadcastTrxSync` API 사용
+5. 트랜잭션 커밋(Commit) 확인 : `RWeb3`의 `queryTrx` API 사용
 
 트랜잭션 제출이 성공하였음이 **블록체인에 기록(Commit) 되었음을 의미하지는 않는다**. 
 때문에 트랜잭션 제출 이후 해당 트랜잭션이 블록체인 원장에 기록되었음을 확인하는 절차가 필요하다.
 
 ```ts
+const rweb3 = new RWeb3(...)
+
 // sync. account
-ACNet.syncAccount(acct).then( () => {
+rweb3.syncAccount(acct).then( () => {
   // build a tx.
     const tx = TrxBuilder.BuildTransferTrx({
       from: acct.address,
@@ -236,7 +238,7 @@ ACNet.syncAccount(acct).then( () => {
   
   // sign the tx.
   TrxBuilder.SignTrx(tx, acct);
-  ACNet.broadcastTrxSync(tx).then (resp => {
+  rweb3.broadcastTrxSync(tx).then (resp => {
     if(resp.code != 0) {
       console.error(resp.log)
     }
@@ -265,14 +267,16 @@ ACNet.syncAccount(acct).then( () => {
 
 ### Check Transaction's Commit
 
-트랜잭션이 블록체인에 기록(커밋)되었음을 확인하기 위해 `ACNet.queryTrx` API 를 사용한다.  
+트랜잭션이 블록체인에 기록(커밋)되었음을 확인하기 위해 `RWeb3`객체의 `queryTrx` API 를 사용한다.  
 앞서 [Build and submit Transactions](#build-and-submit-transactions) 에서 
-응답으로 수신한 데이터중 `resp.hash` 를 인자로 하여 `ACNet.queryTrx`를 호출한다.  
+응답으로 수신한 데이터중 `resp.hash` 를 인자로 하여 `RWeb3`객체의 `queryTrx`를 호출한다.  
 
 ```ts
+const rweb3 = new RWeb3(...)
+
 try {
     setTimeout( () => {
-        ACNet.queryTrx(resp.hash).then( retTx => {
+        rweb3.queryTrx(resp.hash).then( retTx => {
             ...
         });
     }, 1500)
@@ -386,7 +390,7 @@ MAuthWallet 은 다음과 같은 사용자 인증 수단을 제공해야 한다.
 
 ### SDK
 
-*ARCANEX 노드와 통신하는 부분을 모듈화 -> 별도의 프로젝트로 -> SDK 확보 ?*
+*NRIGO 노드와 통신하는 부분을 모듈화 -> 별도의 프로젝트로 -> SDK 확보 ?*
 
 
 ## ETC.

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>ARCANEX Explorer</title>
+        <title>NRIGO Explorer</title>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width,initial-scale=1">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css"/>
@@ -18,11 +18,10 @@
             if(!url) {
                 url = 'http://localhost:26657'
             }
-            ACNRPC.setUrl(url)
-
+            const rweb3 = new RWeb3(url)
 
             const blockItems = []
-            ACNEvent.Listen('ws://localhost:26657/websocket', "tm.event='NewBlockHeader'", (resp) => {
+            rweb3.subscribe('ws://localhost:26657/websocket', "tm.event='NewBlockHeader'", (resp) => {
                 if(!resp.data) {
                     return
                 }
@@ -68,12 +67,12 @@
 
             function showBlock(height) {
 
-                window.open(ACNRPC.getUrl() + `/block?height=${height}`, 'block')
+                window.open(rweb3.getUrl() + `/block?height=${height}`, 'block')
             }
 
 
             function displayTxs(height) {
-                ACNRPC.queryBlockByHeight(height).then(block => {
+                rweb3.queryBlockByHeight(height).then(block => {
                     const bid = block.block_id
                     const body = block.block
 
@@ -124,13 +123,13 @@
             }
 
             function showTx(hash) {
-                window.open(ACNRPC.getUrl() + `/tx?hash=0x${hash}`, 'tx')
+                window.open(rweb3.getUrl() + `/tx?hash=0x${hash}`, 'tx')
             }
 
             displayValidators()
 
             function displayValidators() {
-                ACNRPC.queryValidators().then( resp => {
+                rweb3.queryValidators().then( resp => {
                     let totalPower = 0
                     resp.validators.forEach( val => {
                         totalPower += Number.parseInt(val.voting_power)
@@ -140,7 +139,7 @@
             }
 
             function showValidators() {
-                window.open(ACNRPC.getUrl() + '/validators', 'validators')
+                window.open(rweb3.getUrl() + '/validators', 'validators')
             }
 
         </script>

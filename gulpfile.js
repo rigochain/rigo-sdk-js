@@ -9,7 +9,7 @@ const source = require('vinyl-source-stream');
 const buffer = require('vinyl-buffer');
 const log = require('fancy-log');
 const childproc = require('child_process');
-
+const clean = require('gulp-clean');
 
 gulp.task('protoc', function (cb) {
     return childproc.exec('protoc' +
@@ -46,4 +46,10 @@ gulp.task("tsc", function () {
         .dts.pipe(gulp.dest(tsProject.config.compilerOptions.outDir));
 });
 
-gulp.task('default', gulp.series('protoc', 'dist'));
+gulp.task('clean', function(){
+    const tsProject = ts.createProject("tsconfig.json", {});
+    return gulp.src(['dist', tsProject.config.compilerOptions.outDir], { read: false })
+        .pipe(clean());
+});
+
+gulp.task('default', gulp.series('protoc', 'dist', 'tsc'));

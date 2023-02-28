@@ -1,6 +1,6 @@
 # Overview
 
-이 문서는 ARCANEX Blockhcain 의 Block Explorer 인 **ArcaScan** 에 대한 구성 요구사항 및 기능 요구사항에 대하여 기술한다.
+이 문서는 NRIGO Blockhcain 의 Block Explorer 인 **ArcaScan** 에 대한 구성 요구사항 및 기능 요구사항에 대하여 기술한다.
 
 ```plantuml
 @startuml
@@ -16,7 +16,7 @@ System_Boundary(explorer, "Block Explorer") {
     
     Container(db, "Database")
 }
-Container(node, "ARCANEX Node")
+Container(node, "NRIGO Node")
 
 BiRel_R(browser, fe, "Request", "HTTP/HTTPS")
 Rel_D(fe, bzl, "API", "")
@@ -26,7 +26,7 @@ BiRel_R(sdk, node, "RPC", "HTTP/JSONRPC, Websocket")
 @enduml
 ```
 
-ArcaScan 은 ARCANEX 네트워크에서 생성되는 블록, 트랜잭션 그리고 계정 관련 상태 변경 정보를
+ArcaScan 은 NRIGO 네트워크에서 생성되는 블록, 트랜잭션 그리고 계정 관련 상태 변경 정보를
 실시간으로 사용자에게 제공하기 위한 웹 서비스 시스템이다.  
 
 일반적인 Block Explorer 시스템은 블록체인 노드에 접속하여 필요한 정보를 획득 하고, 
@@ -34,12 +34,12 @@ ArcaScan 은 ARCANEX 네트워크에서 생성되는 블록, 트랜잭션 그리
 그리고 사용자로 부터 요청을 수신하였을 때, DB 데이터를 기반으로 응답을 생산하는 것을 기본 기능으로 구현된다.  
 
 ArcaScan 역시 일반적인 Block Explorer 와 유사한 구조로 구현된다.
-ARCANEX 네트워크와의 연결을 동한 정보 획득, 획득된 정보의 DB 저장을 통한 동기화, 그리고 DB 정보에 기반한 사용자 요청 응답으로 기본 기능을 구성한다.
+NRIGO 네트워크와의 연결을 동한 정보 획득, 획득된 정보의 DB 저장을 통한 동기화, 그리고 DB 정보에 기반한 사용자 요청 응답으로 기본 기능을 구성한다.
 
 ## Initialization from Genesis
-ARCANEX 블록체인 원장의 최초 상태 정보(Genesis)가 ArcaScan DB에 반영되어야 한다.  
-ARCANEX Genesis 에는 블록체인 시작 시점에서의 검증노드(Validator), 계정(Account)별 자산(Balance) 정보등이 포함되어 있다.
-따라서 ArcaScan 최초 실행시, 스캔 대상이 되는 ARCANEX 블록체인 네트워크의 Genesis 정보로 ArcaScan DB의 초기 상태를 구성해야 한다.
+NRIGO 블록체인 원장의 최초 상태 정보(Genesis)가 ArcaScan DB에 반영되어야 한다.  
+NRIGO Genesis 에는 블록체인 시작 시점에서의 검증노드(Validator), 계정(Account)별 자산(Balance) 정보등이 포함되어 있다.
+따라서 ArcaScan 최초 실행시, 스캔 대상이 되는 NRIGO 블록체인 네트워크의 Genesis 정보로 ArcaScan DB의 초기 상태를 구성해야 한다.
 
 ```json
 {
@@ -137,24 +137,24 @@ ARCANEX Genesis 에는 블록체인 시작 시점에서의 검증노드(Validato
 ```
 ## Synchronization
 
-ArcaScan DB는 ARCANEX 블록체인 원장과 동기화 되어야 한다.  
+ArcaScan DB는 NRIGO 블록체인 원장과 동기화 되어야 한다.  
 
-ARCANEX 블록체인 원장과의 동기화는 ARCANEX 블록체인 원장에 기록되는 모든 상태 변경 정보를 수신하여 이를 ArcaScan DB에 재구성함을 의미 하는 것으로,
+NRIGO 블록체인 원장과의 동기화는 NRIGO 블록체인 원장에 기록되는 모든 상태 변경 정보를 수신하여 이를 ArcaScan DB에 재구성함을 의미 하는 것으로,
 ArcaScan 이 사용자에게 제공해야 할 기능을 수행하는데 가장 최적화된 형태로 재구성 하여 **ArcaScan DB에 누적 반영** 한다.
 
 ArcaScan 은 이벤트 구독 방식과 RPC 호출 방식을 통해 동기화에 필요한 정보를 획득 한다.  
 
 - 이벤트 구독 (Event Subscription)    
 현재 발생되는 정보를 실시간에 가깝게 획득하가 위하여 사용된다.   
-ArcaScan은 ARCANEX 네트워크를 구성하는 노드 중 하나로 Websocket 연결을 생성하고,
+ArcaScan은 NRIGO 네트워크를 구성하는 노드 중 하나로 Websocket 연결을 생성하고,
 이 연결을 통해 [이벤트 쿼리문](../../api/subscriber.md#event-query)을 포함한 구독 요청 메시지를 전송함으로서, 블록과 트랜잭션 정보가 포함된 이벤트를 실시간으로 수신 할 수 있다.
 이벤트 구독 대한 자세한 사항은 [Event Subscribe](../../api/subscriber.md)를 참조한다.
 
 - HTTP/JSONRCP 호출  
 이미 발생한 정보를 획득하기 위하여 사용된다.
 이벤트 구독 메커니즘을 통해 수신되는 정보는 현재 시점의 정보로 제한된다. (과거 정보 수신 불가)  
-따라서 과거 시점에 발생한 정보를 조회 하기 위해서는 ARCANEX 노드가 제공하는 RPC 호출을 통해 해당 정보를 획득해야 한다.
-ARCANEX RPC 호출을 위한 API 에 대한 자세한 정보는 [ACNet](../../api/acnrpc.md) 를 참조한다.
+따라서 과거 시점에 발생한 정보를 조회 하기 위해서는 NRIGO 노드가 제공하는 RPC 호출을 통해 해당 정보를 획득해야 한다.
+NRIGO RPC 호출 대한 자세한 정보는 [RWeb3 API](../../api/rweb3.md) 를 참조한다.
 
 ArcaScan DB 동기화를 위해 위와 같은 방법으로 획득 해야 하는 정보는 **블록** 과 **트랜잭션** 정보 이다. 
 
@@ -186,12 +186,12 @@ participant "ArcaScan\Controller" as be
 participant "arcanex-sdk-js" as sdk
 end box
 database "ArcaScan\nDB" as db
-participant "ARCANEX\nNode" as node<<Extern>>
+participant "NRIGO\nNode" as node<<Extern>>
 
 
 == Event 구독 요청 Context ==
 
-be -> sdk: ACNEvent.Listen(..., "tm.event = 'NewBlock'", callback_)
+be -> sdk: rweb3.subscribe(..., "tm.event = 'NewBlock'", callback_)
 sdk -> node: register subscribing to `NewBlock` events
 
 |||
@@ -241,27 +241,27 @@ return rendering block details of block[h]
 
 ### Runtime Synchronization
 
-ArcaScan 실행 중 ARCANEX 네트워크에서 신규로 생성되는 모든 블록과 트랜잭션은 **이벤트 구독** 방식을 통해 실시간에 가깝게 ArcaScan DB 와 동기화 되어야 한다.
+ArcaScan 실행 중 NRIGO 네트워크에서 신규로 생성되는 모든 블록과 트랜잭션은 **이벤트 구독** 방식을 통해 실시간에 가깝게 ArcaScan DB 와 동기화 되어야 한다.
 
 ### History Synchronization
 
 ArcaScan 이 중지된 기간 동안 발생된 블록과 트랜잭션 정보 역시 ArcaScan DB와 동기화 되어야 한다.
 
 ArcaScan 이 최초 구동 또는 일시 정지 후 재구동될 때, 
-ArcaScan DB 와 ARCANEX 블록체인 원장은 동기화 되지 않은 상태이다.
+ArcaScan DB 와 NRIGO 블록체인 원장은 동기화 되지 않은 상태이다.
 예를 들어 ArcaScan 이 시작 되었을 때, ArcaScan DB 는 블록번호 `bn0` 까지의 정보를 적용한 상태인데 반하여,
-ARCANEX 블록체인은 이미 블록번호 `bn1` 까지 생성된 상황이 가능하다.  
+NRIGO 블록체인은 이미 블록번호 `bn1` 까지 생성된 상황이 가능하다.  
 때문에 ArcaScan 는 시작시, 
 DB에 반영된 마지막 블록 번호(`bn0`)와 
-현재 ARCANEX 블록체인의 마지막 블록 번호(`bn1`) 를 조회 하여,
+현재 NRIGO 블록체인의 마지막 블록 번호(`bn1`) 를 조회 하여,
 그 사이에 발생한 모든 블록 정보가 DB에 반영(동기화) 되도록 해야 한다.
 
 ArcaScan 이 구동되지 않은 시간동안 생성된 블록에 대한 정보는 이벤트 구독 방식으로는 획득이 불가능하고,
-[RPC 호출을 수행하는 ACNet의 API](../../api/acnrpc.md#block)를 호출 하는 것으로만 획득이 가능하다.
+RPC 호출을 수행하는 [RWeb3 API](../../api/rweb3.md#block)를 호출 하는 것으로만 획득이 가능하다.
 
 History Sync. 시 누락되는 블록이 발생하지 않도록 구현되어야 한다.
-예를 들어, DB에 반영된 마지막 블록 번호가 `m` 이고, ARCANEX 블록체인의 마지막 블록 번호가 `n, (n>m)` 으로 조회 되었을 경우, 
-블록 `n`까지 블록을 조회 하여 이를 DB에 반영하는 사이에 ARCANEX 네트워크에서 블록 `n+1` 이 생성될 가능성이 있다.  
+예를 들어, DB에 반영된 마지막 블록 번호가 `m` 이고, NRIGO 블록체인의 마지막 블록 번호가 `n, (n>m)` 으로 조회 되었을 경우, 
+블록 `n`까지 블록을 조회 하여 이를 DB에 반영하는 사이에 NRIGO 네트워크에서 블록 `n+1` 이 생성될 가능성이 있다.  
 이 경우, 다음 두가지를 문제를 해결 해야 한다.
 
 1. 이벤트 구독 요청을 먼저 해 두지 않은 경우, 블록 `n+1`은 DB에 적용될 기회를 영원히 잃게 된다.
@@ -292,10 +292,10 @@ box "ArcaScan BackEnd"
 participant "Controller" as be
 participant "arcanex-sdk-js" as sdk
 end box
-participant "ARCANEX\nNode" as node<<Extern>>
+participant "NRIGO\nNode" as node<<Extern>>
 
 par "NewBlock 이벤트 구독"
-be -> sdk: ACNEvent.Listen(..., "tm.event=NewBlock", callback)
+be -> sdk: rweb3.subscribe(..., "tm.event=NewBlock", callback)
 sdk -> node: register subscribing to `NewBlock` events
 end
 |||
@@ -318,7 +318,7 @@ activate be
     be -> db: bn0 <- last block height
     be -> be: i = bn0
     loop "Synchronize bloks between bn0 and bn1"
-        be -> sdk: ACNet.queryBlockByHeight(i)
+        be -> sdk: rweb3.queryBlockByHeight(i)
         activate sdk
             sdk -> node: block <- query block[i]
         return block

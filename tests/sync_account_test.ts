@@ -1,9 +1,9 @@
 import Account from "../src/account/account";
-import ACNet from "../src/rpc/acnet";
+import RWeb3 from "../src/rpc/rweb3";
 
 const acct = Account.New('nm', 's')
-ACNet.setUrl('http://localhost:26657')
-ACNet.syncAccount(acct)
+const rweb3 = new RWeb3('http://localhost:26657')
+rweb3.syncAccount(acct)
     .then( resp => {
         console.log(resp)
     })

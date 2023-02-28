@@ -1,6 +1,6 @@
 ## TrxBuilder
 
-ARCANEX 블록체인에 제출할 트랜잭션을 생성한다.  
+NRIGO 블록체인에 제출할 트랜잭션을 생성한다.  
 생성되는 트랜잭션 객체는 [TrxProto](../internals/data.md#trxproto) 객체로 표현되며, 
 전자서명 및 인코딩 과정을 거쳐 네트워크에 제출 되어 질 수 있다.
 
@@ -9,10 +9,12 @@ API 이름에 `XXXX` 에는 트랜잭션 종류를 타나내는 이름으로 구
 
 전자서명은 `TrxBuild.SignTrx` API를 사용한다.
 
-마지막으로 트랜잭셔의 제출은 `ACNet.broadcastTrxSync` API를 사용한다.
+마지막으로 트랜잭셔의 제출은 `RWeb3`의 `broadcastTrxSync` API를 사용한다.
 
 ```ts
-import ACNet from "acnet";
+import RWeb3 from "rweb3";
+
+const rweb3 = new RWeb3('http://localhost:26657')
 
 const tx = TrxBuilder.BuildTransferTrx({
     from: acct.address,
@@ -27,7 +29,7 @@ const [sig, encodedTx] = TrxBuilder.SignTrx(tx, acct)
 console.log("sig", sig)             // print signature bytes
 console.log("encoded", encodedTx)   // print bytes which is encoded by protobuf v3
 
-ACNet.broadcastTrxSync(tx).then(resp => {
+rweb3.broadcastTrxSync(tx).then(resp => {
     console.log(resp) // the result of submitting transaction
 })
 
@@ -132,11 +134,11 @@ function SignTrx(tx:trxPb.TrxProto, acct:Account): [Bytes, Bytes]
 
 ### DecodeTrx
 Protobuf v3 로 인코딩된 데이터로 부터 `Trx` 객체를 생성한다.  
-ARCANEX 노드로 부터 수신한 트랜잭션 정보는 protobuf v3 로 인코딩한 값을 base64 로 다시 인코딩한 값이다.
+NRIGO 노드로 부터 수신한 트랜잭션 정보는 protobuf v3 로 인코딩한 값을 base64 로 다시 인코딩한 값이다.
 이 값을 디코딩 하기 위해서는 우선 base64 디코딩이 필요하고 그 결과를 다시 `DecodeTrx` API로 디코딩 해야 한다.  
 
 !!! tip
-    `ACNet.queryTrx` API 의 응답값에는 디코딩 완료된 트랜잭션 정보가 이미 포함되어 있어 별도의 디코딩 과정이 필요하지 않다. 
+    `RWeb3`의 `queryTrx` API 의 응답에는 디코딩 완료된 트랜잭션 정보가 이미 포함되어 있어 별도의 디코딩 과정이 필요하지 않다. 
     
 
 ```ts

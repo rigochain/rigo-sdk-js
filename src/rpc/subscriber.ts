@@ -40,10 +40,4 @@ export default class Subscriber {
         this.#ws.close(0, "EventListener is closed by application")
         this.#ws = null
     }
-
-    static Listen(url:string, query: string, cb: (resp:string)=>void): Subscriber {
-        const evtListener = new Subscriber(url, query)
-        evtListener.start(cb)
-        return evtListener
-    }
 }

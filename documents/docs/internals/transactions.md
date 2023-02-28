@@ -7,7 +7,7 @@
 
 `arcanex-sdk-js` 는 트랜잭션의 생성, 서명, 인코딩을 위한 API를 제공한다.
 
-ARCANEX 의 트랜잭션은 다음과 같이 구성된다.
+NRIGO 의 트랜잭션은 다음과 같이 구성된다.
 
 ```ts
 export interface TrxProto {
@@ -25,12 +25,12 @@ export interface TrxProto {
 ```
 
 - `version`: 
-ARCANEX 네트워크의 트랜잭션 종류는 다음과 같다.
+NRIGO 네트워크의 트랜잭션 종류는 다음과 같다.
 
-- **Transfer** : ARCANEX 의 자산(Native Cryptocurrency)을 전송.
-- **Staking** : ARCANEX 의 자산(Native Cryptocurrency)을 지분(Stake)로 전환.
-- **Unstaking** : ARCANEX 의 지분(Stake)를 자산으로 전환.
-- **Governance Proposal** : ARCANEX 의 거버넌스 규칙 변경을 제안.
+- **Transfer** : NRIGO 의 자산(Native Cryptocurrency)을 전송.
+- **Staking** : NRIGO 의 자산(Native Cryptocurrency)을 지분(Stake)로 전환.
+- **Unstaking** : NRIGO 의 지분(Stake)를 자산으로 전환.
+- **Governance Proposal** : NRIGO 의 거버넌스 규칙 변경을 제안.
 - **Voting to proposal** : 거버넌스 규칙 제안에 대하여 투표.
 
 

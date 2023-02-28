@@ -11,8 +11,8 @@ nav:
       - Javascript API:
         - Account: api/account.md
         - TrxBuilder: api/trxbuilder.md
-        - Event: api/subscriber.md
-        - ACNet: api/acnrpc.md
+        - Subscriber: api/subscriber.md
+        - RWeb3: api/rweb3.md
       - RPC API: api/rpc.md
 
   - internals:

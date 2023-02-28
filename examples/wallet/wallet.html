@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>ARCANEX Wallet</title>
+    <title>NRIGO Wallet</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css"/>
@@ -15,6 +15,13 @@
         window.acnUtil = _util;
     </script>
     <script type='text/javascript'>
+        let url = LocalSto.Read('url')
+        if(!url) {
+            url = 'http://localhost:26657'
+        }
+        const rweb3 = new RWeb3(url)
+
+
         //
         // for create button
         function showCreateLayout(v) {
@@ -93,7 +100,7 @@
 
             if(activeAddrStr === acct.address) {
                 opt.selected = 'selected';
-                ACNRPC.syncAccount(acct)
+                rweb3.syncAccount(acct)
                     .then( () => {
                         displayAccount(acct);
                         // console.log("sync", acct.name);
@@ -175,7 +182,7 @@
     -->
 
     <div class="section_area">
-        <div class="text_title_underline">ARCANEX RPC Node</div>
+        <div class="text_title_underline">NRIGO RPC Node</div>
         <div class="flex_area">
             <input id='node_url' class='account_item_value' style='border:0px' type='text' placeholder='Input RPC node url'>
             <button id='btn_set_url' class="menu_btn" style='width:200px;'>Set</button>
@@ -201,7 +208,7 @@
         <script type='text/javascript'>
             btn_set_url.onclick = () => {
                 LocalSto.Write('url', node_url.value)
-                ACNRPC.setUrl(node_url.value)
+                rweb3.setUrl(node_url.value)
             }
             btn_create.onclick = () => {
                 showCreateLayout(true);
@@ -238,7 +245,7 @@
                 sel_acct_name.onchange = () => {
                     const addr = sel_acct_name.options[sel_acct_name.selectedIndex].value;
                     const acct = Account.Unmarshal(LocalSto.Read(addr));
-                    ACNRPC.syncAccount(acct)
+                    rweb3.syncAccount(acct)
                     .then( () => {
                         LocalSto.Write('default', acct.address)
                         activeAddrStr = acct.address;
@@ -318,7 +325,7 @@
                     DelegateAsset(recver_addr.value, send_amt.value)
                 }
                 btn_unstaking.onclick = () => {
-                    ACNRPC.queryStakes(activeAcct.address).then (ret => {
+                    rweb3.queryStakes(activeAcct.address).then (ret => {
                         let list = ''
                         ret.value.forEach(s => {
                             list += `
@@ -477,12 +484,7 @@
     let activeAcct;
 
     window.onload = () => {
-        let url = LocalSto.Read('url')
-        if(!url) {
-            url = 'http://localhost:26657'
-        }
-        ACNRPC.setUrl(url)
-        node_url.value = url
+        node_url.value = rweb3.getUrl()
 
         if(!SessSto.Read('secret')) {
             window.location.href = 'login.html';
@@ -531,7 +533,7 @@
     }
 
     function TransferAsset(to, amt) {
-        ACNRPC.syncAccount(activeAcct)
+        rweb3.syncAccount(activeAcct)
             .then( () => {
                 activeAcct.unlock();
 
@@ -550,7 +552,7 @@
 
                 //
                 // broadcast a tx.
-                ACNRPC.broadcastTrxSync(tx)
+                rweb3.broadcastTrxSync(tx)
                     .then( ret => {
                         if(ret.code != 0) {
                             console.error(ret.log);
@@ -573,7 +575,7 @@
     }
 
     function DelegateAsset(to, amt) {
-        ACNRPC.syncAccount(activeAcct)
+        rweb3.syncAccount(activeAcct)
             .then( () => {
                 activeAcct.unlock();
 
@@ -595,7 +597,7 @@
 
                 //
                 // broadcast a tx.
-                ACNRPC.broadcastTrxSync(tx)
+                rweb3.broadcastTrxSync(tx)
                     .then( ret => {
                         if(ret.code != 0) {
                             console.error(ret.log);
@@ -619,13 +621,13 @@
     }
 
     function UndelegateAsset(txhash) {
-        ACNRPC.queryTrx(txhash).then( retTx => {
+        rweb3.queryTrx(txhash).then( retTx => {
             const txbytes = acnUtil.b64ToU8Array(retTx.tx);
             const tx = TrxBuilder.DecodeTrx(txbytes);
 
             recver_addr.value = tx.to
 
-            ACNRPC.syncAccount(activeAcct)
+            rweb3.syncAccount(activeAcct)
                 .then( () => {
                     activeAcct.unlock();
 
@@ -648,7 +650,7 @@
 
                     //
                     // broadcast a tx.
-                    ACNRPC.broadcastTrxSync(tx, resp => {
+                    rweb3.broadcastTrxSync(tx, resp => {
                         console.log('debug', resp)
                     })
                         .then( ret => {
@@ -678,7 +680,7 @@
     function CheckTx(hash) {
         try {
             setTimeout( () => {
-                ACNRPC.queryTrx(hash).then( retTx => {
+                rweb3.queryTrx(hash).then( retTx => {
                     ProcessResultTx(retTx);
                 });
             }, 1500)
@@ -690,7 +692,7 @@
 
     function ProcessResultTx(retTx) {
         if(retTx.tx_result.code == 0) {
-            ACNRPC.syncAccount(activeAcct).then( () => {
+            rweb3.syncAccount(activeAcct).then( () => {
                 displayAccount(activeAcct);
             }).catch(err => {
                 console.error(err);
@@ -701,7 +703,7 @@
     }
 
     function ShowTx(hash) {
-        ACNRPC.queryTrx(hash)
+        rweb3.queryTrx(hash)
             .then(retTx => {
                 console.log(JSON.stringify(retTx.tx, null, 4))
                 showAlert(JSON.stringify(retTx.tx, null, 4))
