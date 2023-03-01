@@ -51,21 +51,27 @@
               <ul class="current">
                   <li class="toctree-l1 current"><a class="reference internal current" href="#">Javascript API</a>
     <ul class="current">
+                <li class="toctree-l2"><a class="reference internal" href="../rweb3/">RWeb3</a>
+                </li>
                 <li class="toctree-l2 current"><a class="reference internal current" href="./">Account</a>
     <ul class="current">
-    <li class="toctree-l3"><a class="reference internal" href="#accountnew">Account.New</a>
+    <li class="toctree-l3"><a class="reference internal" href="#new">New</a>
         <ul>
     <li class="toctree-l4"><a class="reference internal" href="#parameters">Parameters</a>
     </li>
     <li class="toctree-l4"><a class="reference internal" href="#returns">Returns</a>
     </li>
+    <li class="toctree-l4"><a class="reference internal" href="#example">Example</a>
+    </li>
         </ul>
     </li>
-    <li class="toctree-l3"><a class="reference internal" href="#accountimport">Account.Import</a>
+    <li class="toctree-l3"><a class="reference internal" href="#import">Import</a>
         <ul>
     <li class="toctree-l4"><a class="reference internal" href="#parameters_1">Parameters</a>
     </li>
     <li class="toctree-l4"><a class="reference internal" href="#returns_1">Returns</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#example_1">Example</a>
     </li>
         </ul>
     </li>
@@ -111,11 +117,14 @@
                 </li>
                 <li class="toctree-l2"><a class="reference internal" href="../subscriber/">Subscriber</a>
                 </li>
-                <li class="toctree-l2"><a class="reference internal" href="../rweb3/">RWeb3</a>
-                </li>
     </ul>
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../rpc/">RPC API</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">internals</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../internals/event/">Event Subscription</a>
                   </li>
               </ul>
               <p class="caption"><span class="caption-text">examples</span></p>
@@ -159,10 +168,10 @@
             <div class="section" itemprop="articleBody">
               
                 <h2 id="account">Account</h2>
-<h3 id="accountnew">Account.New</h3>
-<p>새로운 <code>Account</code> 객체를 생성한다.</p>
+<h3 id="new">New</h3>
 <pre><code class="language-ts">static New(nm: string, secret: string): Account
 </code></pre>
+<p>새로운 <code>Account</code> 객체를 생성한다.</p>
 <h4 id="parameters">Parameters</h4>
 <ul>
 <li><code>nm</code>: 계정 이름.</li>
@@ -170,52 +179,58 @@
 </ul>
 <h4 id="returns">Returns</h4>
 <p><code>Account</code> 객체.</p>
+<h4 id="example">Example</h4>
+<pre><code class="language-ts">let acct = Account.New(&quot;my account 1&quot;, &quot;my passphrase&quot;)
+</code></pre>
 <hr />
-<h3 id="accountimport">Account.Import</h3>
-<p>외부에 존재하는 PrivateKey 를 가져와 <code>Account</code>를 생성한다.</p>
+<h3 id="import">Import</h3>
 <pre><code class="language-ts">static Import(nm: string, secret: string, d: Bytes, dsecret?:string): Account
 </code></pre>
+<p>외부에 존재하는 PrivateKey 를 가져와 <code>Account</code>를 생성한다.</p>
 <h4 id="parameters_1">Parameters</h4>
 <ul>
 <li><code>nm</code>: 계정 이름.</li>
 <li><code>secret</code>: 계정의 PrivateKey 암호화를 위한 비밀번호.</li>
 <li><code>d</code>: PrivateKey.</li>
-<li><code>dsecret</code>: <code>d</code>가 암호화된 형태라면, 이를 복호화 하기 위한 비밀번호. (<em>not implemented yet</em>)</li>
+<li><code>dsecret</code>: <code>d</code>가 암호화된 형태라면, 이를 복호화 하기 위한 비밀번호. (<em>Not implemented yet</em>)</li>
 </ul>
 <h4 id="returns_1">Returns</h4>
 <p><code>Account</code> 객체.</p>
+<h4 id="example_1">Example</h4>
+<pre><code class="language-ts">// convert 64chars hex-string(32bytes) to Bytes
+const prvKeyBytes = Bytes.fromHex(&quot;ABCDEF0123456789....&quot;)
+const importedAcct = Account.Import(&quot;new name&quot;, &quot;new passphrase&quot;, prvKeyBytes)
+</code></pre>
 <hr />
 <h3 id="sign">sign</h3>
-<p>현재 <code>Account</code> 객체의 PrivateKey 로 전자서명을 생성한다.</p>
 <pre><code class="language-ts">sign(msg: Uint8Array): Bytes
 </code></pre>
+<p>현재 <code>Account</code> 객체의 PrivateKey 로 전자서명을 생성한다.</p>
 <h4 id="parameters_2">Parameters</h4>
-<ol>
+<ul>
 <li><code>msg</code>: 전자서명 대상 메시지 데이터.</li>
-</ol>
+</ul>
 <h4 id="returns_2">Returns</h4>
 <p>현재 <code>Account</code> 객체의 PrivateKey로 생성된 전자서명.</p>
 <h4 id="examples">Examples</h4>
-<pre><code class="language-ts">...
-let msg = new TextEncoder().encode(&quot;this is message to be signed&quot;);
+<pre><code class="language-ts">let msg = new TextEncoder().encode(&quot;this is message to be signed&quot;);
 const sig = acct.sign(msg)
 console.log(sig.toHex()) // 65bytes hex-string (130chars)
 </code></pre>
 <hr />
 <h3 id="verify">verify</h3>
-<p>현재 <code>Account</code> 객체의 PublicKey 로 전자서명 <code>sig</code>를 검증한다.</p>
 <pre><code class="language-ts">verify(sig: Uint8Array, msg: Uint8Array): boolean
 </code></pre>
+<p>현재 <code>Account</code> 객체의 PublicKey 로 전자서명 <code>sig</code>를 검증한다.</p>
 <h4 id="parameters_3">Parameters</h4>
-<ol>
+<ul>
 <li><code>sig</code>: 전자서명 데이터. 65bytes.</li>
 <li><code>msg</code>: 전자서명 대상 메시지 데이터.</li>
-</ol>
+</ul>
 <h4 id="returns_3">Returns</h4>
 <p>전자서명 검증 결과.</p>
 <h4 id="examples_1">Examples</h4>
-<pre><code class="language-ts">...
-const ret = acct.verify(sig, msg)
+<pre><code class="language-ts">const ret = acct.verify(sig, msg)
 console.log(&quot;verify result&quot;, ret) // true or false=
 </code></pre>
 <hr />
@@ -232,7 +247,7 @@ console.log(&quot;verify result&quot;, ret) // true or false=
             </div>
           </div><footer>
     <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
-        <a href="../../quick/" class="btn btn-neutral float-left" title="Quick Start"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../rweb3/" class="btn btn-neutral float-left" title="RWeb3"><span class="icon icon-circle-arrow-left"></span> Previous</a>
         <a href="../trxbuilder/" class="btn btn-neutral float-right" title="TrxBuilder">Next <span class="icon icon-circle-arrow-right"></span></a>
     </div>
 
@@ -256,7 +271,7 @@ console.log(&quot;verify result&quot;, ret) // true or false=
   <span class="rst-current-version" data-toggle="rst-current-version">
     
     
-      <span><a href="../../quick/" style="color: #fcfcfc">&laquo; Previous</a></span>
+      <span><a href="../rweb3/" style="color: #fcfcfc">&laquo; Previous</a></span>
     
     
       <span><a href="../trxbuilder/" style="color: #fcfcfc">Next &raquo;</a></span>

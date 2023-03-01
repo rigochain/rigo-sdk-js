@@ -51,17 +51,42 @@
               <ul>
                   <li class="toctree-l1"><a class="reference internal" href="#">Javascript API</a>
     <ul>
+                <li class="toctree-l2"><a class="reference internal" href="../../api/rweb3/">RWeb3</a>
+                </li>
                 <li class="toctree-l2"><a class="reference internal" href="../../api/account/">Account</a>
                 </li>
                 <li class="toctree-l2"><a class="reference internal" href="../../api/trxbuilder/">TrxBuilder</a>
                 </li>
                 <li class="toctree-l2"><a class="reference internal" href="../../api/subscriber/">Subscriber</a>
                 </li>
-                <li class="toctree-l2"><a class="reference internal" href="../../api/rweb3/">RWeb3</a>
-                </li>
     </ul>
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../../api/rpc/">RPC API</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">internals</span></p>
+              <ul class="current">
+                  <li class="toctree-l1 current"><a class="reference internal current" href="./">Event Subscription</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#event-query">Event Query</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#key">key</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#operation">operation</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#operand">operand</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#examples">Examples</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#block-event">Block event</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#transaction-event">Transaction event</a>
+    </li>
+        </ul>
+    </li>
+        </ul>
+    </li>
+    </ul>
                   </li>
               </ul>
               <p class="caption"><span class="caption-text">examples</span></p>
@@ -93,6 +118,7 @@
         <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
   <ul class="wy-breadcrumbs">
     <li><a href="../.." class="icon icon-home" alt="Docs"></a> &raquo;</li>
+          <li>internals &raquo;</li>
       <li>Event Subscription</li>
     <li class="wy-breadcrumbs-aside">
     </li>
@@ -150,12 +176,92 @@
 
 
 // 블록 생성 이벤트 구독 요청
-var sub = new Subscriber(&quot;ws://localhost:26657/websocket&quot;, &quot;tm.event = 'NewBlockHeader'&quot;)
+var sub = new Subscriber(&quot;ws://localhost:26657/websocket&quot;, &quot;tm.event = 'NewBlock'&quot;)
 sub.start( resp =&gt; console.log(resp) )
-        ...
-
-// 수신된 이벤트 정보
-{
+</code></pre>
+<p><code>NewBlock</code> 이벤트는 다음과 같다.</p>
+<pre><code class="language-json">{
+    &quot;query&quot;: &quot;tm.event='NewBlock'&quot;,
+    &quot;data&quot;: {
+        &quot;type&quot;: &quot;tendermint/event/NewBlock&quot;,
+        &quot;value&quot;: {
+            &quot;block&quot;: {
+                &quot;header&quot;: {
+                    &quot;version&quot;: {
+                        &quot;block&quot;: &quot;11&quot;,
+                        &quot;app&quot;: &quot;4294967296&quot;
+                    },
+                    &quot;chain_id&quot;: &quot;localnet&quot;,
+                    &quot;height&quot;: &quot;1095&quot;,
+                    &quot;time&quot;: &quot;2023-03-01T07:52:55.02685Z&quot;,
+                    &quot;last_block_id&quot;: {
+                        &quot;hash&quot;: &quot;8B1D0CA3930C84AA83127006F023F58636C9B7AB208B13CC89487DE4319E2B5C&quot;,
+                        &quot;parts&quot;: {
+                            &quot;total&quot;: 1,
+                            &quot;hash&quot;: &quot;9822070631411D2EDF8CBB1210C47EA5B2BB5873FC88DC23017F9D148E184529&quot;
+                        }
+                    },
+                    &quot;last_commit_hash&quot;: &quot;E612B34F93449AC5B3FBC060BE353673760D453A3B36F60E17ABF5C23CB8CBF2&quot;,
+                    &quot;data_hash&quot;: &quot;B19689C3DB8D5144E77084C717293C2AECFADA432B775784A83F6D7F6AD0C4A6&quot;,
+                    &quot;validators_hash&quot;: &quot;8848F26A69AF34431CC233A408276D047328F60199895F160E678F133F004DBB&quot;,
+                    &quot;next_validators_hash&quot;: &quot;8848F26A69AF34431CC233A408276D047328F60199895F160E678F133F004DBB&quot;,
+                    &quot;consensus_hash&quot;: &quot;048091BC7DDC283F77BFBF91D73C44DA58C3DF8A9CBC867405D8B7F3DAADA22F&quot;,
+                    &quot;app_hash&quot;: &quot;BA91F41C30A6A9D1A2160AE45CE2D0A379A25EED6A2FF4EE022018C7B13490C5&quot;,
+                    &quot;last_results_hash&quot;: &quot;CCEC9736296570B1A5CA9F69D56AE286E473BDE1950EB97B419259C2DA071637&quot;,
+                    &quot;evidence_hash&quot;: &quot;E3B0C44298FC1C149AFBF4C8996FB92427AE41E4649B934CA495991B7852B855&quot;,
+                    &quot;proposer_address&quot;: &quot;7BA6CA35C656795F44DFF8862D6BF586FD13BBB8&quot;
+                },
+                &quot;data&quot;: {
+                    &quot;txs&quot;: [
+                        &quot;CAEQ+NeBtIGKj6QXGAwiFEm8JzC96QwZ94ltfTuCmlA8deNSKhQGFlJNfKhf5ZtTgMsHseHEvUmSTTICA1Y6AQpAAVJBWMNXPPmqIib49R3dshVwSU0JKaQftagSnbISphShV/QVSm2bLbFCb3J6itx6YCn+jJDnreFaOj+OCXx7pB62cgA=&quot;,
+                        &quot;CAEQqMWCtIGKj6QXGAwiFCzNRcOIaQmo8UiITzpIBaE6Zvp0KhTpmoObMGwDDIguAbBwUL3RD4EA3TICA1Y6AQpAAVJBdHxHk/uBIScM3w38v8oZhVoA6Q24PiL/dLRzoqrqih9vXJzNyX2N4olyHwMmMvNxaMeV2BrmPF1RiJsAzfxSDQA=&quot;,
+                        &quot;CAEQwLeEtIGKj6QXGAwiFCXnKywRBXHSumMP4IIQTtYwtLCYKhTTyvXTr23a755fS2uTvuMvg72ZHTICA1Y6AQpAAVJBoTw9S4bFk+CngX3wiJzAooO/Emr6P0QS65GDC2a9myhs8VSpV6A48MnZ/4GDpx5xN+OozoMgkWkM2lYLSNQGaAA=&quot;,
+                        &quot;CAEQ6POutYGKj6QXGAwiFFPf0v1o8Nht70SsMBUs1mDKPNtUKhRdBlEtsGE5UP2Dt+GQIruGE9CpPzICA1Y6AQpAAVJBsouVIpQ1wtHY5hNoWPCzrfSi/0Ki0IygqAbv9l46yudJHxiThrgmgwfN8GeSh4ii6PC8RvRur2TDgd4F8zzFeAE=&quot;,
+                        &quot;CAEQyJLBtoGKj6QXGAwiFHSyVaZv7Y02CVjR+tebd9vtI3jiKhSHOxzcP6bUaTruZisKZiSev9XuADICA1Y6AQpAAVJBwMmwGPeITg8lTGEx2FC8QmLDL5UMnRaeDutsNb8Q0tQtucLIUEas7lb2uqpxW66vnyNS7XgKaE8GGcJCshCiVwE=&quot;,
+                        &quot;CAEQ4OGeuIGKj6QXGAwiFIdcsCqtwPJPA11FPeHcvSFCIqPcKhTUNd8mkzuGpmRM4FazPcaQGFhkBjICA1Y6AQpAAVJBOqTOipa6U6rke7WtHKkfn2JRbxIPI66wZ1upS1W+zKlSiz6R+J/1GZgXnCO3+4ommcP1apdHaT/fP3hx/aFCCAA=&quot;,
+                        &quot;CAEQiN20uYGKj6QXGAwiFIqGCfyxYt3OZw5kcNRe+oln+R4HKhRpSjuhkCWR9hXgUxOSYy5Af2Q4ZDICA1Y6AQpAAVJBGXxpK+dBzngR3u+e+iWhdMY6ctlLbDuzOEgBlwWczM8WekE6T2Aql5n+9fMOVa8+uz1DsQJrizIf7XCE1mFumgE=&quot;,
+                        &quot;CAEQ2JLPuoGKj6QXGAwiFM3rjioS3TGAaj/dsk43A5aFYUXUKhQFW3eIQmqcqPkMjcAR3v5xx8YUizICA1Y6AQpAAVJBwb3OjXPnLikTpNOu5k9k5MM0knSitYXi9L7kGwiLrMw3hLEVpaQ8+lUrjS1p+g4L/+77xnA2YppniWJQ4iGu+wE=&quot;,
+                        &quot;CAEQgPznvIGKj6QXGAwiFPDsQNY5KT3yMmvTKOO9DEbOSazHKhR8MuGWrneKsWy4yO5D4NhIZ9x11DICA1Y6AQpAAVJBhLSVp7Ngp6Hm5XFT2fnRUXIUjTpo9gp+QwucTkG+TJ40/EgjHtP9XTELMxFtNSWY+8oQo4fVEwdkj+0LDM6gGAA=&quot;
+                    ]
+                },
+                &quot;evidence&quot;: {
+                    &quot;evidence&quot;: []
+                },
+                &quot;last_commit&quot;: {
+                    &quot;height&quot;: &quot;1094&quot;,
+                    &quot;round&quot;: 0,
+                    &quot;block_id&quot;: {
+                        &quot;hash&quot;: &quot;8B1D0CA3930C84AA83127006F023F58636C9B7AB208B13CC89487DE4319E2B5C&quot;,
+                        &quot;parts&quot;: {
+                            &quot;total&quot;: 1,
+                            &quot;hash&quot;: &quot;9822070631411D2EDF8CBB1210C47EA5B2BB5873FC88DC23017F9D148E184529&quot;
+                        }
+                    },
+                    &quot;signatures&quot;: [
+                        {
+                            &quot;block_id_flag&quot;: 2,
+                            &quot;validator_address&quot;: &quot;7BA6CA35C656795F44DFF8862D6BF586FD13BBB8&quot;,
+                            &quot;timestamp&quot;: &quot;2023-03-01T07:52:55.02685Z&quot;,
+                            &quot;signature&quot;: &quot;MlezkFjgKwqJ8SNpMW2ROnkxzUTRLdKkZ0tDlWUFkaUxRw9yfpBNcy7ngcwOgBXeaZPaUj1rMVoWDJg/JTNKrw==&quot;
+                        }
+                    ]
+                }
+            },
+            &quot;result_begin_block&quot;: {},
+            &quot;result_end_block&quot;: {
+                &quot;validator_updates&quot;: []
+            }
+        }
+    },
+    &quot;events&quot;: {
+        &quot;tm.event&quot;: [
+            &quot;NewBlock&quot;
+        ]
+    }
+}
+</code></pre>
+<p><code>NewBlockHeader</code> 이벤트는 다음과 같다.</p>
+<pre><code class="language-json">{
     &quot;query&quot;: &quot;tm.event='NewBlockHeader'&quot;,
     &quot;data&quot;: {
         &quot;type&quot;: &quot;tendermint/event/NewBlockHeader&quot;,
@@ -205,33 +311,95 @@ sub.start( resp =&gt; console.log(resp) )
 // 트랜잭션 처리완료 이벤트 구독 요청
 var sub = new Subscriber(&quot;ws://localhost:26657/websocket&quot;, &quot;tm.event = 'Tx' AND tx.hash='A7FC574491B18ADD8E3DD60E7442CB34D90A4862E30E9E9B5412154EBFB0E100'&quot;)
 sub.start( resp =&gt; console.log(resp) )
-        ...
-
-// 수신된 이벤트 정보
-
 </code></pre>
 <pre><code class="language-ts">// 트랜잭션 타입이 'transfer' 이고, 
 // sender 주소가 'D8C2C3D121696F51B733F7CF36C8AE60F8F264CC' 인 
 // 트랜잭션 처리완료 이벤트 구독 요청.
 var sub = new Subscriber(&quot;ws://localhost:26657/websocket&quot;, &quot;tm.event = 'Tx' AND tx.type='transfer' AND tx.sender='D8C2C3D121696F51B733F7CF36C8AE60F8F264CC'&quot;)
 sub.start( resp =&gt; console.log(resp) )
-        ...
-
-// 수신된 이벤트 정보
 </code></pre>
 <pre><code class="language-ts">// 트랜잭션 타입이 'transfer' 이고, 
 // sender 주소가 'D8C2C3D121696F51B733F7CF36C8AE60F8F264CC' 인 
 // 트랜잭션 처리완료 이벤트 구독 요청.
 var sub = new Subscriber(&quot;ws://localhost:26657/websocket&quot;, &quot;tm.event = 'Tx' AND tx.type='transfer' AND tx.sender='D8C2C3D121696F51B733F7CF36C8AE60F8F264CC'&quot;)
 sub.start( resp =&gt; console.log(resp) )
-        ...
-
-// 수신된 이벤트 정보
-
+</code></pre>
+<p><code>Tx</code> 이벤트는 다음과 같이 수신된다.</p>
+<pre><code class="language-json">{
+    &quot;query&quot;: &quot;tm.event = 'Tx'&quot;,
+    &quot;data&quot;: {
+      &quot;type&quot;: &quot;tendermint/event/Tx&quot;,
+      &quot;value&quot;: {
+        &quot;TxResult&quot;: {
+          &quot;height&quot;: &quot;1922&quot;,
+          &quot;index&quot;: 8,
+          &quot;tx&quot;: &quot;CAEQ+PWi4Oiij6QXGMMEIhRJvCcwvekMGfeJbX07gppQPHXjUioU6he992wc+owCVAD1IOCgA4H8vegyAgNWOgEKQAFSQR9I4zu2O1WrdzIRLA1M4o12sd0fyHE6EtpX6i5UjIBoZKlzqOvxYZJr47OSeqYooNIi2R3w1gtnRsEJQFtyxVoA&quot;,
+          &quot;result&quot;: {
+            &quot;gas_wanted&quot;: &quot;10&quot;,
+            &quot;gas_used&quot;: &quot;10&quot;,
+            &quot;events&quot;: [
+              {
+                &quot;type&quot;: &quot;tx&quot;,
+                &quot;attributes&quot;: [
+                  {
+                    &quot;key&quot;: &quot;dHgudHlwZQ==&quot;,
+                    &quot;value&quot;: &quot;dHJhbnNmZXI=&quot;,
+                    &quot;index&quot;: true
+                  },
+                  {
+                    &quot;key&quot;: &quot;dHguc2VuZGVy&quot;,
+                    &quot;value&quot;: &quot;NDlCQzI3MzBCREU5MEMxOUY3ODk2RDdEM0I4MjlBNTAzQzc1RTM1Mg==&quot;,
+                    &quot;index&quot;: true
+                  },
+                  {
+                    &quot;key&quot;: &quot;dHgucmVjZWl2ZXI=&quot;,
+                    &quot;value&quot;: &quot;RUExN0JERjc2QzFDRkE4QzAyNTQwMEY1MjBFMEEwMDM4MUZDQkRFOA==&quot;,
+                    &quot;index&quot;: true
+                  },
+                  {
+                    &quot;key&quot;: &quot;dHguYWRkcnBhaXI=&quot;,
+                    &quot;value&quot;: &quot;NDlCQzI3MzBCREU5MEMxOUY3ODk2RDdEM0I4MjlBNTAzQzc1RTM1MkVBMTdCREY3NkMxQ0ZBOEMwMjU0MDBGNTIwRTBBMDAzODFGQ0JERTg=&quot;,
+                    &quot;index&quot;: true
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      }
+    },
+    &quot;events&quot;: {
+      &quot;tx.hash&quot;: [
+        &quot;F30CCD5DCDB98F876698D82B17A003CB9ED8E20F59807242B116A3BD1322D6B6&quot;
+      ],
+      &quot;tx.height&quot;: [
+        &quot;1922&quot;
+      ],
+      &quot;tx.type&quot;: [
+        &quot;transfer&quot;
+      ],
+      &quot;tx.sender&quot;: [
+        &quot;49BC2730BDE90C19F7896D7D3B829A503C75E352&quot;
+      ],
+      &quot;tx.receiver&quot;: [
+        &quot;EA17BDF76C1CFA8C025400F520E0A00381FCBDE8&quot;
+      ],
+      &quot;tx.addrpair&quot;: [
+        &quot;49BC2730BDE90C19F7896D7D3B829A503C75E352EA17BDF76C1CFA8C025400F520E0A00381FCBDE8&quot;
+      ],
+      &quot;tm.event&quot;: [
+        &quot;Tx&quot;
+      ]
+    }
+}
 </code></pre>
               
             </div>
           </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="../../api/rpc/" class="btn btn-neutral float-left" title="RPC API"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../../examples/explorer/srs/" class="btn btn-neutral float-right" title="Requirements">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
 
   <hr/>
 
@@ -253,6 +421,10 @@ sub.start( resp =&gt; console.log(resp) )
   <span class="rst-current-version" data-toggle="rst-current-version">
     
     
+      <span><a href="../../api/rpc/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../../examples/explorer/srs/" style="color: #fcfcfc">Next &raquo;</a></span>
     
   </span>
 </div>
