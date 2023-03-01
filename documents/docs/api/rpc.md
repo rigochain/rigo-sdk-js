@@ -557,19 +557,16 @@ N/A
 ---
 
 ## proposals
-
 Not supported yet.
 
 ---
 
 ## subscribe
-
 Websocket 을 이용한 [Event Subscription](subscriber.md) 을 참조한다.
 
 ---
 
 ## unsbscribe
-
 Websocket 을 이용한 [Event Subscription](subscriber.md) 을 참조한다.
 
 ---
