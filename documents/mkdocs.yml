@@ -11,14 +11,15 @@ nav:
     - Quick Start: quick.md
   - API:
     - Javascript API:
+      - RWeb3: api/rweb3.md
       - Account: api/account.md
       - TrxBuilder: api/trxbuilder.md
       - Subscriber: api/subscriber.md
-      - RWeb3: api/rweb3.md
     - RPC API: api/rpc.md
-#  - internals:
+  - internals:
 #      - Account: internals/account.md
 #      - Transaction: internals/transactions.md
+    - Event Subscription: internals/event.md
   - examples:
       - Explorer:
           - Requirements: examples/explorer/srs.md

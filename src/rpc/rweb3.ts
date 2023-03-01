@@ -14,11 +14,12 @@ export default class RWeb3 extends JSONRPCClient {
             axios.post(url, jsonRPCRequest)
                 .then( response => {
                     if (response.status === 200) {
-                        return this.receive(response.data);
+                        return this.receive(response.data); // response.data has JSONRPC header
                     } else if (jsonRPCRequest.id !== undefined) {
                         return Promise.reject(new Error(response.statusText));
                     }
-                }))
+                })
+        )
     }
 
     private rpcall(method: string, params: object|Map<string, string>, cb?:(_:any)=>void): PromiseLike<any> {
@@ -28,6 +29,7 @@ export default class RWeb3 extends JSONRPCClient {
         }
         return this.request(method, _params)
             .then( resp => {
+                // resp does not include JSONRPC header
                 // resp: {code:..., log:..., info:..., key:..., value:{...}}
                 if(cb) {
                     cb(resp)

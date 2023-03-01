@@ -15,20 +15,19 @@ sub.start("tm.event = 'NewBlock'", resp => {
 sub.stop()
 ```
 
+이벤트 구독 쿼리문 구성은 [Event Query](../internals/event.md#event-query) 를 참조한다.
+
 ---
 
 ### constructor
-
 ```ts
 constructor (public url:string)
 ```
 
 #### Parameters
-
 - `url`: RIGO Node 의 websocket endpoint. 
 
 #### Returns
-
 `Subscriber` 객체.
 
 ---
@@ -37,7 +36,10 @@ constructor (public url:string)
 ```ts
 start(query: string, cbFunc: (resp:string)=>void)
 ```
-`start` API 를 사용하여 `Subscriber` 객체의 구독을 시작 할 수 있다.
+`query` 에 해당되는 이벤트 구독을 시작 한다.
+
+!!! tip
+    [`RWeb3`의 `subscribe` API](rweb3.md#subscribe)를 사용하면 `Subscriber`의 생성과 구독 시작을 하나의 API로 수행할 수 있다.
 
 #### Parameters
 - `query` - `string` : 구독하고자 하는 이벤트 조건 지정.  

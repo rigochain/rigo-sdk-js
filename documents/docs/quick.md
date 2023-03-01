@@ -3,12 +3,12 @@
 ### Prerequisite
 
 ```bash
-$ node -v
+node -v
 v19.5.0
 ```
 
 ```bash
-$ npm -v
+npm -v
 9.4.1
 ```
 

@@ -18,6 +18,7 @@
         let url = LocalSto.Read('url')
         if(!url) {
             url = 'http://localhost:26657'
+            LocalSto.Write('url', url)
         }
         const rweb3 = new RWeb3(url)
 

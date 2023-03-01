@@ -17,17 +17,18 @@
             let url = LocalSto.Read('url')
             if(!url) {
                 url = 'http://localhost:26657'
+                LocalSto.Write('url', url)
             }
             const rweb3 = new RWeb3(url)
 
             const blockItems = []
-            rweb3.subscribe('ws://localhost:26657/websocket', "tm.event='NewBlockHeader'", (resp) => {
+            rweb3.subscribe('ws://localhost:26657/websocket', "tm.event='NewBlock'", (resp) => {
                 if(!resp.data) {
                     return
                 }
                 // console.log(resp)
-                const header = resp.data.value.header
-                header.num_txs = resp.data.value.num_txs
+                const header = resp.data.value.header?resp.data.value.header:resp.data.value.block.header
+                header.num_txs = resp.data.value.num_txs?resp.data.value.num_txs:resp.data.value.block.data.txs.length
                 displayBlockHeader(header)
 
             })

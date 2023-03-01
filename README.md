@@ -1,6 +1,27 @@
 # Javascript SDK for RIGO
 
 `rigo-sdk-js` is Javascript SDK for RIGO blockhcain network.
+## Prerequisite
+To build and deploy documents,
+```bash
+brew install mkdocs
+```
+
+To generate typescript sources for protobuf messages,
+```bash
+brew install protobuf
+```
+
+To compile typescript sources,
+```bash
+node -v
+v19.5.0
+```
+
+```bash
+npm -v
+9.4.1
+```
 
 ## Usages
 ### Browserify

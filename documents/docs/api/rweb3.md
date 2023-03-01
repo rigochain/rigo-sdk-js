@@ -10,9 +10,11 @@ const rweb3 = new RWeb3('http://localhost:26657')
 
 ```
 
+<!--
+
 ---
 
-### ~~setUrl~~
+### setUrl
 *DEPRECATED*
 
 `RWeb3` API 호출시 접속하게 될 Provider(RIGO 노드 RPC 서버) URL을 설정한다.
@@ -30,6 +32,7 @@ setUrl(url:string)
 ```ts
 rweb3.setUrl('http://localhost:26657')
 ```
+--->
 
 ---
 
