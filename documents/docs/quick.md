@@ -14,7 +14,7 @@ npm -v
 
 ```bash
 $ protoc --version
-libprotoc 3.21.4
+libprotoc 3.21.12
 ```
 
 !!! note
