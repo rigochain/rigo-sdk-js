@@ -3,7 +3,7 @@
 `RWeb3` API 는 RIGO Provider (RIGO RPC 서버) 에 접속하여 JSONRPC 요청 작업을 수행 한다.
 
 ```ts
-import RWeb3 from "rweb3";
+import {RWeb3} from 'rigo-sdk-js'
 const rweb3 = new RWeb3('http://localhost:26657')
 
 ...

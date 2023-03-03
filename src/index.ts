@@ -8,17 +8,19 @@ import {TrxBuilder} from "./trx/trx"
 import RWeb3 from "./rpc/rweb3";
 import Subscriber from "./rpc/subscriber";
 
-window.PrvKey = PrvKey
-window.PubKey = PubKey
-window.RWeb3 = RWeb3
-window.RigoSubscriber = Subscriber
-window.Account = Account
-window.TrxBuilder = TrxBuilder
-window.LocalSto = LocalSto
-window.SessSto = SessSto
-window.Bytes = Bytes
-window.Time = Time
-window.Utils = {Bytes, Time, LocalSto, SessSto}
+if(typeof window !== 'undefined') {
+    window.PrvKey = PrvKey
+    window.PubKey = PubKey
+    window.RWeb3 = RWeb3
+    window.RigoSubscriber = Subscriber
+    window.Account = Account
+    window.TrxBuilder = TrxBuilder
+    window.LocalSto = LocalSto
+    window.SessSto = SessSto
+    window.Bytes = Bytes
+    window.Time = Time
+    window.Utils = {Bytes, Time, LocalSto, SessSto}
+}
 
 export {
     PrvKey,

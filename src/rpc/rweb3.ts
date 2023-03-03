@@ -2,7 +2,7 @@ import Account from "../account/account";
 import Bytes from "../utils/bytes";
 import {TrxProto} from "../trx/trx_pb";
 import {TrxBuilder} from '../trx/trx';
-import axios from "axios/index";
+import axios from "axios";
 import {JSONRPCClient} from "json-rpc-2.0";
 import Subscriber from "./subscriber";
 

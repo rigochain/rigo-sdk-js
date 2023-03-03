@@ -10,6 +10,7 @@ const buffer = require('vinyl-buffer');
 const log = require('fancy-log');
 const childproc = require('child_process');
 const clean = require('gulp-clean');
+const merge = require('merge2');
 
 gulp.task('protoc', function (cb) {
     return childproc.exec('protoc' +
@@ -41,9 +42,11 @@ gulp.task('dist', function () {
 
 gulp.task("tsc", function () {
     const tsProject = ts.createProject("tsconfig.json", {});
-    return tsProject.src()
-        .pipe(tsProject())
-        .dts.pipe(gulp.dest(tsProject.config.compilerOptions.outDir));
+    const tsResult = tsProject.src().pipe(tsProject());
+    return merge([
+        tsResult.dts.pipe(gulp.dest(tsProject.config.compilerOptions.outDir+'/definitions')),
+        tsResult.js.pipe(gulp.dest(tsProject.config.compilerOptions.outDir+'/js'))
+    ]);
 });
 
 gulp.task('clean', function(){
