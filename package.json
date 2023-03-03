@@ -1,8 +1,8 @@
 {
-  "name": "rigo-sdk-js",
+  "name": "rigo/web3",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
-  "version": "0.0.16",
+  "version": "0.0.15",
   "description": "Javascript SDK for RIGO",
   "keywords": [
     "rigo",
