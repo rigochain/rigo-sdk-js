@@ -10,7 +10,7 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
-    "rigo-sdk-js": "^0.0.25",
+    "rigo-sdk-js": "^0.0.26",
     "ws": "^8.12.1"
   }
 }
