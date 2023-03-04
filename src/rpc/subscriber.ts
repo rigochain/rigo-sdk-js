@@ -1,5 +1,8 @@
 import {createJSONRPCRequest} from "json-rpc-2.0";
-import WebSocket from 'ws'
+
+if(typeof global.WebSocket === 'undefined') {
+    global.WebSocket = require('ws')
+}
 
 export default class Subscriber {
     #wsconn: WebSocket
@@ -14,26 +17,25 @@ export default class Subscriber {
         this.#query = query
 
         this.#wsconn = new WebSocket(this.url)
-        this.#wsconn.on('error', (err) => {
-            console.error('websocket error:', err)
+        this.#wsconn.onerror = (evt) => {
+            console.error('websocket error:', evt)
             this.stop()
-        })
-        this.#wsconn.on('ping', console.log)
-        this.#wsconn.on('open', () => {
+        }
+        this.#wsconn.onopen = () => {
             console.log("websocket open:", this.url)
             const ret = createJSONRPCRequest("dontcare", 'subscribe', {query: this.#query})
 
             const reqstr = JSON.stringify(ret)
             console.log("websocket request:", reqstr)
             this.#wsconn.send(reqstr)
-        })
-        this.#wsconn.on('message', (data) => {
-            let resp = JSON.parse(data.toString())
+        }
+        this.#wsconn.onmessage = (evt) => {
+            let resp = JSON.parse(evt.data.toString())
             cbFunc(resp.result)
-        })
-        this.#wsconn.on('close', () => {
+        }
+        this.#wsconn.onclose = (evt) => {
             console.log('websocket closed:', this.url)
-        })
+        }
     }
     stop() {
         this.#wsconn.close(0, "Websocket is closed by application")

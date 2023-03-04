@@ -2,7 +2,7 @@
   "name": "rigo-sdk-js",
   "main": "lib/js/index.js",
   "types": "lib/definitions/index.d.ts",
-  "version": "0.0.26",
+  "version": "0.0.28",
   "description": "Javascript SDK for RIGO",
   "keywords": [
     "rigo",
