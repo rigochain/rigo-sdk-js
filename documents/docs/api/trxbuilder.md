@@ -10,7 +10,7 @@ API 이름에 `XXXX` 에는 트랜잭션 종류를 타나내는 이름으로 구
 서명된 트랜잭션의 제출은 `RWeb3`의 `broadcastTrxSync` API를 사용한다.
 
 ```ts
-import RWeb3 from "rweb3";
+import {RWeb3} from "rigo-sdk-js";
 
 const rweb3 = new RWeb3('http://localhost:26657')
 

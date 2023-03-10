@@ -6,14 +6,22 @@ MAuthWallet 은 MDL, RIGO 상의 자산을 관리하기 위하여 개발되는 �
 일반적인 월렛 어플리케이션은,
 
 1. 계정(지갑) 생성
-2. 자산 확인
-3. 자산 전송
+2. 기초 자산 조회, 전송
+3. 토큰 자산 등록, 조회, 전송
 4. 전송 내역 확인
 
 을 기본 기능으로 제공한다.
 
-MAuthWallet 역시 위 기본 기능을 제공함과 동시에, RIGO 의 합의 알고리즘인 DPoS 의 특성에 따른 추가 기능과, 
-하이퍼렛지 기반의 MDL 상에서의 위 기본 기능을 함께 제공하도록 구현되어야 한다.
+MAuthWallet 은 RIGO 및 MDL 상의 자산에 대하여 위 기본 기능을 제공함과 동시에, RIGO 의 합의 알고리즘인 DPoS 의 특성에 따른 추가 기능이 함께 구현 되어야 한다.
+
+**DPoS 합의 알고리즘 관련 기능**
+
+1. 지분 전환 및 위임
+2. 거버넌스 조회 및 신규 거버넌스 제안
+3. 거버넌스 제안에 대한 투표 및 투표 결과 확인
+
+또한 RIGO 의 자산과 RIGO 에 브릿지로 연결된 MDL 상의 자산은 서로 교환 될 수 있어야 한다.
+1. RIGO 자산 <- 브릿지 -> MDL 자산
 
 이러한 MAuthWallet 의 기능은 사용자 인증 용도로 개발된 MAuth App의 기능을 확장하는 형태로 개발 한다. 
 즉 MAuth App 에 아래 기술되는 월렛 기능을 추가 하여 MAuthWallet 을 개발 한다.
@@ -156,8 +164,9 @@ Programming Language, VM 등 에서 제공하는 Garbage Collector 에 의존하
 
 ---
 
-### MAuthDoc 자동 등록
-신규 생성 및 가져오기([Import](#import-account)) 로 디바이스에 생성되는 모든 Account 의 PublicKey 는 'MAuthDoc' 으로 자동 등록되어야 한다.
+### RIGO DIDDoc(MAuthDoc 확장) 자동 등록
+신규 생성 및 가져오기([Import](#import-account)) 로 디바이스에 생성되는 모든 Account 의 PublicKey 는 'RIGO DIDDoc' 으로 자동 등록되어야 한다.  
+RIGO DIDDoc 는 MAuthDoc 를 확장하여 새롭게 정의되어야 하며, 향후 W3C DIDDoc 으로 확장될 것을 염두에 두어야 한다.
 
 ---
 

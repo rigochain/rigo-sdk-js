@@ -36,9 +36,12 @@ Javascript 환경에서 사용할 수 있는 라이브러리 형태로 구현한
 
 ### Account management
 
-- `Account` 생성
-- `Account` 가져오기
-- `Account` 내보내기
+- 계정 생성
+- 계정 가져오기
+- 계정 내보내기
+- 기초 자산(Native Coin) 조회 및 전송
+- 토큰 자산 등록, 조회, 전송
+- 자산간 교환 전송
 
 Account 관련 기능에 대한 자세한 사항은 [Account](api/account.md) 를 참조 한다.
 
