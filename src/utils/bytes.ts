@@ -72,11 +72,15 @@ export default class Bytes extends Uint8Array {
     }
 
     static b64ToBytes(base64:string):Bytes {
-        var binary_string = window.atob(base64);
-        var len = binary_string.length;
-        var bytes = new Bytes(len);
-        for (var i = 0; i < len; i++) {
-            bytes[i] = binary_string.charCodeAt(i);
+        const binary_string = typeof window !== 'undefined' ? window.atob(base64) : Uint8Array.from(Buffer.from(base64, 'base64'));
+        const len = binary_string.length;
+        const bytes = new Bytes(len);
+        for (let i = 0; i < len; i++) {
+            if (typeof binary_string === 'string') {
+                bytes[i] = binary_string.charCodeAt(i);
+            } else {
+                bytes[i] = binary_string[i]
+            }
         }
         return bytes;
     }
