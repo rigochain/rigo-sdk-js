@@ -10,12 +10,11 @@ export default class Subscriber {
 
     constructor(public url:string) {}
 
-    start(query: string, cbFunc: (resp:string)=>void) {
+    start(query: string, cbFunc: (resp:string)=>void, isReconnected?: boolean, time?: number) {
         if(this.#wsconn) {
-            console.error("already start.")
+            console.log("already start.")
         }
         this.#query = query
-
         this.#wsconn = new WebSocket(this.url)
         this.#wsconn.onerror = (evt) => {
             console.error('websocket error:', evt)
@@ -34,7 +33,22 @@ export default class Subscriber {
             cbFunc(resp.result)
         }
         this.#wsconn.onclose = (evt) => {
+            const self = this;
             console.log('websocket closed:', this.url)
+            if(isReconnected) {
+                
+                let timeout: number;
+                if(time) {
+                    timeout = time
+                } else {
+                    timeout = 500
+                }
+                setTimeout(function() {
+                    console.log('Trying to reconnect...')
+                    self.#wsconn = null
+                    self.start(query, cbFunc, isReconnected, timeout)
+                }, timeout);
+            }
         }
     }
     stop() {
