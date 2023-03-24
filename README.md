@@ -51,4 +51,19 @@ You can find documents at https://rigochain.github.io/rigo-sdk-js
 
 ---
 
+### Documentation
+
+Use `mkdocs` to update documents at https://rigochain.github.io/rigo-sdk-js.
+
+```bash
+brew install mkdocs
+```
+
+To publish updated documents,
+
+```bash
+mkdocs build
+mkdocs gh-deploy
+```
+
 ## License
