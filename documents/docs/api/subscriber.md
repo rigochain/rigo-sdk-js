@@ -50,11 +50,6 @@ sub.start(
     timeout,
 );
 ```
-만일 재연결 옵션을 주었을 때 재연결 시간을 주지 않으면 기본적으로 `500`밀리세컨드로 재연결 시도를 하도록 설정되어 있다.
-재연결 시간을 늘리거나 줄이고 싶다면 그에 맞춰서 옵션값을 넘겨주면 된다.
-
-!!! tip
-    [`RWeb3`의 `subscribe` API](rweb3.md#subscribe)를 사용하면 `Subscriber`의 생성과 구독 시작을 하나의 API로 수행할 수 있다.
 
 #### Parameters
 - `query` - `string` : 구독하고자 하는 이벤트 조건 지정.  
@@ -63,7 +58,10 @@ sub.start(
    쿼리문 구성에 대한 자세한 사항은 [Event Query](../internals/event.md#event-query) 를 참조한다.
 - `cbFunc` : 이벤트를 수신할 callback function.
 - `isReconnected` : 노드와 소켓 연결이 끊겼을 경우, 자동으로 재연결 시도 여부. 기본값은 `false` 이다.
-- `time` : 재연결 시도할 때까지의 지연 시간(ms). 기본값은 `500` ms 이다.
+- `time` : 재연결 시도할 때까지의 지연 시간(ms). `isReconnected` 값이 `true` 일때만 적용되며, 값을 설정하지 않을 경우 기본값 `500`ms 가 적용된다.
+
+!!! tip
+[`RWeb3`의 `subscribe` API](rweb3.md#subscribe)를 사용하면 `Subscriber`의 생성과 구독 시작을 하나의 API로 수행할 수 있다.
 
 ---
 
@@ -73,5 +71,5 @@ stop()
 ```
 
 `Subscriber` 객체의 구독을 중지 시킨다.
-
+ㅡ
 ---
