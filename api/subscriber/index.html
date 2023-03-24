@@ -69,6 +69,8 @@
     </li>
     <li class="toctree-l3"><a class="reference internal" href="#start">start</a>
         <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#start-using-reconnected-option">start using Reconnected Option</a>
+    </li>
     <li class="toctree-l4"><a class="reference internal" href="#parameters_1">Parameters</a>
     </li>
         </ul>
@@ -156,6 +158,24 @@ sub.stop()
 <pre><code class="language-ts">start(query: string, cbFunc: (resp:string)=&gt;void)
 </code></pre>
 <p><code>query</code> 에 해당되는 이벤트 구독을 시작 한다.</p>
+<h4 id="start-using-reconnected-option">start using Reconnected Option</h4>
+<pre><code class="language-ts">start(query: string, cbFunc: (resp:string)=&gt;void, isReconnected?: boolean, time?: number)
+</code></pre>
+<p>노드와 소켓 통신중 소켓 연결이 끊어졌을 때 해당 노드와 다시 재연결을 할 수 있도록 옵션을 줄 수 있다.</p>
+<p>특별히 재연결을 하지 않는다면 기존 방식으로 처리하면 되지만 재연결을 할때 <code>boolean</code>으로 재연결 여부와 다시 연결 시도를 하기까지의 시간을 설정해서 보내면 된다.</p>
+<pre><code class="language-ts">const isReconnected = true
+const timeout = 500
+sub.start(
+    &quot;tm.event = 'Tx'&quot;,
+    (resp) =&gt; {
+        //do Something
+    },
+    isReconnected,
+    timeout,
+);
+</code></pre>
+<p>만일 재연결 옵션을 주었을 때 재연결 시간을 주지 않으면 기본적으로 <code>500</code>밀리세컨드로 재연결 시도를 하도록 설정되어 있다.</p>
+<p>재연결 시간을 늘리거나 줄이고 싶다면 그에 맞춰서 옵션값을 넘겨주면 된다.</p>
 <div class="admonition tip">
 <p class="admonition-title">Tip</p>
 <p><a href="../rweb3/#subscribe"><code>RWeb3</code>의 <code>subscribe</code> API</a>를 사용하면 <code>Subscriber</code>의 생성과 구독 시작을 하나의 API로 수행할 수 있다.</p>
