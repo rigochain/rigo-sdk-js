@@ -62,6 +62,7 @@ brew install mkdocs
 To publish updated documents,
 
 ```bash
+cd documents
 mkdocs build
 mkdocs gh-deploy
 ```
