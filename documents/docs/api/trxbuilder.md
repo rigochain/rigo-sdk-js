@@ -66,8 +66,8 @@ function BuildDelegateTrx(obj: Trx): trxPb.TrxProto
 
 #### Parameters
 - `obj`: 트랜잭션 생성시 필요한 값으로 구성된 [Trx](../internals/data.md#trx) 객체.  
-  `obj.from == obj.to` 이면 **지분전환**,  
-  `obj.from != obj.to` 이면 **지분전환**에 해당 된다.
+  `obj.from == obj.to` 이면 **지분 전환**,  
+  `obj.from != obj.to` 이면 **지분 위임**에 해당 된다.
 
 #### Returns
 지분 전환/위임 트랜잭션 객체 [TrxProto](../internals/data.md#trxproto)
@@ -83,9 +83,9 @@ function BuildUndelegateTrx(obj: Trx): trxPb.TrxProto
 지분을 다시 자산으로 전환하기 위한 트랜잭션 객체를을 생성한다.
 
 #### Parameters
-- `obj`: 트랜잭션 생성시 필요한 값으로 구성된 [Trx](../internals/data.md#trx) 객체.  
-  - `payload`: 자산으로 전환할 지분(stake) 정보를 포함하는 [TrxPayloadUndelegating](../internals/data.md#trxpayloadundelegating).
-  `TrxPayloadUndelegating` 의 `txhash`는, 자산으로 전환할 지분이, 지분으로 전환 처리되었을 때의 트랜잭션 해시값이다.
+- `obj`: 트랜잭션 생성시 필요한 값으로 구성된 [Trx](../internals/data.md#trx) 객체.
+    - `payload`: 자산으로 전환할 지분(stake) 정보를 포함하는 [TrxPayloadUndelegating](../internals/data.md#trxpayloadundelegating).  
+    `TrxPayloadUndelegating` 의 `txhash`는, 자산으로 전환할 지분이, 지분으로 전환 처리되었을 때의 트랜잭션 해시값이다.
 
 #### Returns
 자산 전환 트랜잭션 객체 [TrxProto](../internals/data.md#trxproto)
