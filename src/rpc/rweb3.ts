@@ -77,10 +77,9 @@ export default class RWeb3 extends JSONRPCClient {
     queryStakes(addr: string|Bytes, cb?:(_:any)=>void) {
         return this.rpcall("stakes",{addr: addr},cb)
     }
-    queryDeslegatee(addr: string|Bytes, cb?:(_:any)=>void) {
-        return this.rpcall("stakes",{addr: addr},cb)
+    queryDelegatee(addr: string|Bytes, cb?:(_:any)=>void) {
+        return this.rpcall("delegatee", {addr: addr}, cb)
     }
-
     broadcastTrxSync(tx: TrxProto, cb?:(_:any)=>void) {
         const wr = TrxProto.encode(tx)
         const txbz = wr.finish()
