@@ -41,6 +41,10 @@ export interface TrxPayloadVotingProto {
   choice: number;
 }
 
+export interface TrxPayloadContractProto {
+  data: Uint8Array;
+}
+
 function createBaseTrxProto(): TrxProto {
   return {
     version: 0,
@@ -474,6 +478,16 @@ export const TrxPayloadVotingProto = {
     return message;
   },
 };
+
+export const TrxPayloadContractProto = {
+  encode(message: TrxPayloadContractProto, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    if (message.data.length !== 0) {
+      writer.uint32(10).bytes(message.data);
+    }
+    return writer;
+  },
+};
+
 
 declare var self: any | undefined;
 declare var window: any | undefined;
