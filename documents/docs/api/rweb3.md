@@ -522,3 +522,27 @@ listener.stop()
 #### Returns
 `Subscriber` 객체.
 
+---
+
+### createContract
+```ts
+createContract(jsonInterface?: any, address?: string)
+```
+Contract 객체를 생성 한다.
+자세한 사항은 [contract](contract.md)를 참조한다.
+
+#### Parameters
+
+1. `jsonInterface` : contract json interface.
+2. `address` : contract address.
+
+#### Example
+```ts
+const rweb3 = new RWeb3('http://localhost:26657');
+const contractAddress = '42d09a60ad1a791fd500a9e435ed2e6b0c875bdd';
+const jsonInterface = JSON.parse(fs.readFileSync('./abi.json', 'utf-8'));
+const contract = rweb3.createContract(jsonInterface, contractAddress);
+```
+
+#### Returns
+`Contract` 객체.

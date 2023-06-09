@@ -15,6 +15,7 @@ nav:
       - Account: api/account.md
       - TrxBuilder: api/trxbuilder.md
       - Subscriber: api/subscriber.md
+      - Contract: api/contract.md
     - RPC API: api/rpc.md
   - internals:
 #      - Account: internals/account.md
