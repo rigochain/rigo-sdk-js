@@ -32,6 +32,10 @@ interface TrxPayloadUndelegating {
   txhash: string
 }
 
+interface TrxPayloadCreateContract {
+  data: string
+}
+
 function DecodeTrx(d: Bytes): Trx {
   let payload:any
   const tx = trxPb.TrxProto.decode(d)
@@ -121,6 +125,29 @@ function BuildUndelegateTrx(obj: Trx): trxPb.TrxProto {
   }
 }
 
+function buildContractTrx(obj: Trx): trxPb.TrxProto  {
+  const payload = obj.payload as TrxPayloadCreateContract
+  if( !isSet((payload)) || !isSet(payload.data)) {
+    throw Error("mandatory argument is missed")
+  }
+  const payloadBytes = trxPb.TrxPayloadContractProto.encode({
+    data: Bytes.fromHex(payload.data)
+  }).finish()
+
+  return {
+    version: isSet(obj.version) ? Number(obj.version) : 1,
+    time: isSet(obj.time) ? getNanoSecond(obj.time) : getNanoSecond(),
+    nonce: isSet(obj.nonce) ? Long.fromValue(obj.nonce) : Long.fromValue(1),
+    from: Bytes.fromHex(obj.from),
+    to: Bytes.fromHex(obj.to),
+    Amount: new Uint8Array(),
+    Gas: obj.gas === "0" ? new Uint8Array() : new Uint8Array(new BN(obj.gas).toArrayLike(Buffer)),
+    type: 6, // contract type
+    Payload: payloadBytes,
+    sig: new Uint8Array(),
+  };
+}
+
 function SignTrx(tx:trxPb.TrxProto, acct:Account): [Bytes, Bytes] {
   tx.sig = new Uint8Array()
 
@@ -150,5 +177,6 @@ export const TrxBuilder = {
   BuildUndelegateTrx,
   VerifyTrx,
   SignTrx,
+  buildContractTrx,
 }
 

@@ -5,6 +5,7 @@ import {TrxBuilder} from '../trx/trx';
 import axios from "axios";
 import {JSONRPCClient} from "json-rpc-2.0";
 import Subscriber from "./subscriber";
+import Contract from "./contract";
 
 export default class RWeb3 extends JSONRPCClient {
 
@@ -116,9 +117,30 @@ export default class RWeb3 extends JSONRPCClient {
         return this.rpcall('rule', {}, cb)
     }
 
+    vmCall(addr: string, to: string, height: number, data: string, cb?:(_:any)=>void) {
+        console.log('addr : ' + addr);
+        if(!addr.startsWith('0x')) {
+            addr = '0x' + addr;
+        }
+        if(!to.startsWith('0x')) {
+            to = '0x' + to;
+        }
+        const params = {
+            addr: addr,
+            to: to,
+            height: height.toString(10),
+            data: Buffer.from(Bytes.fromHex(data)).toString('base64')
+        }
+        return this.rpcall('vm_call', params, cb)
+    }
+
     subscribe(url:string, query: string, cb: (resp:string)=>void): Subscriber {
         const evtListener = new Subscriber(url)
         evtListener.start(query, cb)
         return evtListener
+    }
+
+    createContract(jsonInterface?: any, address?: string) {
+        return new Contract(this, jsonInterface, address);
     }
 }

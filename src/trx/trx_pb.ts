@@ -41,6 +41,10 @@ export interface TrxPayloadVotingProto {
   choice: number;
 }
 
+export interface TrxPayloadContractProto {
+  data: Uint8Array;
+}
+
 function createBaseTrxProto(): TrxProto {
   return {
     version: 0,
@@ -471,6 +475,54 @@ export const TrxPayloadVotingProto = {
     const message = createBaseTrxPayloadVotingProto();
     message.txHash = object.txHash ?? new Uint8Array();
     message.choice = object.choice ?? 0;
+    return message;
+  },
+};
+
+function createBaseTrxPayloadContractProto(): TrxPayloadContractProto {
+  return { data: new Uint8Array() };
+}
+
+export const TrxPayloadContractProto = {
+  encode(message: TrxPayloadContractProto, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    if (message.data.length !== 0) {
+      writer.uint32(10).bytes(message.data);
+    }
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): TrxPayloadContractProto {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseTrxPayloadContractProto();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.data = reader.bytes();
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): TrxPayloadContractProto {
+    return { data: isSet(object.data) ? bytesFromBase64(object.data) : new Uint8Array() };
+  },
+
+  toJSON(message: TrxPayloadContractProto): unknown {
+    const obj: any = {};
+    message.data !== undefined &&
+      (obj.data = base64FromBytes(message.data !== undefined ? message.data : new Uint8Array()));
+    return obj;
+  },
+
+  fromPartial<I extends Exact<DeepPartial<TrxPayloadContractProto>, I>>(object: I): TrxPayloadContractProto {
+    const message = createBaseTrxPayloadContractProto();
+    message.data = object.data ?? new Uint8Array();
     return message;
   },
 };
