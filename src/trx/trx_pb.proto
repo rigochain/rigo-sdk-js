@@ -37,3 +37,7 @@ message TrxPayloadVotingProto {
   bytes tx_hash = 1;
   int32 choice = 2;
 }
+
+message TrxPayloadContractProto {
+  bytes data = 1;
+}

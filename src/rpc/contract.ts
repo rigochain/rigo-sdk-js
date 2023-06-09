@@ -15,8 +15,8 @@ export default class Contract {
         this._contractAddress = contractAddress;
     }
 
-    private findFunctionSignature(functionName) {
-        return this._jsonInterface.find(item => {
+    private findFunctionSignature(functionName: string) {
+        return this._jsonInterface.find((item: {type: any; name: string}) => {
             return item.name === functionName && item.type === 'function';
         })
     }
@@ -29,11 +29,11 @@ export default class Contract {
         return functionSignature;
     }
 
-    private getEncodeFunctionSignature(functionSignature, values: any[]) {
+    private getEncodeFunctionSignature(functionSignature: any, values: any[]) {
         if (values !== undefined) {
             if(functionSignature.inputs.length !== values.length) throw Error('input parameters is different');
         }
-        const inputsType = functionSignature.inputs.map(input => input.type).join(',');
+        const inputsType = functionSignature.inputs.map((input: {type: any}) => input.type).join(',');
         let encodeFunctionSignature = Web3EthAbi.encodeFunctionSignature(`${functionSignature.name}(${inputsType})`);
         for(let i=0; i<functionSignature.inputs.length; i++) {
             encodeFunctionSignature = encodeFunctionSignature + Web3EthAbi.encodeParameter(functionSignature.inputs[i].type, values[i]).substring(2);
@@ -42,7 +42,7 @@ export default class Contract {
     }
 
     public deploy(account: Account, bytecode: string, args: any[]) {
-        let abi = this._jsonInterface.find(item => item.type === 'constructor');
+        let abi = this._jsonInterface.find((item: {type: any}) => item.type === 'constructor');
         if (!abi) {
             abi = {
                 type: 'constructor',
