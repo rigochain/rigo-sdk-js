@@ -34,7 +34,7 @@
           <a href="../.." class="icon icon-home"> rigo-sdk-js
         </a><div role="search">
   <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
-      <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
   </form>
 </div>
       </div>
@@ -58,6 +58,8 @@
                 <li class="toctree-l2"><a class="reference internal" href="../../api/trxbuilder/">TrxBuilder</a>
                 </li>
                 <li class="toctree-l2"><a class="reference internal" href="../../api/subscriber/">Subscriber</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../api/contract/">Contract</a>
                 </li>
     </ul>
                   </li>
@@ -97,7 +99,7 @@
       <div class="wy-nav-content">
         <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
   <ul class="wy-breadcrumbs">
-    <li><a href="../.." class="icon icon-home" alt="Docs"></a> &raquo;</li>
+    <li><a href="../.." class="icon icon-home" aria-label="Docs"></a> &raquo;</li>
       <li>Data structures</li>
     <li class="wy-breadcrumbs-aside">
     </li>
@@ -298,7 +300,7 @@ message TrxPayloadVotingProto {
   int32 choice = 2;
 }
 </code></pre>
-<h2 id="rigo-wallet-format-rwf">RIGO Wallet Format (RWF)</h2>
+<h2 id="rigo-wallet-format-rwf-v1">RIGO Wallet Format (RWF) V1</h2>
 <pre><code class="language-json">{
   &quot;version&quot;: &quot;1&quot;,
   &quot;address&quot;: &quot;8DC41A86B91EB88D82489C4D037AE9FFCA65CFBF&quot;,
@@ -321,19 +323,52 @@ message TrxPayloadVotingProto {
 <li><code>version</code>: RWF의 버전 정보.</li>
 <li><code>address</code>: 계정 주소. PublicKey 로 부터 유도된다.</li>
 <li><code>algo</code>: ECDSA curve 이름. (현재는 무조건 'secp256k1' 사용)</li>
-<li><code>cp</code>: Private Key 암호화 알고리즘 및 암호화 결과.</li>
+<li><code>cp</code>: Private Key 암호화 알고리즘 및 암호화 결과.<ul>
 <li><code>ca</code>: Private key 암호화시 사용한 대칭키 암호화 알고리즘.</li>
 <li><code>ct</code>: Private key 를 암호화 하고 이를 다시 base64로 인코딩한 값.</li>
 <li><code>ci</code>: Private key 암호화시 사용한 IV의 base64로 인코딩된 값.</li>
+</ul>
+</li>
 <li><code>dkp</code>: Private Key 암호화시 사용한 암호화키 유도를 위한 정보.<br />
 사용자 입력 비밀번호 기반 암호화키 유도 방식으로 암호화 된 경우 필요하다.
-모바일 디바이스의 보안 영역을 통해 암호화 키를 관리할 경우, 필요 없을 수 있다.</li>
+모바일 디바이스의 보안 영역을 통해 암호화 키를 관리할 경우, 필요 없을 수 있다.<ul>
 <li><code>ka</code>: 대칭키 유도 알고리즘.</li>
 <li><code>kh</code>: 대팅키 유도에 사용한 해시 알고리즘.</li>
 <li><code>kc</code>: 해시 반복 횟수.</li>
 <li><code>ks</code>: 키유도시 사용된 salt 의 base64 인코딩 값.</li>
 <li><code>kl</code>: 바이트 단위의 키 길이.</li>
 </ul>
+</li>
+</ul>
+<div class="admonition tip">
+<p class="admonition-title">KMS Wallet Format V5</p>
+<p>KMS-go 에서 사용하는 KMS-go Wallet Format 은 아래와 같다.<br />
+RWF의 다음 버전으로 검토한다.</p>
+</div>
+<pre><code class="language-json">{
+  &quot;Version&quot;: 5,
+  &quot;uid&quot;: &quot;fzrlgf7r@zemiter.dev&quot;,
+  &quot;id&quot;: &quot;be2dc84c-7bbf-4ca3-9ed2-aaf685f23be2&quot;,
+  &quot;address&quot;: &quot;0fc9f29ec2d8a7b3eeae65f3f50fa39f7483c2e7&quot;,
+  &quot;pubKey&quot;: &quot;039eedcd22b496563244b19498d1986db6d129a8d10e4b91f6b0d7873a5b990748&quot;,
+  &quot;crypto&quot;: {
+    &quot;cipher&quot;: &quot;aes-256-cbc&quot;,
+    &quot;cipherparams&quot;: {
+      &quot;iv&quot;: &quot;c6ef42ffe3b3f2583c5d4d7110c7a717&quot;
+    },
+    &quot;ciphertext&quot;: &quot;370f9dea5533a1dda120a2a1c21a087a97e80956be809cd7b7bc91517d10bdea8198760331659692572331eb3a47fb8e&quot;,
+    &quot;kdf&quot;: &quot;scrypt&quot;,
+    &quot;kdfparams&quot;: {
+      &quot;dklen&quot;: 32,
+      &quot;n&quot;: 65536,
+      &quot;r&quot;: 8,
+      &quot;p&quot;: 1,
+      &quot;salt&quot;: &quot;4719d27c5fda748fb51c26a6e7e95a23bbb85e88e2bf5518fd4a00db9a0dea10&quot;
+    },
+    &quot;mac&quot;: &quot;a3bd9da32a80a696da2cab8ed2f9a037a9fe31e9e4b47d220e787c5528441edf&quot;
+  }
+}
+</code></pre>
 <div class="admonition note">
 <p class="admonition-title">PublicKey to Address</p>
 <ul>

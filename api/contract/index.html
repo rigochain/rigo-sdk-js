@@ -5,15 +5,15 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       <link rel="shortcut icon" href="../../img/favicon.ico" />
-    <title>Account - rigo-sdk-js</title>
+    <title>Contract - rigo-sdk-js</title>
     <link rel="stylesheet" href="../../css/theme.css" />
     <link rel="stylesheet" href="../../css/theme_extra.css" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css" />
     
       <script>
         // Current page data
-        var mkdocs_page_name = "Account";
-        var mkdocs_page_input_path = "api/account.md";
+        var mkdocs_page_name = "Contract";
+        var mkdocs_page_input_path = "api/contract.md";
         var mkdocs_page_url = null;
       </script>
     
@@ -53,71 +53,55 @@
     <ul class="current">
                 <li class="toctree-l2"><a class="reference internal" href="../rweb3/">RWeb3</a>
                 </li>
-                <li class="toctree-l2 current"><a class="reference internal current" href="./">Account</a>
-    <ul class="current">
-    <li class="toctree-l3"><a class="reference internal" href="#new">New</a>
-        <ul>
-    <li class="toctree-l4"><a class="reference internal" href="#parameters">Parameters</a>
-    </li>
-    <li class="toctree-l4"><a class="reference internal" href="#returns">Returns</a>
-    </li>
-    <li class="toctree-l4"><a class="reference internal" href="#example">Example</a>
-    </li>
-        </ul>
-    </li>
-    <li class="toctree-l3"><a class="reference internal" href="#import">Import</a>
-        <ul>
-    <li class="toctree-l4"><a class="reference internal" href="#parameters_1">Parameters</a>
-    </li>
-    <li class="toctree-l4"><a class="reference internal" href="#returns_1">Returns</a>
-    </li>
-    <li class="toctree-l4"><a class="reference internal" href="#example_1">Example</a>
-    </li>
-        </ul>
-    </li>
-    <li class="toctree-l3"><a class="reference internal" href="#sign">sign</a>
-        <ul>
-    <li class="toctree-l4"><a class="reference internal" href="#parameters_2">Parameters</a>
-    </li>
-    <li class="toctree-l4"><a class="reference internal" href="#returns_2">Returns</a>
-    </li>
-    <li class="toctree-l4"><a class="reference internal" href="#examples">Examples</a>
-    </li>
-        </ul>
-    </li>
-    <li class="toctree-l3"><a class="reference internal" href="#verify">verify</a>
-        <ul>
-    <li class="toctree-l4"><a class="reference internal" href="#parameters_3">Parameters</a>
-    </li>
-    <li class="toctree-l4"><a class="reference internal" href="#returns_3">Returns</a>
-    </li>
-    <li class="toctree-l4"><a class="reference internal" href="#examples_1">Examples</a>
-    </li>
-        </ul>
-    </li>
-    <li class="toctree-l3"><a class="reference internal" href="#lock">lock</a>
-        <ul>
-    <li class="toctree-l4"><a class="reference internal" href="#parameters_4">Parameters</a>
-    </li>
-    <li class="toctree-l4"><a class="reference internal" href="#returns_4">Returns</a>
-    </li>
-        </ul>
-    </li>
-    <li class="toctree-l3"><a class="reference internal" href="#unlock">unlock</a>
-        <ul>
-    <li class="toctree-l4"><a class="reference internal" href="#parameters_5">Parameters</a>
-    </li>
-    <li class="toctree-l4"><a class="reference internal" href="#returns_5">Returns</a>
-    </li>
-        </ul>
-    </li>
-    </ul>
+                <li class="toctree-l2"><a class="reference internal" href="../account/">Account</a>
                 </li>
                 <li class="toctree-l2"><a class="reference internal" href="../trxbuilder/">TrxBuilder</a>
                 </li>
                 <li class="toctree-l2"><a class="reference internal" href="../subscriber/">Subscriber</a>
                 </li>
-                <li class="toctree-l2"><a class="reference internal" href="../contract/">Contract</a>
+                <li class="toctree-l2 current"><a class="reference internal current" href="./">Contract</a>
+    <ul class="current">
+    <li class="toctree-l3"><a class="reference internal" href="#deploy">deploy</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#parameters">Parameters</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#example">Example</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#returns">Returns</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#excute">excute</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#parameters_1">Parameters</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#example_1">Example</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#returns_1">Returns</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#query">query</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#parameters_2">Parameters</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#example_2">Example</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#returns_2">Returns</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#getcontractaddress">getContractAddress</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#parameters_3">Parameters</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#example_3">Example</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#returns_3">Returns</a>
+    </li>
+        </ul>
+    </li>
+    </ul>
                 </li>
     </ul>
                   </li>
@@ -160,7 +144,7 @@
     <li><a href="../.." class="icon icon-home" aria-label="Docs"></a> &raquo;</li>
           <li>API &raquo;</li>
           <li>Javascript API &raquo;</li>
-      <li>Account</li>
+      <li>Contract</li>
     <li class="wy-breadcrumbs-aside">
     </li>
   </ul>
@@ -169,88 +153,123 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
             <div class="section" itemprop="articleBody">
               
-                <h2 id="account">Account</h2>
-<h3 id="new">New</h3>
-<pre><code class="language-ts">static New(nm: string, secret: string): Account
+                <h2 id="contract">Contract</h2>
+<h3 id="deploy">deploy</h3>
+<pre><code class="language-ts">deploy(account: Account, bytecode: string, args: any[])
 </code></pre>
-<p>새로운 <code>Account</code> 객체를 생성한다.</p>
+<p>RIGO 네트워크에 새로운 스마트 컨트랙트를 배포 한다.</p>
 <h4 id="parameters">Parameters</h4>
-<ul>
-<li><code>nm</code>: 계정 이름.</li>
-<li><code>secret</code>: 계정의 PrivateKey 암호화를 위한 비밀번호.</li>
-</ul>
-<h4 id="returns">Returns</h4>
-<p><code>Account</code> 객체.</p>
+<ol>
+<li><code>account</code> : <code>Account</code> 객체.</li>
+<li><code>bytecode</code> : 스마트 컨트랙트의 바이트 코드.</li>
+<li><code>args</code> : Arguments 배열.</li>
+</ol>
 <h4 id="example">Example</h4>
-<pre><code class="language-ts">let acct = Account.New(&quot;my account 1&quot;, &quot;my passphrase&quot;)
+<pre><code class="language-ts">const prvKeyBytes = Bytes.fromHex('ABCDEF0123456789....');
+const account:Account = Account.Import(&quot;new name&quot;, &quot;new passphrase&quot;, prvKeyBytes);
+rweb3.syncAccount(account);
+
+const jsonInterface = JSON.parse(fs.readFileSync('./abi.json', 'utf-8'));
+const contract = rweb3.createContract(jsonInterface);
+
+const bytecode = '0x516186765....'
+const result = await contract.deploy(account, bytecode, ['arg1', 'arg2']);
+console.log(result);
+</code></pre>
+<h4 id="returns">Returns</h4>
+<pre><code class="language-json">{
+  &quot;code&quot; : 0,
+  &quot;data&quot; : &quot;&quot;,
+  &quot;log&quot; : &quot;&quot;,
+  &quot;codespace&quot; : &quot;&quot;,
+  &quot;hash&quot; : &quot;0CE8C8675812FD869E7D73D132229BE746EE847E643C506CCF7DAC32EBAE4312&quot;
+}
 </code></pre>
 <hr />
-<h3 id="import">Import</h3>
-<pre><code class="language-ts">static Import(nm: string, secret: string, d: Bytes, dsecret?:string): Account
+<h3 id="excute">excute</h3>
+<pre><code class="language-ts">execute(account: Account, functionName: string, values: any[])
 </code></pre>
-<p>외부에 존재하는 PrivateKey 를 가져와 <code>Account</code>를 생성한다.</p>
 <h4 id="parameters_1">Parameters</h4>
-<ul>
-<li><code>nm</code>: 계정 이름.</li>
-<li><code>secret</code>: 계정의 PrivateKey 암호화를 위한 비밀번호.</li>
-<li><code>d</code>: PrivateKey.</li>
-<li><code>dsecret</code>: <code>d</code>가 암호화된 형태라면, 이를 복호화 하기 위한 비밀번호. (<em>Not implemented yet</em>)</li>
-</ul>
-<h4 id="returns_1">Returns</h4>
-<p><code>Account</code> 객체.</p>
+<ol>
+<li><code>account</code> : <code>Account</code> 객체.</li>
+<li><code>functionName</code> : 대상 함수명.</li>
+<li><code>values</code> : Arguments 배열.</li>
+</ol>
 <h4 id="example_1">Example</h4>
-<pre><code class="language-ts">// convert 64chars hex-string(32bytes) to Bytes
-const prvKeyBytes = Bytes.fromHex(&quot;ABCDEF0123456789....&quot;)
-const importedAcct = Account.Import(&quot;new name&quot;, &quot;new passphrase&quot;, prvKeyBytes)
+<pre><code class="language-ts">const prvKeyBytes = Bytes.fromHex('ABCDEF0123456789...');
+const account:Account = Account.Import(&quot;new name&quot;, &quot;new passphrase&quot;, prvKeyBytes);
+rweb3.syncAccount(account);
+
+const jsonInterface = JSON.parse(fs.readFileSync('./abi.json', 'utf-8'));
+const contractAddress = '42d09a60ad1...';
+const contract = rweb3.createContract(jsonInterface, contractAddress);
+const values = ['280057599c3975537bb8ad42343078d879384436', BigInt('100')];
+
+const result = await contract.execute(account, 'transfer', values);
+console.log(result);
+</code></pre>
+<h4 id="returns_1">Returns</h4>
+<pre><code class="language-json">{
+  &quot;code&quot; : 0,
+  &quot;data&quot; : &quot;&quot;,
+  &quot;log&quot; : &quot;&quot;,
+  &quot;codespace&quot; : &quot;&quot;,
+  &quot;hash&quot; : &quot;6681B51192F59F7EACC6D12558886CCBC414BB5E5475CF051772002652E29FAB&quot;
+}
 </code></pre>
 <hr />
-<h3 id="sign">sign</h3>
-<pre><code class="language-ts">sign(msg: Uint8Array): Bytes
+<h3 id="query">query</h3>
+<pre><code class="language-ts">query(account: Account, functionName: string, values?: any[])
 </code></pre>
-<p>현재 <code>Account</code> 객체의 PrivateKey 로 전자서명을 생성한다.</p>
 <h4 id="parameters_2">Parameters</h4>
-<ul>
-<li><code>msg</code>: 전자서명 대상 메시지 데이터.</li>
-</ul>
+<ol>
+<li><code>account</code> : <code>Account</code> 객체.</li>
+<li><code>functionName</code> : 대상 함수명.</li>
+<li><code>values</code> : Arguments 배열.</li>
+</ol>
+<h4 id="example_2">Example</h4>
+<pre><code class="language-ts">const prvKeyBytes = Bytes.fromHex('ABCDEF0123456789...');
+const account:Account = Account.Import(&quot;new name&quot;, &quot;new passphrase&quot;, prvKeyBytes);
+rweb3.syncAccount(account);
+
+const jsonInterface = JSON.parse(fs.readFileSync('./abi.json', 'utf-8'));
+const contractAddress = '42d09a60ad1...';
+const contract = rweb3.createContract(jsonInterface, contractAddress);
+const values = ['280057599c3975537bb8ad42343078d879384436'];
+
+const result = await contract.query(importUser, 'balanceOf', values);
+console.log(result);
+</code></pre>
 <h4 id="returns_2">Returns</h4>
-<p>현재 <code>Account</code> 객체의 PrivateKey로 생성된 전자서명.</p>
-<h4 id="examples">Examples</h4>
-<pre><code class="language-ts">let msg = new TextEncoder().encode(&quot;this is message to be signed&quot;);
-const sig = acct.sign(msg)
-console.log(sig.toHex()) // 65bytes hex-string (130chars)
+<pre><code class="language-json">{
+  &quot;key&quot;: &quot;696BFA1C38B123EDCB45952D89A5205913F89D38FD4D3B0F16C74CD236AD8761309D51EF92CA880B70A08231000000000000000000000000280057599C3975537BB8AD42343078D879384436&quot;,
+  &quot;value&quot;: {
+    &quot;usedGas&quot;: &quot;24365&quot;,
+    &quot;returnData&quot;: &quot;000000000000000000000000000000000000000000000000000000000000012c&quot;
+  }
+}
 </code></pre>
 <hr />
-<h3 id="verify">verify</h3>
-<pre><code class="language-ts">verify(sig: Uint8Array, msg: Uint8Array): boolean
+<h3 id="getcontractaddress">getContractAddress</h3>
+<pre><code class="language-ts">getContractAddress(txHash: string)
 </code></pre>
-<p>현재 <code>Account</code> 객체의 PublicKey 로 전자서명 <code>sig</code>를 검증한다.</p>
 <h4 id="parameters_3">Parameters</h4>
-<ul>
-<li><code>sig</code>: 전자서명 데이터. 65bytes.</li>
-<li><code>msg</code>: 전자서명 대상 메시지 데이터.</li>
-</ul>
-<h4 id="returns_3">Returns</h4>
-<p>전자서명 검증 결과.</p>
-<h4 id="examples_1">Examples</h4>
-<pre><code class="language-ts">const ret = acct.verify(sig, msg)
-console.log(&quot;verify result&quot;, ret) // true or false=
+<ol>
+<li><code>txHash</code> : 배포된 스마트 컨트랙트 트랙잭션 해시 값.</li>
+</ol>
+<h4 id="example_3">Example</h4>
+<pre><code class="language-ts">const contract = rweb3.createContract();
+const txHash = '4FF4A18BC39180C34E18AD7A21090476F8B4293DF07C29B2D54A49ED1F3937D2';
+const addr = await contract.getContractAddress(txHash);
 </code></pre>
-<hr />
-<h3 id="lock">lock</h3>
-<p>Not implemented.</p>
-<h4 id="parameters_4">Parameters</h4>
-<h4 id="returns_4">Returns</h4>
-<hr />
-<h3 id="unlock">unlock</h3>
-<p>Not implemented.</p>
-<h4 id="parameters_5">Parameters</h4>
-<h4 id="returns_5">Returns</h4>
+<h4 id="returns_3">Returns</h4>
+<p>스마트 컨트랙트 주소</p>
               
             </div>
           </div><footer>
     <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
-        <a href="../rweb3/" class="btn btn-neutral float-left" title="RWeb3"><span class="icon icon-circle-arrow-left"></span> Previous</a>
-        <a href="../trxbuilder/" class="btn btn-neutral float-right" title="TrxBuilder">Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../subscriber/" class="btn btn-neutral float-left" title="Subscriber"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../rpc/" class="btn btn-neutral float-right" title="RPC API">Next <span class="icon icon-circle-arrow-right"></span></a>
     </div>
 
   <hr/>
@@ -273,10 +292,10 @@ console.log(&quot;verify result&quot;, ret) // true or false=
   <span class="rst-current-version" data-toggle="rst-current-version">
     
     
-      <span><a href="../rweb3/" style="color: #fcfcfc">&laquo; Previous</a></span>
+      <span><a href="../subscriber/" style="color: #fcfcfc">&laquo; Previous</a></span>
     
     
-      <span><a href="../trxbuilder/" style="color: #fcfcfc">Next &raquo;</a></span>
+      <span><a href="../rpc/" style="color: #fcfcfc">Next &raquo;</a></span>
     
   </span>
 </div>

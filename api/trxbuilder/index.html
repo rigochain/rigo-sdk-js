@@ -34,7 +34,7 @@
           <a href="../.." class="icon icon-home"> rigo-sdk-js
         </a><div role="search">
   <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
-      <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
   </form>
 </div>
       </div>
@@ -111,6 +111,8 @@
                 </li>
                 <li class="toctree-l2"><a class="reference internal" href="../subscriber/">Subscriber</a>
                 </li>
+                <li class="toctree-l2"><a class="reference internal" href="../contract/">Contract</a>
+                </li>
     </ul>
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../rpc/">RPC API</a>
@@ -149,7 +151,7 @@
       <div class="wy-nav-content">
         <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
   <ul class="wy-breadcrumbs">
-    <li><a href="../.." class="icon icon-home" alt="Docs"></a> &raquo;</li>
+    <li><a href="../.." class="icon icon-home" aria-label="Docs"></a> &raquo;</li>
           <li>API &raquo;</li>
           <li>Javascript API &raquo;</li>
       <li>TrxBuilder</li>
@@ -217,8 +219,8 @@ rweb3.broadcastTrxSync(tx).then(resp =&gt; {
 <h4 id="parameters_1">Parameters</h4>
 <ul>
 <li><code>obj</code>: 트랜잭션 생성시 필요한 값으로 구성된 <a href="../../internals/data/#trx">Trx</a> 객체.<br />
-<code>obj.from == obj.to</code> 이면 <strong>지분전환</strong>,<br />
-<code>obj.from != obj.to</code> 이면 <strong>지분전환</strong>에 해당 된다.</li>
+<code>obj.from == obj.to</code> 이면 <strong>지분 전환</strong>,<br />
+<code>obj.from != obj.to</code> 이면 <strong>지분 위임</strong>에 해당 된다.</li>
 </ul>
 <h4 id="returns_1">Returns</h4>
 <p>지분 전환/위임 트랜잭션 객체 <a href="../../internals/data/#trxproto">TrxProto</a></p>
@@ -230,9 +232,11 @@ rweb3.broadcastTrxSync(tx).then(resp =&gt; {
 <p>지분을 다시 자산으로 전환하기 위한 트랜잭션 객체를을 생성한다.</p>
 <h4 id="parameters_2">Parameters</h4>
 <ul>
-<li><code>obj</code>: 트랜잭션 생성시 필요한 값으로 구성된 <a href="../../internals/data/#trx">Trx</a> 객체.  </li>
-<li><code>payload</code>: 자산으로 전환할 지분(stake) 정보를 포함하는 <a href="../../internals/data/#trxpayloadundelegating">TrxPayloadUndelegating</a>.
-  <code>TrxPayloadUndelegating</code> 의 <code>txhash</code>는, 자산으로 전환할 지분이, 지분으로 전환 처리되었을 때의 트랜잭션 해시값이다.</li>
+<li><code>obj</code>: 트랜잭션 생성시 필요한 값으로 구성된 <a href="../../internals/data/#trx">Trx</a> 객체.<ul>
+<li><code>payload</code>: 자산으로 전환할 지분(stake) 정보를 포함하는 <a href="../../internals/data/#trxpayloadundelegating">TrxPayloadUndelegating</a>.<br />
+<code>TrxPayloadUndelegating</code> 의 <code>txhash</code>는, 자산으로 전환할 지분이, 지분으로 전환 처리되었을 때의 트랜잭션 해시값이다.</li>
+</ul>
+</li>
 </ul>
 <h4 id="returns_2">Returns</h4>
 <p>자산 전환 트랜잭션 객체 <a href="../../internals/data/#trxproto">TrxProto</a></p>
