@@ -67,7 +67,7 @@ export default class Contract {
             from: account.address,
             to: '0000000000000000000000000000000000000000',
             nonce: account.nonce,
-            gas: '10',
+            gas: '1000000000000000',
             amount: '0',
             payload: {data: bytecodeWithArguments},
         })
@@ -86,7 +86,7 @@ export default class Contract {
             from: account.address,
             to: this._contractAddress,
             nonce: account.nonce,
-            gas: '10',
+            gas: '1000000000000000',
             amount: '0',
             payload: {data: encodeFunctionSignature},
         })
