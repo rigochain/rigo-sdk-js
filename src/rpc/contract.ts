@@ -35,9 +35,13 @@ export default class Contract {
         }
         const inputsType = functionSignature.inputs.map((input: {type: any}) => input.type).join(',');
         let encodeFunctionSignature = Web3EthAbi.encodeFunctionSignature(`${functionSignature.name}(${inputsType})`);
-        for(let i=0; i<functionSignature.inputs.length; i++) {
-            encodeFunctionSignature = encodeFunctionSignature + Web3EthAbi.encodeParameter(functionSignature.inputs[i].type, values[i]).substring(2);
+
+        const inputsTypeArray: any[] = [];
+        for (const input of functionSignature.inputs) {
+            inputsTypeArray.push(input.type);
         }
+
+        encodeFunctionSignature = encodeFunctionSignature + Web3EthAbi.encodeParameters(inputsTypeArray, values).substring(2);
         return encodeFunctionSignature;
     }
 
