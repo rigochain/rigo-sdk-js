@@ -8,6 +8,7 @@ export default class Contract {
     private _rweb3: RWeb3;
     private _jsonInterface;
     public _contractAddress;
+    public gas = '1000000000000000';
 
     constructor(rweb3: RWeb3, jsonInterface?: any, contractAddress?: string) {
         this._rweb3 = rweb3;
@@ -67,7 +68,7 @@ export default class Contract {
             from: account.address,
             to: '0000000000000000000000000000000000000000',
             nonce: account.nonce,
-            gas: '1000000000000000',
+            gas: this.gas,
             amount: '0',
             payload: {data: bytecodeWithArguments},
         })
@@ -86,7 +87,7 @@ export default class Contract {
             from: account.address,
             to: this._contractAddress,
             nonce: account.nonce,
-            gas: '1000000000000000',
+            gas: this.gas,
             amount: '0',
             payload: {data: encodeFunctionSignature},
         })
@@ -113,6 +114,8 @@ export default class Contract {
         const transactionData = await this._rweb3.queryTrx(txHash);
         if (!transactionData.tx_result || !transactionData.tx_result.data) throw Error('not found contract address');
         const bytes = Bytes.b64ToBytes(transactionData.tx_result.data);
-        return bytes.toHex();
+        let bytesToHex = bytes.toHex();
+        if(!bytesToHex.startsWith('0x'))    bytesToHex = '0x' + bytesToHex;
+        return bytesToHex.toLowerCase();
     }
 }
