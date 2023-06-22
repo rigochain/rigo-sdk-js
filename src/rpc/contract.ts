@@ -34,12 +34,11 @@ export default class Contract {
         if (values !== undefined) {
             if(functionSignature.inputs.length !== values.length) throw Error('input parameters is different');
         }
-        const inputsType = functionSignature.inputs.map((input: {type: any}) => input.type).join(',');
-        let encodeFunctionSignature = Web3EthAbi.encodeFunctionSignature(`${functionSignature.name}(${inputsType})`);
+        let encodeFunctionSignature = Web3EthAbi.encodeFunctionSignature(functionSignature);
 
         const inputsTypeArray: any[] = [];
         for (const input of functionSignature.inputs) {
-            inputsTypeArray.push(input.type);
+            inputsTypeArray.push(input);
         }
 
         encodeFunctionSignature = encodeFunctionSignature + Web3EthAbi.encodeParameters(inputsTypeArray, values).substring(2);
