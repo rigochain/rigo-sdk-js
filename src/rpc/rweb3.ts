@@ -141,6 +141,9 @@ export default class RWeb3 extends JSONRPCClient {
     }
 
     createContract(jsonInterface?: any, address?: string) {
+        if(address !== undefined && address.startsWith('0x')) {
+            address = address.substring(2)
+        }
         return new Contract(this, jsonInterface, address);
     }
 }
