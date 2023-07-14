@@ -10,3 +10,8 @@ lib/
 examples/rigo.js
 examples/rigo.min.js
 documents/site
+
+
+# Unsupported lock files
+package-lock.json
+yarn.lock

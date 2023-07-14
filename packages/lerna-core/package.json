@@ -3,6 +3,7 @@
 	"version": "0.0.1",
 	"main": "./lib/commonjs/index.js",
 	"module": "./lib/esm/index.js",
+	"license": "Apache-2.0",
 	"exports": {
 		".": {
 			"types": "./lib/types/index.d.ts",
