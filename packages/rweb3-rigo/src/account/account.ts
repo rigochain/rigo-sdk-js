@@ -4,6 +4,7 @@ import PubKey from "../crypto/secp256k1/pubKey";
 import BN from 'bn.js'
 
 export default class Account {
+
     address: string
     name: string
     nonce: number

@@ -1,0 +1,20 @@
+0 silly argv {
+0 silly argv   _: [ 'bootstrap' ],
+0 silly argv   lernaVersion: '6.6.2',
+0 silly argv   '$0': '/Users/baeseongdong/IdeaProjects/medium/rigo-sdk-js/node_modules/.bin/lerna'
+0 silly argv }
+1 notice cli v6.6.2
+2 verbose rootPath /Users/baeseongdong/IdeaProjects/medium/rigo-sdk-js
+3 info versioning independent
+4 error JSONError: Unexpected token "}" (0x7D) in JSON at position 1100 while parsing near "...es/ws\": \"^8.5.4\",\n  }\n}\n" in packages/rweb3-providers/package.json
+4 error
+4 error [0m [90m 23 |[39m     [32m"@types/secp256k1"[39m[33m:[39m [32m"^4.0.3"[39m[33m,[39m[0m
+4 error [0m [90m 24 |[39m     [32m"@types/ws"[39m[33m:[39m [32m"^8.5.4"[39m[33m,[39m[0m
+4 error [0m[31m[1m>[22m[39m[90m 25 |[39m   }[0m
+4 error [0m [90m    |[39m   [31m[1m^[22m[39m[0m
+4 error [0m [90m 26 |[39m }[0m
+4 error [0m [90m 27 |[39m[0m
+4 error
+4 error     at parseJson (/Users/baeseongdong/IdeaProjects/medium/rigo-sdk-js/node_modules/parse-json/index.js:29:21)
+4 error     at parse (/Users/baeseongdong/IdeaProjects/medium/rigo-sdk-js/node_modules/load-json-file/index.js:15:9)
+4 error     at module.exports (/Users/baeseongdong/IdeaProjects/medium/rigo-sdk-js/node_modules/load-json-file/index.js:18:47)

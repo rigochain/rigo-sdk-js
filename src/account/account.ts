@@ -1,4 +1,4 @@
-import Bytes from "../utils/bytes";
+1import Bytes from "../utils/bytes";
 import PrvKey from "../crypto/secp256k1/prvKey";
 import PubKey from "../crypto/secp256k1/pubKey";
 import BN from 'bn.js'
