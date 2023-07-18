@@ -7,6 +7,7 @@ import Account from "./account/account";
 import {TrxBuilder} from "./trx/trx"
 import RWeb3 from "./rpc/rweb3";
 import Subscriber from "./rpc/subscriber";
+import {RWeb3Rigo} from "./rweb3_rigo";
 
 if(typeof window !== 'undefined') {
     window.PrvKey = PrvKey
@@ -32,5 +33,6 @@ export {
     LocalSto,
     SessSto,
     Bytes,
-    Time
+    Time,
+    RWeb3Rigo
 }
