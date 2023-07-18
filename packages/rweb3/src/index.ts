@@ -1,1 +1,5 @@
-console.log('Hello rweb3 worlds')
+
+/**
+ * Export all packages grouped by name spaces
+ */
+export * from './rigo.exports.js';

@@ -12,7 +12,5 @@ declare global {
         Bytes: any;
         Time: any;
         Utils: any;
-
-
     }
 }

@@ -1,3 +1,4 @@
+/*
 import {TrxBuilder} from "../src/trx/trx";
 import Account from "../src/account/account"
 import Bytes from "../src/utils/bytes";
@@ -20,4 +21,4 @@ const [sig, signedTx] = TrxBuilder.SignTrx(tx, acct);
 tx.sig = sig
 const ret = TrxBuilder.VerifyTrx(tx, acct);
 console.log("address", acct.address)
-console.log(ret)
+console.log(ret)*/

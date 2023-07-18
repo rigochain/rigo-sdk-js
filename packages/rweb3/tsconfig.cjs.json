@@ -1,10 +1,19 @@
 {
-	"extends": "../../tsconfig.base.json",
 	"compilerOptions": {
-		"outDir": "./lib/commonjs",
+		"target": "es6",
+		"module": "commonjs",
+		"moduleResolution": "node",
+		//"strict": true /* Enable all strict type-checking options. */,
+		"allowSyntheticDefaultImports": true,
 		"esModuleInterop": true,
+		"forceConsistentCasingInFileNames": true,
 		"declaration": true,
-		"module": "commonjs"
+		"outDir": "./lib/commonjs"
 	},
-	"include": ["src/**/*"]
+	"exclude": [
+		"node_modules"
+	],
+	"include": [
+		"src/**/*.ts"
+	]
 }

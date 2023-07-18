@@ -1,1 +1,2 @@
-console.log('Hello rweb3-core worlds')
+
+export * from './rweb3_request_manager.js';

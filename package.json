@@ -1,10 +1,9 @@
 {
   "name": "rigo-sdk-js",
   "types": "lib/definitions/index.d.ts",
-  "version": "0.0.32",
+  "version": "0.0.33",
   "description": "Javascript SDK for RIGO",
   "private": true,
-  "author": "ChainSafe Systems",
   "keywords": [
     "rigo",
     "rigochain",
@@ -15,6 +14,11 @@
   "bugs": {
     "url": "https://github.com/rigochain/rigo-sdk-js",
     "email": "kyle.kwon@themedium.io"
+  },
+  "author": {
+    "name": "Kyle Kwon",
+    "email": "kyle.kwon@themedium.io",
+    "url": "https://github.com/rigochain"
   },
   "license": "Apache-2.0",
   "workspaces": {

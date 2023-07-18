@@ -1,3 +1,4 @@
+/*
 import {hrtime} from "node:process";
 
 function getNanoTime(): bigint {
@@ -18,3 +19,4 @@ console.log(getMilliSeconds().toString(10))
 console.log(getNanoTime().toString(10))
 console.log(getNanoTime0().toString(10))
 console.log(Number.MAX_SAFE_INTEGER)
+*/

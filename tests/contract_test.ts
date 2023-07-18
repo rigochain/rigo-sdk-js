@@ -1,3 +1,4 @@
+/*
 import RWeb3 from "../src/rpc/rweb3";
 import fs from "fs";
 import Account from "../src/account/account";
@@ -50,4 +51,4 @@ async function getContractAddressTest() {
     const contract = rweb3.createContract();
     const addr = await contract.getContractAddress('58CCD2E88047D44D9C79496ED6A31E9A49E26FF1CDE2B3268F0555107081B347');
     console.log(addr);
-}
+}*/

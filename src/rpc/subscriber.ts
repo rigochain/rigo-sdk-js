@@ -5,6 +5,7 @@ if(typeof global.WebSocket === 'undefined') {
 }
 
 export default class Subscriber {
+
     #wsconn: WebSocket
     #query: string
 

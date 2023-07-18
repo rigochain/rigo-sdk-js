@@ -1,9 +1,19 @@
 {
-	"extends": "../../tsconfig.base.json",
 	"compilerOptions": {
+		"target": "es6",
+		"module": "es2020",
 		"outDir": "./lib/esm",
+		"moduleResolution": "node",
+		//"strict": true /* Enable all strict type-checking options. */,
+		"allowSyntheticDefaultImports": true,
 		"esModuleInterop": true,
-		"module": "es2020"
+		"forceConsistentCasingInFileNames": true,
+		"declaration": true
 	},
-	"include": ["src/**/*"]
+	"exclude": [
+		"node_modules"
+	],
+	"include": [
+		"src/**/*.ts"
+	]
 }

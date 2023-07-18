@@ -9,7 +9,6 @@ import Contract from "./contract";
 
 export default class RWeb3 extends JSONRPCClient {
 
-
     constructor(public url: string) {
         super((jsonRPCRequest) =>
             axios.post(url, jsonRPCRequest)

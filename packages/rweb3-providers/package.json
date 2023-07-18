@@ -1,9 +1,16 @@
 {
   "name": "rweb3-providers",
-  "version": "0.0.1",
+  "version": "0.0.33",
   "main": "./lib/commonjs/index.js",
   "module": "./lib/esm/index.js",
   "license": "Apache-2.0",
+  "keywords": [
+    "rigo",
+    "rigochain",
+    "blockchain",
+    "dapp"
+  ],
+  "homepage": "https://github.com/rigochain/rigo-sdk-js",
   "scripts": {
     "clean": "rimraf dist && rimraf lib",
     "prebuild": "yarn clean",

@@ -3,15 +3,15 @@ import * as cryptojs from "crypto-js";
 
 export default class Bytes extends Uint8Array {
     static fromHex(hex: string): Bytes {
-        if(hex.startsWith('0x')) {
+        if (hex.startsWith('0x')) {
             hex = hex.substring(2)
         }
-        if(hex.length%2 !== 0) {
-            hex = '0'+hex
+        if (hex.length % 2 !== 0) {
+            hex = '0' + hex
         }
-        const ret = new Bytes(hex.length/2)
-        for(let i=0; i<ret.length; i++) {
-            ret[i] = (parseInt(hex.substring(i*2,(i*2)+2), 16))
+        const ret = new Bytes(hex.length / 2)
+        for (let i = 0; i < ret.length; i++) {
+            ret[i] = (parseInt(hex.substring(i * 2, (i * 2) + 2), 16))
         }
         return ret
     }
@@ -24,8 +24,8 @@ export default class Bytes extends Uint8Array {
         return hexBytes
     }
 
-    static parse(d: any, enc:string): Bytes {
-        switch(enc) {
+    static parse(d: any, enc: string): Bytes {
+        switch (enc) {
             case 'hex':
                 return this.fromHex(d);
                 break;
@@ -39,17 +39,18 @@ export default class Bytes extends Uint8Array {
 
     toHex(): string {
         let ret = ''
-        for(let i=0; i<this.length; i++) {
+        for (let i = 0; i < this.length; i++) {
             const digits = this[i].toString(16)
-            if(this[i] < 16) {
+            if (this[i] < 16) {
                 ret += '0'
             }
             ret += digits
         }
         return ret.toLowerCase()
     }
+
     toWords(): cryptojs.lib.WordArray {
-        let words:number[] = [];
+        let words: number[] = [];
         for (var i = 0; i < this.length; i++) {
             words[i >>> 2] |= this[i] << (24 - (i % 4) * 8);
         }
@@ -57,10 +58,9 @@ export default class Bytes extends Uint8Array {
     }
 
 
-
     isEqual(o: Bytes): boolean {
-        for(let i=0; i<this.length; i++) {
-            if(this[i] !== o[i]) {
+        for (let i = 0; i < this.length; i++) {
+            if (this[i] !== o[i]) {
                 return false
             }
         }
@@ -71,7 +71,7 @@ export default class Bytes extends Uint8Array {
         return webcrypto.getRandomValues(new Bytes(n))
     }
 
-    static b64ToBytes(base64:string):Bytes {
+    static b64ToBytes(base64: string): Bytes {
         const binary_string = typeof window !== 'undefined' ? window.atob(base64) : Uint8Array.from(Buffer.from(base64, 'base64'));
         const len = binary_string.length;
         const bytes = new Bytes(len);
