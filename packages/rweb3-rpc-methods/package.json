@@ -1,6 +1,6 @@
 {
   "name": "rweb3-rpc-methods",
-  "version": "0.0.32",
+  "version": "0.0.33",
   "main": "./lib/commonjs/index.js",
   "module": "./lib/esm/index.js",
   "license": "Apache-2.0",
