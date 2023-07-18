@@ -10,7 +10,7 @@ lib/
 examples/rigo.js
 examples/rigo.min.js
 documents/site
-
+lerna-debug.log
 
 # Unsupported lock files
 package-lock.json
