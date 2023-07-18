@@ -60,7 +60,6 @@
     "secp256k1": "^4.0.3",
     "ts-proto": "^1.137.0",
     "tsify": "^5.0.4",
-    "web3-eth-abi": "^1.10.0",
     "ws": "^8.12.1"
   },
   "devDependencies": {

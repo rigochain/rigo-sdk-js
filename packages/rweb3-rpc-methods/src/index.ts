@@ -1,5 +1,3 @@
-﻿/*
-import * as rigoRpcMethods from './rigo_rpc_methods';
+﻿import * as rigoRpcMethods from './rigo_rpc_methods';
 
-export { rigoRpcMethods};
-*/
+export {rigoRpcMethods};
