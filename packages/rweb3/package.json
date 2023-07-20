@@ -33,7 +33,8 @@
 
     "rweb3-rigo" : "0.0.33",
     "rweb3-core" : "0.0.33",
-    "rweb3-providers-http" : "0.0.33"
+    "rweb3-providers-http" : "0.0.33",
+    "rweb3-validator" : "0.0.33"
 
 
   }

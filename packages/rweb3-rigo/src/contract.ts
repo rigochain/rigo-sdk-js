@@ -1,16 +1,16 @@
-import RWeb3 from "./rweb3";
-import Account from "../account/account";
+import RpcMethodWrappers from "./rpc_method_wrappers";
+import Account from "./account/account";
 import Web3EthAbi from 'web3-eth-abi';
-import {TrxBuilder} from "../trx/trx";
-import Bytes from "../utils/bytes";
+import {TrxBuilder} from "./trx/trx";
+import Bytes from "./utils/bytes";
 
 export default class Contract {
-    private _rweb3: RWeb3;
+    private _rweb3: RpcMethodWrappers;
     private _jsonInterface;
     public _contractAddress;
     public gas = '1000000000000000';
 
-    constructor(rweb3: RWeb3, jsonInterface?: any, contractAddress?: string) {
+    constructor(rweb3: RpcMethodWrappers, jsonInterface?: any, contractAddress?: string) {
         this._rweb3 = rweb3;
         this._jsonInterface = jsonInterface;
         this._contractAddress = contractAddress;

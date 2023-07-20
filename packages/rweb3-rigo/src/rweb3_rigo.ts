@@ -4,4 +4,5 @@ export class RWeb3Rigo extends RWeb3Context {
     public constructor() {
         super();
     }
+
 }
