@@ -28,10 +28,14 @@ export class RWeb3 extends RWeb3Context {
         // eslint-disable-next-line @typescript-eslint/no-this-alias
         const self = this;
         const rigo = self.use(RWeb3Rigo);
+
+        console.log('rigo', rigo);
         //
         // // Rigo Module
         this.rigo = Object.assign(rigo, {
         });
+
+        console.log('this.rigo', this.rigo)
     }
 
 }

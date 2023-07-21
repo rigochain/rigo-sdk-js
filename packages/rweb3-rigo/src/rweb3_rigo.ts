@@ -4,6 +4,7 @@ import RpcMethodWrappers from "./rpc_method_wrappers";
 import Account from "./account/account";
 import {TrxProto} from "./trx/trx_pb";
 import Subscriber from "./subscriber";
+import { rigoRpcMethods } from 'rweb3-rpc-methods';
 
 export class RWeb3Rigo extends RWeb3Context {
     public constructor() {
@@ -15,7 +16,9 @@ export class RWeb3Rigo extends RWeb3Context {
     }
 
 
-    queryAccount(addr: string | Bytes, cb?: (_: any) => void) {
+    queryAccount(addr: string, cb?: (_: any) => void) {
+        // return rigoRpcMethods.queryAccount(this.requestManager, addr);
+        // return rigoRpcMethods.queryAccount(this.requestManager, addr);
         return new RpcMethodWrappers("http://192.168.252.60:26657").queryAccount(addr, cb);
     }
 

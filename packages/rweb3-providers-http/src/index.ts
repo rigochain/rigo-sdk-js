@@ -1,9 +1,19 @@
-﻿
-import {HttpProviderOptions} from './types.js';
+﻿import {HttpProviderOptions} from './types.js';
 
 export {HttpProviderOptions} from './types.js';
 
-export default class HttpProvider {
+import {
+    JsonRpcResponseWithResult,
+    RWeb3APIMethod,
+    RWeb3APIPayload,
+    RWeb3APIReturnType,
+    RWeb3APISpec,
+    RigoExecutionAPI
+} from 'rweb3-types';
+
+export default class HttpProvider<
+    API extends RWeb3APISpec = RigoExecutionAPI,
+> {
 
     private readonly clientUrl: string;
     private readonly httpProviderOptions: HttpProviderOptions | undefined;
@@ -11,20 +21,25 @@ export default class HttpProvider {
     public constructor(clientUrl: string, httpProviderOptions?: HttpProviderOptions) {
         this.clientUrl = clientUrl;
         this.httpProviderOptions = httpProviderOptions;
+
     }
 
-    private static validateClientUrl(clientUrl: string): boolean {
-        return typeof clientUrl === 'string' ? /^http(s)?:\/\//i.test(clientUrl) : false;
-    }
-
-    public async request(
-        payload: any,
+    public async request<
+        Method extends RWeb3APIMethod<API>,
+        Function extends RWeb3APIMethod<API>,
+        ResultType = RWeb3APIReturnType<API, Method>,
+    >(
+        payload: RWeb3APIPayload<API, Method, Function>,
         requestOptions?: RequestInit,
-    ): Promise<any> {
+    ): Promise<JsonRpcResponseWithResult<ResultType>> {
+
+        console.log("payload" , payload);
+
         const providerOptionsCombined = {
             ...this.httpProviderOptions?.providerOptions,
             ...requestOptions,
         };
+
         const response = await fetch(this.clientUrl, {
             ...providerOptionsCombined,
             method: 'POST',
@@ -36,11 +51,12 @@ export default class HttpProvider {
         });
 
         // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-        // TODO : ERROR 처리;
         // if (!response.ok) throw new ResponseError(await response.json());
 
-        return (await response.json());
+        return (await response.json()) as JsonRpcResponseWithResult<ResultType>;
     }
+
+
 }
 
 export {HttpProvider};

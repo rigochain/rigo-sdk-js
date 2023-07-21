@@ -25,6 +25,9 @@ export interface ProviderConnectInfo {
 }
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export type Web3APISpec = Record<string, (...params: any) => any> | unknown;
+export type RWeb3APISpec = Record<string, (...params: any) => any> | unknown;
+
+
 export type Web3APIMethod<T extends Web3APISpec> = string & keyof Exclude<T, unknown>;
 export type Web3APIParams<
 	API extends Web3APISpec,

@@ -1,6 +1,7 @@
 import {RWeb3Config} from "./rweb3_config";
 import {RWeb3RequestManager} from "./rweb3_request_manager";
 import {isNullish} from 'rweb3-validator';
+import {RWeb3APISpec, RigoExecutionAPI} from 'rweb3-types';
 
 // eslint-disable-next-line no-use-before-define
 export type RWeb3ContextConstructor<T extends RWeb3Context, T2 extends unknown[]> = new (
@@ -9,7 +10,7 @@ export type RWeb3ContextConstructor<T extends RWeb3Context, T2 extends unknown[]
 
 
 // To avoid circular dependencies, we need to export type from here.
-export type RWeb3ContextObject<> = {
+export type RWeb3ContextObject<API extends RWeb3APISpec = RigoExecutionAPI,> = {
     requestManager: RWeb3RequestManager;
 };
 
@@ -39,15 +40,15 @@ export class RWeb3Context extends RWeb3Config {
         ContextRef: RWeb3ContextConstructor<T, T2>,
         ...args: [...T2]
     ) {
-        //
-        // this.on(Web3ConfigEvent.CONFIG_CHANGE, event => {
-        //     // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-        //     newContextChild.setConfig({ [event.name]: event.newValue });
-        // });
 
-        return new ContextRef(
+        // TODO : 개선점 있어 보임 -> 정상적으로 requstManager 등록되어야 함
+        let useContext = new ContextRef(
             ...([...args, this.getContextObject()] as unknown as [...T2, RWeb3ContextObject]),
         );
+
+        useContext._requestManager = this.requestManager;
+
+        return useContext;
     }
 
     public get requestManager() {
