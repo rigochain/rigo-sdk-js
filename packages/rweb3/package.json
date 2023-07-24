@@ -20,22 +20,15 @@
     "build:esm": "tsc --build tsconfig.esm.json && echo '{\"type\": \"module\"}' > ./lib/esm/package.json",
     "build:types": "tsc --build tsconfig.types.json"
   },
-  "dependencies": {
-    "@types/axios": "^0.14.0",
-    "@types/bn.js": "^5.1.1",
-    "@types/crypto-js": "^4.1.1",
-    "@types/keccak": "^3.0.1",
-    "@types/long": "^5.0.0",
-    "@types/node": "^18.11.18",
-    "@types/node-localstorage": "^1.3.0",
-    "@types/secp256k1": "^4.0.3",
-    "@types/ws": "^8.5.4",
 
+  "devDependencies": {
+    "typescript": "^4.7.4"
+  },
+
+  "dependencies": {
     "rweb3-rigo" : "0.0.33",
     "rweb3-core" : "0.0.33",
     "rweb3-providers-http" : "0.0.33",
     "rweb3-validator" : "0.0.33"
-
-
   }
 }

@@ -1,6 +1,14 @@
 ﻿import HttpProvider from 'rweb3-providers-http';
-import {isNullish} from 'rweb3-validator';
-import {RigoExecutionAPI, RWeb3APISpec, RWeb3APIMethod, RWeb3APIRequest, RWeb3APIReturnType} from "rweb3-types";
+import {isNullish, isPromise, jsonRpc, isResponseRpcError} from 'rweb3-utils';
+import {
+    RigoExecutionAPI,
+    RWeb3APISpec,
+    RWeb3APIMethod,
+    RWeb3APIRequest,
+    RWeb3APIReturnType,
+    RWeb3APIType,
+    JsonRpcResponse, JsonRpcBatchRequest
+} from "rweb3-types";
 
 export var Web3RequestManagerEvent;
 (function (Web3RequestManagerEvent) {
@@ -24,9 +32,7 @@ export class RWeb3RequestManager<API extends RWeb3APISpec = RigoExecutionAPI> {
     }
 
 
-    public setProvider(provider?: string): boolean {
-
-        console.log('run setProvider', provider)
+    public setProvider(provider?: string): void {
 
         // autodetect provider
         if (provider && typeof provider === 'string' && this.providers) {
@@ -34,15 +40,8 @@ export class RWeb3RequestManager<API extends RWeb3APISpec = RigoExecutionAPI> {
             // HTTP
             if (/^http(s)?:\/\//i.test(provider)) {
                 this._provider = new this.providers.HttpProvider(provider);
-
-                console.log('success setProvider', provider)
-                console.log('_provider', this._provider)
-                return true;
             }
         }
-
-        console.log('getProvider', this.provider)
-        console.log('getProvider 2', this._provider)
     }
 
     public get providers() {
@@ -56,9 +55,8 @@ export class RWeb3RequestManager<API extends RWeb3APISpec = RigoExecutionAPI> {
 
     public async send<
         Method extends RWeb3APIMethod<API>,
-        Function extends RWeb3APIMethod<API>,
-        ResultType = RWeb3APIReturnType<API, Method>,
-    >(request: RWeb3APIRequest<API, Method, Function>): Promise<any> {
+        ResponseType = RWeb3APIReturnType<API, Method>,
+    >(apiType: RWeb3APIType, request: RWeb3APIRequest<API, Method>): Promise<ResponseType> {
 
 
         console.log('send', request)
@@ -69,10 +67,11 @@ export class RWeb3RequestManager<API extends RWeb3APISpec = RigoExecutionAPI> {
         console.log('send2', this.provider)
         console.log('send2', this._provider)
 
+        // if (jsonRpc.isResponseWithResult(response)) {
+        return await provider.request(apiType, request);
+        // }
 
-        const response = await provider.request(request)
-
-        return response.result;
+        // return response.result;
 
         // if (jsonRpc.isResponseWithResult(response)) {
         //     return response.result;

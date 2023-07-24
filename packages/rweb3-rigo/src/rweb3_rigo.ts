@@ -18,8 +18,8 @@ export class RWeb3Rigo extends RWeb3Context {
 
     queryAccount(addr: string, cb?: (_: any) => void) {
         // return rigoRpcMethods.queryAccount(this.requestManager, addr);
-        // return rigoRpcMethods.queryAccount(this.requestManager, addr);
-        return new RpcMethodWrappers("http://192.168.252.60:26657").queryAccount(addr, cb);
+         return rigoRpcMethods.queryAccount(this.requestManager, addr);
+        // return new RpcMethodWrappers("http://192.168.252.60:26657").queryAccount(addr, cb);
     }
 
     syncAccount(acct: Account, cb?: (_: any) => void) {

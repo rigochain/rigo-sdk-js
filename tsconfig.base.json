@@ -7,13 +7,13 @@
 		"newLine": "lf",
 		"noFallthroughCasesInSwitch": true,
 		"noImplicitReturns": true,
-		"noUnusedLocals": true,
-		"noUnusedParameters": true,
+		"noUnusedLocals": false,
+		"noUnusedParameters": false,
 		"pretty": true,
 		"removeComments": false,
 		"sourceMap": true,
-		"strict": true,
-		"strictNullChecks": true,
+		"strict": false,
+		"strictNullChecks": false,
 		"esModuleInterop": true,
 		"allowSyntheticDefaultImports": true
 	}

@@ -32,14 +32,13 @@ export type RWeb3APIParams<
 > = API extends Exclude<RWeb3APISpec, unknown> ? Parameters<API[Method]> : unknown;
 
 // An interface describing a request to the Web3 API
-export interface RWeb3APIRequest<API extends RWeb3APISpec, Method extends RWeb3APIMethod<API>, Function extends RWeb3APIMethod<API>> {
-	method: Method | string; // the method to be called
-    function: Function | string; // the function to be called
+export interface RWeb3APIRequest<API extends RWeb3APISpec, Method extends RWeb3APIMethod<API>> {
+	method: Method; // the method to be called
 	params?: RWeb3APIParams<API, Method> | readonly unknown[] | object; // parameters for the method
 }
 
 // An interface describing a payload for a request to the Web3 API
-export interface RWeb3APIPayload<API extends RWeb3APISpec, Method extends RWeb3APIMethod<API>, Function extends RWeb3APIMethod<API>> extends RWeb3APIRequest<API, Method, Function> {
+export interface RWeb3APIPayload<API extends RWeb3APISpec, Method extends RWeb3APIMethod<API>> extends RWeb3APIRequest<API, Method> {
 	readonly jsonrpc?: JsonRpcIdentifier; // optional JSON-RPC identifier
 	readonly id?: JsonRpcId; // optional ID for the request
 	readonly requestOptions?: unknown; // optional request options
@@ -51,3 +50,9 @@ export type RWeb3APIReturnType<
 	Method extends RWeb3APIMethod<API>,
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 > = API extends Record<string, (...params: any) => any> ? ReturnType<API[Method]> : any;
+
+
+export enum RWeb3APIType {
+	POST = "POST",
+	GET = "GET"
+}

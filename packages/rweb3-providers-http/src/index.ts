@@ -1,4 +1,6 @@
-﻿import {HttpProviderOptions} from './types.js';
+﻿import fetch from 'cross-fetch';
+
+import {HttpProviderOptions} from './types.js';
 
 export {HttpProviderOptions} from './types.js';
 
@@ -8,7 +10,7 @@ import {
     RWeb3APIPayload,
     RWeb3APIReturnType,
     RWeb3APISpec,
-    RigoExecutionAPI
+    RigoExecutionAPI, RWeb3APIType
 } from 'rweb3-types';
 
 export default class HttpProvider<
@@ -26,13 +28,15 @@ export default class HttpProvider<
 
     public async request<
         Method extends RWeb3APIMethod<API>,
-        Function extends RWeb3APIMethod<API>,
-        ResultType = RWeb3APIReturnType<API, Method>,
+        ResponseType = RWeb3APIReturnType<API, Method>,
     >(
-        payload: RWeb3APIPayload<API, Method, Function>,
+        apiType: RWeb3APIType,
+        payload: RWeb3APIPayload<API, Method>,
         requestOptions?: RequestInit,
-    ): Promise<JsonRpcResponseWithResult<ResultType>> {
+    ): Promise<ResponseType> {
 
+
+        console.log("apiType" , apiType);
         console.log("payload" , payload);
 
         const providerOptionsCombined = {
@@ -53,7 +57,7 @@ export default class HttpProvider<
         // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
         // if (!response.ok) throw new ResponseError(await response.json());
 
-        return (await response.json()) as JsonRpcResponseWithResult<ResultType>;
+        return (await response.json()) as ResponseType;
     }
 
 

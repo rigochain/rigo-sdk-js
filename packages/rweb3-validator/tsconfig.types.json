@@ -1,19 +1,10 @@
 {
+	"extends": "../../tsconfig.base.json",
 	"compilerOptions": {
-		"target": "es2016",
-		"module": "commonjs",
-		"moduleResolution": "node",
-		//"strict": true /* Enable all strict type-checking options. */,
-		"allowSyntheticDefaultImports": true,
-		"esModuleInterop": true,
-		"forceConsistentCasingInFileNames": true,
+		"declarationDir": "./lib/types",
 		"declaration": true,
-		"outDir": "lib"
+		"declarationMap": true,
+		"emitDeclarationOnly": true
 	},
-	"exclude": [
-		"node_modules"
-	],
-	"include": [
-		"src/**/*.ts"
-	]
+	"include": ["src/**/*"]
 }
