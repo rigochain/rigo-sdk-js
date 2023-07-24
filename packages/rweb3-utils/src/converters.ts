@@ -1,23 +1,7 @@
-﻿/*
-This file is part of web3.js.
-
-web3.js is free software: you can redistribute it and/or modify
-it under the terms of the GNU Lesser General Public License as published by
-the Free Software Foundation, either version 3 of the License, or
-(at your option) any later version.
-
-web3.js is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU Lesser General Public License for more details.
-
-You should have received a copy of the GNU Lesser General Public License
-along with web3.js.  If not, see <http://www.gnu.org/licenses/>.
-*/
-
-import {keccak256} from 'ethereum-cryptography/keccak.js';
-import {bytesToUtf8, utf8ToBytes} from 'ethereum-cryptography/utils.js';
-import {Address, Bytes, HexString, Numbers, ValueTypes} from 'rweb3-types';
+﻿
+import { keccak256 } from 'ethereum-cryptography/keccak.js';
+import { bytesToUtf8, utf8ToBytes } from 'ethereum-cryptography/utils.js';
+import { Address, Bytes, HexString, Numbers, ValueTypes } from 'rweb3-types';
 import {
     isAddress,
     isHex,
@@ -36,10 +20,10 @@ import {
     InvalidUnitError,
 } from 'rweb3-errors';
 
-const expo10 = function (expo: number) {
-    return BigInt(10) ** BigInt(expo);
-}
+const base = BigInt(10);
+const expo10 = (expo: number) => base ** BigInt(expo);
 
+// Ref: https://ethdocs.org/en/latest/ether.html
 /** @internal */
 export const ethUnitMap = {
     noether: BigInt('0'),
@@ -104,7 +88,7 @@ export const bytesToUint8Array = (data: Bytes): Uint8Array | never => {
 /**
  * @internal
  */
-const {uint8ArrayToHexString} = validatorUtils;
+const { uint8ArrayToHexString } = validatorUtils;
 
 /**
  * Convert a byte array to a hex string
@@ -564,7 +548,7 @@ export const toWei = (number: Numbers, unit: EtherUnits): string => {
 /**
  * Will convert an upper or lowercase Ethereum address to a checksum address.
  * @param address - An address string
- * @returns    The checksum address
+ * @returns	The checksum address
  * @example
  * ```ts
  * web3.utils.toChecksumAddress('0xc1912fee45d61c87cc5ea59dae31190fffff232d');

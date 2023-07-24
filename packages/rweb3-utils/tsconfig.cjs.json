@@ -1,6 +1,7 @@
 {
 	"extends": "../../tsconfig.base.json",
 	"compilerOptions": {
+		"target": "es2016",
 		"outDir": "./lib/commonjs",
 		"esModuleInterop": true,
 		"declaration": true,

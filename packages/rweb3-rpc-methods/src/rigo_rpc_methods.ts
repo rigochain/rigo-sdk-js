@@ -1,5 +1,4 @@
 import {RWeb3RequestManager} from 'rweb3-core';
-import {RWeb3APIType} from 'rweb3-types';
 
 
 export async function getBlockNumber(requestManager: RWeb3RequestManager) {
@@ -10,14 +9,55 @@ export async function getBlockNumber(requestManager: RWeb3RequestManager) {
 }
 
 
-export async function queryAccount(requestManager: RWeb3RequestManager, address: string) {
-    console.log("queryAccount")
+export async function queryAccount(requestManager: RWeb3RequestManager, addr: string) {
+
     return requestManager.send(
-        RWeb3APIType.GET,
         {
-        method: 'queryAccount',
-        params: [
-            address
-        ],
-    });
+            method: 'account',
+            params: {
+                addr: addr
+            }
+        });
+}
+
+export async function queryValidators(requestManager: RWeb3RequestManager, height: number | string) {
+
+}
+
+export async function queryStakes(requestManager: RWeb3RequestManager, addr: string) {
+
+
+}
+
+export async function queryDelegatee(requestManager: RWeb3RequestManager, addr: string) {
+
+}
+
+
+export async function broadcastTrxSync(requestManager: RWeb3RequestManager, addr: string) {
+
+
+}
+
+export async function queryTrx(requestManager: RWeb3RequestManager, addr: string) {
+
+}
+
+export async function queryBlockByHeight(requestManager: RWeb3RequestManager, addr: string) {
+
+}
+
+export async function queryBlockByHash(requestManager: RWeb3RequestManager, addr: string) {
+
+
+}
+
+export async function queryRule(requestManager: RWeb3RequestManager, addr: string) {
+
+
+}
+
+export async function vmCall(requestManager: RWeb3RequestManager, addr: string) {
+
+
 }

@@ -10,11 +10,12 @@ import {
     RWeb3APIPayload,
     RWeb3APIReturnType,
     RWeb3APISpec,
-    RigoExecutionAPI, RWeb3APIType
+    RigoExecutionAPI
 } from 'rweb3-types';
+import {ResponseError} from 'rweb3-errors';
 
 export default class HttpProvider<
-    API extends RWeb3APISpec = RigoExecutionAPI,
+    API extends RWeb3APISpec = RigoExecutionAPI
 > {
 
     private readonly clientUrl: string;
@@ -30,14 +31,10 @@ export default class HttpProvider<
         Method extends RWeb3APIMethod<API>,
         ResponseType = RWeb3APIReturnType<API, Method>,
     >(
-        apiType: RWeb3APIType,
-        payload: RWeb3APIPayload<API, Method>,
+        payload: any,
         requestOptions?: RequestInit,
-    ): Promise<ResponseType> {
+    ): Promise<JsonRpcResponseWithResult<ResponseType>> {
 
-
-        console.log("apiType" , apiType);
-        console.log("payload" , payload);
 
         const providerOptionsCombined = {
             ...this.httpProviderOptions?.providerOptions,
@@ -54,12 +51,19 @@ export default class HttpProvider<
             body: JSON.stringify(payload),
         });
 
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-        // if (!response.ok) throw new ResponseError(await response.json());
+        console.log('response : ', response)
+        console.log('response.ok : ', response.ok)
 
-        return (await response.json()) as ResponseType;
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+        if (!response.ok) throw new ResponseError(await response.json());
+
+        return (await response.json()) as JsonRpcResponseWithResult<ResponseType>;
     }
 
+
+    public getClientUrl(): string {
+        return this.clientUrl;
+    }
 
 }
 

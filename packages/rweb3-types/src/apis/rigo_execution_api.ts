@@ -10,5 +10,5 @@ export type AddressAPI = AddressBase<
 
 /* eslint-disable camelcase */
 export type RigoExecutionAPI = {
-    query_account: (address: string) => AddressAPI;
+    account: (addr: string) => AddressAPI;
 };

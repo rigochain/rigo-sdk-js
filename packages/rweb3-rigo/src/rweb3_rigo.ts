@@ -1,74 +1,66 @@
 ﻿import {RWeb3Context} from 'rweb3-core';
 import Bytes from "./utils/bytes";
-import RpcMethodWrappers from "./rpc_method_wrappers";
 import Account from "./account/account";
 import {TrxProto} from "./trx/trx_pb";
-import Subscriber from "./subscriber";
-import { rigoRpcMethods } from 'rweb3-rpc-methods';
+import {DataFormat, DEFAULT_RETURN_FORMAT} from 'rweb3-types';
+import * as rpcMethodsWrappers from './rpc_method_wrappers.js';
 
 export class RWeb3Rigo extends RWeb3Context {
+
     public constructor() {
         super();
     }
 
     getUrl(): string {
-        return new RpcMethodWrappers("http://192.168.252.60:26657").getUrl();
+
+        // TODO : Validate RequestManger
+        return this.requestManager.provider.getClientUrl();
     }
 
 
-    queryAccount(addr: string, cb?: (_: any) => void) {
-        // return rigoRpcMethods.queryAccount(this.requestManager, addr);
-         return rigoRpcMethods.queryAccount(this.requestManager, addr);
-        // return new RpcMethodWrappers("http://192.168.252.60:26657").queryAccount(addr, cb);
+    /**
+     * // 상세 주석 필요
+     * @param addr
+     **/
+    queryAccount<ReturnFormat extends DataFormat = typeof DEFAULT_RETURN_FORMAT>(addr: string){
+        return rpcMethodsWrappers.queryAccount(this, addr);
     }
 
-    syncAccount(acct: Account, cb?: (_: any) => void) {
-        return new RpcMethodWrappers("http://192.168.252.60:26657").syncAccount(acct, cb);
+    syncAccount<ReturnFormat extends DataFormat = typeof DEFAULT_RETURN_FORMAT>(acct: Account) {
     }
 
 
-    queryValidators(height: number | string, cb?: (_: any) => void) {
-        return new RpcMethodWrappers("http://192.168.252.60:26657").queryValidators(height, cb);
+    queryValidators<ReturnFormat extends DataFormat = typeof DEFAULT_RETURN_FORMAT>(height: number | string) {
     }
 
-    queryStakes(addr: string | Bytes, cb?: (_: any) => void) {
-        return new RpcMethodWrappers("http://192.168.252.60:26657").queryStakes(addr, cb);
+    queryStakes<ReturnFormat extends DataFormat = typeof DEFAULT_RETURN_FORMAT>(addr: string | Bytes) {
     }
 
-    queryDelegatee(addr: string | Bytes, cb?: (_: any) => void) {
-        return new RpcMethodWrappers("http://192.168.252.60:26657").queryDelegatee(addr, cb);
+    queryDelegatee<ReturnFormat extends DataFormat = typeof DEFAULT_RETURN_FORMAT>(addr: string | Bytes) {
     }
 
-    broadcastTrxSync(tx: TrxProto, cb?: (_: any) => void) {
-        return new RpcMethodWrappers("http://192.168.252.60:26657").broadcastTrxSync(tx, cb);
+    broadcastTrxSync<ReturnFormat extends DataFormat = typeof DEFAULT_RETURN_FORMAT>(tx: TrxProto) {
     }
 
-    queryTrx(txhash: string | Uint8Array, cb?: (_: any) => void) {
-        return new RpcMethodWrappers("http://192.168.252.60:26657").queryTrx(txhash, cb);
+    queryTrx<ReturnFormat extends DataFormat = typeof DEFAULT_RETURN_FORMAT>(txhash: string | Uint8Array) {
     }
 
-    queryBlockByHeight(height: number | string, cb?: (_: any) => void) {
-        return new RpcMethodWrappers("http://192.168.252.60:26657").queryBlockByHeight(height, cb);
+    queryBlockByHeight<ReturnFormat extends DataFormat = typeof DEFAULT_RETURN_FORMAT>(height: number | string) {
     }
 
-    queryBlockByHash(hash: string | Uint8Array, cb?: (_: any) => void) {
-        return new RpcMethodWrappers("http://192.168.252.60:26657").queryBlockByHash(hash, cb);
+    queryBlockByHash<ReturnFormat extends DataFormat = typeof DEFAULT_RETURN_FORMAT>(hash: string | Uint8Array) {
     }
 
-    queryRule(cb?: (_: any) => void) {
-        return new RpcMethodWrappers("http://192.168.252.60:26657").queryRule(cb);
+    queryRule<ReturnFormat extends DataFormat = typeof DEFAULT_RETURN_FORMAT>(cb?: (_: any) => void) {
     }
 
-    vmCall(addr: string, to: string, height: number, data: string, cb?: (_: any) => void) {
-        return new RpcMethodWrappers("http://192.168.252.60:26657").vmCall(addr, to, height, data, cb);
+    vmCall<ReturnFormat extends DataFormat = typeof DEFAULT_RETURN_FORMAT>(addr: string, to: string, height: number, data: string) {
     }
 
-    subscribe(url: string, query: string, cb: (resp: string) => void): Subscriber {
-        return new RpcMethodWrappers("http://192.168.252.60:26657").subscribe(url, query, cb);
+    subscribe<ReturnFormat extends DataFormat = typeof DEFAULT_RETURN_FORMAT>(url: string, query: string, cb: (resp: string) => void) {
     }
 
-    createContract(jsonInterface?: any, address?: string) {
-        return new RpcMethodWrappers("http://192.168.252.60:26657").createContract(jsonInterface, address);
+    createContract<ReturnFormat extends DataFormat = typeof DEFAULT_RETURN_FORMAT>(jsonInterface?: any, address?: string) {
     }
 
 

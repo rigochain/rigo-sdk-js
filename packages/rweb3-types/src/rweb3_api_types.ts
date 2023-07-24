@@ -50,9 +50,3 @@ export type RWeb3APIReturnType<
 	Method extends RWeb3APIMethod<API>,
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 > = API extends Record<string, (...params: any) => any> ? ReturnType<API[Method]> : any;
-
-
-export enum RWeb3APIType {
-	POST = "POST",
-	GET = "GET"
-}

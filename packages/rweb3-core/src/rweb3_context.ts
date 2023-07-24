@@ -15,7 +15,7 @@ export type RWeb3ContextObject<API extends RWeb3APISpec = RigoExecutionAPI,> = {
 };
 
 
-export class RWeb3Context extends RWeb3Config {
+export class RWeb3Context<API extends RWeb3APISpec = unknown> extends RWeb3Config {
 
     protected _requestManager: RWeb3RequestManager;
 
