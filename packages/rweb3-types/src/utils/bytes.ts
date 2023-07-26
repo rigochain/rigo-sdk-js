@@ -1,7 +1,7 @@
 import {webcrypto} from 'crypto'
 import * as cryptojs from "crypto-js";
 
-export class Bytes extends Uint8Array {
+export default class Bytes extends Uint8Array {
     static fromHex(hex: string): Bytes {
         if (hex.startsWith('0x')) {
             hex = hex.substring(2)
