@@ -18,7 +18,7 @@
 import {createHash} from "crypto"
 import * as secp256k1 from 'secp256k1'
 import PrvKey from "./prvKey";
-import Bytes from "../../utils/bytes";
+import {Bytes} from "./bytes";
 
 export default class PubKey {
     compressed: Bytes

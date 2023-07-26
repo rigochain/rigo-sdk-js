@@ -34,7 +34,3 @@ export * from './rweb3_api_types.js';
 export * from './web3_base_provider.js';
 export * from './web3_base_wallet.js';
 export * from './web3_deferred_promise_type.js';
-
-
-export * from './trx/trx_pb'
-export * from './trx/trx'

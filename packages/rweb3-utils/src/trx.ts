@@ -17,10 +17,10 @@
 
 import * as trxPb from './trx_pb'
 import Long from 'long'
-import Bytes from "../utils/bytes";
+import {Bytes} from "./bytes";
 import BN from "bn.js";
-import Account from "../account/account";
-import {fromNanoSecond, getNanoSecond} from "../utils/time";
+import Account from "./account";
+import {fromNanoSecond, getNanoSecond} from "./time";
 import {createHash} from "crypto";
 
 function isSet(value: any): boolean {

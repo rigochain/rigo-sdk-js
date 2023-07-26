@@ -16,7 +16,7 @@
 
 import * as secp256k1 from 'secp256k1'
 import {createHash, randomBytes} from "crypto"
-import Bytes from "../../utils/bytes"
+import {Bytes} from "./bytes"
 
 export default class PrvKey {
     private d: Bytes

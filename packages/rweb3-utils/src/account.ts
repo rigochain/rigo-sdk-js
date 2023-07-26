@@ -14,11 +14,11 @@
     limitations under the License.
 */
 
-
-import Bytes from "../utils/bytes";
-import PrvKey from "../crypto/secp256k1/prvKey";
-import PubKey from "../crypto/secp256k1/pubKey";
 import BN from 'bn.js'
+import PrvKey from "./prvKey";
+import PubKey from "./pubKey";
+import {Bytes} from "./bytes";
+
 
 export default class Account {
 

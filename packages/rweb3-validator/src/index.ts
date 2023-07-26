@@ -15,7 +15,7 @@
 */
 
 
-export * from './web3_validator.js';
+export * from './rweb3_validator';
 export * from './default_validator.js';
 export * from './types.js';
 export * as utils from './utils.js';

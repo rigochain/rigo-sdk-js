@@ -14,10 +14,11 @@
     limitations under the License.
 */
 
-import {DataFormat, RigoExecutionAPI, TrxProto} from 'rweb3-types';
+import {DataFormat, RigoExecutionAPI} from 'rweb3-types';
 import {RWeb3Context} from 'rweb3-core';
 import {rigoRpcMethods} from 'rweb3-rpc-methods';
-import {Bytes} from 'rweb3-utils';
+import {Bytes, TrxProto} from 'rweb3-utils';
+
 
 export async function queryAccount<ReturnFormat extends DataFormat>(
     web3Context: RWeb3Context<RigoExecutionAPI>,
@@ -26,8 +27,6 @@ export async function queryAccount<ReturnFormat extends DataFormat>(
     return rigoRpcMethods.queryAccount(
         web3Context.requestManager,
         addr);
-
-
 }
 
 export async function queryValidators<ReturnFormat extends DataFormat>(

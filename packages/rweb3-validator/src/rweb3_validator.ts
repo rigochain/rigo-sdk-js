@@ -21,7 +21,7 @@ import { ethAbiToJsonSchema } from './utils.js';
 import { Json, ValidationSchemaInput, Web3ValidationOptions } from './types.js';
 import { Web3ValidatorError } from './errors.js';
 
-export class Web3Validator {
+export class RWeb3Validator {
 	private readonly _validator: Validator;
 
 	public constructor() {

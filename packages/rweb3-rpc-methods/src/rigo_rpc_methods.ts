@@ -14,10 +14,8 @@
     limitations under the License.
 */
 
-
 import {RWeb3RequestManager} from 'rweb3-core';
-import {Bytes} from 'rweb3-utils';
-import {TrxProto} from 'rweb3-types';
+import {Bytes, TrxProto} from 'rweb3-utils';
 
 
 export async function queryAccount(requestManager: RWeb3RequestManager, addr: string) {

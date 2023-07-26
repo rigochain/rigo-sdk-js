@@ -24,6 +24,7 @@ interface IStorage {
 
 
 class LocalSto {
+
     #storage: Storage
 
     constructor() {

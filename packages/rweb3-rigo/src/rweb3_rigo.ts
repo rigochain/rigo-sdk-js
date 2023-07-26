@@ -15,8 +15,8 @@
 */
 
 import {RWeb3Context} from 'rweb3-core';
-import {Bytes} from "rweb3-utils";
-import {DataFormat, DEFAULT_RETURN_FORMAT, TrxProto} from 'rweb3-types';
+import {Bytes, TrxProto} from "rweb3-utils";
+import {DataFormat, DEFAULT_RETURN_FORMAT} from 'rweb3-types';
 import * as rpcMethodsWrappers from './rpc_method_wrappers.js';
 
 export class RWeb3Rigo extends RWeb3Context {
