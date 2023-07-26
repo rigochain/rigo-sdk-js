@@ -117,6 +117,7 @@ export class RWeb3Rigo extends RWeb3Context {
             byteTxHash = Bytes.fromHex(txhash);
         }
 
+        // @ts-ignore
         return rpcMethodsWrappers.queryTrx(this, byteTxHash);
     }
 
@@ -175,6 +176,7 @@ export class RWeb3Rigo extends RWeb3Context {
             byteHash = Bytes.fromHex(hash);
         }
 
+        // @ts-ignore
         return rpcMethodsWrappers.queryBlockByHash(this, byteHash);
     }
 

@@ -61,7 +61,7 @@ export class RWeb3Validator {
                     schemaPath: '/',
                     keyword: 'required',
                     message: 'empty schema against data can not be validated',
-                    params: data,
+                    params: { missingProperty: '0' },
                 },
             ]);
         }
