@@ -1,8 +1,6 @@
 ﻿import {RWeb3Context} from 'rweb3-core';
 import {Bytes} from "rweb3-utils";
-import Account from "./account/account";
-import {TrxProto} from "./trx/trx_pb";
-import {DataFormat, DEFAULT_RETURN_FORMAT} from 'rweb3-types';
+import {DataFormat, DEFAULT_RETURN_FORMAT, TrxProto} from 'rweb3-types';
 import * as rpcMethodsWrappers from './rpc_method_wrappers.js';
 
 export class RWeb3Rigo extends RWeb3Context {
@@ -26,9 +24,9 @@ export class RWeb3Rigo extends RWeb3Context {
         return rpcMethodsWrappers.queryAccount(this, addr);
     }
 
-    syncAccount<ReturnFormat extends DataFormat = typeof DEFAULT_RETURN_FORMAT>(acct: Account) {
-        // TODO
-    }
+    // syncAccount<ReturnFormat extends DataFormat = typeof DEFAULT_RETURN_FORMAT>(acct: Account) {
+    //     // TODO
+    // }
 
 
     /**

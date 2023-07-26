@@ -1,4 +1,4 @@
-import {Web3PkgInfo} from './version.js';
+import {RWeb3PkgInfo} from './version.js';
 import {RWeb3Context} from 'rweb3-core';
 import RWeb3Rigo from 'rweb3-rigo';
 import {HttpProvider} from 'rweb3-providers-http';
@@ -7,7 +7,7 @@ import {RWeb3RigoInterface} from "./types";
 
 export class RWeb3 extends RWeb3Context {
 
-    public static version = Web3PkgInfo.version;
+    public static version = RWeb3PkgInfo.version;
     public static modules = {
         RWeb3Rigo
     };
