@@ -17,31 +17,31 @@
 import { keccak256 } from 'ethereum-cryptography/keccak.js';
 import { utf8ToBytes } from 'ethereum-cryptography/utils.js';
 import {
-	InvalidAddressError,
-	InvalidBooleanError,
-	InvalidBytesError,
-	InvalidLargeValueError,
-	InvalidSizeError,
-	InvalidStringError,
-	InvalidUnsignedIntegerError,
+    InvalidAddressError,
+    InvalidBooleanError,
+    InvalidBytesError,
+    InvalidLargeValueError,
+    InvalidSizeError,
+    InvalidStringError,
+    InvalidUnsignedIntegerError,
 } from 'rweb3-errors';
 import {
-	Bytes,
-	EncodingTypes,
-	Numbers,
-	Sha3Input,
-	TypedObject,
-	TypedObjectAbbreviated,
+    Bytes,
+    EncodingTypes,
+    Numbers,
+    Sha3Input,
+    TypedObject,
+    TypedObjectAbbreviated,
 } from 'rweb3-types';
 import { isAddress, isNullish, isHexStrict } from 'rweb3-validator';
 import {
-	bytesToUint8Array,
-	bytesToHex,
-	hexToBytes,
-	toBigInt,
-	toHex,
-	toNumber,
-	utf8ToHex,
+    bytesToUint8Array,
+    bytesToHex,
+    hexToBytes,
+    toBigInt,
+    toHex,
+    toNumber,
+    utf8ToHex,
 } from './converters.js';
 import { leftPad, rightPad, toTwosComplement } from './string_manipulation.js';
 
@@ -62,21 +62,21 @@ const SHA3_EMPTY_BYTES = '0xc5d2460186f7233c927e7db2dcc703c0e500b653ca82273b7bfa
  * ```
  */
 export const sha3 = (data: Bytes): string | undefined => {
-	let updatedData: Uint8Array;
+    let updatedData: Uint8Array;
 
-	if (typeof data === 'string') {
-		if (data.startsWith('0x') && isHexStrict(data)) {
-			updatedData = hexToBytes(data);
-		} else {
-			updatedData = utf8ToBytes(data);
-		}
-	} else {
-		updatedData = data;
-	}
-	const hash = bytesToHex(keccak256(updatedData));
+    if (typeof data === 'string') {
+        if (data.startsWith('0x') && isHexStrict(data)) {
+            updatedData = hexToBytes(data);
+        } else {
+            updatedData = utf8ToBytes(data);
+        }
+    } else {
+        updatedData = data;
+    }
+    const hash = bytesToHex(keccak256(updatedData));
 
-	// EIP-1052 if hash is equal to c5d2460186f7233c927e7db2dcc703c0e500b653ca82273b7bfad8045d85a470, keccak was given empty data
-	return hash === SHA3_EMPTY_BYTES ? undefined : hash;
+    // EIP-1052 if hash is equal to c5d2460186f7233c927e7db2dcc703c0e500b653ca82273b7bfad8045d85a470, keccak was given empty data
+    return hash === SHA3_EMPTY_BYTES ? undefined : hash;
 };
 
 /**
@@ -94,12 +94,12 @@ export const sha3 = (data: Bytes): string | undefined => {
  * ```
  */
 export const sha3Raw = (data: Bytes): string => {
-	const hash = sha3(data);
-	if (isNullish(hash)) {
-		return SHA3_EMPTY_BYTES;
-	}
+    const hash = sha3(data);
+    if (isNullish(hash)) {
+        return SHA3_EMPTY_BYTES;
+    }
 
-	return hash;
+    return hash;
 };
 
 /**
@@ -120,19 +120,19 @@ export const sha3Raw = (data: Bytes): string => {
  * ```
  */
 export const keccak256Wrapper = (
-	data: Bytes | Numbers | string | ReadonlyArray<number>,
+    data: Bytes | Numbers | string | ReadonlyArray<number>,
 ): string => {
-	let processedData;
-	if (typeof data === 'bigint' || typeof data === 'number') {
-		processedData = utf8ToBytes(data.toString());
-	} else if (Array.isArray(data)) {
-		processedData = new Uint8Array(data);
-	} else if (typeof data === 'string' && !isHexStrict(data)) {
-		processedData = utf8ToBytes(data);
-	} else {
-		processedData = bytesToUint8Array(data as Bytes);
-	}
-	return bytesToHex(keccak256(processedData));
+    let processedData;
+    if (typeof data === 'bigint' || typeof data === 'number') {
+        processedData = utf8ToBytes(data.toString());
+    } else if (Array.isArray(data)) {
+        processedData = new Uint8Array(data);
+    } else if (typeof data === 'string' && !isHexStrict(data)) {
+        processedData = utf8ToBytes(data);
+    } else {
+        processedData = bytesToUint8Array(data as Bytes);
+    }
+    return bytesToHex(keccak256(processedData));
 };
 
 export { keccak256Wrapper as keccak256 };
@@ -143,39 +143,39 @@ export { keccak256Wrapper as keccak256 };
  * @returns - the type and value of the input
  */
 const getType = (arg: Sha3Input): [string, EncodingTypes] => {
-	if (Array.isArray(arg)) {
-		throw new Error('Autodetection of array types is not supported.');
-	}
+    if (Array.isArray(arg)) {
+        throw new Error('Autodetection of array types is not supported.');
+    }
 
-	let type;
-	let value;
-	// if type is given
-	if (
-		typeof arg === 'object' &&
-		('t' in arg || 'type' in arg) &&
-		('v' in arg || 'value' in arg)
-	) {
-		type = 't' in arg ? arg.t : arg.type;
-		value = 'v' in arg ? arg.v : arg.value;
+    let type;
+    let value;
+    // if type is given
+    if (
+        typeof arg === 'object' &&
+        ('t' in arg || 'type' in arg) &&
+        ('v' in arg || 'value' in arg)
+    ) {
+        type = 't' in arg ? arg.t : arg.type;
+        value = 'v' in arg ? arg.v : arg.value;
 
-		// otherwise try to guess the type
-	} else {
-		type = toHex(arg, true);
-		value = toHex(arg);
+        // otherwise try to guess the type
+    } else {
+        type = toHex(arg, true);
+        value = toHex(arg);
 
-		if (!type.startsWith('int') && !type.startsWith('uint')) {
-			type = 'bytes';
-		}
-	}
+        if (!type.startsWith('int') && !type.startsWith('uint')) {
+            type = 'bytes';
+        }
+    }
 
-	if (
-		(type.startsWith('int') || type.startsWith('uint')) &&
-		typeof value === 'string' &&
-		!/^(-)?0x/i.test(value)
-	) {
-		value = toBigInt(value);
-	}
-	return [type, value];
+    if (
+        (type.startsWith('int') || type.startsWith('uint')) &&
+        typeof value === 'string' &&
+        !/^(-)?0x/i.test(value)
+    ) {
+        value = toBigInt(value);
+    }
+    return [type, value];
 };
 
 /**
@@ -184,27 +184,27 @@ const getType = (arg: Sha3Input): [string, EncodingTypes] => {
  * @returns - the type with size of the input
  */
 const elementaryName = (name: string): string => {
-	if (name.startsWith('int[')) {
-		return `int256${name.slice(3)}`;
-	}
-	if (name === 'int') {
-		return 'int256';
-	}
-	if (name.startsWith('uint[')) {
-		return `uint256'${name.slice(4)}`;
-	}
-	if (name === 'uint') {
-		return 'uint256';
-	}
-	return name;
+    if (name.startsWith('int[')) {
+        return `int256${name.slice(3)}`;
+    }
+    if (name === 'int') {
+        return 'int256';
+    }
+    if (name.startsWith('uint[')) {
+        return `uint256'${name.slice(4)}`;
+    }
+    if (name === 'uint') {
+        return 'uint256';
+    }
+    return name;
 };
 
 /**
  * returns the size of the value of type 'byte'
  */
 const parseTypeN = (value: string, typeLength: number): number => {
-	const typesize = /^(\d+).*$/.exec(value.slice(typeLength));
-	return typesize ? parseInt(typesize[1], 10) : 0;
+    const typesize = /^(\d+).*$/.exec(value.slice(typeLength));
+    return typesize ? parseInt(typesize[1], 10) : 0;
 };
 
 /**
@@ -213,8 +213,8 @@ const parseTypeN = (value: string, typeLength: number): number => {
  * @returns - the bit length of the input
  */
 const bitLength = (value: bigint | number): number => {
-	const updatedVal = value.toString(2);
-	return updatedVal.length;
+    const updatedVal = value.toString(2);
+    return updatedVal.length;
 };
 
 /**
@@ -224,77 +224,77 @@ const bitLength = (value: bigint | number): number => {
  * @returns = the padded value
  */
 const solidityPack = (type: string, val: EncodingTypes): string => {
-	const value = val.toString();
-	if (type === 'string') {
-		if (typeof val === 'string') return utf8ToHex(val);
-		throw new InvalidStringError(val);
-	}
-	if (type === 'bool' || type === 'boolean') {
-		if (typeof val === 'boolean') return val ? '01' : '00';
-		throw new InvalidBooleanError(val);
-	}
+    const value = val.toString();
+    if (type === 'string') {
+        if (typeof val === 'string') return utf8ToHex(val);
+        throw new InvalidStringError(val);
+    }
+    if (type === 'bool' || type === 'boolean') {
+        if (typeof val === 'boolean') return val ? '01' : '00';
+        throw new InvalidBooleanError(val);
+    }
 
-	if (type === 'address') {
-		if (!isAddress(value)) {
-			throw new InvalidAddressError(value);
-		}
-		return value;
-	}
-	const name = elementaryName(type);
-	if (type.startsWith('uint')) {
-		const size = parseTypeN(name, 'uint'.length);
+    if (type === 'address') {
+        if (!isAddress(value)) {
+            throw new InvalidAddressError(value);
+        }
+        return value;
+    }
+    const name = elementaryName(type);
+    if (type.startsWith('uint')) {
+        const size = parseTypeN(name, 'uint'.length);
 
-		if (size % 8 || size < 8 || size > 256) {
-			throw new InvalidSizeError(value);
-		}
-		const num = toNumber(value);
-		if (bitLength(num) > size) {
-			throw new InvalidLargeValueError(value);
-		}
-		if (num < BigInt(0)) {
-			throw new InvalidUnsignedIntegerError(value);
-		}
+        if (size % 8 || size < 8 || size > 256) {
+            throw new InvalidSizeError(value);
+        }
+        const num = toNumber(value);
+        if (bitLength(num) > size) {
+            throw new InvalidLargeValueError(value);
+        }
+        if (num < BigInt(0)) {
+            throw new InvalidUnsignedIntegerError(value);
+        }
 
-		return size ? leftPad(num.toString(16), (size / 8) * 2) : num.toString(16);
-	}
+        return size ? leftPad(num.toString(16), (size / 8) * 2) : num.toString(16);
+    }
 
-	if (type.startsWith('int')) {
-		const size = parseTypeN(name, 'int'.length);
-		if (size % 8 || size < 8 || size > 256) {
-			throw new InvalidSizeError(type);
-		}
+    if (type.startsWith('int')) {
+        const size = parseTypeN(name, 'int'.length);
+        if (size % 8 || size < 8 || size > 256) {
+            throw new InvalidSizeError(type);
+        }
 
-		const num = toNumber(value);
-		if (bitLength(num) > size) {
-			throw new InvalidLargeValueError(value);
-		}
-		if (num < BigInt(0)) {
-			return toTwosComplement(num.toString(), (size / 8) * 2);
-		}
-		return size ? leftPad(num.toString(16), size / 4) : num.toString(16);
-	}
+        const num = toNumber(value);
+        if (bitLength(num) > size) {
+            throw new InvalidLargeValueError(value);
+        }
+        if (num < BigInt(0)) {
+            return toTwosComplement(num.toString(), (size / 8) * 2);
+        }
+        return size ? leftPad(num.toString(16), size / 4) : num.toString(16);
+    }
 
-	if (name === 'bytes') {
-		if (value.replace(/^0x/i, '').length % 2 !== 0) {
-			throw new InvalidBytesError(value);
-		}
-		return value;
-	}
+    if (name === 'bytes') {
+        if (value.replace(/^0x/i, '').length % 2 !== 0) {
+            throw new InvalidBytesError(value);
+        }
+        return value;
+    }
 
-	if (type.startsWith('bytes')) {
-		if (value.replace(/^0x/i, '').length % 2 !== 0) {
-			throw new InvalidBytesError(value);
-		}
+    if (type.startsWith('bytes')) {
+        if (value.replace(/^0x/i, '').length % 2 !== 0) {
+            throw new InvalidBytesError(value);
+        }
 
-		const size = parseTypeN(type, 'bytes'.length);
+        const size = parseTypeN(type, 'bytes'.length);
 
-		if (!size || size < 1 || size > 64 || size < value.replace(/^0x/i, '').length / 2) {
-			throw new InvalidBytesError(value);
-		}
+        if (!size || size < 1 || size > 64 || size < value.replace(/^0x/i, '').length / 2) {
+            throw new InvalidBytesError(value);
+        }
 
-		return rightPad(value, size * 2);
-	}
-	return '';
+        return rightPad(value, size * 2);
+    }
+    return '';
 };
 
 /**
@@ -303,26 +303,26 @@ const solidityPack = (type: string, val: EncodingTypes): string => {
  * @returns - the tightly packed value
  */
 export const processSolidityEncodePackedArgs = (arg: Sha3Input): string => {
-	const [type, val] = getType(arg);
+    const [type, val] = getType(arg);
 
-	// array case
-	if (Array.isArray(val)) {
-		// go through each element of the array and use map function to create new hexarg list
-		const hexArg = val.map((v: Numbers | boolean) => solidityPack(type, v).replace('0x', ''));
-		return hexArg.join('');
-	}
+    // array case
+    if (Array.isArray(val)) {
+        // go through each element of the array and use map function to create new hexarg list
+        const hexArg = val.map((v: Numbers | boolean) => solidityPack(type, v).replace('0x', ''));
+        return hexArg.join('');
+    }
 
-	const hexArg = solidityPack(type, val);
-	return hexArg.replace('0x', '');
+    const hexArg = solidityPack(type, val);
+    return hexArg.replace('0x', '');
 };
 
 /**
  * Encode packed arguments to a hexstring
  */
 export const encodePacked = (...values: Sha3Input[]): string => {
-	const args = Array.prototype.slice.call(values);
-	const hexArgs = args.map(processSolidityEncodePackedArgs);
-	return `0x${hexArgs.join('').toLowerCase()}`;
+    const args = Array.prototype.slice.call(values);
+    const hexArgs = args.map(processSolidityEncodePackedArgs);
+    return `0x${hexArgs.join('').toLowerCase()}`;
 };
 
 /**
@@ -339,7 +339,7 @@ export const encodePacked = (...values: Sha3Input[]): string => {
  * ```
  */
 export const soliditySha3 = (...values: Sha3Input[]): string | undefined =>
-	sha3(encodePacked(...values));
+    sha3(encodePacked(...values));
 
 /**
  * Will tightly pack values given in the same way solidity would then hash.
@@ -354,7 +354,7 @@ export const soliditySha3 = (...values: Sha3Input[]): string | undefined =>
  * ```
  */
 export const soliditySha3Raw = (...values: TypedObject[] | TypedObjectAbbreviated[]): string =>
-	sha3Raw(encodePacked(...values));
+    sha3Raw(encodePacked(...values));
 
 /**
  * Get slot number for storage long string in contract. Basically for getStorage method
@@ -363,9 +363,9 @@ export const soliditySha3Raw = (...values: TypedObject[] | TypedObjectAbbreviate
  * @returns - the slot number where will be stored long string
  */
 export const getStorageSlotNumForLongString = (mainSlotNumber: number | string) =>
-	sha3(
-		`0x${(typeof mainSlotNumber === 'number'
-			? mainSlotNumber.toString()
-			: mainSlotNumber
-		).padStart(64, '0')}`,
-	);
+    sha3(
+        `0x${(typeof mainSlotNumber === 'number'
+            ? mainSlotNumber.toString()
+            : mainSlotNumber
+        ).padStart(64, '0')}`,
+    );

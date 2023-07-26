@@ -14,11 +14,6 @@
     limitations under the License.
 */
 
-
 import Rigo from 'rweb3-rigo';
 
-export interface RWeb3RigoInterface extends Rigo {
-
-
-
-}
+export type RWeb3RigoInterface = Rigo;

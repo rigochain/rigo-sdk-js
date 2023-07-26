@@ -21,7 +21,6 @@ export * from './apis/rigo_execution_api.js';
 export * from './apis/web3_net_api.js';
 // export * from './apis/eth_personal_api.js';
 
-
 export * from './data_format_types.js';
 export * from './eth_types.js';
 export * from './eth_abi_types.js';

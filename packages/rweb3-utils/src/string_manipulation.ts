@@ -34,19 +34,19 @@ import { numberToHex, toHex, toNumber } from './converters.js';
  * ```
  */
 export const padLeft = (value: Numbers, characterAmount: number, sign = '0'): string => {
-	// To avoid duplicate code and circular dependency we will
-	// use `padLeft` implementation from `web3-validator`
+    // To avoid duplicate code and circular dependency we will
+    // use `padLeft` implementation from `web3-validator`
 
-	if (typeof value === 'string') {
-		if (!isHexStrict(value)) {
-			return value.padStart(characterAmount, sign);
-		}
-		return validatorUtils.padLeft(value, characterAmount, sign);
-	}
+    if (typeof value === 'string') {
+        if (!isHexStrict(value)) {
+            return value.padStart(characterAmount, sign);
+        }
+        return validatorUtils.padLeft(value, characterAmount, sign);
+    }
 
-	validator.validate(['int'], [value]);
+    validator.validate(['int'], [value]);
 
-	return validatorUtils.padLeft(value, characterAmount, sign);
+    return validatorUtils.padLeft(value, characterAmount, sign);
 };
 
 /**
@@ -66,16 +66,16 @@ export const padLeft = (value: Numbers, characterAmount: number, sign = '0'): st
  * ```
  */
 export const padRight = (value: Numbers, characterAmount: number, sign = '0'): string => {
-	if (typeof value === 'string' && !isHexStrict(value)) {
-		return value.padEnd(characterAmount, sign);
-	}
+    if (typeof value === 'string' && !isHexStrict(value)) {
+        return value.padEnd(characterAmount, sign);
+    }
 
-	validator.validate(['int'], [value]);
+    validator.validate(['int'], [value]);
 
-	const hexString = typeof value === 'string' && isHexStrict(value) ? value : numberToHex(value);
+    const hexString = typeof value === 'string' && isHexStrict(value) ? value : numberToHex(value);
 
-	const prefixLength = hexString.startsWith('-') ? 3 : 2;
-	return hexString.padEnd(characterAmount + prefixLength, sign);
+    const prefixLength = hexString.startsWith('-') ? 3 : 2;
+    return hexString.padEnd(characterAmount + prefixLength, sign);
 };
 
 /**
@@ -108,21 +108,21 @@ export const leftPad = padLeft;
  * ```
  */
 export const toTwosComplement = (value: Numbers, nibbleWidth = 64): string => {
-	validator.validate(['int'], [value]);
+    validator.validate(['int'], [value]);
 
-	const val = toNumber(value);
+    const val = toNumber(value);
 
-	if (val >= 0) return padLeft(toHex(val), nibbleWidth);
+    if (val >= 0) return padLeft(toHex(val), nibbleWidth);
 
-	const largestBit = BigInt(2) ** BigInt(nibbleWidth * 4);
-	if (-val >= largestBit) {
-		throw new NibbleWidthError(`value: ${value}, nibbleWidth: ${nibbleWidth}`);
-	}
-	const updatedVal = BigInt(val);
+    const largestBit = BigInt(2) ** BigInt(nibbleWidth * 4);
+    if (-val >= largestBit) {
+        throw new NibbleWidthError(`value: ${value}, nibbleWidth: ${nibbleWidth}`);
+    }
+    const updatedVal = BigInt(val);
 
-	const complement = updatedVal + largestBit;
+    const complement = updatedVal + largestBit;
 
-	return padLeft(numberToHex(complement), nibbleWidth);
+    return padLeft(numberToHex(complement), nibbleWidth);
 };
 
 /**
@@ -141,21 +141,21 @@ export const toTwosComplement = (value: Numbers, nibbleWidth = 64): string => {
  * ```
  */
 export const fromTwosComplement = (value: Numbers, nibbleWidth = 64): number | bigint => {
-	validator.validate(['int'], [value]);
+    validator.validate(['int'], [value]);
 
-	const val = toNumber(value);
+    const val = toNumber(value);
 
-	if (val < 0) return val;
+    if (val < 0) return val;
 
-	const largestBit = Math.ceil(Math.log(Number(val)) / Math.log(2));
+    const largestBit = Math.ceil(Math.log(Number(val)) / Math.log(2));
 
-	if (largestBit > nibbleWidth * 4)
-		throw new NibbleWidthError(`value: "${value}", nibbleWidth: "${nibbleWidth}"`);
+    if (largestBit > nibbleWidth * 4)
+        throw new NibbleWidthError(`value: "${value}", nibbleWidth: "${nibbleWidth}"`);
 
-	// check the largest bit to see if negative
-	if (nibbleWidth * 4 !== largestBit) return val;
+    // check the largest bit to see if negative
+    if (nibbleWidth * 4 !== largestBit) return val;
 
-	const complement = BigInt(2) ** (BigInt(nibbleWidth) * BigInt(4));
+    const complement = BigInt(2) ** (BigInt(nibbleWidth) * BigInt(4));
 
-	return toNumber(BigInt(val) - complement);
+    return toNumber(BigInt(val) - complement);
 };

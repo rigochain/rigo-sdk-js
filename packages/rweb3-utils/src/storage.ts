@@ -14,120 +14,111 @@
     limitations under the License.
 */
 
-
-import {LocalStorage} from 'node-localstorage'
-
-interface IStorage {
-    Write(k:string, v:string):void // write
-    Read(k: string):string|null; // read
-}
-
+import { LocalStorage } from 'node-localstorage';
 
 class LocalSto {
-
-    #storage: Storage
+    #storage: Storage;
 
     constructor() {
         switch (runtimeEnvironment()) {
-            case "browser":
-                this.#storage = window.localStorage
-                break
-            case "nodejs":
-                this.#storage = new LocalStorage('./nodeLocalStorage')
-                break
+            case 'browser':
+                this.#storage = window.localStorage;
+                break;
+            case 'nodejs':
+                this.#storage = new LocalStorage('./nodeLocalStorage');
+                break;
         }
     }
     read(k: string): string | null {
-        return this.#storage.getItem(k)
+        return this.#storage.getItem(k);
     }
 
     write(k: string, v: string): void {
-        this.#storage.setItem(k, v)
+        this.#storage.setItem(k, v);
     }
 
-
-    static #obj:LocalSto
+    static #obj: LocalSto;
     static Read(k: string): string | null {
-        if(!LocalSto.#obj) {
-            LocalSto.#obj = new LocalSto()
+        if (!LocalSto.#obj) {
+            LocalSto.#obj = new LocalSto();
         }
-        return LocalSto.#obj.read(k)
+        return LocalSto.#obj.read(k);
     }
-    static Write(k: string, v:string): void {
-        if(!LocalSto.#obj) {
-            LocalSto.#obj = new LocalSto()
+    static Write(k: string, v: string): void {
+        if (!LocalSto.#obj) {
+            LocalSto.#obj = new LocalSto();
         }
-        return LocalSto.#obj.write(k,v)
+        return LocalSto.#obj.write(k, v);
     }
 }
 
 class SessSto {
-    static #_data:{[key : string] : string }
-    #storage
+    static #_data: { [key: string]: string };
+    #storage;
     constructor() {
-        if(!SessSto.#_data) {
-            SessSto.#_data = {}
+        if (!SessSto.#_data) {
+            SessSto.#_data = {};
         }
         switch (runtimeEnvironment()) {
-            case "browser":
-                this.#storage = window.sessionStorage
-                break
-            case "nodejs":
+            case 'browser':
+                this.#storage = window.sessionStorage;
+                break;
+            case 'nodejs':
                 this.#storage = {
-                    setItem: (k:string, v:string) => SessSto.#_data[k] = v,
-                    getItem: (k:string) => SessSto.#_data[k],
-                    removeItem: (k:string) => delete SessSto.#_data[k],
-                }
-                break
+                    setItem: (k: string, v: string) => (SessSto.#_data[k] = v),
+                    getItem: (k: string) => SessSto.#_data[k],
+                    removeItem: (k: string) => delete SessSto.#_data[k],
+                };
+                break;
         }
     }
     read(k: string): string | null {
-        return this.#storage.getItem(k)
+        return this.#storage.getItem(k);
     }
 
     write(k: string, v: string): void {
-        this.#storage.setItem(k, v)
+        this.#storage.setItem(k, v);
     }
 
-    static #obj:SessSto
+    static #obj: SessSto;
     static Read(k: string): string | null {
-        if(!SessSto.#obj) {
-            SessSto.#obj = new SessSto()
+        if (!SessSto.#obj) {
+            SessSto.#obj = new SessSto();
         }
-        return SessSto.#obj.read(k)
+        return SessSto.#obj.read(k);
     }
-    static Write(k: string, v:string): void {
-        if(!SessSto.#obj) {
-            SessSto.#obj = new SessSto()
+    static Write(k: string, v: string): void {
+        if (!SessSto.#obj) {
+            SessSto.#obj = new SessSto();
         }
-        return SessSto.#obj.write(k,v)
+        return SessSto.#obj.write(k, v);
     }
 }
 
 function runtimeEnvironment() {
-
     // Check if the environment is a Browser
-    if (typeof window === "object") {
+    if (typeof window === 'object') {
         return 'browser';
     }
 
     // Check if the environment is a Service worker
-    if (typeof importScripts === "function") {
+    if (typeof importScripts === 'function') {
         return 'worker';
     }
 
     // Check if the environment is Node.js
     // if (typeof process === "object" && typeof require === "function") {
     // if (typeof exports !== 'undefined' && this.exports !== exports) {
-    if ((typeof process !== 'undefined')
-        && (typeof process.release !== 'undefined')
-        && (typeof process.release.name !== 'undefined')
-        && (process.release.name.search(/node|io.js/) !== -1)) {
+    if (
+        typeof process !== 'undefined' &&
+        typeof process.release !== 'undefined' &&
+        typeof process.release.name !== 'undefined' &&
+        process.release.name.search(/node|io.js/) !== -1
+    ) {
         return 'nodejs';
     }
 
     return 'unknown';
 }
 
-export {LocalSto, SessSto}
-
+export { LocalSto, SessSto };

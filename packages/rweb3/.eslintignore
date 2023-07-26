@@ -1,3 +1,5 @@
 dist
 lib
 .eslintrc.js
+webpack.analyze.js
+webpack.config.js

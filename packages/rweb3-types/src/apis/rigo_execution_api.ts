@@ -14,17 +14,13 @@
     limitations under the License.
 */
 
-import {HexString} from '../primitives_types.js';
-import {AddressBase, StakeValue, Validators, Transaction, Block, Rule} from "../rigo_types";
+import { HexString } from '../primitives_types.js';
+import { AddressBase, StakeValue, Validators, Transaction, Block, Rule } from '../rigo_types';
 
-
-export type AddressAPI = AddressBase<
-    HexString
->;
+export type AddressAPI = AddressBase<HexString>;
 
 /* eslint-disable camelcase */
 export type RigoExecutionAPI = {
-
     account: (addr: string) => AddressAPI;
     validators: (height: string) => Validators;
     stakes: (addr: string) => StakeValue;
@@ -33,7 +29,6 @@ export type RigoExecutionAPI = {
 
     tx: (txhash: string) => Transaction;
     block: (height: string) => Block;
-    block_by_hash: (hash: String) => Block;
+    block_by_hash: (hash: string) => Block;
     rule: () => Rule;
-
 };

@@ -14,7 +14,6 @@
     limitations under the License.
 */
 
-
 import { keccak256 } from 'ethereum-cryptography/keccak.js';
 import { bytesToUtf8, utf8ToBytes } from 'ethereum-cryptography/utils.js';
 import { Address, Bytes, HexString, Numbers, ValueTypes } from 'rweb3-types';

@@ -14,7 +14,6 @@
     limitations under the License.
 */
 
-
 import { Filter } from 'rweb3-types';
 import { isAddress } from './address.js';
 import { isBlockNumberOrTag } from './block.js';
@@ -28,50 +27,50 @@ import { isTopic } from './topic.js';
  * otherwise we return true after all checks pass.
  */
 export const isFilterObject = (value: Filter) => {
-	const expectedFilterProperties: (keyof Filter)[] = [
-		'fromBlock',
-		'toBlock',
-		'address',
-		'topics',
-		'blockHash',
-	];
-	if (isNullish(value) || typeof value !== 'object') return false;
+    const expectedFilterProperties: (keyof Filter)[] = [
+        'fromBlock',
+        'toBlock',
+        'address',
+        'topics',
+        'blockHash',
+    ];
+    if (isNullish(value) || typeof value !== 'object') return false;
 
-	if (
-		!Object.keys(value).every(property =>
-			expectedFilterProperties.includes(property as keyof Filter),
-		)
-	)
-		return false;
+    if (
+        !Object.keys(value).every((property) =>
+            expectedFilterProperties.includes(property as keyof Filter),
+        )
+    )
+        return false;
 
-	if (
-		(!isNullish(value.fromBlock) && !isBlockNumberOrTag(value.fromBlock)) ||
-		(!isNullish(value.toBlock) && !isBlockNumberOrTag(value.toBlock))
-	)
-		return false;
+    if (
+        (!isNullish(value.fromBlock) && !isBlockNumberOrTag(value.fromBlock)) ||
+        (!isNullish(value.toBlock) && !isBlockNumberOrTag(value.toBlock))
+    )
+        return false;
 
-	if (!isNullish(value.address)) {
-		if (Array.isArray(value.address)) {
-			if (!value.address.every(address => isAddress(address))) return false;
-		} else if (!isAddress(value.address)) return false;
-	}
+    if (!isNullish(value.address)) {
+        if (Array.isArray(value.address)) {
+            if (!value.address.every((address) => isAddress(address))) return false;
+        } else if (!isAddress(value.address)) return false;
+    }
 
-	if (!isNullish(value.topics)) {
-		if (
-			!value.topics.every(topic => {
-				if (isNullish(topic)) return true;
+    if (!isNullish(value.topics)) {
+        if (
+            !value.topics.every((topic) => {
+                if (isNullish(topic)) return true;
 
-				if (Array.isArray(topic)) {
-					return topic.every(nestedTopic => isTopic(nestedTopic));
-				}
+                if (Array.isArray(topic)) {
+                    return topic.every((nestedTopic) => isTopic(nestedTopic));
+                }
 
-				if (isTopic(topic)) return true;
+                if (isTopic(topic)) return true;
 
-				return false;
-			})
-		)
-			return false;
-	}
+                return false;
+            })
+        )
+            return false;
+    }
 
-	return true;
+    return true;
 };

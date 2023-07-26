@@ -14,9 +14,7 @@
     limitations under the License.
 */
 
-
-import {Bytes, HexString, Numbers} from './primitives_types.js';
-import {AccessList, Common, Hardfork, ValidChains} from "./eth_types";
+import { HexString, Numbers } from './primitives_types.js';
 
 export type ValueTypes = 'address' | 'bool' | 'string' | 'int256' | 'uint256' | 'bytes' | 'bigint';
 // Hex encoded 32 bytes
@@ -42,142 +40,119 @@ export type Topic = HexString32Bytes;
 
 export type TransactionHash = HexString;
 
-
-//
-// {
-// 	key: 'DF976A96545DAD0E0B14FED615587A89BA980B84',
-// 		value: {
-// 	address: 'DF976A96545DAD0E0B14FED615587A89BA980B84',
-// 		nonce: '0',
-// 		balance: '0'
-// }
-// }
 export interface AddressBase<AddressType> {
     key: AddressType;
     value: {
         address: AddressType;
         nonce: Numbers;
         balance: Numbers;
-    }
+    };
 }
-
-// {
-//      *   block_height: '1153',
-//      *   validators: [
-//      *     {
-//      *       address: '735DC3FC8BCCFD7810BCC14DB49234C1BCE7758B',
-//      *       pub_key: [Object],
-//      *       voting_power: '91000010',
-//      *       proposer_priority: '0'
-//      *     }
-//      *   ],
-//      *   count: '1',
-//      *   total: '1'
-//      * }
 
 export interface Validators {
-    block_height: String;
+    block_height: string;
     validators: Validator[];
-    count: String;
-    total: String;
+    count: string;
+    total: string;
 }
-
 
 export interface Validator {
     address: Address;
-    pub_key: [];    // TODO : pub_key type
-    voting_power: String;
-    proposer_priority: String;
+    pub_key: []; // TODO : pub_key type
+    voting_power: string;
+    proposer_priority: string;
 }
 
 export interface StakeValue {
-    key: String;
-    value: Object;
+    key: string;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    value: any;
 }
 
 export interface Transaction {
-
     hash: TransactionHash;
-    height: String;
+    height: string;
     index: Numbers;
     tx_result: {
         code: Numbers;
-        data: String;
-        log: String;
-        info: String;
-        gas_wanted: String;
-        gas_used: String;
+        data: string;
+        log: string;
+        info: string;
+        gas_wanted: string;
+        gas_used: string;
         events: [];
-        codespace: String;
-    },
-    tx: String;
+        codespace: string;
+    };
+    tx: string;
     proof: {
-        root_hash: String;
-        data: String;
+        root_hash: string;
+        data: string;
         proof: {
-            total: String;
-            index: String;
-            leaf_hash: String;
+            total: string;
+            index: string;
+            leaf_hash: string;
             aunts: [];
-        }
-    }
+        };
+    };
 }
 
 export interface Block {
     block_id: {
-        hash: String;
+        hash: string;
         parts: {
             total: Numbers;
-            hash: String;
-        }
-    },
+            hash: string;
+        };
+    };
     block: {
         header: {
-            version: Object;
-            chain_id: String;
-            height: String;
-            time: String;
-            last_block_id: Object;
-            last_commit_hash: String;
-            data_hash: String;
-            validators_hash: String;
-            next_validators_hash: String;
-            consensus_hash: String;
-            app_hash: String;
-            last_results_hash: String;
-            evidence_hash: String;
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            version: any;
+            chain_id: string;
+            height: string;
+            time: string;
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            last_block_id: any;
+            last_commit_hash: string;
+            data_hash: string;
+            validators_hash: string;
+            next_validators_hash: string;
+            consensus_hash: string;
+            app_hash: string;
+            last_results_hash: string;
+            evidence_hash: string;
             proposer_address: Address;
-
-        },
+        };
         data: {
-            txs: []
-        },
+            txs: [];
+        };
         evidence: {
-            evidence: []
-        },
+            evidence: [];
+        };
         last_commit: {
-            height: String;
+            height: string;
             round: Numbers;
-            block_id: Object;
-            signatures: []
-        }
-    }
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            block_id: any;
+            signatures: [];
+        };
+    };
 }
 
 export interface Rule {
     value: {
-        version: String;
-        maxValidatorCnt: String;
-        minValidatorStake: String;
-        rewardPerPower: String;
-        lazyRewardBlocks: String;
-        lazyApplyingBlocks: String;
-        gasPrice: String;
-        minTrxFee: String;
-        minVotingPeriodBlocks: String;
-        maxVotingPeriodBlocks: String;
-        minSelfStakeRatio: String;
-        maxUpdatableStakeRatio: String;
-        slashRatio: String;
-    }
+        version: string;
+        maxValidatorCnt: string;
+        minValidatorStake: string;
+        rewardPerPower: string;
+        lazyRewardBlocks: string;
+        lazyApplyingBlocks: string;
+        gasPrice: string;
+        minTrxFee: string;
+        minVotingPeriodBlocks: string;
+        maxVotingPeriodBlocks: string;
+        minSelfStakeRatio: string;
+        maxUpdatableStakeRatio: string;
+        slashRatio: string;
+    };
 }

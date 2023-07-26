@@ -28,4 +28,4 @@ export const isBlockTag = (value: string) => Object.values(BlockTags).includes(v
  * Returns true if given value is valid hex string and not negative, or is a valid BlockTag
  */
 export const isBlockNumberOrTag = (value: string | number | bigint) =>
-	isBlockTag(value as string) || isBlockNumber(value);
+    isBlockTag(value as string) || isBlockNumber(value);

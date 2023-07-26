@@ -16,42 +16,36 @@
 
 import fetch from 'cross-fetch';
 
-import {HttpProviderOptions} from './types.js';
+import { HttpProviderOptions } from './types.js';
 
-export {HttpProviderOptions} from './types.js';
+export { HttpProviderOptions } from './types.js';
 
 import {
     JsonRpcResponseWithResult,
     RWeb3APIMethod,
-    RWeb3APIPayload,
     RWeb3APIReturnType,
     RWeb3APISpec,
-    RigoExecutionAPI
+    RigoExecutionAPI,
+    RWeb3APIPayload,
 } from 'rweb3-types';
-import {ResponseError} from 'rweb3-errors';
+import { ResponseError } from 'rweb3-errors';
 
-export default class HttpProvider<
-    API extends RWeb3APISpec = RigoExecutionAPI
-> {
-
+export default class HttpProvider<API extends RWeb3APISpec = RigoExecutionAPI> {
     private readonly clientUrl: string;
     private readonly httpProviderOptions: HttpProviderOptions | undefined;
 
     public constructor(clientUrl: string, httpProviderOptions?: HttpProviderOptions) {
         this.clientUrl = clientUrl;
         this.httpProviderOptions = httpProviderOptions;
-
     }
 
     public async request<
         Method extends RWeb3APIMethod<API>,
         ResponseType = RWeb3APIReturnType<API, Method>,
     >(
-        payload: any,
+        payload: RWeb3APIPayload<API, Method>,
         requestOptions?: RequestInit,
     ): Promise<JsonRpcResponseWithResult<ResponseType>> {
-
-
         const providerOptionsCombined = {
             ...this.httpProviderOptions?.providerOptions,
             ...requestOptions,
@@ -73,11 +67,9 @@ export default class HttpProvider<
         return (await response.json()) as JsonRpcResponseWithResult<ResponseType>;
     }
 
-
     public getClientUrl(): string {
         return this.clientUrl;
     }
-
 }
 
-export {HttpProvider};
+export { HttpProvider };

@@ -14,7 +14,6 @@
     limitations under the License.
 */
 
-
 import { ValidInputTypes } from '../types.js';
 
 /**
@@ -23,7 +22,7 @@ import { ValidInputTypes } from '../types.js';
 export const isString = (value: ValidInputTypes) => typeof value === 'string';
 
 export const isHexStrict = (hex: ValidInputTypes) =>
-	typeof hex === 'string' && /^((-)?0x[0-9a-f]+|(0x))$/i.test(hex);
+    typeof hex === 'string' && /^((-)?0x[0-9a-f]+|(0x))$/i.test(hex);
 
 /**
  * Is the string a hex string.
@@ -33,24 +32,24 @@ export const isHexStrict = (hex: ValidInputTypes) =>
  * @returns  output the string is a hex string
  */
 export function isHexString(value: string, length?: number): boolean {
-	if (typeof value !== 'string' || !value.match(/^0x[0-9A-Fa-f]*$/)) return false;
+    if (typeof value !== 'string' || !value.match(/^0x[0-9A-Fa-f]*$/)) return false;
 
-	if (typeof length !== 'undefined' && length > 0 && value.length !== 2 + 2 * length)
-		return false;
+    if (typeof length !== 'undefined' && length > 0 && value.length !== 2 + 2 * length)
+        return false;
 
-	return true;
+    return true;
 }
 
 export const isHex = (hex: ValidInputTypes): boolean =>
-	typeof hex === 'number' ||
-	typeof hex === 'bigint' ||
-	(typeof hex === 'string' && /^((-0x|0x|-)?[0-9a-f]+|(0x))$/i.test(hex));
+    typeof hex === 'number' ||
+    typeof hex === 'bigint' ||
+    (typeof hex === 'string' && /^((-0x|0x|-)?[0-9a-f]+|(0x))$/i.test(hex));
 
 export const isHexString8Bytes = (value: string, prefixed = true) =>
-	prefixed ? isHexStrict(value) && value.length === 18 : isHex(value) && value.length === 16;
+    prefixed ? isHexStrict(value) && value.length === 18 : isHex(value) && value.length === 16;
 
 export const isHexString32Bytes = (value: string, prefixed = true) =>
-	prefixed ? isHexStrict(value) && value.length === 66 : isHex(value) && value.length === 64;
+    prefixed ? isHexStrict(value) && value.length === 66 : isHex(value) && value.length === 64;
 
 /**
  * Returns a `Boolean` on whether or not the a `String` starts with '0x'
@@ -59,11 +58,11 @@ export const isHexString32Bytes = (value: string, prefixed = true) =>
  * @throws if the str input is not a string
  */
 export function isHexPrefixed(str: string): boolean {
-	if (typeof str !== 'string') {
-		throw new Error(`[isHexPrefixed] input must be type 'string', received type ${typeof str}`);
-	}
+    if (typeof str !== 'string') {
+        throw new Error(`[isHexPrefixed] input must be type 'string', received type ${typeof str}`);
+    }
 
-	return str.startsWith('0x');
+    return str.startsWith('0x');
 }
 
 /**
@@ -80,11 +79,11 @@ export function isHexPrefixed(str: string): boolean {
  * @throws if any provided value is found to have leading zero bytes
  */
 export const validateNoLeadingZeroes = function (values: {
-	[key: string]: Uint8Array | undefined;
+    [key: string]: Uint8Array | undefined;
 }) {
-	for (const [k, v] of Object.entries(values)) {
-		if (v !== undefined && v.length > 0 && v[0] === 0) {
-			throw new Error(`${k} cannot have leading zeroes, received: ${v.toString()}`);
-		}
-	}
+    for (const [k, v] of Object.entries(values)) {
+        if (v !== undefined && v.length > 0 && v[0] === 0) {
+            throw new Error(`${k} cannot have leading zeroes, received: ${v.toString()}`);
+        }
+    }
 };

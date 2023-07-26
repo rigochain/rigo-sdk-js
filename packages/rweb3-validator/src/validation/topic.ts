@@ -14,26 +14,25 @@
     limitations under the License.
 */
 
-
 import { isBloom, isInBloom } from './bloom.js';
 
 /**
  * Checks if its a valid topic
  */
 export const isTopic = (topic: string): boolean => {
-	if (typeof topic !== 'string') {
-		return false;
-	}
+    if (typeof topic !== 'string') {
+        return false;
+    }
 
-	if (!/^(0x)?[0-9a-f]{64}$/i.test(topic)) {
-		return false;
-	}
+    if (!/^(0x)?[0-9a-f]{64}$/i.test(topic)) {
+        return false;
+    }
 
-	if (/^(0x)?[0-9a-f]{64}$/.test(topic) || /^(0x)?[0-9A-F]{64}$/.test(topic)) {
-		return true;
-	}
+    if (/^(0x)?[0-9a-f]{64}$/.test(topic) || /^(0x)?[0-9A-F]{64}$/.test(topic)) {
+        return true;
+    }
 
-	return false;
+    return false;
 };
 
 /**
@@ -41,13 +40,13 @@ export const isTopic = (topic: string): boolean => {
  * note: false positives are possible.
  */
 export const isTopicInBloom = (bloom: string, topic: string): boolean => {
-	if (!isBloom(bloom)) {
-		return false;
-	}
+    if (!isBloom(bloom)) {
+        return false;
+    }
 
-	if (!isTopic(topic)) {
-		return false;
-	}
+    if (!isTopic(topic)) {
+        return false;
+    }
 
-	return isInBloom(bloom, topic);
+    return isInBloom(bloom, topic);
 };

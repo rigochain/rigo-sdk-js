@@ -14,33 +14,33 @@
     limitations under the License.
 */
 
-
-import {webcrypto} from 'crypto'
-import * as cryptojs from "crypto-js";
+import { webcrypto } from 'crypto';
+import * as cryptojs from 'crypto-js';
 
 export class Bytes extends Uint8Array {
     static fromHex(hex: string): Bytes {
         if (hex.startsWith('0x')) {
-            hex = hex.substring(2)
+            hex = hex.substring(2);
         }
         if (hex.length % 2 !== 0) {
-            hex = '0' + hex
+            hex = '0' + hex;
         }
-        const ret = new Bytes(hex.length / 2)
+        const ret = new Bytes(hex.length / 2);
         for (let i = 0; i < ret.length; i++) {
-            ret[i] = (parseInt(hex.substring(i * 2, (i * 2) + 2), 16))
+            ret[i] = parseInt(hex.substring(i * 2, i * 2 + 2), 16);
         }
-        return ret
+        return ret;
     }
 
     static fromWords(w: cryptojs.lib.WordArray): Bytes {
         const hexBytes = new Bytes(w.sigBytes);
         for (let i = 0; i < w.sigBytes; i++) {
-            hexBytes[i] = w.words[i >>> 0x2] >>> 0x18 - i % 0x4 * 0x8 & 0xff;
+            hexBytes[i] = (w.words[i >>> 0x2] >>> (0x18 - (i % 0x4) * 0x8)) & 0xff;
         }
-        return hexBytes
+        return hexBytes;
     }
 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     static parse(d: any, enc: string): Bytes {
         switch (enc) {
             case 'hex':
@@ -50,53 +50,55 @@ export class Bytes extends Uint8Array {
                 return this.fromWords(d);
                 break;
             default:
-                throw Error('not supported encoding: ' + enc)
+                throw Error('not supported encoding: ' + enc);
         }
     }
 
     toHex(): string {
-        let ret = ''
+        let ret = '';
         for (let i = 0; i < this.length; i++) {
-            const digits = this[i].toString(16)
+            const digits = this[i].toString(16);
             if (this[i] < 16) {
-                ret += '0'
+                ret += '0';
             }
-            ret += digits
+            ret += digits;
         }
-        return ret.toLowerCase()
+        return ret.toLowerCase();
     }
 
     toWords(): cryptojs.lib.WordArray {
-        let words: number[] = [];
-        for (var i = 0; i < this.length; i++) {
+        const words: number[] = [];
+        for (let i = 0; i < this.length; i++) {
             words[i >>> 2] |= this[i] << (24 - (i % 4) * 8);
         }
-        return cryptojs.lib.WordArray.create(words)
+        return cryptojs.lib.WordArray.create(words);
     }
-
 
     isEqual(o: Bytes): boolean {
         for (let i = 0; i < this.length; i++) {
             if (this[i] !== o[i]) {
-                return false
+                return false;
             }
         }
-        return true
+        return true;
     }
 
     static rand(n: number): Bytes {
-        return webcrypto.getRandomValues(new Bytes(n))
+        return webcrypto.getRandomValues(new Bytes(n));
     }
 
     static b64ToBytes(base64: string): Bytes {
-        const binary_string = typeof window !== 'undefined' ? window.atob(base64) : Uint8Array.from(Buffer.from(base64, 'base64'));
+        const binary_string =
+            typeof window !== 'undefined'
+                ? window.atob(base64)
+                : Uint8Array.from(Buffer.from(base64, 'base64'));
         const len = binary_string.length;
         const bytes = new Bytes(len);
         for (let i = 0; i < len; i++) {
             if (typeof binary_string === 'string') {
                 bytes[i] = binary_string.charCodeAt(i);
             } else {
-                bytes[i] = binary_string[i]
+                bytes[i] = binary_string[i];
             }
         }
         return bytes;

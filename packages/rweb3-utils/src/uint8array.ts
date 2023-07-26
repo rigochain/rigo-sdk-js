@@ -14,36 +14,36 @@
     limitations under the License.
 */
 export function uint8ArrayConcat(...parts: Uint8Array[]): Uint8Array {
-	const length = parts.reduce((prev, part) => {
-		const agg = prev + part.length;
-		return agg;
-	}, 0);
-	const result = new Uint8Array(length);
-	let offset = 0;
-	for (const part of parts) {
-		result.set(part, offset);
-		offset += part.length;
-	}
-	return result;
+    const length = parts.reduce((prev, part) => {
+        const agg = prev + part.length;
+        return agg;
+    }, 0);
+    const result = new Uint8Array(length);
+    let offset = 0;
+    for (const part of parts) {
+        result.set(part, offset);
+        offset += part.length;
+    }
+    return result;
 }
 
 /**
  * Returns true if the two passed Uint8Arrays have the same content
  */
 export function uint8ArrayEquals(a: Uint8Array, b: Uint8Array): boolean {
-	if (a === b) {
-		return true;
-	}
+    if (a === b) {
+        return true;
+    }
 
-	if (a.byteLength !== b.byteLength) {
-		return false;
-	}
+    if (a.byteLength !== b.byteLength) {
+        return false;
+    }
 
-	for (let i = 0; i < a.byteLength; i += 1) {
-		if (a[i] !== b[i]) {
-			return false;
-		}
-	}
+    for (let i = 0; i < a.byteLength; i += 1) {
+        if (a[i] !== b[i]) {
+            return false;
+        }
+    }
 
-	return true;
+    return true;
 }

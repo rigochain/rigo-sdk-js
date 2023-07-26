@@ -14,7 +14,7 @@
     limitations under the License.
 */
 
-export * from './bytes'
+export * from './bytes';
 export * from './validation.js';
 export * from './formatter.js';
 export * from './hash.js';

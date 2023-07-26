@@ -14,15 +14,19 @@
     limitations under the License.
 */
 
+import { BlockNumberOrTag, HexString } from 'rweb3-types';
+
 export interface RWeb3ConfigOptions {
+    handleRevert: boolean;
+    defaultAccount?: HexString;
+    defaultBlock: BlockNumberOrTag;
 }
 
-export abstract class RWeb3Config implements RWeb3ConfigOptions {
-
+export abstract class RWeb3Config {
     public config: RWeb3ConfigOptions = {
         handleRevert: false,
         defaultAccount: undefined,
-        defaultBlock: 'latest'
+        defaultBlock: 'latest',
     };
 
     public constructor(options?: Partial<RWeb3ConfigOptions>) {

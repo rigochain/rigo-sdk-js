@@ -14,36 +14,31 @@
     limitations under the License.
 */
 
-import {RWeb3Context} from 'rweb3-core';
-import {Bytes, TrxProto} from "rweb3-utils";
-import {DataFormat, DEFAULT_RETURN_FORMAT} from 'rweb3-types';
+import { RWeb3Context } from 'rweb3-core';
+import { Bytes, TrxProto } from 'rweb3-utils';
 import * as rpcMethodsWrappers from './rpc_method_wrappers.js';
 
 export class RWeb3Rigo extends RWeb3Context {
-
     public constructor() {
         super();
     }
 
     getUrl(): string {
-
         // TODO : Validate RequestManger
         return this.requestManager.provider.getClientUrl();
     }
-
 
     /**
      * // 상세 주석 필요
      * @param addr
      **/
-    queryAccount<ReturnFormat extends DataFormat = typeof DEFAULT_RETURN_FORMAT>(addr: string){
+    queryAccount(addr: string) {
         return rpcMethodsWrappers.queryAccount(this, addr);
     }
 
-    // syncAccount<ReturnFormat extends DataFormat = typeof DEFAULT_RETURN_FORMAT>(acct: Account) {
+    // syncAccount(acct: Account) {
     //     // TODO
     // }
-
 
     /**
      * {
@@ -60,10 +55,9 @@ export class RWeb3Rigo extends RWeb3Context {
      *   total: '1'
      * }
      **/
-    queryValidators<ReturnFormat extends DataFormat = typeof DEFAULT_RETURN_FORMAT>(height: number | string) {
-
-        if(typeof height === 'number') {
-            height = height.toString(10)
+    queryValidators(height: number | string) {
+        if (typeof height === 'number') {
+            height = height.toString(10);
         }
 
         return rpcMethodsWrappers.queryValidators(this, height);
@@ -72,23 +66,21 @@ export class RWeb3Rigo extends RWeb3Context {
     /**
      * { key: '8DC41A86B91EB88D82489C4D037AE9FFCA65CFBF', value: null }
      **/
-    queryStakes<ReturnFormat extends DataFormat = typeof DEFAULT_RETURN_FORMAT>(addr: string) {
-
-        if(!addr.startsWith('0x')) {
+    queryStakes(addr: string) {
+        if (!addr.startsWith('0x')) {
             addr = '0x' + addr;
         }
 
         return rpcMethodsWrappers.queryStakes(this, addr);
     }
 
-    queryDelegatee<ReturnFormat extends DataFormat = typeof DEFAULT_RETURN_FORMAT>(addr: string) {
+    queryDelegatee(addr: string) {
         return rpcMethodsWrappers.queryDelegatee(this, addr);
     }
 
-    broadcastTrxSync<ReturnFormat extends DataFormat = typeof DEFAULT_RETURN_FORMAT>(tx: TrxProto) {
+    broadcastTrxSync(tx: TrxProto) {
         return rpcMethodsWrappers.broadcastTrxSync(this, tx);
     }
-
 
     /**
      * {
@@ -118,12 +110,11 @@ export class RWeb3Rigo extends RWeb3Context {
      *   }
      * }
      **/
-    queryTrx<ReturnFormat extends DataFormat = typeof DEFAULT_RETURN_FORMAT>(txhash: string | Uint8Array) {
+    queryTrx(txhash: string | Uint8Array) {
+        let byteTxHash: Bytes;
 
-        let byteTxHash : Bytes
-
-        if(typeof txhash === 'string') {
-            byteTxHash = Bytes.fromHex(txhash)
+        if (typeof txhash === 'string') {
+            byteTxHash = Bytes.fromHex(txhash);
         }
 
         return rpcMethodsWrappers.queryTrx(this, byteTxHash);
@@ -166,10 +157,9 @@ export class RWeb3Rigo extends RWeb3Context {
      *   }
      * }
      **/
-    queryBlockByHeight<ReturnFormat extends DataFormat = typeof DEFAULT_RETURN_FORMAT>(height: number | string) {
-
-        if(typeof height === 'number') {
-            height = height.toString(10)
+    queryBlockByHeight(height: number | string) {
+        if (typeof height === 'number') {
+            height = height.toString(10);
         }
 
         return rpcMethodsWrappers.queryBlockByHeight(this, height);
@@ -177,18 +167,16 @@ export class RWeb3Rigo extends RWeb3Context {
 
     /**
      * { block_id: { hash: '', parts: { total: 0, hash: '' } }, block: null }
-    **/
-    queryBlockByHash<ReturnFormat extends DataFormat = typeof DEFAULT_RETURN_FORMAT>(hash: string) {
+     **/
+    queryBlockByHash(hash: string) {
+        let byteHash: Bytes;
 
-        let byteHash : Bytes
-
-        if(typeof hash === 'string') {
-            byteHash = Bytes.fromHex(hash)
+        if (typeof hash === 'string') {
+            byteHash = Bytes.fromHex(hash);
         }
 
         return rpcMethodsWrappers.queryBlockByHash(this, byteHash);
     }
-
 
     /**
      * {
@@ -209,21 +197,11 @@ export class RWeb3Rigo extends RWeb3Context {
      *   }
      * }
      **/
-    queryRule<ReturnFormat extends DataFormat = typeof DEFAULT_RETURN_FORMAT>() {
+    queryRule() {
         return rpcMethodsWrappers.queryRule(this);
     }
 
-    vmCall<ReturnFormat extends DataFormat = typeof DEFAULT_RETURN_FORMAT>(addr: string, to: string, height: number, data: string) {
+    vmCall(addr: string, to: string, height: number, data: string) {
         return rpcMethodsWrappers.vmCall(this, addr, to, height, data);
     }
-
-    subscribe<ReturnFormat extends DataFormat = typeof DEFAULT_RETURN_FORMAT>(url: string, query: string, cb: (resp: string) => void) {
-        // TODO 별도로 빠짐
-    }
-
-    createContract<ReturnFormat extends DataFormat = typeof DEFAULT_RETURN_FORMAT>(jsonInterface?: any, address?: string) {
-        // TODO 별도로 빠짐
-    }
-
-
 }

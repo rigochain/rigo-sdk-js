@@ -14,37 +14,29 @@
     limitations under the License.
 */
 
-import {RWeb3Config} from "./rweb3_config";
-import {RWeb3RequestManager} from "./rweb3_request_manager";
-import {isNullish} from 'rweb3-validator';
-import {RWeb3APISpec, RigoExecutionAPI} from 'rweb3-types';
+import { RWeb3Config } from './rweb3_config';
+import { RWeb3RequestManager } from './rweb3_request_manager';
+import { isNullish } from 'rweb3-validator';
+import { RWeb3APISpec, RigoExecutionAPI } from 'rweb3-types';
 
 // eslint-disable-next-line no-use-before-define
 export type RWeb3ContextConstructor<T extends RWeb3Context, T2 extends unknown[]> = new (
     ...args: [...extras: T2, context: RWeb3ContextObject]
 ) => T;
 
-
 // To avoid circular dependencies, we need to export type from here.
-export type RWeb3ContextObject<API extends RWeb3APISpec = RigoExecutionAPI,> = {
-    requestManager: RWeb3RequestManager;
+export type RWeb3ContextObject<API extends RWeb3APISpec = RigoExecutionAPI> = {
+    requestManager: RWeb3RequestManager<API>;
 };
 
-
 export class RWeb3Context<API extends RWeb3APISpec = unknown> extends RWeb3Config {
-
-    protected _requestManager: RWeb3RequestManager;
+    protected _requestManager: RWeb3RequestManager<API>;
 
     public get requestManager() {
         return this._requestManager;
     }
 
-
-    public constructor(
-        providerOrContext?:
-            | string
-    ) {
-
+    public constructor(providerOrContext?: string) {
         super();
         // If "providerOrContext" is provided as "string" or an objects matching "SupportedProviders" interface
         if (
@@ -60,9 +52,8 @@ export class RWeb3Context<API extends RWeb3APISpec = unknown> extends RWeb3Confi
         ContextRef: RWeb3ContextConstructor<T, T2>,
         ...args: [...T2]
     ) {
-
         // TODO : 개선점 있어 보임 -> 정상적으로 requstManager 등록되어야 함
-        let useContext = new ContextRef(
+        const useContext = new ContextRef(
             ...([...args, this.getContextObject()] as unknown as [...T2, RWeb3ContextObject]),
         );
 
@@ -71,11 +62,9 @@ export class RWeb3Context<API extends RWeb3APISpec = unknown> extends RWeb3Confi
         return useContext;
     }
 
-    public getContextObject(): RWeb3ContextObject {
+    public getContextObject(): RWeb3ContextObject<API> {
         return {
-            requestManager: this.requestManager
+            requestManager: this.requestManager,
         };
     }
-
-
 }

@@ -14,7 +14,6 @@
     limitations under the License.
 */
 
-
 /* eslint-disable */
 import Long from "long";
 import _m0 from "protobufjs/minimal";
