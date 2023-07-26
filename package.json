@@ -36,7 +36,10 @@
     "build:cjs": "lerna run build:cjs --stream",
     "build:esm": "lerna run build:esm --stream",
     "build:web": "lerna run build:web --stream",
-    "clean": "lerna run clean --stream --parallel"
+    "clean": "lerna run clean --stream --parallel",
+    "lint": "lerna run lint --stream --parallel",
+    "lint:fix": "lerna run lint:fix --stream --parallel",
+    "format": "lerna run format --stream --parallel && prettier --write ./scripts/**/*.ts"
   },
   "devDependencies": {
     "@cypress/webpack-preprocessor": "^5.12.0",

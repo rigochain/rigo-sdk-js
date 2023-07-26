@@ -15,16 +15,25 @@
 */
 
 import {HexString} from '../primitives_types.js';
-import {BlockAPI, TransactionInfoAPI} from "./eth_execution_api";
-import {AddressBase} from "../rigo_types";
+import {AddressBase, StakeValue, Validators, Transaction, Block, Rule} from "../rigo_types";
 
 
 export type AddressAPI = AddressBase<
     HexString
 >;
 
-
 /* eslint-disable camelcase */
 export type RigoExecutionAPI = {
+
     account: (addr: string) => AddressAPI;
+    validators: (height: string) => Validators;
+    stakes: (addr: string) => StakeValue;
+    // delegatee: (addr: string) => StakeValue;     TODO : Response 알아야 함
+    // broadcast_tx_sync : (tx: string): string;    TODO : Response 알아야 함
+
+    tx: (txhash: string) => Transaction;
+    block: (height: string) => Block;
+    block_by_hash: (hash: String) => Block;
+    rule: () => Rule;
+
 };

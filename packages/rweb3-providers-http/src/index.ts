@@ -67,9 +67,6 @@ export default class HttpProvider<
             body: JSON.stringify(payload),
         });
 
-        console.log('response : ', response)
-        console.log('response.ok : ', response.ok)
-
         // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
         if (!response.ok) throw new ResponseError(await response.json());
 
