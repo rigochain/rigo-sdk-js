@@ -19,6 +19,7 @@
     "build:cjs": "tsc --build tsconfig.cjs.json && echo '{\"type\": \"commonjs\"}' > ./lib/commonjs/package.json",
     "build:esm": "tsc --build tsconfig.esm.json && echo '{\"type\": \"module\"}' > ./lib/esm/package.json",
     "build:types": "tsc --build tsconfig.types.json",
+    "build:web": "npx webpack",
     "lint": "eslint --ext .js,.ts .",
     "lint:fix": "eslint --fix --ext .js,.ts .",
     "format": "prettier --write '**/*'"
@@ -34,7 +35,11 @@
     "eslint-plugin-import": "^2.26.0",
     "eslint-plugin-prettier": "^5.0.0",
     "prettier": "^3.0.0",
-    "typescript": "^4.7.4"
+    "typescript": "^4.7.4",
+    "@cypress/webpack-preprocessor": "^5.12.0",
+    "@openzeppelin/contracts": "^4.7.1",
+    "@types/node": "^18.11.9",
+    "@types/webpack": "^5.28.0"
   },
 
   "dependencies": {
