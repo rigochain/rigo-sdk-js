@@ -17,3 +17,7 @@ lerna-debug.log
 # Unsupported lock files
 package-lock.json
 yarn.lock
+
+.npm
+.coverage
+.tool-versions

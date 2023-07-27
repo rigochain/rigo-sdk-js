@@ -21,7 +21,8 @@
     "build:types": "tsc --build tsconfig.types.json",
     "lint": "eslint --ext .js,.ts .",
     "lint:fix": "eslint --fix --ext .js,.ts .",
-    "format": "prettier --write '**/*'"
+    "format": "prettier --write '**/*'",
+    "test": "jest --config=./test/unit/jest.config.js"
   },
 
 

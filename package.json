@@ -39,7 +39,8 @@
     "clean": "lerna run clean --stream --parallel",
     "lint": "lerna run lint --stream --parallel",
     "lint:fix": "lerna run lint:fix --stream --parallel",
-    "format": "lerna run format --stream --parallel && prettier --write ./scripts/**/*.ts"
+    "format": "lerna run format --stream --parallel && prettier --write ./scripts/**/*.ts",
+    "test": "lerna run test --stream --parallel"
   },
   "devDependencies": {
     "@cypress/webpack-preprocessor": "^5.12.0",
