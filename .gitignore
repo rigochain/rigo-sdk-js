@@ -12,6 +12,8 @@ examples/rigo.min.js
 documents/site
 lerna-debug.log
 
+.secrets.json
+
 # Unsupported lock files
 package-lock.json
 yarn.lock
