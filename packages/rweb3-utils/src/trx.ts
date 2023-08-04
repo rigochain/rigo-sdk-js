@@ -27,7 +27,7 @@ function isSet(value: any): boolean {
     return value !== undefined;
 }
 
-interface Trx {
+export interface Trx {
     hash?: string;
     version?: number;
     time?: Date;
