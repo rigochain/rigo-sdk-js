@@ -19,6 +19,7 @@ import * as cryptojs from "crypto-js";
 
 export default class Bytes extends Uint8Array {
     static fromHex(hex: string): Bytes {
+
         if (hex.startsWith('0x')) {
             hex = hex.substring(2)
         }

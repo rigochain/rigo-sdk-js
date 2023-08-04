@@ -73,6 +73,11 @@ export async function queryBlockByHeight(
     requestManager: RWeb3RequestManager,
     height: string | number,
 ) {
+
+    if(typeof height === 'number') {
+        height = height.toString(10);
+    }
+
     return requestManager.send({
         method: 'block',
         params: { height: height },
