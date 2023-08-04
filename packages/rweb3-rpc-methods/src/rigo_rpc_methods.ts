@@ -52,6 +52,7 @@ export async function queryDelegatee(requestManager: RWeb3RequestManager, addr: 
 }
 
 export async function broadcastTrxSync(requestManager: RWeb3RequestManager, tx: TrxProto) {
+
     const wr = TrxProto.encode(tx);
     const txbz = wr.finish();
 
