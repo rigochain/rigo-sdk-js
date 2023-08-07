@@ -15,9 +15,9 @@
 */
 
 import BN from 'bn.js';
-import PrvKey from './prvKey';
-import PubKey from './pubKey';
-import {Bytes} from './bytes';
+import PrvKey from './prvKey.js';
+import PubKey from './pubKey.js';
+import {Bytes} from './bytes.js';
 
 export default class Account {
     address: string;

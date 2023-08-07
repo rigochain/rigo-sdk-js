@@ -14,8 +14,8 @@
     limitations under the License.
 */
 
-import { RWeb3Config } from './rweb3_config';
-import { RWeb3RequestManager } from './rweb3_request_manager';
+import { RWeb3Config } from './rweb3_config.js';
+import { RWeb3RequestManager } from './rweb3_request_manager.js';
 import { isNullish } from 'rweb3-validator';
 import { RWeb3APISpec, RigoExecutionAPI } from 'rweb3-types';
 

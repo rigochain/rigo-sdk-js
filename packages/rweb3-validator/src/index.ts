@@ -14,7 +14,7 @@
     limitations under the License.
 */
 
-export * from './rweb3_validator';
+export * from './rweb3_validator.js';
 export * from './default_validator.js';
 export * from './types.js';
 export * as utils from './utils.js';

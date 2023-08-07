@@ -14,12 +14,12 @@
     limitations under the License.
 */
 
-import * as trxPb from './trx_pb';
+import * as trxPb from './trx_pb.js';
 import Long from 'long';
-import { Bytes } from './bytes';
+import { Bytes } from './bytes.js';
 import BN from 'bn.js';
-import Account from './account';
-import { fromNanoSecond, getNanoSecond } from './time';
+import Account from './account.js';
+import { fromNanoSecond, getNanoSecond } from './time.js';
 import { createHash } from 'crypto';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any

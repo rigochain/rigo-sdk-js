@@ -48,11 +48,6 @@ describe("Bytes class tests", () => {
         expect(bytes1.isEqual(bytes3)).toBeFalsy();
     });
 
-    test("rand", () => {
-        const bytes = Bytes.rand(10);
-        expect(bytes.length).toBe(10);
-    });
-
     test("b64ToBytes", () => {
         const base64 = Buffer.from('123abc', 'hex').toString('base64');
         const bytes = Bytes.b64ToBytes(base64);

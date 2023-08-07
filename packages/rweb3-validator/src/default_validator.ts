@@ -14,6 +14,6 @@
     limitations under the License.
 */
 
-import { RWeb3Validator } from './rweb3_validator';
+import { RWeb3Validator } from './rweb3_validator.js';
 
 export const validator = new RWeb3Validator();

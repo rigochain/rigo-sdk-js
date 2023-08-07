@@ -14,6 +14,6 @@
     limitations under the License.
 */
 
-import * as rigoRpcMethods from './rigo_rpc_methods';
+import * as rigoRpcMethods from './rigo_rpc_methods.js';
 
 export { rigoRpcMethods };

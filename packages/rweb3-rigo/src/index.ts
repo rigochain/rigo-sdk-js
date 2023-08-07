@@ -14,7 +14,7 @@
     limitations under the License.
 */
 
-import { RWeb3Rigo } from './rweb3_rigo';
+import { RWeb3Rigo } from './rweb3_rigo.js';
 export * from './rpc_method_wrappers.js';
 
 export default RWeb3Rigo;

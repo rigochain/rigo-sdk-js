@@ -14,7 +14,6 @@
     limitations under the License.
 */
 
-import { webcrypto } from 'crypto';
 import * as cryptojs from 'crypto-js';
 
 export class Bytes extends Uint8Array {
@@ -81,10 +80,6 @@ export class Bytes extends Uint8Array {
             }
         }
         return true;
-    }
-
-    static rand(n: number): Bytes {
-        return webcrypto.getRandomValues(new Bytes(n));
     }
 
     static b64ToBytes(base64: string): Bytes {

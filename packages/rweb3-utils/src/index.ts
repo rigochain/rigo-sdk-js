@@ -14,7 +14,7 @@
     limitations under the License.
 */
 
-export * from './bytes';
+export * from './bytes.js';
 export * from './validation.js';
 export * from './formatter.js';
 export * from './hash.js';
@@ -32,7 +32,6 @@ export * from './uint8array.js';
 export * from './account.js';
 export * from './pubKey.js';
 export * from './prvKey.js';
-export * from './storage.js';
 export * from './time.js';
 export * from './trx.js';
 export * from './trx_pb.js';
