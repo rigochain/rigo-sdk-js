@@ -15,12 +15,13 @@
 */
 
 import { HexString } from '../primitives_types.js';
-import { AddressBase, StakeValue, Validators, Transaction, Block, Rule } from '../rigo_types';
+import {AddressBase, StakeValue, Validators, Transaction, Block, Rule, AbciInfo, ResponseData} from '../rigo_types';
 
 export type AddressAPI = AddressBase<HexString>;
 
 /* eslint-disable camelcase */
 export type RigoExecutionAPI = {
+    abci_info: () => ResponseData<AbciInfo>;
     account: (addr: string) => AddressAPI;
     validators: (height: string) => Validators;
     stakes: (addr: string) => StakeValue;

@@ -2,7 +2,7 @@ import {RWeb3RequestManager} from 'rweb3-core';
 
 import {rigoRpcMethods} from '../../../src/index';
 
-describe('queryAccount', () => {
+describe('stakes', () => {
 
     let requestManagerSendSpy: jest.Mock;
     let requestManager: RWeb3RequestManager;
@@ -13,17 +13,15 @@ describe('queryAccount', () => {
         requestManager.send = requestManagerSendSpy;
     });
 
-    it('should call requestManager.send with queryAccount method', async () => {
+    it('should call requestManager.send with queryStakes method', async () => {
 
         const addr = '0x1234';
 
-        await rigoRpcMethods.queryAccount(requestManager, addr);
+        await rigoRpcMethods.stakes(requestManager, addr);
 
         expect(requestManagerSendSpy).toHaveBeenCalledWith({
-            method: 'account',
-            params: {
-                addr: addr,
-            },
+            method: 'stakes',
+            params: {addr: addr},
         });
     });
 });

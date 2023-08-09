@@ -2,7 +2,7 @@ import {RWeb3RequestManager} from 'rweb3-core';
 
 import {rigoRpcMethods} from '../../../src/index';
 
-describe('queryValidator', () => {
+describe('tx', () => {
 
     let requestManagerSendSpy: jest.Mock;
     let requestManager: RWeb3RequestManager;
@@ -13,15 +13,15 @@ describe('queryValidator', () => {
         requestManager.send = requestManagerSendSpy;
     });
 
-    it('should call requestManager.send with queryValidator method', async () => {
+    it('should call requestManager.send with tx method', async () => {
 
-        const height = '0x1234';
+        const txHash = "";
 
-        await rigoRpcMethods.queryValidators(requestManager, height);
+        await rigoRpcMethods.tx(requestManager, txHash);
 
         expect(requestManagerSendSpy).toHaveBeenCalledWith({
-            method: 'validators',
-            params: {height: height},
+            method: 'tx',
+            params: { hash: Buffer.from(txHash).toString('base64'), prove: true },
         });
     });
 });

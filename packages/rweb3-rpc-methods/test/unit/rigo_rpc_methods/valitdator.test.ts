@@ -2,7 +2,7 @@ import {RWeb3RequestManager} from 'rweb3-core';
 
 import {rigoRpcMethods} from '../../../src/index';
 
-describe('queryStakes', () => {
+describe('validators', () => {
 
     let requestManagerSendSpy: jest.Mock;
     let requestManager: RWeb3RequestManager;
@@ -13,15 +13,15 @@ describe('queryStakes', () => {
         requestManager.send = requestManagerSendSpy;
     });
 
-    it('should call requestManager.send with queryStakes method', async () => {
+    it('should call requestManager.send with validators method', async () => {
 
-        const addr = '0x1234';
+        const height = '0x1234';
 
-        await rigoRpcMethods.queryStakes(requestManager, addr);
+        await rigoRpcMethods.validators(requestManager, height);
 
         expect(requestManagerSendSpy).toHaveBeenCalledWith({
-            method: 'stakes',
-            params: {addr: addr},
+            method: 'validators',
+            params: {height: height},
         });
     });
 });

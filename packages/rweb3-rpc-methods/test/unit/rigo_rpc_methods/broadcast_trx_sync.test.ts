@@ -1,8 +1,9 @@
 import {RWeb3RequestManager} from 'rweb3-core';
 
 import {rigoRpcMethods} from '../../../src/index';
+import {TrxProto} from "rweb3-utils";
 
-describe('queryTrx', () => {
+describe('broadcastTrxSync', () => {
 
     let requestManagerSendSpy: jest.Mock;
     let requestManager: RWeb3RequestManager;
@@ -13,15 +14,18 @@ describe('queryTrx', () => {
         requestManager.send = requestManagerSendSpy;
     });
 
-    it('should call requestManager.send with queryTrx method', async () => {
+    it('should call requestManager.send with broadcastTrxSync method', async () => {
 
-        const txHash = "";
+        const tx: TrxProto = TrxProto.fromJSON({});
+        const wr = TrxProto.encode(tx);
+        const txbz = wr.finish();
 
-        await rigoRpcMethods.queryTrx(requestManager, txHash);
+        await rigoRpcMethods.broadcastTrxSync(requestManager, tx);
 
         expect(requestManagerSendSpy).toHaveBeenCalledWith({
-            method: 'tx',
-            params: { hash: Buffer.from(txHash).toString('base64'), prove: true },
+            method: 'broadcast_tx_sync',
+            params: {tx: Buffer.from(txbz).toString('base64')},
         });
     });
 });
+

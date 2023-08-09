@@ -19,7 +19,7 @@ describe('queryBlockByHash', () => {
 
         const hash = Bytes.fromHex("0x1234");
 
-        await rigoRpcMethods.queryBlockByHash(requestManager, hash);
+        await rigoRpcMethods.blockByHash(requestManager, hash);
 
         expect(requestManagerSendSpy).toHaveBeenCalledWith({
             method: 'block_by_hash',
@@ -41,7 +41,7 @@ describe('queryBlockByHash Develop Server Call ', () => {
 
         const hash = Bytes.fromHex("830e8a07d553e67be7fd021ce1fab3aa5616f71f132bb1dd52d61cc6dd8bfa81");
 
-        let returnValue = await rigoRpcMethods.queryBlockByHash(requestManager, hash);
+        let returnValue = await rigoRpcMethods.blockByHash(requestManager, hash);
 
         console.log(returnValue);
 

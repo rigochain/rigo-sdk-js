@@ -2,7 +2,7 @@ import {RWeb3RequestManager} from 'rweb3-core';
 
 import {rigoRpcMethods} from '../../../src/index';
 
-describe('queryDelegatee', () => {
+describe('delegatee', () => {
 
     let requestManagerSendSpy: jest.Mock;
     let requestManager: RWeb3RequestManager;
@@ -13,11 +13,11 @@ describe('queryDelegatee', () => {
         requestManager.send = requestManagerSendSpy;
     });
 
-    it('should call requestManager.send with queryDelegatee method', async () => {
+    it('should call requestManager.send with delegatee method', async () => {
 
         const addr = '0x1234';
 
-        await rigoRpcMethods.queryDelegatee(requestManager, addr);
+        await rigoRpcMethods.delegatee(requestManager, addr);
 
         expect(requestManagerSendSpy).toHaveBeenCalledWith({
             method: 'delegatee',
