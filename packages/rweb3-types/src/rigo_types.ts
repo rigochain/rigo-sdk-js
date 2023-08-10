@@ -600,6 +600,77 @@ export interface DumpConsensusState {
     "peers": []
 }
 
+export interface Genesis {
+
+    "genesis": {
+        "genesis_time": string,
+        "chain_id": string,
+        "initial_height": string,
+        "consensus_params": {
+            "block": { "max_bytes": string, "max_gas": string, "time_iota_ms": string },
+            "evidence": {
+                "max_age_num_blocks": string,
+                "max_age_duration": string,
+                "max_bytes": string
+            },
+            "validator": { "pub_key_types": [] },
+            "version": { "app_version": string }
+        },
+        "validators": [{
+            "address": string,
+            "pub_key": {
+                "type": string,
+                "value": string
+            },
+            "power": string,
+            "name": string
+        }],
+        "app_hash": string,
+        "app_state": {
+            "assetHolders": [{
+                "address": string,
+                "balance": string
+            }],
+            "govRule": {
+                "version": string,
+                "maxValidatorCnt": string,
+                "minValidatorStake": string,
+                "rewardPerPower": string,
+                "lazyRewardBlocks": string,
+                "lazyApplyingBlocks": string,
+                "gasPrice": string,
+                "minTrxFee": string,
+                "minVotingPeriodBlocks": string,
+                "maxVotingPeriodBlocks": string,
+                "minSelfStakeRatio": string,
+                "maxUpdatableStakeRatio": string,
+                "slashRatio": string
+            }
+        }
+    }
+}
+
+
+export interface GenesisChunked {
+    chunk: string,
+    total: string,
+    data: string
+}
+
+export interface NetInfo {
+    "listening": boolean,
+    "listeners": [],
+    "n_peers": string,
+    "peers": []
+}
+
+export interface NumUnconfirmedTxs {
+    "n_txs": string,
+    "total": string,
+    "total_bytes": string,
+    "txs": any[]
+}
+
 
 export interface Rule {
     value: {

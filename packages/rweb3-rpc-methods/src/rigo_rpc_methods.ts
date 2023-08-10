@@ -276,7 +276,12 @@ export async function genesis(requestManager: RWeb3RequestManager) {
     });
 }
 
-export async function genesisChunked(requestManager: RWeb3RequestManager, chunk: number) {
+export async function genesisChunked(requestManager: RWeb3RequestManager, chunk: number | string) {
+
+    if(typeof chunk === 'number') {
+        chunk = chunk.toString(10);
+    }
+
     return requestManager.send({
         method: 'genesis_chunked',
         params: {

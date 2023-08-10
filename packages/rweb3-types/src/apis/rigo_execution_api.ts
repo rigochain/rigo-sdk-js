@@ -32,7 +32,7 @@ import {
     ConsensusParams,
     ConsensusState,
     Delegatee,
-    DumpConsensusState
+    DumpConsensusState, Genesis, GenesisChunked, NetInfo
 } from '../rigo_types';
 
 export type AddressAPI = AddressBase<HexString>;
@@ -53,6 +53,9 @@ export type RigoExecutionAPI = {
     consensus_state: () => ConsensusState;
     delegatee: (addr: string) => Delegatee;
     dump_consensus_state: () => DumpConsensusState;
+    genesis: () => Genesis;
+    genesis_chunked: () => GenesisChunked;
+    net_info: () => NetInfo;
 
     validators: (height: string) => Validators;
     stakes: (addr: string) => StakeValue;
