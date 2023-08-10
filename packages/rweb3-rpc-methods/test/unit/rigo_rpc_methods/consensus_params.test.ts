@@ -2,9 +2,9 @@ import {RWeb3RequestManager} from 'rweb3-core';
 
 import {rigoRpcMethods} from '../../../src/index';
 import {DEV_SERVER} from "./fixtures/test_constant";
-import {testData} from "./fixtures/delegatee";
+import {testData} from "./fixtures/consensus_params";
 
-describe('delegatee', () => {
+describe('consensusParams', () => {
 
     let requestManagerSendSpy: jest.Mock;
     let requestManager: RWeb3RequestManager;
@@ -15,21 +15,22 @@ describe('delegatee', () => {
         requestManager.send = requestManagerSendSpy;
     });
 
-    it('should call requestManager.send with delegatee method', async () => {
+    it('should call requestManager.send with commit method', async () => {
 
-        const addr = '0x1234';
+        let height = 1;
 
-        await rigoRpcMethods.delegatee(requestManager, addr);
+        await rigoRpcMethods.consensusParams(requestManager, height);
 
+        // call number 1 of requestManagerSendSpy
         expect(requestManagerSendSpy).toHaveBeenCalledWith({
-            method: 'delegatee',
-            params: {addr: addr},
+            method: 'consensus_params',
+            params: {height: height.toString(10)},
         });
     });
 });
 
 
-describe('delegatee develop server call', () => {
+describe('consensusParams develop server call', () => {
 
     let requestManager: RWeb3RequestManager;
 
@@ -38,10 +39,11 @@ describe('delegatee develop server call', () => {
     });
 
     it.each(testData)(
-        'delegatee should call success return',
+        'consensusParams should call success return',
         async (_parameter, _response) => {
 
-            let returnValue = await rigoRpcMethods.delegatee(requestManager, _parameter.addr);
+            let returnValue = await rigoRpcMethods.consensusParams(requestManager, _parameter.height);
+            console.log("consensusParams", JSON.stringify(returnValue));
 
             expect(returnValue).toEqual(
                 _response

@@ -24,13 +24,22 @@ import {
     Rule,
     AbciInfo,
     ResponseData,
-    BlockResult, BlockSearch, Blockcahin
+    BlockResult,
+    BlockSearch,
+    Blockcahin,
+    CheckTx,
+    Commit,
+    ConsensusParams,
+    ConsensusState,
+    Delegatee,
+    DumpConsensusState
 } from '../rigo_types';
 
 export type AddressAPI = AddressBase<HexString>;
 
 /* eslint-disable camelcase */
 export type RigoExecutionAPI = {
+
     abci_info: () => ResponseData<AbciInfo>;
     account: (addr: string) => AddressAPI;
     block: (height: string) => Block;
@@ -38,8 +47,12 @@ export type RigoExecutionAPI = {
     block_results: (height: string) => BlockResult;
     block_search: (query: string, page: string, per_page: string, order_by: string) => BlockSearch;
     blockchain: (minHeight: string, maxHeight: string) => Blockcahin;
-
-
+    check_tx: (tx: string) => CheckTx;
+    commit: (height: string) => Commit;
+    consensus_params: (height: string) => ConsensusParams;
+    consensus_state: () => ConsensusState;
+    delegatee: (addr: string) => Delegatee;
+    dump_consensus_state: () => DumpConsensusState;
 
     validators: (height: string) => Validators;
     stakes: (addr: string) => StakeValue;

@@ -2,9 +2,9 @@ import {RWeb3RequestManager} from 'rweb3-core';
 
 import {rigoRpcMethods} from '../../../src/index';
 import {DEV_SERVER} from "./fixtures/test_constant";
-import {testData} from "./fixtures/delegatee";
+import {testData} from "./fixtures/broadcast_tx_commit";
 
-describe('delegatee', () => {
+describe('checkTx', () => {
 
     let requestManagerSendSpy: jest.Mock;
     let requestManager: RWeb3RequestManager;
@@ -15,21 +15,24 @@ describe('delegatee', () => {
         requestManager.send = requestManagerSendSpy;
     });
 
-    it('should call requestManager.send with delegatee method', async () => {
+    it('should call requestManager.send with checkTx method', async () => {
 
-        const addr = '0x1234';
+        let tx = "678e659b9de68984f7e8828c759351c25266dcc9980c9cf6ecbe9b6cc6b51748";
 
-        await rigoRpcMethods.delegatee(requestManager, addr);
+        await rigoRpcMethods.checkTx(requestManager, tx);
 
+        let txhash = Buffer.from(tx).toString('base64');
+
+        // call number 1 of requestManagerSendSpy
         expect(requestManagerSendSpy).toHaveBeenCalledWith({
-            method: 'delegatee',
-            params: {addr: addr},
+            method: 'check_tx',
+            params: {tx: txhash},
         });
     });
 });
 
 
-describe('delegatee develop server call', () => {
+describe('checkTx develop server call', () => {
 
     let requestManager: RWeb3RequestManager;
 
@@ -38,14 +41,18 @@ describe('delegatee develop server call', () => {
     });
 
     it.each(testData)(
-        'delegatee should call success return',
+        'checkTx should call success return',
         async (_parameter, _response) => {
 
-            let returnValue = await rigoRpcMethods.delegatee(requestManager, _parameter.addr);
+
+            let returnValue = await rigoRpcMethods.checkTx(requestManager, _parameter.tx);
 
             expect(returnValue).toEqual(
                 _response
             )
+
         }
     );
 });
+
+

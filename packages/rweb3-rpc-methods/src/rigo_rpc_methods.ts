@@ -70,9 +70,12 @@ export async function abciInfo(requestManager: RWeb3RequestManager) {
 
 
 export async function broadcastTxCommit(requestManager: RWeb3RequestManager, tx: string) {
+
+    let txhash = Buffer.from(tx).toString('base64')
+
     return requestManager.send({
         method: 'broadcast_tx_commit',
-        params: {tx: tx},
+        params: {tx: txhash},
     });
 }
 
@@ -208,14 +211,22 @@ export async function broadcastTxSync(requestManager: RWeb3RequestManager, tx: s
 }
 
 export async function checkTx(requestManager: RWeb3RequestManager, tx: string) {
+
+    let txhash = Buffer.from(tx).toString('base64')
+
     return requestManager.send({
         method: 'check_tx',
-        params: {tx: tx},
+        params: {tx: txhash},
     });
 }
 
 
-export async function commit(requestManager: RWeb3RequestManager, height: number | string) {
+export async function commit(requestManager: RWeb3RequestManager, height?: number | string) {
+
+    if (height && typeof height === 'number') {
+        height = height.toString(10);
+    }
+
     return requestManager.send({
         method: 'commit',
         params: {height: height},
@@ -223,7 +234,12 @@ export async function commit(requestManager: RWeb3RequestManager, height: number
 }
 
 
-export async function consensusParams(requestManager: RWeb3RequestManager, height: number | string) {
+export async function consensusParams(requestManager: RWeb3RequestManager, height?: number | string) {
+
+    if (height && typeof height === 'number') {
+        height = height.toString(10);
+    }
+
     return requestManager.send({
         method: 'consensus_params',
         params: {height: height},
@@ -231,6 +247,7 @@ export async function consensusParams(requestManager: RWeb3RequestManager, heigh
 }
 
 export async function consensusState(requestManager: RWeb3RequestManager) {
+
     return requestManager.send({
         method: 'consensus_state',
         params: {},
@@ -242,6 +259,13 @@ export async function delegatee(requestManager: RWeb3RequestManager, addr: strin
     return requestManager.send({
         method: 'delegatee',
         params: {addr: addr},
+    });
+}
+
+export async function dumpConsensusState(requestManager: RWeb3RequestManager) {
+    return requestManager.send({
+        method: 'dump_consensus_state',
+        params: {},
     });
 }
 

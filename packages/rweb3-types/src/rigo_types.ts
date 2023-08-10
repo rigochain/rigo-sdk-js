@@ -1,14 +1,14 @@
 /*
     Copyright 2023 All Rigo Chain Developers
 
-    Licensed under the Apache License, Version 2.0 (the "License");
+    Licensed under the Apache License, Version 2.0 (the License);
     you may not use this file except in compliance with the License.
     You may obtain a copy of the License at
 
         http://www.apache.org/licenses/LICENSE-2.0
 
     Unless required by applicable law or agreed to in writing, software
-    distributed under the License is distributed on an "AS IS" BASIS,
+    distributed under the License is distributed on an AS IS BASIS,
     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
     See the License for the specific language governing permissions and
     limitations under the License.
@@ -231,7 +231,7 @@ export interface Filter {
     readonly toBlock?: BlockNumberOrTag;
     readonly address?: Address | Address[];
     readonly blockHash?: Address;
-    // Using "null" type intentionally to match specifications
+    // Using null type intentionally to match specifications
     // eslint-disable-next-line @typescript-eslint/ban-types
     readonly topics?: (null | Topic | Topic[])[];
     readonly filter?: FilterOption;
@@ -440,22 +440,22 @@ export interface Block {
 }
 
 export interface BlockResult {
-    "height": string,
-    "txs_results": [],
-    "begin_block_events": [],
-    "end_block_events:": [],
-    "validator_updates": [],
-    "consensus_params_updates": {
-        "block": {
-            "max_bytes": string,
-            "max_gas": string,
-            "time_iota_ms": string
+    height: string,
+    txs_results: [],
+    begin_block_events: [],
+    end_block_events: [],
+    validator_updates: [],
+    consensus_params_updates: {
+        block: {
+            max_bytes: string,
+            max_gas: string,
+            time_iota_ms: string
         },
-        "evidence": {
-            "max_age": string
+        evidence: {
+            max_age: string
         },
-        "validator": {
-            "pub_key_types": string[]
+        validator: {
+            pub_key_types: string[]
         }
     }
 }
@@ -467,9 +467,137 @@ export interface BlockSearch {
 
 
 export interface Blockcahin {
-    "last_height": string,
-    "block_metas": [
-    ]
+    last_height: string,
+    block_metas: []
+}
+
+
+export interface CheckTx {
+    code: string,
+    data: string,
+    log: string,
+    info: string,
+    gas_wanted: string,
+    gas_used: string,
+    events: [],
+    codespace: string
+}
+
+export interface Commit {
+    "signed_header": {
+        "header": {
+            "version": { "block": string, "app": string },
+            "chain_id": string,
+            "height": string,
+            "time": string,
+            "last_block_id": { "hash": string, "parts": { "total": number, "hash": string } },
+            "last_commit_hash": string,
+            "data_hash": string,
+            "validators_hash": string,
+            "next_validators_hash": string,
+            "consensus_hash": string,
+            "app_hash": string,
+            "last_results_hash": string,
+            "evidence_hash": string,
+            "proposer_address": string
+        },
+        "commit": {
+            "height": string,
+            "round": number,
+            "block_id": {
+                "hash": string,
+                "parts": { "total": number, "hash": string }
+            },
+            "signatures": [{
+                "block_id_flag": number,
+                "validator_address": string,
+                "timestamp": string,
+                "signature": string
+            }]
+        }
+    },
+    "canonical": boolean
+}
+
+
+export interface ConsensusParams {
+    "block_height": string,
+    "consensus_params": {
+        "block": { "max_bytes": string, "max_gas": string, "time_iota_ms": string },
+        "evidence": { "max_age_num_blocks": string, "max_age_duration": string, "max_bytes": string },
+        "validator": { "pub_key_types": [] },
+        "version": { "app_version": string }
+    }
+}
+
+export interface ConsensusState {
+    "round_state": {
+        "height/round/step": string,
+        "start_time": string,
+        "proposal_block_hash": string,
+        "locked_block_hash": string,
+        "valid_block_hash": string,
+        "height_vote_set": [{
+            "round": number,
+            "prevotes": [],
+            "prevotes_bit_array": string,
+            "precommits": [],
+            "precommits_bit_array": string
+        }],
+        "proposer": { "address": string, "index": number }
+    }
+}
+
+
+export interface Delegatee {
+    "code": number,
+    "log": string,
+    "key": string
+}
+
+export interface DumpConsensusState {
+    "round_state": {
+        "height": string,
+        "round": number,
+        "step": number,
+        "start_time": string,
+        "commit_time": string,
+        "validators": {
+            "validators": [],
+            "proposer": {
+                "address": string,
+                "pub_key": {
+                    "type": string,
+                    "value": string
+                },
+                "voting_power": string,
+                "proposer_priority": string
+            }
+        },
+        "locked_round": number,
+        "valid_round": string,
+        "votes": [],
+        "commit_round": number,
+        "last_commit": {
+            "votes": [],
+            "votes_bit_array": string,
+            "peer_maj_23s": {}
+        },
+        "last_validators": {
+            "validators": [],
+            "proposer": {
+                "address": string,
+                "pub_key": {
+                    "type": string,
+                    "value": string
+                },
+                "voting_power": string,
+                "proposer_priority": string
+            }
+        },
+        "triggered_timeout_precommit": boolean
+    },
+    "peers": []
 }
 
 
