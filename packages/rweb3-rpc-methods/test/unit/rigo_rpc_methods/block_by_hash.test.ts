@@ -3,8 +3,9 @@ import {RWeb3RequestManager} from 'rweb3-core';
 import {rigoRpcMethods} from '../../../src/index';
 import {Bytes} from "rweb3-utils";
 import {DEV_SERVER} from "./fixtures/test_constant";
+import {testData} from "./fixtures/block_by_hash";
 
-describe('queryBlockByHash', () => {
+describe('blockByHash', () => {
     let requestManagerSendSpy: jest.Mock;
 
     let requestManager: RWeb3RequestManager;
@@ -15,7 +16,7 @@ describe('queryBlockByHash', () => {
         requestManager.send = requestManagerSendSpy;
     });
 
-    it('should call requestManager.send with queryBlockByHash method', async () => {
+    it('should call requestManager.send with blockByHash method', async () => {
 
         const hash = Bytes.fromHex("0x1234");
 
@@ -29,7 +30,7 @@ describe('queryBlockByHash', () => {
 });
 
 
-describe('queryBlockByHash Develop Server Call ', () => {
+describe('blockByHash Develop Server Call ', () => {
 
     let requestManager: RWeb3RequestManager;
 
@@ -37,20 +38,21 @@ describe('queryBlockByHash Develop Server Call ', () => {
         requestManager = new RWeb3RequestManager(DEV_SERVER);
     });
 
-    it('should call requestManager.send with queryBlockByHash method', async () => {
+    it.each(testData)(
+        'blockByHash should call success return',
+        async (_hash, _response) => {
 
-        const hash = Bytes.fromHex("830e8a07d553e67be7fd021ce1fab3aa5616f71f132bb1dd52d61cc6dd8bfa81");
+            const hash = Bytes.fromHex(_hash);
 
-        let returnValue = await rigoRpcMethods.blockByHash(requestManager, hash);
+            let returnValue = await rigoRpcMethods.blockByHash(requestManager, hash);
 
-        console.log(returnValue);
-
-        // TODO : 여기 같으면 안됨 찾아 야됨
-        expect(returnValue).toEqual(
-            {block_id: {hash: '', parts: {total: 0, hash: ''}}, block: null}
-        )
-
-    });
+            console.log(returnValue)
+            // 해당 주소의 값은 바뀔 수 있음..
+            expect(returnValue).toEqual(
+                _response
+            )
+        }
+    );
 });
 
 

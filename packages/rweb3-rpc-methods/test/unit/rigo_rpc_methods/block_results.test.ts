@@ -1,12 +1,12 @@
 import {RWeb3RequestManager} from 'rweb3-core';
 
 import {rigoRpcMethods} from '../../../src/index';
-import {testData} from "./fixtures/block";
 import {DEV_SERVER} from "./fixtures/test_constant";
+import {testData} from "./fixtures/block_results";
 
-describe('block', () => {
-
+describe('blockResults', () => {
     let requestManagerSendSpy: jest.Mock;
+
     let requestManager: RWeb3RequestManager;
 
     beforeAll(() => {
@@ -15,23 +15,21 @@ describe('block', () => {
         requestManager.send = requestManagerSendSpy;
     });
 
-    it('should call requestManager.send with block method', async () => {
+    it('should call requestManager.send with blockResults method', async () => {
 
-        let height = 1;
+        let height = 1234;
 
-        await rigoRpcMethods.block(requestManager, height);
+        await rigoRpcMethods.blockResults(requestManager, height);
 
-
-        // call number 1 of requestManagerSendSpy
         expect(requestManagerSendSpy).toHaveBeenCalledWith({
-            method: 'block',
-            params: {height: height.toString(10)},
+            method: 'block_results',
+            params: {height: height.toString(10)}
         });
     });
 });
 
 
-describe('block develop server call', () => {
+describe('blockResults Develop Server Call ', () => {
 
     let requestManager: RWeb3RequestManager;
 
@@ -40,14 +38,17 @@ describe('block develop server call', () => {
     });
 
     it.each(testData)(
-        'block should call success return',
+        'blockResults should call success return',
         async (height, _return) => {
 
-            let returnValue = await rigoRpcMethods.block(requestManager, height);
-
+            let returnValue = await rigoRpcMethods.blockResults(requestManager, height);
+            console.log(returnValue)
             expect(returnValue).toEqual(
                 _return
             )
         },
     );
 });
+
+
+

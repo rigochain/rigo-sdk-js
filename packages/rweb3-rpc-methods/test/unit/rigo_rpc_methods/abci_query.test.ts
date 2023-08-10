@@ -3,7 +3,7 @@ import {RWeb3RequestManager} from 'rweb3-core';
 
 import {rigoRpcMethods} from '../../../src/index';
 import {DEV_SERVER} from "./fixtures/test_constant";
-import {testData} from "./fixtures/get_abci_query";
+import {testData} from "./fixtures/abci_query";
 
 describe('abciQuery', () => {
     let requestManagerSendSpy: jest.Mock;

@@ -14,8 +14,18 @@
     limitations under the License.
 */
 
-import { HexString } from '../primitives_types.js';
-import {AddressBase, StakeValue, Validators, Transaction, Block, Rule, AbciInfo, ResponseData} from '../rigo_types';
+import {HexString} from '../primitives_types.js';
+import {
+    AddressBase,
+    StakeValue,
+    Validators,
+    Transaction,
+    Block,
+    Rule,
+    AbciInfo,
+    ResponseData,
+    BlockResult, BlockSearch, Blockcahin
+} from '../rigo_types';
 
 export type AddressAPI = AddressBase<HexString>;
 
@@ -23,13 +33,20 @@ export type AddressAPI = AddressBase<HexString>;
 export type RigoExecutionAPI = {
     abci_info: () => ResponseData<AbciInfo>;
     account: (addr: string) => AddressAPI;
+    block: (height: string) => Block;
+    block_by_hash: (hash: string) => Block;
+    block_results: (height: string) => BlockResult;
+    block_search: (query: string, page: string, per_page: string, order_by: string) => BlockSearch;
+    blockchain: (minHeight: string, maxHeight: string) => Blockcahin;
+
+
+
     validators: (height: string) => Validators;
     stakes: (addr: string) => StakeValue;
     // delegatee: (addr: string) => StakeValue;     TODO : Response 알아야 함
     // broadcast_tx_sync : (tx: string): string;    TODO : Response 알아야 함
 
     tx: (txhash: string) => Transaction;
-    block: (height: string) => Block;
-    block_by_hash: (hash: string) => Block;
+
     rule: () => Rule;
 };

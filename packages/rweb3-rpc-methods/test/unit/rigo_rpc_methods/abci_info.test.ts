@@ -4,7 +4,7 @@ import {AbciInfo, ResponseData} from 'rweb3-types';
 
 import {rigoRpcMethods} from '../../../src/index';
 import {DEV_SERVER} from "./fixtures/test_constant";
-import {testData} from "./fixtures/get_abci_info";
+import {testData} from "./fixtures/abci_info";
 
 describe('abciInfo', () => {
     let requestManagerSendSpy: jest.Mock;

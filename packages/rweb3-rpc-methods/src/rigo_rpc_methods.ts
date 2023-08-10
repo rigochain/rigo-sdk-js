@@ -69,6 +69,14 @@ export async function abciInfo(requestManager: RWeb3RequestManager) {
 }
 
 
+export async function broadcastTxCommit(requestManager: RWeb3RequestManager, tx: string) {
+    return requestManager.send({
+        method: 'broadcast_tx_commit',
+        params: {tx: tx},
+    });
+}
+
+
 export async function abciQuery(requestManager: RWeb3RequestManager, path: string, data: string, height: number | string, prove: boolean) {
 
     if (typeof height === 'number') {
@@ -114,6 +122,7 @@ export async function block(
 
 
 export async function blockByHash(requestManager: RWeb3RequestManager, hash: Bytes) {
+
     return requestManager.send({
         method: 'block_by_hash',
         params: {hash: Buffer.from(hash).toString('base64')},
@@ -121,18 +130,27 @@ export async function blockByHash(requestManager: RWeb3RequestManager, hash: Byt
 }
 
 
-export async function blockResult(requestManager: RWeb3RequestManager, height: string | number) {
+export async function blockResults(requestManager: RWeb3RequestManager, height: string | number) {
+
     if (typeof height === 'number') {
         height = height.toString(10);
     }
 
     return requestManager.send({
-        method: 'block_result',
+        method: 'block_results',
         params: {height: height},
     });
 }
 
-export async function blockSearch(requestManager: RWeb3RequestManager, query: string, page: number, per_page: number, order_by: string) {
+export async function blockSearch(requestManager: RWeb3RequestManager, query: string, page?: number | string, per_page?: number | string, order_by?: string) {
+
+    if (typeof page === 'number') {
+        page = page.toString(10);
+    }
+
+    if (typeof per_page === 'number') {
+        per_page = per_page.toString(10);
+    }
 
     return requestManager.send({
         method: 'block_search',
@@ -146,7 +164,16 @@ export async function blockSearch(requestManager: RWeb3RequestManager, query: st
 }
 
 
-export async function blockchain(requestManager: RWeb3RequestManager, minHeight: number, maxHeight: number) {
+export async function blockchain(requestManager: RWeb3RequestManager, minHeight?: number | string, maxHeight?: number | string) {
+
+    if (minHeight && typeof minHeight === 'number') {
+        minHeight = minHeight.toString(10);
+    }
+
+    if (maxHeight && typeof maxHeight === 'number') {
+        maxHeight = maxHeight.toString(10);
+    }
+
     return requestManager.send({
         method: 'blockchain',
         params: {
@@ -168,14 +195,6 @@ export async function broadcastEvidence(requestManager: RWeb3RequestManager, evi
 export async function broadcastTxAsync(requestManager: RWeb3RequestManager, tx: string) {
     return requestManager.send({
         method: 'broadcast_tx_async',
-        params: {tx: tx},
-    });
-}
-
-
-export async function broadcastTxCommit(requestManager: RWeb3RequestManager, tx: string) {
-    return requestManager.send({
-        method: 'broadcast_tx_commit',
         params: {tx: tx},
     });
 }

@@ -94,6 +94,8 @@ export class RWeb3RequestManager<API extends RWeb3APISpec = RigoExecutionAPI> {
             return response.result;
         }
 
+        console.error('response', response);
+
         throw new ResponseError(response);
     }
 

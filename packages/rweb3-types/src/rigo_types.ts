@@ -40,6 +40,7 @@ export type Topic = HexString32Bytes;
 
 export type TransactionHash = HexString;
 export type Uncles = HexString32Bytes[];
+
 export enum BlockTags {
     EARLIEST = 'earliest',
     LATEST = 'latest',
@@ -47,6 +48,7 @@ export enum BlockTags {
     SAFE = 'safe',
     FINALIZED = 'finalized',
 }
+
 export type BlockTag = `${BlockTags}`;
 
 export type BlockNumberOrTag = Numbers | BlockTag;
@@ -59,6 +61,7 @@ export interface Proof {
 
 export interface TransactionInput {
     readonly [key: string]: unknown;
+
     readonly to?: HexString; // If its a contract creation tx then no address wil be specified.
     readonly from?: HexString;
     readonly data?: string;
@@ -90,7 +93,7 @@ export type TransactionOutput = {
 } & (
     | { maxPriorityFeePerGas: Numbers; maxFeePerGas: Numbers; gasPrice?: never }
     | { maxPriorityFeePerGas?: never; maxFeePerGas?: never; gasPrice: Numbers }
-);
+    );
 
 export interface LogsInput {
     readonly blockHash?: HexString;
@@ -103,6 +106,7 @@ export interface LogsInput {
     readonly topics: HexString[];
     readonly data: HexString;
 }
+
 export interface LogsOutput {
     readonly id?: string;
     readonly removed: boolean;
@@ -159,6 +163,7 @@ export interface BlockHeaderOutput {
 
 export interface ReceiptInput {
     readonly [x: string]: unknown;
+
     readonly blockNumber?: HexString;
     readonly transactionIndex?: HexString;
     readonly cumulativeGasUsed: HexString;
@@ -236,6 +241,7 @@ export interface AccessListEntry {
     readonly address?: Address;
     readonly storageKeys?: HexString32Bytes[];
 }
+
 export type AccessList = AccessListEntry[];
 
 export type AccessListResult = {
@@ -284,9 +290,11 @@ export interface LogBase<NumberType, ByteType> {
     readonly topics?: ByteType[];
     readonly id?: string;
 }
+
 export interface Log extends LogBase<Numbers, any> {
     readonly id?: string;
 }
+
 export interface TransactionReceiptBase<numberType, hashByteType, logsBloomByteType, logsType> {
     readonly transactionHash: hashByteType;
     readonly transactionIndex: numberType;
@@ -321,7 +329,7 @@ export interface Common {
 
 
 export interface ResponseData<Base> {
-    response : Base
+    response: Base
 }
 
 export interface AbciInfo {
@@ -336,8 +344,8 @@ export interface AddressBase<AddressType> {
     key: AddressType;
     value: {
         address: AddressType;
-        nonce: Numbers;
-        balance: Numbers;
+        nonce: string;
+        balance: string;
     };
 }
 
@@ -430,6 +438,40 @@ export interface Block {
         };
     };
 }
+
+export interface BlockResult {
+    "height": string,
+    "txs_results": [],
+    "begin_block_events": [],
+    "end_block_events:": [],
+    "validator_updates": [],
+    "consensus_params_updates": {
+        "block": {
+            "max_bytes": string,
+            "max_gas": string,
+            "time_iota_ms": string
+        },
+        "evidence": {
+            "max_age": string
+        },
+        "validator": {
+            "pub_key_types": string[]
+        }
+    }
+}
+
+export interface BlockSearch {
+    blocks: Block[];
+    total_count: string;
+}
+
+
+export interface Blockcahin {
+    "last_height": string,
+    "block_metas": [
+    ]
+}
+
 
 export interface Rule {
     value: {

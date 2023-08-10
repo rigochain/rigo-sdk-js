@@ -2,7 +2,7 @@ import {RWeb3RequestManager} from 'rweb3-core';
 
 import {rigoRpcMethods} from '../../../src/index';
 
-describe('queryRule', () => {
+describe('rule', () => {
 
     let requestManagerSendSpy: jest.Mock;
     let requestManager: RWeb3RequestManager;
@@ -13,9 +13,9 @@ describe('queryRule', () => {
         requestManager.send = requestManagerSendSpy;
     });
 
-    it('should call requestManager.send with queryRule method', async () => {
+    it('should call requestManager.send with rule method', async () => {
 
-        await rigoRpcMethods.queryRule(requestManager);
+        await rigoRpcMethods.rule(requestManager);
 
         expect(requestManagerSendSpy).toHaveBeenCalledWith({
             method: 'rule',
