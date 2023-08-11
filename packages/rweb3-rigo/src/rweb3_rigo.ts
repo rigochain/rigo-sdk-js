@@ -32,8 +32,8 @@ export class RWeb3Rigo extends RWeb3Context {
      * // 상세 주석 필요
      * @param addr
      **/
-    queryAccount(addr: string) {
-        return rpcMethodsWrappers.queryAccount(this, addr);
+    account(addr: string) {
+        return rpcMethodsWrappers.account(this, addr);
     }
 
     // syncAccount(acct: Account) {
@@ -55,27 +55,27 @@ export class RWeb3Rigo extends RWeb3Context {
      *   total: '1'
      * }
      **/
-    queryValidators(height: number | string) {
+    validators(height: number | string) {
         if (typeof height === 'number') {
             height = height.toString(10);
         }
 
-        return rpcMethodsWrappers.queryValidators(this, height);
+        return rpcMethodsWrappers.validators(this, height);
     }
 
     /**
      * { key: '8DC41A86B91EB88D82489C4D037AE9FFCA65CFBF', value: null }
      **/
-    queryStakes(addr: string) {
+    stakes(addr: string) {
         if (!addr.startsWith('0x')) {
             addr = '0x' + addr;
         }
 
-        return rpcMethodsWrappers.queryStakes(this, addr);
+        return rpcMethodsWrappers.stakes(this, addr);
     }
 
-    queryDelegatee(addr: string) {
-        return rpcMethodsWrappers.queryDelegatee(this, addr);
+    delegatee(addr: string) {
+        return rpcMethodsWrappers.delegatee(this, addr);
     }
 
     broadcastTrxSync(tx: TrxProto) {
@@ -121,50 +121,6 @@ export class RWeb3Rigo extends RWeb3Context {
         return rpcMethodsWrappers.queryTrx(this, byteTxHash);
     }
 
-    /**
-     * {
-     *   block_id: {
-     *     hash: '97EA623844694395542AA9FEC7155D9601C2C3914E32CF9B83595DCCFB4AA153',
-     *     parts: {
-     *       total: 1,
-     *       hash: 'A2B4D76753C13B6CE09CF5CC7303B69196252D5AF9C97444BC6613B664EB4B7D'
-     *     }
-     *   },
-     *   block: {
-     *     header: {
-     *       version: [Object],
-     *       chain_id: 'devnet0',
-     *       height: '10818',
-     *       time: '2023-06-14T10:17:42.164478437Z',
-     *       last_block_id: [Object],
-     *       last_commit_hash: 'A5253ABF9ED8F0217F5B5FACFC3B6DB6E14D0FB8CFF8366D0D818914DD712F0A',
-     *       data_hash: 'E3B0C44298FC1C149AFBF4C8996FB92427AE41E4649B934CA495991B7852B855',
-     *       validators_hash: '5B2FCAEBDFD9E6CB6CBE441B1F0060923986C25B910445AEDEC907C12DFC1B5E',
-     *       next_validators_hash: '5B2FCAEBDFD9E6CB6CBE441B1F0060923986C25B910445AEDEC907C12DFC1B5E',
-     *       consensus_hash: '048091BC7DDC283F77BFBF91D73C44DA58C3DF8A9CBC867405D8B7F3DAADA22F',
-     *       app_hash: '5421B4C31EAE7BC682E6D1D4C3575AA03D1EB152189D59C8034627377665D014',
-     *       last_results_hash: 'E3B0C44298FC1C149AFBF4C8996FB92427AE41E4649B934CA495991B7852B855',
-     *       evidence_hash: 'E3B0C44298FC1C149AFBF4C8996FB92427AE41E4649B934CA495991B7852B855',
-     *       proposer_address: '735DC3FC8BCCFD7810BCC14DB49234C1BCE7758B'
-     *     },
-     *     data: { txs: [] },
-     *     evidence: { evidence: [] },
-     *     last_commit: {
-     *       height: '10817',
-     *       round: 0,
-     *       block_id: [Object],
-     *       signatures: [Array]
-     *     }
-     *   }
-     * }
-     **/
-    queryBlockByHeight(height: number | string) {
-        if (typeof height === 'number') {
-            height = height.toString(10);
-        }
-
-        return rpcMethodsWrappers.queryBlockByHeight(this, height);
-    }
 
     /**
      * { block_id: { hash: '', parts: { total: 0, hash: '' } }, block: null }
@@ -199,8 +155,8 @@ export class RWeb3Rigo extends RWeb3Context {
      *   }
      * }
      **/
-    queryRule() {
-        return rpcMethodsWrappers.queryRule(this);
+    rule() {
+        return rpcMethodsWrappers.rule(this);
     }
 
     vmCall(addr: string, to: string, height: number, data: string) {

@@ -17,42 +17,6 @@
 import {RWeb3RequestManager} from 'rweb3-core';
 import {Bytes, TrxProto} from 'rweb3-utils';
 
-//192.168.252.60:26657/abci_info?
-//192.168.252.60:26657/abci_query?path=_&data=_&height=_&prove=_
-//192.168.252.60:26657/account?addr=_
-//192.168.252.60:26657/block?height=_
-//192.168.252.60:26657/block_by_hash?hash=_
-//192.168.252.60:26657/block_results?height=_
-//192.168.252.60:26657/block_search?query=_&page=_&per_page=_&order_by=_
-//192.168.252.60:26657/blockchain?minHeight=_&maxHeight=_
-//192.168.252.60:26657/broadcast_evidence?evidence=_
-//192.168.252.60:26657/broadcast_tx_async?tx=_
-//192.168.252.60:26657/broadcast_tx_commit?tx=_
-//192.168.252.60:26657/broadcast_tx_sync?tx=_
-//192.168.252.60:26657/check_tx?tx=_
-//192.168.252.60:26657/commit?height=_
-//192.168.252.60:26657/consensus_params?height=_
-//192.168.252.60:26657/consensus_state?
-//192.168.252.60:26657/delegatee?addr=_
-//192.168.252.60:26657/dump_consensus_state?
-//192.168.252.60:26657/genesis?
-//192.168.252.60:26657/genesis_chunked?chunk=_
-//192.168.252.60:26657/health?
-//192.168.252.60:26657/net_info?
-//192.168.252.60:26657/num_unconfirmed_txs?
-//192.168.252.60:26657/proposals?txhash=_
-//192.168.252.60:26657/rule?
-//192.168.252.60:26657/stakes?addr=_
-//192.168.252.60:26657/status?
-//192.168.252.60:26657/subscribe?query=_
-//192.168.252.60:26657/tx?hash=_&prove=_
-//192.168.252.60:26657/tx_search?query=_&prove=_&page=_&per_page=_&order_by=_
-//192.168.252.60:26657/unconfirmed_txs?limit=_
-//192.168.252.60:26657/unsubscribe?query=_
-//192.168.252.60:26657/unsubscribe_all?
-//192.168.252.60:26657/validators?height=_&page=_&per_page=_
-//192.168.252.60:26657/vm_call?addr=_&to=_&height=_&data=_
-
 
 export async function health(requestManager: RWeb3RequestManager) {
     return requestManager.send({
@@ -99,7 +63,6 @@ export async function abciQuery(requestManager: RWeb3RequestManager, path: strin
 
 
 export async function account(requestManager: RWeb3RequestManager, addr: string) {
-    // TODO : tx encode 되어 잇음.
     return requestManager.send({
         method: 'account',
         params: {

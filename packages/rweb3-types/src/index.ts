@@ -29,6 +29,7 @@ export * from './primitives_types.js';
 export * from './utility_types.js';
 // export * from './web3_api_types.js';
 export * from './rigo_types.js';
+export * from './responses.js';
 export * from './rweb3_api_types.js';
 export * from './web3_base_wallet.js';
 export * from './web3_deferred_promise_type.js';

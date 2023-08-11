@@ -52,7 +52,6 @@ export enum BlockTags {
 export type BlockTag = `${BlockTags}`;
 
 export type BlockNumberOrTag = Numbers | BlockTag;
-
 export interface Proof {
     readonly address: HexString;
     readonly nonce: string;
@@ -349,20 +348,6 @@ export interface AddressBase<AddressType> {
     };
 }
 
-export interface Validators {
-    block_height: string;
-    validators: Validator[];
-    count: string;
-    total: string;
-}
-
-export interface Validator {
-    address: Address;
-    pub_key: []; // TODO : pub_key type
-    voting_power: string;
-    proposer_priority: string;
-}
-
 export interface StakeValue {
     key: string;
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -396,49 +381,6 @@ export interface Transaction {
     };
 }
 
-export interface Block {
-    block_id: {
-        hash: string;
-        parts: {
-            total: Numbers;
-            hash: string;
-        };
-    };
-    block: {
-        header: {
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
-            version: any;
-            chain_id: string;
-            height: string;
-            time: string;
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
-            last_block_id: any;
-            last_commit_hash: string;
-            data_hash: string;
-            validators_hash: string;
-            next_validators_hash: string;
-            consensus_hash: string;
-            app_hash: string;
-            last_results_hash: string;
-            evidence_hash: string;
-            proposer_address: Address;
-        };
-        data: {
-            txs: [];
-        };
-        evidence: {
-            evidence: [];
-        };
-        last_commit: {
-            height: string;
-            round: Numbers;
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
-            block_id: any;
-            signatures: [];
-        };
-    };
-}
-
 export interface BlockResult {
     height: string,
     txs_results: [],
@@ -460,11 +402,6 @@ export interface BlockResult {
     }
 }
 
-export interface BlockSearch {
-    blocks: Block[];
-    total_count: string;
-}
-
 
 export interface Blockcahin {
     last_height: string,
@@ -483,52 +420,7 @@ export interface CheckTx {
     codespace: string
 }
 
-export interface Commit {
-    "signed_header": {
-        "header": {
-            "version": { "block": string, "app": string },
-            "chain_id": string,
-            "height": string,
-            "time": string,
-            "last_block_id": { "hash": string, "parts": { "total": number, "hash": string } },
-            "last_commit_hash": string,
-            "data_hash": string,
-            "validators_hash": string,
-            "next_validators_hash": string,
-            "consensus_hash": string,
-            "app_hash": string,
-            "last_results_hash": string,
-            "evidence_hash": string,
-            "proposer_address": string
-        },
-        "commit": {
-            "height": string,
-            "round": number,
-            "block_id": {
-                "hash": string,
-                "parts": { "total": number, "hash": string }
-            },
-            "signatures": [{
-                "block_id_flag": number,
-                "validator_address": string,
-                "timestamp": string,
-                "signature": string
-            }]
-        }
-    },
-    "canonical": boolean
-}
 
-
-export interface ConsensusParams {
-    "block_height": string,
-    "consensus_params": {
-        "block": { "max_bytes": string, "max_gas": string, "time_iota_ms": string },
-        "evidence": { "max_age_num_blocks": string, "max_age_duration": string, "max_bytes": string },
-        "validator": { "pub_key_types": [] },
-        "version": { "app_version": string }
-    }
-}
 
 export interface ConsensusState {
     "round_state": {

@@ -19,52 +19,45 @@ import { RWeb3Context } from 'rweb3-core';
 import { rigoRpcMethods } from 'rweb3-rpc-methods';
 import { Bytes, TrxProto } from 'rweb3-utils';
 
-export async function queryAccount(web3Context: RWeb3Context<RigoExecutionAPI>, addr: string) {
-    return rigoRpcMethods.queryAccount(web3Context.requestManager, addr);
+export async function account(web3Context: RWeb3Context<RigoExecutionAPI>, addr: string) {
+    return rigoRpcMethods.account(web3Context.requestManager, addr);
 }
 
-export async function queryValidators(
+export async function validators(
     web3Context: RWeb3Context<RigoExecutionAPI>,
     height: number | string,
 ) {
-    return rigoRpcMethods.queryValidators(web3Context.requestManager, height);
+    return rigoRpcMethods.validators(web3Context.requestManager, height);
 }
 
-export async function queryStakes(web3Context: RWeb3Context<RigoExecutionAPI>, addr: string) {
-    return rigoRpcMethods.queryStakes(web3Context.requestManager, addr);
+export async function stakes(web3Context: RWeb3Context<RigoExecutionAPI>, addr: string) {
+    return rigoRpcMethods.stakes(web3Context.requestManager, addr);
 }
 
-export async function queryDelegatee(web3Context: RWeb3Context<RigoExecutionAPI>, addr: string) {
-    return rigoRpcMethods.queryDelegatee(web3Context.requestManager, addr);
+export async function delegatee(web3Context: RWeb3Context<RigoExecutionAPI>, addr: string) {
+    return rigoRpcMethods.delegatee(web3Context.requestManager, addr);
 }
 
 export async function broadcastTrxSync(web3Context: RWeb3Context<RigoExecutionAPI>, tx: TrxProto) {
     return rigoRpcMethods.broadcastTrxSync(web3Context.requestManager, tx);
 }
 
-export async function queryTrx(
+export async function tx(
     web3Context: RWeb3Context<RigoExecutionAPI>,
     txhash: string | Uint8Array,
 ) {
-    return rigoRpcMethods.queryTrx(web3Context.requestManager, txhash);
+    return rigoRpcMethods.tx(web3Context.requestManager, txhash);
 }
 
-export async function queryBlockByHeight(
-    web3Context: RWeb3Context<RigoExecutionAPI>,
-    height: number | string,
-) {
-    return rigoRpcMethods.queryBlockByHeight(web3Context.requestManager, height);
-}
-
-export async function queryBlockByHash(
+export async function blockByHash(
     web3Context: RWeb3Context<RigoExecutionAPI>,
     byteHash: Bytes,
 ) {
-    return rigoRpcMethods.queryBlockByHash(web3Context.requestManager, byteHash);
+    return rigoRpcMethods.blockByHash(web3Context.requestManager, byteHash);
 }
 
-export async function queryRule(web3Context: RWeb3Context<RigoExecutionAPI>) {
-    return rigoRpcMethods.queryRule(web3Context.requestManager);
+export async function rule(web3Context: RWeb3Context<RigoExecutionAPI>) {
+    return rigoRpcMethods.rule(web3Context.requestManager);
 }
 
 export async function vmCall(

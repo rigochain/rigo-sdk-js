@@ -43,7 +43,7 @@ describe('block develop server call', () => {
         'block should call success return',
         async (height, _return) => {
 
-            let returnValue = await rigoRpcMethods.block(requestManager, height);
+            let returnValue: reponses.BlockResponse = await rigoRpcMethods.block(requestManager, height);
 
             expect(returnValue).toEqual(
                 _return

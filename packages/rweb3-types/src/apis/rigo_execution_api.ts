@@ -18,22 +18,19 @@ import {HexString} from '../primitives_types.js';
 import {
     AddressBase,
     StakeValue,
-    Validators,
     Transaction,
-    Block,
     Rule,
     AbciInfo,
     ResponseData,
     BlockResult,
-    BlockSearch,
     Blockcahin,
     CheckTx,
-    Commit,
-    ConsensusParams,
     ConsensusState,
     Delegatee,
     DumpConsensusState, Genesis, GenesisChunked, NetInfo, NumUnconfirmedTxs, TxSearch, UnconfirmedTxs
 } from '../rigo_types';
+
+import * as responses from "../responses";
 
 export type AddressAPI = AddressBase<HexString>;
 
@@ -42,16 +39,16 @@ export type RigoExecutionAPI = {
 
     abci_info: () => ResponseData<AbciInfo>;
     account: (addr: string) => AddressAPI;
-    block: (height: string) => Block;
-    block_by_hash: (hash: string) => Block;
+    block: (height: string) => responses.BlockResponse;
+    block_by_hash: (hash: string) => responses.Block;
     block_results: (height: string) => BlockResult;
-    block_search: (query: string, page: string, per_page: string, order_by: string) => BlockSearch;
+    block_search: (query: string, page: string, per_page: string, order_by: string) => responses.BlockSearchResponse;
     blockchain: (minHeight: string, maxHeight: string) => Blockcahin;
     broadcast_evidence: (evidence: string) => ResponseData<null>;
     broadcast_tx_async: (tx: string) => ResponseData<null>;
     check_tx: (tx: string) => CheckTx;
-    commit: (height: string) => Commit;
-    consensus_params: (height: string) => ConsensusParams;
+    commit: (height: string) => responses.Commit;
+    consensus_params: (height: string) => responses.ConsensusParams;
     consensus_state: () => ConsensusState;
     delegatee: (addr: string) => Delegatee;
     dump_consensus_state: () => DumpConsensusState;
@@ -64,7 +61,7 @@ export type RigoExecutionAPI = {
     stakes: (addr: string) => StakeValue;
     tx: (txhash: string) => Transaction;
     tx_search: (query: string, prove: boolean, page: string, per_page: string, order_by: string) => TxSearch;
-    validators: (height: string) => Validators;
+    validators: (height: string) => responses.ValidatorsResponse;
     unconfirmed_txs: (limit: string) => UnconfirmedTxs;
 
 };
