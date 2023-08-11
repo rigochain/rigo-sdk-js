@@ -3,8 +3,8 @@ import {AbciInfo, ResponseData} from 'rweb3-types';
 
 
 import {rigoRpcMethods} from '../../../src/index';
-import {DEV_SERVER} from "./fixtures/test_constant";
 import {testData} from "./fixtures/abci_info";
+import {getDevServer} from "../e2e_utils";
 
 describe('abciInfo', () => {
     let requestManagerSendSpy: jest.Mock;
@@ -34,7 +34,7 @@ describe('abciInfo develop server call', () => {
     let requestManager: RWeb3RequestManager;
 
     beforeAll(() => {
-        requestManager = new RWeb3RequestManager(DEV_SERVER);
+        requestManager = new RWeb3RequestManager(getDevServer());
     });
 
     it.each(testData)(

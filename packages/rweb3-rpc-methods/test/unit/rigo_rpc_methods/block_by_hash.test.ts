@@ -2,8 +2,8 @@ import {RWeb3RequestManager} from 'rweb3-core';
 
 import {rigoRpcMethods} from '../../../src/index';
 import {Bytes} from "rweb3-utils";
-import {DEV_SERVER} from "./fixtures/test_constant";
 import {testData} from "./fixtures/block_by_hash";
+import {getDevServer} from "../e2e_utils";
 
 describe('blockByHash', () => {
     let requestManagerSendSpy: jest.Mock;
@@ -35,7 +35,7 @@ describe('blockByHash Develop Server Call ', () => {
     let requestManager: RWeb3RequestManager;
 
     beforeAll(() => {
-        requestManager = new RWeb3RequestManager(DEV_SERVER);
+        requestManager = new RWeb3RequestManager(getDevServer());
     });
 
     it.each(testData)(

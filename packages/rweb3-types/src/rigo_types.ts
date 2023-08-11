@@ -689,3 +689,16 @@ export interface Rule {
         slashRatio: string;
     };
 }
+
+export interface TxSearch {
+    txs: [];
+    total_count: string;
+}
+
+
+export interface UnconfirmedTxs {
+    "n_txs": string,
+    "total": string,
+    "total_bytes": string,
+    "txs": []
+}

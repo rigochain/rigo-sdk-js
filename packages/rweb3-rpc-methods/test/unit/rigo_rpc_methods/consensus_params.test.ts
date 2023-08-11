@@ -1,8 +1,8 @@
 import {RWeb3RequestManager} from 'rweb3-core';
 
 import {rigoRpcMethods} from '../../../src/index';
-import {DEV_SERVER} from "./fixtures/test_constant";
 import {testData} from "./fixtures/consensus_params";
+import {getDevServer} from "../e2e_utils";
 
 describe('consensusParams', () => {
 
@@ -35,7 +35,7 @@ describe('consensusParams develop server call', () => {
     let requestManager: RWeb3RequestManager;
 
     beforeAll(() => {
-        requestManager = new RWeb3RequestManager(DEV_SERVER);
+        requestManager = new RWeb3RequestManager(getDevServer());
     });
 
     it.each(testData)(

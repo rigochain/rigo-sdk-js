@@ -1,9 +1,9 @@
 import {RWeb3RequestManager} from 'rweb3-core';
 
 import {rigoRpcMethods} from '../../../src/index';
-import {DEV_SERVER} from "./fixtures/test_constant";
 import {testData} from "./fixtures/account";
 import {AddressBase, HexString} from "rweb3-types/lib/types";
+import {getDevServer} from "../e2e_utils";
 
 describe('account', () => {
 
@@ -37,7 +37,7 @@ describe('abciQuery develop server call', () => {
     let requestManager: RWeb3RequestManager;
 
     beforeAll(() => {
-        requestManager = new RWeb3RequestManager(DEV_SERVER);
+        requestManager = new RWeb3RequestManager(getDevServer());
     });
 
     it.each(testData)(

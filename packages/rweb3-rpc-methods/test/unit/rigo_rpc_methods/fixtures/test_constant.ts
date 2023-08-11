@@ -1,1 +1,0 @@
-export const DEV_SERVER: string = 'http://192.168.252.60:26657';

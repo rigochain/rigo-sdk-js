@@ -278,7 +278,7 @@ export async function genesis(requestManager: RWeb3RequestManager) {
 
 export async function genesisChunked(requestManager: RWeb3RequestManager, chunk: number | string) {
 
-    if(typeof chunk === 'number') {
+    if (typeof chunk === 'number') {
         chunk = chunk.toString(10);
     }
 
@@ -305,7 +305,10 @@ export async function numUnconfirmedTxs(requestManager: RWeb3RequestManager) {
     });
 }
 
-export async function proposals(requestManager: RWeb3RequestManager, txhash: string) {
+export async function proposals(requestManager: RWeb3RequestManager, tx: string) {
+
+    let txhash = Buffer.from(tx).toString('base64')
+
     return requestManager.send({
         method: 'proposals',
         params: {
@@ -323,7 +326,12 @@ export async function rule(requestManager: RWeb3RequestManager) {
 }
 
 
-export async function stakes(requestManager: RWeb3RequestManager, addr: string | Bytes) {
+export async function stakes(requestManager: RWeb3RequestManager, addr: string) {
+
+    if (!addr.startsWith('0x')) {
+        addr = '0x' + addr;
+    }
+
     return requestManager.send({
         method: 'stakes',
         params: {addr: addr},
@@ -331,14 +339,8 @@ export async function stakes(requestManager: RWeb3RequestManager, addr: string |
 }
 
 
-export async function status(requestManager: RWeb3RequestManager) {
-    return requestManager.send({
-        method: 'status',
-        params: {},
-    });
-}
 
-
+// TODO : WebSocket 전용
 export async function subscribe(requestManager: RWeb3RequestManager, query: string) {
     return requestManager.send({
         method: 'subscribe',
@@ -349,6 +351,7 @@ export async function subscribe(requestManager: RWeb3RequestManager, query: stri
 }
 
 export async function tx(requestManager: RWeb3RequestManager, txhash: string | Uint8Array) {
+
     return requestManager.send({
         method: 'tx',
         params: {hash: Buffer.from(txhash).toString('base64'), prove: true},
@@ -356,7 +359,18 @@ export async function tx(requestManager: RWeb3RequestManager, txhash: string | U
 }
 
 
-export async function txSearch(requestManager: RWeb3RequestManager, query: string, prove: boolean, page: number, per_page: number, order_by: string) {
+
+export async function txSearch(requestManager: RWeb3RequestManager, query: string, prove: boolean, page: number | string, per_page: number | string, order_by: string) {
+
+    if (typeof page === 'number') {
+        page = page.toString(10);
+    }
+
+    if (typeof per_page === 'number') {
+        per_page = per_page.toString(10);
+    }
+
+
     return requestManager.send({
         method: 'tx_search',
         params: {
@@ -369,7 +383,12 @@ export async function txSearch(requestManager: RWeb3RequestManager, query: strin
     });
 }
 
-export async function unconfirmedTxs(requestManager: RWeb3RequestManager, limit: number) {
+export async function unconfirmedTxs(requestManager: RWeb3RequestManager, limit: number | string) {
+
+    if(typeof limit === 'number') {
+        limit = limit.toString(10);
+    }
+
     return requestManager.send({
         method: 'unconfirmed_txs',
         params: {
@@ -378,6 +397,18 @@ export async function unconfirmedTxs(requestManager: RWeb3RequestManager, limit:
     });
 }
 
+export async function status(requestManager: RWeb3RequestManager) {
+    return requestManager.send({
+        method: 'status',
+        params: {},
+    });
+}
+
+
+
+
+
+// TODO : WEB SOCKET 전용
 export async function unsubscribe(requestManager: RWeb3RequestManager, query: string) {
     return requestManager.send({
         method: 'unsubscribe',
@@ -387,6 +418,8 @@ export async function unsubscribe(requestManager: RWeb3RequestManager, query: st
     });
 }
 
+
+// TODO : WEB SOCKET 전용
 export async function unsubscribeAll(requestManager: RWeb3RequestManager) {
     return requestManager.send({
         method: 'unsubscribe_all',

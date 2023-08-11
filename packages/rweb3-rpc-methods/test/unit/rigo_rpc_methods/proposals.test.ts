@@ -1,10 +1,10 @@
 import {RWeb3RequestManager} from 'rweb3-core';
 
 import {rigoRpcMethods} from '../../../src/index';
-import {testData} from "./fixtures/num_unconfirmed_txs";
+import {testData} from "./fixtures/proposals";
 import {getDevServer} from "../e2e_utils";
 
-describe('numUnconfirmedTxs', () => {
+describe('proposals', () => {
 
     let requestManagerSendSpy: jest.Mock;
     let requestManager: RWeb3RequestManager;
@@ -15,20 +15,23 @@ describe('numUnconfirmedTxs', () => {
         requestManager.send = requestManagerSendSpy;
     });
 
-    it('should call requestManager.send with numUnconfirmedTxs method', async () => {
+    it('should call requestManager.send with proposals method', async () => {
 
+        let txHash = "0x1234567890123456789012345678901234567890123456789012345678901234";
 
-        await rigoRpcMethods.numUnconfirmedTxs(requestManager);
+        await rigoRpcMethods.proposals(requestManager, txHash);
 
         expect(requestManagerSendSpy).toHaveBeenCalledWith({
-            method: 'num_unconfirmed_txs',
-            params: {},
+            method: 'proposals',
+            params: {
+                txhash: Buffer.from(txHash).toString('base64')
+            },
         });
     });
 });
 
 
-describe('numUnconfirmedTxs develop server call', () => {
+describe('proposals develop server call', () => {
 
     let requestManager: RWeb3RequestManager;
 
@@ -37,12 +40,11 @@ describe('numUnconfirmedTxs develop server call', () => {
     });
 
     it.each(testData)(
-        'numUnconfirmedTxs should call success return',
+        'proposals should call success return',
         async (_parameter, _response) => {
 
-            let returnValue = await rigoRpcMethods.numUnconfirmedTxs(requestManager);
-
-            console.log("numUnconfirmedTxs", JSON.stringify(returnValue));
+            let returnValue = await rigoRpcMethods.proposals(requestManager, _parameter.tx);
+            console.log("proposals", JSON.stringify(returnValue));
 
             expect(returnValue).toEqual(
                 _response

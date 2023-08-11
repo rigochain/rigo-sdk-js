@@ -1,10 +1,10 @@
 import {RWeb3RequestManager} from 'rweb3-core';
 
 import {rigoRpcMethods} from '../../../src/index';
-import {testData} from "./fixtures/net_info";
+import {testData} from "./fixtures/tx_search";
 import {getDevServer} from "../e2e_utils";
 
-describe('netInfo', () => {
+describe('unconfirmedTxs', () => {
 
     let requestManagerSendSpy: jest.Mock;
     let requestManager: RWeb3RequestManager;
@@ -15,20 +15,23 @@ describe('netInfo', () => {
         requestManager.send = requestManagerSendSpy;
     });
 
-    it('should call requestManager.send with netInfo method', async () => {
+    it('should call requestManager.send with unconfirmedTxs method', async () => {
 
+        let limit = 5
 
-        await rigoRpcMethods.netInfo(requestManager);
+        await rigoRpcMethods.unconfirmedTxs(requestManager, limit);
 
         expect(requestManagerSendSpy).toHaveBeenCalledWith({
-            method: 'net_info',
-            params: {},
+            method: 'unconfirmed_txs',
+            params: {
+                limit: limit.toString(10)
+            }
         });
     });
 });
 
 
-describe('netInfo develop server call', () => {
+describe('unconfirmedTxs develop server call', () => {
 
     let requestManager: RWeb3RequestManager;
 
@@ -37,14 +40,13 @@ describe('netInfo develop server call', () => {
     });
 
     it.each(testData)(
-        'netInfo should call success return',
+        'unconfirmedTxs should call success return',
         async (_parameter, _response) => {
 
-            let returnValue = await rigoRpcMethods.netInfo(requestManager);
+            let returnValue = await rigoRpcMethods.unconfirmedTxs(requestManager, _parameter.limit);
 
-            console.log("netInfo", JSON.stringify(returnValue));
+            console.log("unconfirmedTxs", JSON.stringify(returnValue));
 
-            // 값이 수시로 바뀜
             // expect(returnValue).toEqual(
             //     _response
             // )

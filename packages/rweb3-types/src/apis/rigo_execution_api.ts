@@ -32,7 +32,7 @@ import {
     ConsensusParams,
     ConsensusState,
     Delegatee,
-    DumpConsensusState, Genesis, GenesisChunked, NetInfo
+    DumpConsensusState, Genesis, GenesisChunked, NetInfo, NumUnconfirmedTxs, TxSearch, UnconfirmedTxs
 } from '../rigo_types';
 
 export type AddressAPI = AddressBase<HexString>;
@@ -47,6 +47,8 @@ export type RigoExecutionAPI = {
     block_results: (height: string) => BlockResult;
     block_search: (query: string, page: string, per_page: string, order_by: string) => BlockSearch;
     blockchain: (minHeight: string, maxHeight: string) => Blockcahin;
+    broadcast_evidence: (evidence: string) => ResponseData<null>;
+    broadcast_tx_async: (tx: string) => ResponseData<null>;
     check_tx: (tx: string) => CheckTx;
     commit: (height: string) => Commit;
     consensus_params: (height: string) => ConsensusParams;
@@ -56,13 +58,13 @@ export type RigoExecutionAPI = {
     genesis: () => Genesis;
     genesis_chunked: () => GenesisChunked;
     net_info: () => NetInfo;
-
-    validators: (height: string) => Validators;
-    stakes: (addr: string) => StakeValue;
-    // delegatee: (addr: string) => StakeValue;     TODO : Response 알아야 함
-    // broadcast_tx_sync : (tx: string): string;    TODO : Response 알아야 함
-
-    tx: (txhash: string) => Transaction;
-
+    num_unconfirmed_txs: () => NumUnconfirmedTxs;
+    // TODO :  proposal: (proposalId: string) => Proposal; 필요함
     rule: () => Rule;
+    stakes: (addr: string) => StakeValue;
+    tx: (txhash: string) => Transaction;
+    tx_search: (query: string, prove: boolean, page: string, per_page: string, order_by: string) => TxSearch;
+    validators: (height: string) => Validators;
+    unconfirmed_txs: (limit: string) => UnconfirmedTxs;
+
 };
