@@ -225,8 +225,6 @@ export async function unconfirmedTxs(requestManager: RWeb3RequestManager, limit:
 }
 
 
-
-
 export async function abciInfo(requestManager: RWeb3RequestManager) {
     return requestManager.send({
         method: 'abci_info',
@@ -265,33 +263,13 @@ export async function txSearch(requestManager: RWeb3RequestManager, query: strin
 }
 
 
-export async function tx(requestManager: RWeb3RequestManager, hash: string | Uint8Array) : Promise<TxResponse> {
+export async function tx(requestManager: RWeb3RequestManager, hash: string | Uint8Array): Promise<TxResponse> {
     return requestManager.send({
         method: 'tx',
         params: {hash: Buffer.from(hash).toString('base64'), prove: true},
     });
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+}
 
 
 export async function broadcastTxCommit(requestManager: RWeb3RequestManager, tx: string) {
@@ -436,7 +414,6 @@ export async function subscribe(requestManager: RWeb3RequestManager, query: stri
             query: query
         },
     });
-}
 }
 
 

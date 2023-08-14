@@ -91,7 +91,7 @@ export async function consensusParams(web3Context: RWeb3Context<RigoExecutionAPI
     return rigoRpcMethods.consensusParams(web3Context.requestManager, height);
 }
 
-export async function unconfirmedTxs(web3Context: RWeb3Context<RigoExecutionAPI>, limit?: number | string) {
+export async function unconfirmedTxs(web3Context: RWeb3Context<RigoExecutionAPI>, limit: number | string) {
     return rigoRpcMethods.unconfirmedTxs(web3Context.requestManager, limit);
 }
 

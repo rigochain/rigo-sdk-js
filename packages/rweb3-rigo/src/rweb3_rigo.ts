@@ -17,7 +17,6 @@
 import {RWeb3Context} from 'rweb3-core';
 import {Bytes, TrxProto} from 'rweb3-utils';
 import * as rpcMethodsWrappers from './rpc_method_wrappers.js';
-import {consensusParams, unconfirmedTxs} from "./rpc_method_wrappers.js";
 
 export class RWeb3Rigo extends RWeb3Context {
     public constructor() {
@@ -85,7 +84,7 @@ export class RWeb3Rigo extends RWeb3Context {
         return rpcMethodsWrappers.consensusParams(this, height);
     }
 
-    unconfirmedTxs(limit?: number) {
+    unconfirmedTxs(limit: number) {
         return rpcMethodsWrappers.unconfirmedTxs(this, limit);
     }
 

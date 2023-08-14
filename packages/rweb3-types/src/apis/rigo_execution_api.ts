@@ -18,18 +18,15 @@ import {HexString} from '../primitives_types.js';
 import {
     AddressBase,
     StakeValue,
-    Transaction,
     Rule,
     AbciInfo,
     ResponseData,
     CheckTx,
     Delegatee,
     NumUnconfirmedTxs,
-    TxSearch,
 } from '../rigo_types';
 
 import * as responses from "../responses";
-import {TxSearchResponse} from "../responses";
 
 export type AddressAPI = AddressBase<HexString>;
 
