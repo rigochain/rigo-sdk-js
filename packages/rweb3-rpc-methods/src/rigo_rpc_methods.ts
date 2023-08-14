@@ -25,7 +25,12 @@ import {
     NetInfoResponse,
     StatusResponse,
     GenesisChunkedResponse,
-    ValidatorsResponse, DumpConsensusStateResponse
+    ValidatorsResponse,
+    DumpConsensusStateResponse,
+    ConsensusStateResponse,
+    ConsensusParams,
+    NumUnconfirmedTxsResponse,
+    UnconfirmedTxsResponse, TxResponse
 } from "rweb3-types";
 
 
@@ -176,7 +181,6 @@ export async function genesisChunked(requestManager: RWeb3RequestManager, chunk:
     });
 }
 
-
 export async function dumpConsensusState(requestManager: RWeb3RequestManager): Promise<DumpConsensusStateResponse> {
     return requestManager.send({
         method: 'dump_consensus_state',
@@ -185,12 +189,109 @@ export async function dumpConsensusState(requestManager: RWeb3RequestManager): P
 }
 
 
+export async function consensusState(requestManager: RWeb3RequestManager): Promise<ConsensusStateResponse> {
+    return requestManager.send({
+        method: 'consensus_state',
+        params: {},
+    });
+}
+
+
+export async function consensusParams(requestManager: RWeb3RequestManager, height?: number | string): Promise<ConsensusParams> {
+
+    if (height && typeof height === 'number') {
+        height = height.toString(10);
+    }
+
+    return requestManager.send({
+        method: 'consensus_params',
+        params: {height: height},
+    });
+}
+
+
+export async function unconfirmedTxs(requestManager: RWeb3RequestManager, limit: number | string): Promise<UnconfirmedTxsResponse> {
+
+    if (typeof limit === 'number') {
+        limit = limit.toString(10);
+    }
+
+    return requestManager.send({
+        method: 'unconfirmed_txs',
+        params: {
+            limit: limit
+        },
+    });
+}
+
+
+
+
 export async function abciInfo(requestManager: RWeb3RequestManager) {
     return requestManager.send({
         method: 'abci_info',
         params: {},
     });
 }
+
+export async function numUnconfirmedTxs(requestManager: RWeb3RequestManager): Promise<NumUnconfirmedTxsResponse> {
+    return requestManager.send({
+        method: 'num_unconfirmed_txs',
+        params: {},
+    });
+}
+
+
+export async function txSearch(requestManager: RWeb3RequestManager, query: string, prove?: boolean, page?: number | string, per_page?: number | string, order_by?: string) {
+
+    if (page && typeof page === 'number') {
+        page = page.toString(10);
+    }
+
+    if (per_page && typeof per_page === 'number') {
+        per_page = per_page.toString(10);
+    }
+
+    return requestManager.send({
+        method: 'tx_search',
+        params: {
+            query: query,
+            prove: prove,
+            page: page,
+            per_page: per_page,
+            order_by: order_by
+        },
+    });
+}
+
+
+export async function tx(requestManager: RWeb3RequestManager, hash: string | Uint8Array) : Promise<TxResponse> {
+    return requestManager.send({
+        method: 'tx',
+        params: {hash: Buffer.from(hash).toString('base64'), prove: true},
+    });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 export async function broadcastTxCommit(requestManager: RWeb3RequestManager, tx: string) {
@@ -286,38 +387,10 @@ export async function checkTx(requestManager: RWeb3RequestManager, tx: string) {
 }
 
 
-export async function consensusParams(requestManager: RWeb3RequestManager, height?: number | string) {
-
-    if (height && typeof height === 'number') {
-        height = height.toString(10);
-    }
-
-    return requestManager.send({
-        method: 'consensus_params',
-        params: {height: height},
-    });
-}
-
-export async function consensusState(requestManager: RWeb3RequestManager) {
-
-    return requestManager.send({
-        method: 'consensus_state',
-        params: {},
-    });
-}
-
-
 export async function delegatee(requestManager: RWeb3RequestManager, addr: string) {
     return requestManager.send({
         method: 'delegatee',
         params: {addr: addr},
-    });
-}
-
-export async function numUnconfirmedTxs(requestManager: RWeb3RequestManager) {
-    return requestManager.send({
-        method: 'num_unconfirmed_txs',
-        params: {},
     });
 }
 
@@ -364,51 +437,6 @@ export async function subscribe(requestManager: RWeb3RequestManager, query: stri
         },
     });
 }
-
-export async function tx(requestManager: RWeb3RequestManager, txhash: string | Uint8Array) {
-
-    return requestManager.send({
-        method: 'tx',
-        params: {hash: Buffer.from(txhash).toString('base64'), prove: true},
-    });
-}
-
-
-export async function txSearch(requestManager: RWeb3RequestManager, query: string, prove: boolean, page: number | string, per_page: number | string, order_by: string) {
-
-    if (typeof page === 'number') {
-        page = page.toString(10);
-    }
-
-    if (typeof per_page === 'number') {
-        per_page = per_page.toString(10);
-    }
-
-
-    return requestManager.send({
-        method: 'tx_search',
-        params: {
-            query: query,
-            prove: prove,
-            page: page,
-            per_page: per_page,
-            order_by: order_by
-        },
-    });
-}
-
-export async function unconfirmedTxs(requestManager: RWeb3RequestManager, limit: number | string) {
-
-    if (typeof limit === 'number') {
-        limit = limit.toString(10);
-    }
-
-    return requestManager.send({
-        method: 'unconfirmed_txs',
-        params: {
-            limit: limit
-        },
-    });
 }
 
 

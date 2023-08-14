@@ -29,11 +29,14 @@ import {
 } from '../rigo_types';
 
 import * as responses from "../responses";
+import {TxSearchResponse} from "../responses";
 
 export type AddressAPI = AddressBase<HexString>;
 
 /* eslint-disable camelcase */
 export type RigoExecutionAPI = {
+
+    // start tendermint apis
     health: () => void;
     status: () => responses.StatusResponse;
     net_info: () => responses.NetInfoResponse;
@@ -45,17 +48,15 @@ export type RigoExecutionAPI = {
     validators: (height: string) => responses.ValidatorsResponse;
     genesis: () => responses.GenesisResponse;
     genesis_chunked: (chunk: number | string) => responses.GenesisChunkedResponse;
-
     dump_consensus_state: () => responses.DumpConsensusStateResponse;
-
-
     consensus_state: () => responses.ConsensusStateResponse;
-    consensus_params: (height: string) => responses.ConsensusParams;
-    unconfirmed_txs: (limit: string) => responses.UnconfirmedTxsResponse;
-    tx_search: (query: string, prove: boolean, page: string, per_page: string, order_by: string) => TxSearch;
+    consensus_params: (height?: number | string) => responses.ConsensusParams;
+    unconfirmed_txs: (limit?: number | string) => responses.UnconfirmedTxsResponse;
+    tx_search: (query: string, prove?: boolean, page?: number | string, per_page?: number | string, order_by?: string) => responses.TxSearchResponse;
     block_search: (query: string, page: string, per_page: string, order_by: string) => responses.BlockSearchResponse;
-    tx: (txhash: string) => Transaction;
+    tx: (hash: string) => responses.TxResponse;
 
+    // end tendermint apis
 
 
 

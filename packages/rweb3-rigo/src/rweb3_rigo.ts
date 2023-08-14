@@ -17,6 +17,7 @@
 import {RWeb3Context} from 'rweb3-core';
 import {Bytes, TrxProto} from 'rweb3-utils';
 import * as rpcMethodsWrappers from './rpc_method_wrappers.js';
+import {consensusParams, unconfirmedTxs} from "./rpc_method_wrappers.js";
 
 export class RWeb3Rigo extends RWeb3Context {
     public constructor() {
@@ -71,6 +72,33 @@ export class RWeb3Rigo extends RWeb3Context {
     genesisChunked(chunk: number | string) {
         return rpcMethodsWrappers.genesisChunked(this, chunk);
     }
+
+    dumpConsensusState() {
+        return rpcMethodsWrappers.dumpConsensusState(this);
+    }
+
+    consensusState() {
+        return rpcMethodsWrappers.consensusState(this);
+    }
+
+    consensusParams(height?: string | number) {
+        return rpcMethodsWrappers.consensusParams(this, height);
+    }
+
+    unconfirmedTxs(limit?: number) {
+        return rpcMethodsWrappers.unconfirmedTxs(this, limit);
+    }
+
+    txSearch(query: string, prove?: boolean, page?: number, per_page?: number) {
+        return rpcMethodsWrappers.txSearch(this, query, prove, page, per_page);
+    }
+
+    tx(hash: string | Uint8Array) {
+        return rpcMethodsWrappers.tx(this, hash);
+    }
+
+
+
 
 
     account(addr: string) {

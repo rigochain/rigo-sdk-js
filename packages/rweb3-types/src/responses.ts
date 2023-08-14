@@ -445,7 +445,7 @@ export interface NetInfoResponse {
 }
 
 
-
+// TODO : 재 작성
 export interface DumpConsensusStateResponse {
     "round_state": {
         "height": string,
@@ -491,9 +491,7 @@ export interface DumpConsensusStateResponse {
     "peers": []
 }
 
-
-
-
+// TODO : 재 작성
 export interface ConsensusStateResponse {
     "round_state": {
         "height/round/step": string,
@@ -512,7 +510,7 @@ export interface ConsensusStateResponse {
     }
 }
 
-
+// TODO : 재 작성
 export interface UnconfirmedTxsResponse {
     "n_txs": string,
     "total": string,

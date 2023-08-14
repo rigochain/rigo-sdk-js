@@ -75,11 +75,33 @@ export async function genesis(web3Context: RWeb3Context<RigoExecutionAPI>) {
 }
 
 
-export async function genesisChunked(web3Context: RWeb3Context<RigoExecutionAPI>,  chunk: number | string) {
+export async function genesisChunked(web3Context: RWeb3Context<RigoExecutionAPI>, chunk: number | string) {
     return rigoRpcMethods.genesisChunked(web3Context.requestManager, chunk);
 }
 
+export async function dumpConsensusState(web3Context: RWeb3Context<RigoExecutionAPI>) {
+    return rigoRpcMethods.dumpConsensusState(web3Context.requestManager);
+}
 
+export async function consensusState(web3Context: RWeb3Context<RigoExecutionAPI>) {
+    return rigoRpcMethods.consensusState(web3Context.requestManager);
+}
+
+export async function consensusParams(web3Context: RWeb3Context<RigoExecutionAPI>, height? : number | string) {
+    return rigoRpcMethods.consensusParams(web3Context.requestManager, height);
+}
+
+export async function unconfirmedTxs(web3Context: RWeb3Context<RigoExecutionAPI>, limit?: number | string) {
+    return rigoRpcMethods.unconfirmedTxs(web3Context.requestManager, limit);
+}
+
+export async function txSearch(web3Context: RWeb3Context<RigoExecutionAPI>, query: string, prove?: boolean, page?: number | string, per_page?: number | string, order_by?: string) {
+    return rigoRpcMethods.txSearch(web3Context.requestManager, query, prove, page, per_page, order_by);
+}
+
+export async function tx(web3Context: RWeb3Context<RigoExecutionAPI>, hash: string | Uint8Array) {
+    return rigoRpcMethods.tx(web3Context.requestManager, hash);
+}
 
 
 
@@ -94,14 +116,6 @@ export async function delegatee(web3Context: RWeb3Context<RigoExecutionAPI>, add
 export async function broadcastTrxSync(web3Context: RWeb3Context<RigoExecutionAPI>, tx: TrxProto) {
     return rigoRpcMethods.broadcastTrxSync(web3Context.requestManager, tx);
 }
-
-export async function tx(
-    web3Context: RWeb3Context<RigoExecutionAPI>,
-    txhash: string | Uint8Array,
-) {
-    return rigoRpcMethods.tx(web3Context.requestManager, txhash);
-}
-
 
 export async function rule(web3Context: RWeb3Context<RigoExecutionAPI>) {
     return rigoRpcMethods.rule(web3Context.requestManager);
