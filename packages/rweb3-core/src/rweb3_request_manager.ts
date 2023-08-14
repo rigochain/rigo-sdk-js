@@ -15,7 +15,7 @@
 */
 
 import HttpProvider from 'rweb3-providers-http';
-import { isNullish, jsonRpc, isResponseRpcError } from 'rweb3-utils';
+import {isNullish, jsonRpc, isResponseRpcError} from 'rweb3-utils';
 import {
     RigoExecutionAPI,
     RWeb3APISpec,
@@ -80,7 +80,7 @@ export class RWeb3RequestManager<API extends RWeb3APISpec = RigoExecutionAPI> {
         Method extends RWeb3APIMethod<API>,
         ResponseType = RWeb3APIReturnType<API, Method>,
     >(request: RWeb3APIRequest<API, Method>): Promise<ResponseType> {
-        const { provider } = this;
+        const {provider} = this;
 
         const payload = jsonRpc.toPayload(request);
 
@@ -107,7 +107,7 @@ export class RWeb3RequestManager<API extends RWeb3APISpec = RigoExecutionAPI> {
     private _processJsonRpcResponse<ResultType, ErrorType, RequestType>(
         payload: JsonRpcPayload<RequestType>,
         response: JsonRpcResponse<ResultType, ErrorType>,
-        { legacy, error }: { legacy: boolean; error: boolean },
+        {legacy, error}: { legacy: boolean; error: boolean },
     ): JsonRpcResponse<ResultType> | never {
         if (isNullish(response)) {
             return this._buildResponse(
@@ -206,10 +206,10 @@ export class RWeb3RequestManager<API extends RWeb3APISpec = RigoExecutionAPI> {
             id: jsonRpc.isBatchRequest(payload)
                 ? payload[0].id
                 : 'id' in payload
-                ? payload.id
-                : // Have to use the null here explicitly
-                  // eslint-disable-next-line no-null/no-null
-                  null,
+                    ? payload.id
+                    : // Have to use the null here explicitly
+                      // eslint-disable-next-line no-null/no-null
+                    null,
         };
 
         if (error) {

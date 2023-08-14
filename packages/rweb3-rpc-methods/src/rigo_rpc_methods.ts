@@ -16,14 +16,174 @@
 
 import {RWeb3RequestManager} from 'rweb3-core';
 import {Bytes, TrxProto} from 'rweb3-utils';
+import {
+    BlockchainResponse,
+    BlockResponse,
+    BlockResultsResponse,
+    CommitResponse,
+    GenesisResponse,
+    NetInfoResponse,
+    StatusResponse,
+    GenesisChunkedResponse,
+    ValidatorsResponse, DumpConsensusStateResponse
+} from "rweb3-types";
 
 
-export async function health(requestManager: RWeb3RequestManager) {
+export async function health(requestManager: RWeb3RequestManager): Promise<void> {
     return requestManager.send({
         method: 'health',
         params: {},
     })
 }
+
+export async function status(requestManager: RWeb3RequestManager): Promise<StatusResponse> {
+    return requestManager.send({
+        method: 'status',
+        params: {},
+    });
+}
+
+export async function netInfo(requestManager: RWeb3RequestManager): Promise<NetInfoResponse> {
+    return requestManager.send({
+        method: 'net_info',
+        params: {},
+    });
+}
+
+
+export async function blockchain(requestManager: RWeb3RequestManager, minHeight?: number | string, maxHeight?: number | string): Promise<BlockchainResponse> {
+
+    if (minHeight && typeof minHeight === 'number') {
+        minHeight = minHeight.toString(10);
+    }
+
+    if (maxHeight && typeof maxHeight === 'number') {
+        maxHeight = maxHeight.toString(10);
+    }
+
+    return requestManager.send({
+        method: 'blockchain',
+        params: {
+            minHeight: minHeight,
+            maxHeight: maxHeight
+        }
+    });
+}
+
+
+export async function block(requestManager: RWeb3RequestManager, height?: string | number): Promise<BlockResponse> {
+
+    if (height && typeof height === 'number') {
+        height = height.toString(10);
+    }
+
+    return requestManager.send({
+        method: 'block',
+        params: {height: height},
+    });
+}
+
+
+// TODO : 여기 테스트 파라미터 알아 내야 함.
+export async function blockByHash(requestManager: RWeb3RequestManager, hash: string | Uint8Array): Promise<BlockResponse> {
+
+    if (typeof hash === 'string') {
+        hash = Bytes.fromHex(hash)
+    }
+
+    return requestManager.send({
+        method: 'block_by_hash',
+        params: {hash: Buffer.from(hash).toString('base64')},
+    });
+}
+
+
+export async function blockResults(requestManager: RWeb3RequestManager, height?: string | number): Promise<BlockResultsResponse> {
+
+    if (height && typeof height === 'number') {
+        height = height.toString(10);
+    }
+
+    return requestManager.send({
+        method: 'block_results',
+        params: {height: height},
+    });
+}
+
+
+export async function commit(requestManager: RWeb3RequestManager, height?: number | string): Promise<CommitResponse> {
+
+    if (height && typeof height === 'number') {
+        height = height.toString(10);
+    }
+
+    return requestManager.send({
+        method: 'commit',
+        params: {height: height},
+    });
+}
+
+
+export async function validators(
+    requestManager: RWeb3RequestManager,
+    height?: number | string,
+    page?: number | string,
+    per_page?: number | string
+): Promise<ValidatorsResponse> {
+
+    if (height && typeof height === 'number') {
+        height = height.toString(10);
+    }
+
+    if (page && typeof page === 'number') {
+        page = page.toString(10);
+    }
+
+    if (per_page && typeof per_page === 'number') {
+        per_page = per_page.toString(10);
+    }
+
+    return requestManager.send({
+        method: 'validators',
+        params: {
+            height: height,
+            page: page,
+            per_page: per_page
+        },
+    });
+}
+
+
+export async function genesis(requestManager: RWeb3RequestManager): Promise<GenesisResponse> {
+    return requestManager.send({
+        method: 'genesis',
+        params: {},
+    });
+}
+
+
+export async function genesisChunked(requestManager: RWeb3RequestManager, chunk: number | string): Promise<GenesisChunkedResponse> {
+
+    if (typeof chunk === 'number') {
+        chunk = chunk.toString(10);
+    }
+
+    return requestManager.send({
+        method: 'genesis_chunked',
+        params: {
+            chunk: chunk
+        },
+    });
+}
+
+
+export async function dumpConsensusState(requestManager: RWeb3RequestManager): Promise<DumpConsensusStateResponse> {
+    return requestManager.send({
+        method: 'dump_consensus_state',
+        params: {},
+    });
+}
+
 
 export async function abciInfo(requestManager: RWeb3RequestManager) {
     return requestManager.send({
@@ -71,43 +231,6 @@ export async function account(requestManager: RWeb3RequestManager, addr: string)
     });
 }
 
-export async function block(
-    requestManager: RWeb3RequestManager,
-    height: string | number,
-) {
-
-    if (typeof height === 'number') {
-        height = height.toString(10);
-    }
-
-    return requestManager.send({
-        method: 'block',
-        params: {height: height},
-    });
-}
-
-
-export async function blockByHash(requestManager: RWeb3RequestManager, hash: Bytes) {
-
-    return requestManager.send({
-        method: 'block_by_hash',
-        params: {hash: Buffer.from(hash).toString('base64')},
-    });
-}
-
-
-export async function blockResults(requestManager: RWeb3RequestManager, height: string | number) {
-
-    if (typeof height === 'number') {
-        height = height.toString(10);
-    }
-
-    return requestManager.send({
-        method: 'block_results',
-        params: {height: height},
-    });
-}
-
 export async function blockSearch(requestManager: RWeb3RequestManager, query: string, page?: number | string, per_page?: number | string, order_by?: string) {
 
     if (typeof page === 'number') {
@@ -128,27 +251,6 @@ export async function blockSearch(requestManager: RWeb3RequestManager, query: st
         },
     });
 }
-
-
-export async function blockchain(requestManager: RWeb3RequestManager, minHeight?: number | string, maxHeight?: number | string) {
-
-    if (minHeight && typeof minHeight === 'number') {
-        minHeight = minHeight.toString(10);
-    }
-
-    if (maxHeight && typeof maxHeight === 'number') {
-        maxHeight = maxHeight.toString(10);
-    }
-
-    return requestManager.send({
-        method: 'blockchain',
-        params: {
-            minHeight: minHeight,
-            maxHeight: maxHeight
-        }
-    });
-}
-
 
 export async function broadcastEvidence(requestManager: RWeb3RequestManager, evidence: string) {
     return requestManager.send({
@@ -184,19 +286,6 @@ export async function checkTx(requestManager: RWeb3RequestManager, tx: string) {
 }
 
 
-export async function commit(requestManager: RWeb3RequestManager, height?: number | string) {
-
-    if (height && typeof height === 'number') {
-        height = height.toString(10);
-    }
-
-    return requestManager.send({
-        method: 'commit',
-        params: {height: height},
-    });
-}
-
-
 export async function consensusParams(requestManager: RWeb3RequestManager, height?: number | string) {
 
     if (height && typeof height === 'number') {
@@ -222,42 +311,6 @@ export async function delegatee(requestManager: RWeb3RequestManager, addr: strin
     return requestManager.send({
         method: 'delegatee',
         params: {addr: addr},
-    });
-}
-
-export async function dumpConsensusState(requestManager: RWeb3RequestManager) {
-    return requestManager.send({
-        method: 'dump_consensus_state',
-        params: {},
-    });
-}
-
-export async function genesis(requestManager: RWeb3RequestManager) {
-    return requestManager.send({
-        method: 'genesis',
-        params: {},
-    });
-}
-
-export async function genesisChunked(requestManager: RWeb3RequestManager, chunk: number | string) {
-
-    if (typeof chunk === 'number') {
-        chunk = chunk.toString(10);
-    }
-
-    return requestManager.send({
-        method: 'genesis_chunked',
-        params: {
-            chunk: chunk
-        },
-    });
-}
-
-
-export async function netInfo(requestManager: RWeb3RequestManager) {
-    return requestManager.send({
-        method: 'net_info',
-        params: {},
     });
 }
 
@@ -302,7 +355,6 @@ export async function stakes(requestManager: RWeb3RequestManager, addr: string) 
 }
 
 
-
 // TODO : WebSocket 전용
 export async function subscribe(requestManager: RWeb3RequestManager, query: string) {
     return requestManager.send({
@@ -320,7 +372,6 @@ export async function tx(requestManager: RWeb3RequestManager, txhash: string | U
         params: {hash: Buffer.from(txhash).toString('base64'), prove: true},
     });
 }
-
 
 
 export async function txSearch(requestManager: RWeb3RequestManager, query: string, prove: boolean, page: number | string, per_page: number | string, order_by: string) {
@@ -348,7 +399,7 @@ export async function txSearch(requestManager: RWeb3RequestManager, query: strin
 
 export async function unconfirmedTxs(requestManager: RWeb3RequestManager, limit: number | string) {
 
-    if(typeof limit === 'number') {
+    if (typeof limit === 'number') {
         limit = limit.toString(10);
     }
 
@@ -359,16 +410,6 @@ export async function unconfirmedTxs(requestManager: RWeb3RequestManager, limit:
         },
     });
 }
-
-export async function status(requestManager: RWeb3RequestManager) {
-    return requestManager.send({
-        method: 'status',
-        params: {},
-    });
-}
-
-
-
 
 
 // TODO : WEB SOCKET 전용
@@ -390,16 +431,6 @@ export async function unsubscribeAll(requestManager: RWeb3RequestManager) {
     });
 }
 
-
-export async function validators(
-    requestManager: RWeb3RequestManager,
-    height: number | string,
-) {
-    return requestManager.send({
-        method: 'validators',
-        params: {height: height},
-    });
-}
 
 export async function broadcastTrxSync(requestManager: RWeb3RequestManager, tx: TrxProto) {
 

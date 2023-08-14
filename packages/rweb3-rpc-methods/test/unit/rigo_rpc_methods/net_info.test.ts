@@ -3,6 +3,7 @@ import {RWeb3RequestManager} from 'rweb3-core';
 import {rigoRpcMethods} from '../../../src/index';
 import {testData} from "./fixtures/net_info";
 import {getDevServer} from "../e2e_utils";
+import {NetInfoResponse} from "rweb3-types/lib/types";
 
 describe('netInfo', () => {
 
@@ -40,14 +41,14 @@ describe('netInfo develop server call', () => {
         'netInfo should call success return',
         async (_parameter, _response) => {
 
-            let returnValue = await rigoRpcMethods.netInfo(requestManager);
+            let returnValue: NetInfoResponse = await rigoRpcMethods.netInfo(requestManager);
 
             console.log("netInfo", JSON.stringify(returnValue));
-
-            // 값이 수시로 바뀜
-            // expect(returnValue).toEqual(
-            //     _response
-            // )
+            
+            // returnValue 의 모든 값이 undefined 가 아닌지 확인
+            Object.values(returnValue).forEach(value => {
+                expect(value).not.toBeUndefined();
+            });
         }
     );
 });

@@ -14,8 +14,8 @@
     limitations under the License.
 */
 
-import { RWeb3Context } from 'rweb3-core';
-import { Bytes, TrxProto } from 'rweb3-utils';
+import {RWeb3Context} from 'rweb3-core';
+import {Bytes, TrxProto} from 'rweb3-utils';
 import * as rpcMethodsWrappers from './rpc_method_wrappers.js';
 
 export class RWeb3Rigo extends RWeb3Context {
@@ -28,40 +28,55 @@ export class RWeb3Rigo extends RWeb3Context {
         return this.requestManager.provider.getClientUrl();
     }
 
-    /**
-     * // 상세 주석 필요
-     * @param addr
-     **/
+    health() {
+        return rpcMethodsWrappers.health(this);
+    }
+
+    status() {
+        return rpcMethodsWrappers.status(this);
+    }
+
+    netInfo() {
+        return rpcMethodsWrappers.netInfo(this);
+    }
+
+    blockchain(minHeight?: number | string, maxHeight?: number | string) {
+        return rpcMethodsWrappers.blockchain(this, minHeight, maxHeight);
+    }
+
+    block(height?: string | number) {
+        return rpcMethodsWrappers.block(this, height);
+    }
+
+    blockByHash(hash: Uint8Array) {
+        return rpcMethodsWrappers.blockByHash(this, hash);
+    }
+
+    blockResults(height?: string | number) {
+        return rpcMethodsWrappers.blockResults(this, height);
+    }
+
+    commit(height?: string | number) {
+        return rpcMethodsWrappers.commit(this, height);
+    }
+
+    validators(height?: string | number, page?: number, per_page?: number) {
+        return rpcMethodsWrappers.validators(this, height, page, per_page);
+    }
+
+    genesis() {
+        return rpcMethodsWrappers.genesis(this);
+    }
+
+    genesisChunked(chunk: number | string) {
+        return rpcMethodsWrappers.genesisChunked(this, chunk);
+    }
+
+
     account(addr: string) {
         return rpcMethodsWrappers.account(this, addr);
     }
 
-    // syncAccount(acct: Account) {
-    //     // TODO
-    // }
-
-    /**
-     * {
-     *   block_height: '1153',
-     *   validators: [
-     *     {
-     *       address: '735DC3FC8BCCFD7810BCC14DB49234C1BCE7758B',
-     *       pub_key: [Object],
-     *       voting_power: '91000010',
-     *       proposer_priority: '0'
-     *     }
-     *   ],
-     *   count: '1',
-     *   total: '1'
-     * }
-     **/
-    validators(height: number | string) {
-        if (typeof height === 'number') {
-            height = height.toString(10);
-        }
-
-        return rpcMethodsWrappers.validators(this, height);
-    }
 
     /**
      * { key: '8DC41A86B91EB88D82489C4D037AE9FFCA65CFBF', value: null }

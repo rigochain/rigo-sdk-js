@@ -3,6 +3,7 @@ import {RWeb3RequestManager} from 'rweb3-core';
 import {rigoRpcMethods} from '../../../src/index';
 import {testData} from "./fixtures/blockchain";
 import {getDevServer} from "../e2e_utils";
+import {BlockchainResponse} from "rweb3-types/lib/types";
 
 describe('blockchain', () => {
     let requestManagerSendSpy: jest.Mock;
@@ -46,8 +47,15 @@ describe('blockchain Develop Server Call ', () => {
         'blockchain should call success return',
         async (_parameter, _return) => {
 
-            let returnValue = await rigoRpcMethods.blockchain(requestManager, _parameter.minHeight, _parameter.maxHeight);
-            console.log(returnValue)
+            let returnValue: BlockchainResponse = await rigoRpcMethods.blockchain(requestManager, _parameter.minHeight, _parameter.maxHeight);
+
+            console.log("blockchain return", returnValue)
+
+            // returnValue 의 모든 값이 undefined 가 아닌지 확인
+            Object.values(returnValue).forEach(value => {
+                expect(value).not.toBeUndefined();
+            });
+
         },
     );
 });

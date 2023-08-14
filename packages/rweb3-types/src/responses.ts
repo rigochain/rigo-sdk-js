@@ -1,10 +1,8 @@
 import {ReadonlyDate} from "readonly-date";
 
 export interface ReadonlyDateWithNanoseconds extends ReadonlyDate {
-    /* Nanoseconds after the time stored in a vanilla ReadonlyDate (millisecond granularity) */
     readonly nanoseconds?: number;
 }
-
 
 export interface ValidatorEd25519Pubkey {
     readonly algorithm: "ed25519";
@@ -16,9 +14,6 @@ export interface ValidatorSecp256k1Pubkey {
     readonly data: Uint8Array;
 }
 
-/**
- * Union type for different possible pubkeys.
- */
 export type ValidatorPubkey = ValidatorEd25519Pubkey | ValidatorSecp256k1Pubkey;
 
 export enum BlockIdFlag {
@@ -30,13 +25,11 @@ export enum BlockIdFlag {
 }
 
 export interface CommitSignature {
-    /** If this is BlockIdFlag.Absent, all other fields are expected to be unset */
-    blockIdFlag: BlockIdFlag;
-    validatorAddress: Uint8Array | undefined;
+    block_id_flag: BlockIdFlag;
+    validator_address: Uint8Array | undefined;
     timestamp: ReadonlyDateWithNanoseconds | undefined;
     signature: Uint8Array | undefined;
 }
-
 
 export type Response =
     | AbciInfoResponse
@@ -55,12 +48,13 @@ export type Response =
     | StatusResponse
     | TxResponse
     | TxSearchResponse
-    | ValidatorsResponse;
+    | ValidatorsResponse
+    | NetInfoResponse;
 
 export interface AbciInfoResponse {
     readonly data?: string;
-    readonly lastBlockHeight?: number;
-    readonly lastBlockAppHash?: Uint8Array;
+    readonly last_block_height?: number;
+    readonly last_block_app_hash?: Uint8Array;
 }
 
 export interface ProofOp {
@@ -79,34 +73,34 @@ export interface AbciQueryResponse {
     readonly proof?: QueryProof;
     readonly height?: number;
     readonly index?: number;
-    readonly code?: number; // non-falsy for errors
+    readonly code?: number;
     readonly codespace: string;
     readonly log?: string;
     readonly info: string;
 }
 
 export interface BlockResponse {
-    readonly blockId: BlockId;
+    readonly block_id: BlockId;
     readonly block: Block;
 }
 
 export interface BlockResultsResponse {
     readonly height: number;
-    readonly results: readonly TxData[];
-    readonly validatorUpdates: readonly ValidatorUpdate[];
-    readonly consensusUpdates?: ConsensusParams;
-    readonly beginBlockEvents: readonly Event[];
-    readonly endBlockEvents: readonly Event[];
+    readonly txs_results: readonly TxData[];
+    readonly begin_block_events: readonly Event[];
+    readonly end_block_events: readonly Event[];
+    readonly validator_updates: readonly ValidatorUpdate[];
+    readonly consensus_params_updates?: ConsensusParams;
 }
 
 export interface BlockSearchResponse {
     readonly blocks: readonly BlockResponse[];
-    readonly totalCount: number;
+    readonly total_count: number;
 }
 
 export interface BlockchainResponse {
-    readonly lastHeight: number;
-    readonly blockMetas: readonly BlockMeta[];
+    readonly last_height: number;
+    readonly block_metas: readonly BlockMeta[];
 }
 
 /**
@@ -131,8 +125,8 @@ export function broadcastTxSyncSuccess(res: BroadcastTxSyncResponse): boolean {
 export interface BroadcastTxCommitResponse {
     readonly height: number;
     readonly hash: Uint8Array;
-    readonly checkTx: TxData;
-    readonly deliverTx?: TxData;
+    readonly check_tx: TxData;
+    readonly deliver_tx?: TxData;
 }
 
 /**
@@ -141,36 +135,47 @@ export interface BroadcastTxCommitResponse {
  */
 export function broadcastTxCommitSuccess(response: BroadcastTxCommitResponse): boolean {
     // code must be 0 on success
-    // deliverTx may be present but empty on failure
-    return response.checkTx.code === 0 && !!response.deliverTx && response.deliverTx.code === 0;
+    // deliver_tx may be present but empty on failure
+    return response.check_tx.code === 0 && !!response.deliver_tx && response.deliver_tx.code === 0;
 }
 
 export interface CommitResponse {
+    readonly signed_header: SignedHeader;
+
+}
+
+export interface SignedHeader {
     readonly header: Header;
     readonly commit: Commit;
     readonly canonical: boolean;
 }
 
 export interface GenesisResponse {
-    readonly genesisTime: ReadonlyDate;
-    readonly chainId: string;
-    readonly consensusParams: ConsensusParams;
+    readonly genesis_time: ReadonlyDate;
+    readonly chain_id: string;
+    readonly consensus_params: ConsensusParams;
     readonly validators: readonly Validator[];
-    readonly appHash: Uint8Array;
-    readonly appState: Record<string, unknown> | undefined;
+    readonly app_hash: Uint8Array;
+    readonly app_state: Record<string, unknown> | undefined;
+}
+
+export interface GenesisChunkedResponse {
+    chunk: string,
+    total: string,
+    data: string
 }
 
 export type HealthResponse = null;
 
 export interface NumUnconfirmedTxsResponse {
     readonly total: number;
-    readonly totalBytes: number;
+    readonly total_bytes: number;
 }
 
 export interface StatusResponse {
-    readonly nodeInfo: NodeInfo;
-    readonly syncInfo: SyncInfo;
-    readonly validatorInfo: Validator;
+    readonly node_info: NodeInfo;
+    readonly sync_info: SyncInfo;
+    readonly validator_info: Validator;
 }
 
 /**
@@ -189,11 +194,11 @@ export interface TxResponse {
 
 export interface TxSearchResponse {
     readonly txs: readonly TxResponse[];
-    readonly totalCount: number;
+    readonly total_count: number;
 }
 
 export interface ValidatorsResponse {
-    readonly blockHeight: number;
+    readonly block_height: number;
     readonly validators: readonly Validator[];
     readonly count: number;
     readonly total: number;
@@ -225,6 +230,7 @@ export interface TxEvent {
 export interface EventAttribute {
     readonly key: string;
     readonly value: string;
+    readonly index: boolean;
 }
 
 export interface Event {
@@ -238,26 +244,26 @@ export interface TxData {
     readonly log?: string;
     readonly data?: Uint8Array;
     readonly events: readonly Event[];
-    readonly gasWanted: number;
-    readonly gasUsed: number;
+    readonly gas_wanted: number;
+    readonly gas_used: number;
 }
 
 export interface TxProof {
     readonly data: Uint8Array;
-    readonly rootHash: Uint8Array;
+    readonly root_hash: Uint8Array;
     readonly proof: {
         readonly total: number;
         readonly index: number;
-        readonly leafHash: Uint8Array;
+        readonly leaf_hash: Uint8Array;
         readonly aunts: readonly Uint8Array[];
     };
 }
 
 export interface BlockMeta {
-    readonly blockId: BlockId;
-    readonly blockSize: number;
+    readonly block_id: BlockId;
+    readonly block_size: number;
     readonly header: Header;
-    readonly numTxs: number;
+    readonly num_txs: number;
 }
 
 export interface BlockId {
@@ -273,7 +279,7 @@ export interface Block {
     /**
      * For the block at height 1, last commit is not set.
      */
-    readonly lastCommit: Commit | null;
+    readonly last_commit: Commit | null;
     readonly txs: readonly Uint8Array[];
     readonly evidence: readonly Evidence[];
 }
@@ -287,7 +293,7 @@ export interface Block {
 export type Evidence = any;
 
 export interface Commit {
-    readonly blockId: BlockId;
+    readonly block_id: BlockId;
     readonly height: number;
     readonly round: number;
     readonly signatures: readonly CommitSignature[];
@@ -303,12 +309,12 @@ export enum VoteType {
 
 export interface Vote {
     readonly type: VoteType;
-    readonly validatorAddress: Uint8Array;
-    readonly validatorIndex: number;
+    readonly validator_address: Uint8Array;
+    readonly validator_index: number;
     readonly height: number;
     readonly round: number;
     readonly timestamp: ReadonlyDate;
-    readonly blockId: BlockId;
+    readonly block_id: BlockId;
     readonly signature: Uint8Array;
 }
 
@@ -321,51 +327,51 @@ export interface Version {
 export interface Header {
     // basic block info
     readonly version: Version;
-    readonly chainId: string;
+    readonly chain_id: string;
     readonly height: number;
     readonly time: ReadonlyDateWithNanoseconds;
 
     /**
      * Block ID of the previous block. This can be `null` when the currect block is height 1.
      */
-    readonly lastBlockId: BlockId | null;
+    readonly last_block_id: BlockId | null;
 
     /**
      * Hashes of block data.
      *
      * This is `sha256("")` for height 1 🤷‍
      */
-    readonly lastCommitHash: Uint8Array;
+    readonly last_commit_hash: Uint8Array;
     /**
      * This is `sha256("")` as long as there is no data 🤷‍
      */
-    readonly dataHash: Uint8Array;
+    readonly data_hash: Uint8Array;
 
     // hashes from the app output from the prev block
-    readonly validatorsHash: Uint8Array;
-    readonly nextValidatorsHash: Uint8Array;
-    readonly consensusHash: Uint8Array;
+    readonly validators_hash: Uint8Array;
+    readonly next_validators_hash: Uint8Array;
+    readonly consensus_hash: Uint8Array;
     /**
      * This can be an empty string for height 1 and turn into "0000000000000000" later on 🤷‍
      */
-    readonly appHash: Uint8Array;
+    readonly app_hash: Uint8Array;
     /**
      * This is `sha256("")` as long as there is no data 🤷‍
      */
-    readonly lastResultsHash: Uint8Array;
+    readonly last_results_hash: Uint8Array;
 
     // consensus info
     /**
      * This is `sha256("")` as long as there is no data 🤷‍
      */
-    readonly evidenceHash: Uint8Array;
-    readonly proposerAddress: Uint8Array;
+    readonly evidence_hash: Uint8Array;
+    readonly proposer_address: Uint8Array;
 }
 
 export interface NodeInfo {
     readonly id: Uint8Array;
     /** IP and port */
-    readonly listenAddr: string;
+    readonly listen_addr: string;
     readonly network: string;
     /**
      * The Tendermint version. Can be empty (see https://github.com/cosmos/cosmos-sdk/issues/7963).
@@ -374,7 +380,7 @@ export interface NodeInfo {
     readonly channels: string; // ???
     readonly moniker: string;
     readonly other: Map<string, string>;
-    readonly protocolVersion: {
+    readonly protocol_version: {
         readonly p2p: number;
         readonly block: number;
         readonly app: number;
@@ -382,27 +388,27 @@ export interface NodeInfo {
 }
 
 export interface SyncInfo {
-    readonly earliestAppHash?: Uint8Array;
-    readonly earliestBlockHash?: Uint8Array;
-    readonly earliestBlockHeight?: number;
-    readonly earliestBlockTime?: ReadonlyDate;
-    readonly latestBlockHash: Uint8Array;
-    readonly latestAppHash: Uint8Array;
-    readonly latestBlockHeight: number;
-    readonly latestBlockTime: ReadonlyDate;
-    readonly catchingUp: boolean;
+    readonly earliest_app_hash?: Uint8Array;
+    readonly earliest_block_hash?: Uint8Array;
+    readonly earliest_block_height?: number;
+    readonly earliest_block_time?: ReadonlyDate;
+    readonly latest_block_hash: Uint8Array;
+    readonly latest_app_hash: Uint8Array;
+    readonly latest_block_height: number;
+    readonly latest_block_time: ReadonlyDate;
+    readonly catching_up: boolean;
 }
 
 export interface Validator {
     readonly address: Uint8Array;
     readonly pubkey?: ValidatorPubkey;
-    readonly votingPower: bigint;
-    readonly proposerPriority?: number;
+    readonly voting_power: bigint;
+    readonly proposer_priority?: number;
 }
 
 export interface ValidatorUpdate {
     readonly pubkey: ValidatorPubkey;
-    readonly votingPower: bigint;
+    readonly voting_power: bigint;
 }
 
 export interface ConsensusParams {
@@ -411,20 +417,105 @@ export interface ConsensusParams {
 }
 
 export interface BlockParams {
-    readonly maxBytes: number;
-    readonly maxGas: number;
+    readonly max_bytes: number;
+    readonly max_gas: number;
 }
 
 export interface TxSizeParams {
-    readonly maxBytes: number;
-    readonly maxGas: number;
+    readonly max_bytes: number;
+    readonly max_gas: number;
 }
 
 export interface BlockGossipParams {
-    readonly blockPartSizeBytes: number;
+    readonly block_part_size_bytes: number;
 }
 
 export interface EvidenceParams {
-    readonly maxAgeNumBlocks: number;
-    readonly maxAgeDuration: number;
+    readonly max_age_num_blocks: number;
+    readonly max_age_duration: number;
+}
+
+
+// TODO : 상세히 작성해야됨
+export interface NetInfoResponse {
+    listening: boolean,
+    listeners: [],
+    n_peers: string,
+    peers: []
+}
+
+
+
+export interface DumpConsensusStateResponse {
+    "round_state": {
+        "height": string,
+        "round": number,
+        "step": number,
+        "start_time": string,
+        "commit_time": string,
+        "validators": {
+            "validators": [],
+            "proposer": {
+                "address": string,
+                "pub_key": {
+                    "type": string,
+                    "value": string
+                },
+                "voting_power": string,
+                "proposer_priority": string
+            }
+        },
+        "locked_round": number,
+        "valid_round": string,
+        "votes": [],
+        "commit_round": number,
+        "last_commit": {
+            "votes": [],
+            "votes_bit_array": string,
+            "peer_maj_23s": {}
+        },
+        "last_validators": {
+            "validators": [],
+            "proposer": {
+                "address": string,
+                "pub_key": {
+                    "type": string,
+                    "value": string
+                },
+                "voting_power": string,
+                "proposer_priority": string
+            }
+        },
+        "triggered_timeout_precommit": boolean
+    },
+    "peers": []
+}
+
+
+
+
+export interface ConsensusStateResponse {
+    "round_state": {
+        "height/round/step": string,
+        "start_time": string,
+        "proposal_block_hash": string,
+        "locked_block_hash": string,
+        "valid_block_hash": string,
+        "height_vote_set": [{
+            "round": number,
+            "prevotes": [],
+            "prevotes_bit_array": string,
+            "precommits": [],
+            "precommits_bit_array": string
+        }],
+        "proposer": { "address": string, "index": number }
+    }
+}
+
+
+export interface UnconfirmedTxsResponse {
+    "n_txs": string,
+    "total": string,
+    "total_bytes": string,
+    "txs": []
 }

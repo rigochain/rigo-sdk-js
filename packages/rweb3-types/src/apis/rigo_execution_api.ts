@@ -22,12 +22,10 @@ import {
     Rule,
     AbciInfo,
     ResponseData,
-    BlockResult,
-    Blockcahin,
     CheckTx,
-    ConsensusState,
     Delegatee,
-    DumpConsensusState, Genesis, GenesisChunked, NetInfo, NumUnconfirmedTxs, TxSearch, UnconfirmedTxs
+    NumUnconfirmedTxs,
+    TxSearch,
 } from '../rigo_types';
 
 import * as responses from "../responses";
@@ -36,32 +34,41 @@ export type AddressAPI = AddressBase<HexString>;
 
 /* eslint-disable camelcase */
 export type RigoExecutionAPI = {
+    health: () => void;
+    status: () => responses.StatusResponse;
+    net_info: () => responses.NetInfoResponse;
+    blockchain: (minHeight?: string | number, maxHeight?: string | number) => responses.BlockchainResponse;
+    block: (height?: string | number) => responses.BlockResponse;
+    block_by_hash: (hash: Uint8Array) => responses.BlockchainResponse;
+    block_results: (height?: string | number) => responses.BlockResultsResponse;
+    commit: (height: string) => responses.CommitResponse;
+    validators: (height: string) => responses.ValidatorsResponse;
+    genesis: () => responses.GenesisResponse;
+    genesis_chunked: (chunk: number | string) => responses.GenesisChunkedResponse;
+
+    dump_consensus_state: () => responses.DumpConsensusStateResponse;
+
+
+    consensus_state: () => responses.ConsensusStateResponse;
+    consensus_params: (height: string) => responses.ConsensusParams;
+    unconfirmed_txs: (limit: string) => responses.UnconfirmedTxsResponse;
+    tx_search: (query: string, prove: boolean, page: string, per_page: string, order_by: string) => TxSearch;
+    block_search: (query: string, page: string, per_page: string, order_by: string) => responses.BlockSearchResponse;
+    tx: (txhash: string) => Transaction;
+
+
+
 
     abci_info: () => ResponseData<AbciInfo>;
     account: (addr: string) => AddressAPI;
-    block: (height: string) => responses.BlockResponse;
-    block_by_hash: (hash: string) => responses.Block;
-    block_results: (height: string) => BlockResult;
-    block_search: (query: string, page: string, per_page: string, order_by: string) => responses.BlockSearchResponse;
-    blockchain: (minHeight: string, maxHeight: string) => Blockcahin;
     broadcast_evidence: (evidence: string) => ResponseData<null>;
     broadcast_tx_async: (tx: string) => ResponseData<null>;
     check_tx: (tx: string) => CheckTx;
-    commit: (height: string) => responses.Commit;
-    consensus_params: (height: string) => responses.ConsensusParams;
-    consensus_state: () => ConsensusState;
     delegatee: (addr: string) => Delegatee;
-    dump_consensus_state: () => DumpConsensusState;
-    genesis: () => Genesis;
-    genesis_chunked: () => GenesisChunked;
-    net_info: () => NetInfo;
     num_unconfirmed_txs: () => NumUnconfirmedTxs;
     // TODO :  proposal: (proposalId: string) => Proposal; 필요함
     rule: () => Rule;
     stakes: (addr: string) => StakeValue;
-    tx: (txhash: string) => Transaction;
-    tx_search: (query: string, prove: boolean, page: string, per_page: string, order_by: string) => TxSearch;
-    validators: (height: string) => responses.ValidatorsResponse;
-    unconfirmed_txs: (limit: string) => UnconfirmedTxs;
+
 
 };

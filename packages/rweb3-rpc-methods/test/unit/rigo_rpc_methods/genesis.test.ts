@@ -3,6 +3,7 @@ import {RWeb3RequestManager} from 'rweb3-core';
 import {rigoRpcMethods} from '../../../src/index';
 import {testData} from "./fixtures/genesis";
 import {getDevServer} from "../e2e_utils";
+import {GenesisResponse} from "rweb3-types/lib/types";
 
 describe('genesis', () => {
 
@@ -39,7 +40,7 @@ describe('genesis develop server call', () => {
         'genesis should call success return',
         async (_parameter, _response) => {
 
-            let returnValue = await rigoRpcMethods.genesis(requestManager);
+            let returnValue: GenesisResponse = await rigoRpcMethods.genesis(requestManager);
 
             console.log("genesis", JSON.stringify(returnValue));
 
