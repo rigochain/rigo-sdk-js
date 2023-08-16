@@ -19,7 +19,6 @@ export * from './block.js';
 export * from './bloom.js';
 export * from './boolean.js';
 export * from './bytes.js';
-export * from './eth.js';
 export * from './filter.js';
 export * from './numbers.js';
 export * from './string.js';

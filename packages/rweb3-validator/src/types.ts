@@ -17,6 +17,8 @@
 import { AbiParameter } from 'rweb3-types';
 import { ValidationError } from 'is-my-json-valid';
 
+// TODO : 여기 Abi 타입 체크를 이더가 아닌 RIGO 로 해야 된다.
+
 export type ValidInputTypes = Uint8Array | bigint | string | number | boolean;
 export type EthBaseTypes = 'bool' | 'bytes' | 'string' | 'uint' | 'int' | 'address' | 'tuple';
 export type EthBaseTypesWithMeta =
