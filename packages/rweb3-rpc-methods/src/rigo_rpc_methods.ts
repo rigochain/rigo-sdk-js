@@ -41,6 +41,7 @@ import {
     ProposalResponse, StakesResponse, AccountResponse
 } from "rweb3-types";
 
+import {validator} from 'rweb3-validator';
 
 export async function health(requestManager: RWeb3RequestManager): Promise<void> {
     return requestManager.send({
@@ -74,6 +75,8 @@ export async function blockchain(requestManager: RWeb3RequestManager, minHeight?
         maxHeight = maxHeight.toString(10);
     }
 
+    validator.validate(['intOrEmpty', 'intOrEmpty'], [minHeight, maxHeight]);
+
     return requestManager.send({
         method: 'blockchain',
         params: {
@@ -89,6 +92,8 @@ export async function block(requestManager: RWeb3RequestManager, height?: string
     if (height && typeof height === 'number') {
         height = height.toString(10);
     }
+
+    validator.validate(['intOrEmpty'], [height]);
 
     return requestManager.send({
         method: 'block',
@@ -117,6 +122,8 @@ export async function blockResults(requestManager: RWeb3RequestManager, height?:
         height = height.toString(10);
     }
 
+    validator.validate(['intOrEmpty'], [height]);
+
     return requestManager.send({
         method: 'block_results',
         params: {height: height},
@@ -129,6 +136,9 @@ export async function commit(requestManager: RWeb3RequestManager, height?: numbe
     if (height && typeof height === 'number') {
         height = height.toString(10);
     }
+
+    validator.validate(['intOrEmpty'], [height]);
+
 
     return requestManager.send({
         method: 'commit',
@@ -155,6 +165,9 @@ export async function validators(
     if (per_page && typeof per_page === 'number') {
         per_page = per_page.toString(10);
     }
+
+    validator.validate(['intOrEmpty', 'intOrEmpty', 'intOrEmpty'], [height, page, per_page]);
+
 
     return requestManager.send({
         method: 'validators',
@@ -211,6 +224,9 @@ export async function consensusParams(requestManager: RWeb3RequestManager, heigh
         height = height.toString(10);
     }
 
+    validator.validate(['intOrEmpty'], [height]);
+
+
     return requestManager.send({
         method: 'consensus_params',
         params: {height: height},
@@ -223,6 +239,8 @@ export async function unconfirmedTxs(requestManager: RWeb3RequestManager, limit:
     if (typeof limit === 'number') {
         limit = limit.toString(10);
     }
+
+    validator.validate(['intOrEmpty'], [limit]);
 
     return requestManager.send({
         method: 'unconfirmed_txs',
@@ -242,6 +260,8 @@ export async function txSearch(requestManager: RWeb3RequestManager, query: strin
     if (per_page && typeof per_page === 'number') {
         per_page = per_page.toString(10);
     }
+
+    validator.validate(['boolOrEmpty', 'intOrEmpty', 'intOrEmpty'], [prove, page, per_page]);
 
     return requestManager.send({
         method: 'tx_search',
@@ -278,6 +298,8 @@ export async function abciQuery(requestManager: RWeb3RequestManager, path: strin
         height = height.toString(10);
     }
 
+    validator.validate(['intOrEmpty', 'boolOrEmpty'], [height, prove]);
+
     return requestManager.send({
         method: 'abci_query',
         params: {
@@ -302,7 +324,6 @@ export async function numUnconfirmedTxs(requestManager: RWeb3RequestManager): Pr
         params: {},
     });
 }
-
 
 
 export async function broadcastEvidence(requestManager: RWeb3RequestManager, evidence: string) {
@@ -355,6 +376,13 @@ export async function broadcastTxCommit(requestManager: RWeb3RequestManager, tx:
 
 
 export async function delegatee(requestManager: RWeb3RequestManager, addr: string): Promise<DelegateeResponse> {
+
+    if (!addr.startsWith('0x')) {
+        addr = '0x' + addr;
+    }
+
+    validator.validate(['rigoAddress'], [addr]);
+
     return requestManager.send({
         method: 'delegatee',
         params: {addr: addr},
@@ -371,6 +399,13 @@ export async function rule(requestManager: RWeb3RequestManager): Promise<RuleRes
 
 
 export async function account(requestManager: RWeb3RequestManager, addr: string): Promise<AccountResponse> {
+
+    if (!addr.startsWith('0x')) {
+        addr = '0x' + addr;
+    }
+
+    validator.validate(['rigoAddress'], [addr]);
+
     return requestManager.send({
         method: 'account',
         params: {
@@ -397,6 +432,8 @@ export async function stakes(requestManager: RWeb3RequestManager, addr: string):
         addr = '0x' + addr;
     }
 
+    validator.validate(['rigoAddress'], [addr]);
+
     return requestManager.send({
         method: 'stakes',
         params: {addr: addr},
@@ -419,6 +456,8 @@ export async function vmCall(
         to = '0x' + to;
     }
 
+    validator.validate(['rigoAddress', 'rigoAddress'], [addr, to]);
+
     return requestManager.send({
         method: 'vm_call',
         params: {
@@ -440,6 +479,8 @@ export async function blockSearch(requestManager: RWeb3RequestManager, query: st
     if (typeof per_page === 'number') {
         per_page = per_page.toString(10);
     }
+
+    validator.validate(['intOrEmpty', 'intOrEmpty'], [page, per_page]);
 
     return requestManager.send({
         method: 'block_search',

@@ -109,6 +109,17 @@ export const isInt = (
     }
 };
 
+
+export const isIntOrEmpty = (
+    value: ValidInputTypes,
+    options: { abiType: string; bitSize?: never } | { bitSize: number; abiType?: never } = {
+        abiType: 'int',
+    },
+) => {
+    return value === '' || isInt(value, options);
+};
+
+
 export const isNumber = (value: ValidInputTypes) => {
     if (isInt(value)) {
         return true;

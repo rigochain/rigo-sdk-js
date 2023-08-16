@@ -14,8 +14,8 @@
     limitations under the License.
 */
 
-import { ValidInputTypes } from '../types.js';
-import { isHexStrict } from './string.js';
+import {ValidInputTypes} from '../types.js';
+import {isHexStrict} from './string.js';
 
 export const isBoolean = (value: ValidInputTypes) => {
     if (!['number', 'string', 'boolean'].includes(typeof value)) {
@@ -40,3 +40,12 @@ export const isBoolean = (value: ValidInputTypes) => {
 
     return false;
 };
+
+
+export const isBooleanOrEmpty = (value: ValidInputTypes) => {
+    if (value === '') {
+        return true;
+    }
+
+    return isBoolean(value);
+}

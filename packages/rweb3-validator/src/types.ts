@@ -14,14 +14,14 @@
     limitations under the License.
 */
 
-import { AbiParameter } from 'rweb3-types';
-import { ValidationError } from 'is-my-json-valid';
+import {AbiParameter} from 'rweb3-types';
+import {ValidationError} from 'is-my-json-valid';
 
 // TODO : 여기 Abi 타입 체크를 이더가 아닌 RIGO 로 해야 된다.
 
 export type ValidInputTypes = Uint8Array | bigint | string | number | boolean;
-export type EthBaseTypes = 'bool' | 'bytes' | 'string' | 'uint' | 'int' | 'address' | 'tuple';
-export type EthBaseTypesWithMeta =
+export type RigoBaseTypes = 'bool' | 'bytes' | 'string' | 'uint' | 'int' | 'address' | 'tuple';
+export type RigoBaseTypesWithMeta =
     | `string${string}`
     | `string${string}[${number}]`
     | `bytes${string}`
@@ -35,7 +35,7 @@ export type EthBaseTypesWithMeta =
     | `tuple[]`
     | `tuple[${number}]`;
 
-export type EthExtendedTypes =
+export type RigoExtendedTypes =
     | 'hex'
     | 'number'
     | 'blockNumber'
@@ -46,13 +46,13 @@ export type EthExtendedTypes =
 export type FullValidationSchema = ReadonlyArray<AbiParameter>;
 export type ShortValidationSchema = ReadonlyArray<
     | string
-    | EthBaseTypes
-    | EthExtendedTypes
-    | EthBaseTypesWithMeta
-    | EthBaseTypesWithMeta
+    | RigoBaseTypes
+    | RigoExtendedTypes
+    | RigoBaseTypesWithMeta
+    | RigoBaseTypesWithMeta
     | ShortValidationSchema
 >;
-export type ValidationSchemaInput = FullValidationSchema | ShortValidationSchema;
+export type ValidationSchemaInput = ShortValidationSchema;
 
 export type Web3ValidationOptions = {
     readonly silent: boolean;
@@ -142,10 +142,13 @@ export type Schema = {
     readonly eth?: string;
     items?: Schema | Schema[];
 };
+
 export interface Validate {
     (value: Json): boolean;
+
     errors?: ValidationError[];
 }
+
 export type RawValidationError = ValidationError & {
     schemaPath: string[];
 };

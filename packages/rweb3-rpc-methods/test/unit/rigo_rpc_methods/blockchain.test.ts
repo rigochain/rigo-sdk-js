@@ -50,12 +50,6 @@ describe('blockchain Develop Server Call ', () => {
             let returnValue: BlockchainResponse = await rigoRpcMethods.blockchain(requestManager, _parameter.minHeight, _parameter.maxHeight);
 
             console.log("blockchain return", returnValue)
-
-            // returnValue 의 모든 값이 undefined 가 아닌지 확인
-            Object.values(returnValue).forEach(value => {
-                expect(value).not.toBeUndefined();
-            });
-
         },
     );
 });

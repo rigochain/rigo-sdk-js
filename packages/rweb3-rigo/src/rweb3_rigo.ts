@@ -19,12 +19,13 @@ import * as rpcMethodsWrappers from './rpc_method_wrappers.js';
 import {TrxProto} from "rweb3-utils";
 
 export class RWeb3Rigo extends RWeb3Context {
+
     public constructor() {
         super();
     }
 
     getUrl(): string {
-        // TODO : Validate RequestManger
+        // TODO : ValidateW RequestManger
         return this.requestManager.provider.getClientUrl();
     }
 
@@ -96,7 +97,6 @@ export class RWeb3Rigo extends RWeb3Context {
         return rpcMethodsWrappers.tx(this, hash);
     }
 
-
     abciInfo() {
         return rpcMethodsWrappers.abciInfo(this);
     }
@@ -144,7 +144,6 @@ export class RWeb3Rigo extends RWeb3Context {
     proposals(txHash: string) {
         return rpcMethodsWrappers.proposals(this, txHash);
     }
-
 
     stakes(addr: string) {
         if (!addr.startsWith('0x')) {

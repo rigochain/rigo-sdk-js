@@ -14,11 +14,11 @@
     limitations under the License.
 */
 
-import { keccak256 } from 'ethereum-cryptography/keccak.js';
-import { utf8ToBytes } from 'ethereum-cryptography/utils.js';
-import { ValidInputTypes } from '../types.js';
-import { uint8ArrayToHexString } from '../utils.js';
-import { isHexStrict } from './string.js';
+import {keccak256} from 'ethereum-cryptography/keccak.js';
+import {utf8ToBytes} from 'ethereum-cryptography/utils.js';
+import {ValidInputTypes} from '../types.js';
+import {uint8ArrayToHexString} from '../utils.js';
+import {isHexStrict} from './string.js';
 
 /**
  * Checks the checksum of a given address. Will also return false on non-checksum addresses.
@@ -74,3 +74,15 @@ export const isAddress = (value: ValidInputTypes, checkChecksum = true) => {
     }
     return checkChecksum ? checkAddressCheckSum(valueToCheck) : true;
 };
+
+
+export const isRigoAddress = (value: ValidInputTypes, checkChecksum = true) => {
+
+
+    console.log('isRigoAddress value : ', value);
+    console.log('isRigoAddress checkChecksum : ', checkChecksum);
+
+    // TODO : 여기 내용 확인해야됨.
+    return true;
+
+}
