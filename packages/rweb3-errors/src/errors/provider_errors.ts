@@ -23,13 +23,13 @@ import {
     ERR_SUBSCRIPTION,
     ERR_WS_PROVIDER,
 } from '../error_codes.js';
-import { BaseWeb3Error } from '../web3_error_base.js';
+import { BaseRWeb3Error } from '../rweb3_error_base';
 
-export class ProviderError extends BaseWeb3Error {
+export class ProviderError extends BaseRWeb3Error {
     public code = ERR_PROVIDER;
 }
 
-export class InvalidProviderError extends BaseWeb3Error {
+export class InvalidProviderError extends BaseRWeb3Error {
     public code = ERR_INVALID_PROVIDER;
 
     public constructor(public clientUrl: string) {
@@ -37,7 +37,7 @@ export class InvalidProviderError extends BaseWeb3Error {
     }
 }
 
-export class InvalidClientError extends BaseWeb3Error {
+export class InvalidClientError extends BaseRWeb3Error {
     public code = ERR_INVALID_CLIENT;
 
     public constructor(clientUrl: string) {
@@ -45,10 +45,10 @@ export class InvalidClientError extends BaseWeb3Error {
     }
 }
 
-export class SubscriptionError extends BaseWeb3Error {
+export class SubscriptionError extends BaseRWeb3Error {
     public code = ERR_SUBSCRIPTION;
 }
 
-export class Web3WSProviderError extends BaseWeb3Error {
+export class Web3WSProviderError extends BaseRWeb3Error {
     public code = ERR_WS_PROVIDER; // this had duplicate code with generic provider
 }

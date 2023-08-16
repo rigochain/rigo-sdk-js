@@ -16,10 +16,10 @@
 
 /* eslint-disable max-classes-per-file */
 
-import { BaseWeb3Error } from '../web3_error_base.js';
+import { BaseRWeb3Error } from '../rweb3_error_base';
 import { ERR_CORE_HARDFORK_MISMATCH } from '../error_codes.js';
 
-export class ConfigHardforkMismatchError extends BaseWeb3Error {
+export class ConfigHardforkMismatchError extends BaseRWeb3Error {
     public code = ERR_CORE_HARDFORK_MISMATCH;
 
     public constructor(defaultHardfork: string, commonHardFork: string) {
@@ -29,7 +29,7 @@ export class ConfigHardforkMismatchError extends BaseWeb3Error {
     }
 }
 
-export class ConfigChainMismatchError extends BaseWeb3Error {
+export class ConfigChainMismatchError extends BaseRWeb3Error {
     public code = ERR_CORE_HARDFORK_MISMATCH;
 
     public constructor(defaultHardfork: string, commonHardFork: string) {

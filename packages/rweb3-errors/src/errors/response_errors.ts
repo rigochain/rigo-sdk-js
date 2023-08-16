@@ -21,7 +21,7 @@ import {
     JsonRpcResponse,
     JsonRpcResponseWithError,
 } from 'rweb3-types';
-import { BaseWeb3Error } from '../web3_error_base.js';
+import { BaseRWeb3Error } from '../rweb3_error_base';
 import { ERR_INVALID_RESPONSE, ERR_RESPONSE } from '../error_codes.js';
 
 // To avoid circular package dependency, copied to code here. If you update this please update same function in `json_rpc.ts`
@@ -40,7 +40,7 @@ const isResponseWithError = <Error = unknown, Result = unknown>(
 const buildErrorMessage = (response: JsonRpcResponse<unknown, unknown>): string =>
     isResponseWithError(response) ? response.error.message : '';
 
-export class ResponseError<ErrorType = unknown, RequestType = unknown> extends BaseWeb3Error {
+export class ResponseError<ErrorType = unknown, RequestType = unknown> extends BaseRWeb3Error {
     public code = ERR_RESPONSE;
     public data?: ErrorType | ErrorType[];
     public request?: JsonRpcPayload<RequestType>;

@@ -14,13 +14,13 @@
     limitations under the License.
 */
 
-export interface Web3Error extends Error {
+export interface RWeb3Error extends Error {
     readonly name: string;
     readonly code: number;
     readonly stack?: string;
 }
 
-export type Web3ValidationErrorObject<
+export type RWeb3ValidationErrorObject<
     K extends string = string,
     P = Record<string, unknown>,
     S = unknown,

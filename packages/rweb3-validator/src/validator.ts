@@ -14,7 +14,7 @@
     limitations under the License.
 */
 
-import { Web3ValidationErrorObject } from 'rweb3-types';
+import { RWeb3ValidationErrorObject } from 'rweb3-types';
 import { toHex, utf8ToBytes } from 'ethereum-cryptography/utils.js';
 import { blake2b } from 'ethereum-cryptography/blake2b.js';
 import validator from 'is-my-json-valid';
@@ -75,7 +75,7 @@ export class Validator {
         errors: RawValidationError[] | undefined,
         schema: Schema,
         data: Json,
-    ): Web3ValidationErrorObject[] | undefined {
+    ): RWeb3ValidationErrorObject[] | undefined {
         if (errors && Array.isArray(errors) && errors.length > 0) {
             return errors.map((error: RawValidationError) => {
                 let message;
@@ -136,7 +136,7 @@ export class Validator {
                     // eslint-disable-next-line  @typescript-eslint/no-unsafe-assignment
                     params: params ?? { value: dataValue },
                     message: message ?? error.message,
-                } as Web3ValidationErrorObject;
+                } as RWeb3ValidationErrorObject;
             });
         }
         return undefined;

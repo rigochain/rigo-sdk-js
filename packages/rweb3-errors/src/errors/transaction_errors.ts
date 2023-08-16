@@ -21,7 +21,7 @@ import {
     HexString,
     Numbers,
     TransactionReceipt,
-    Web3ValidationErrorObject,
+    RWeb3ValidationErrorObject,
 } from 'rweb3-types';
 import {
     ERR_RAW_TX_UNDEFINED,
@@ -65,9 +65,9 @@ import {
     ERR_TX_REVERT_TRANSACTION_CUSTOM_ERROR,
     ERR_TX_INVALID_PROPERTIES_FOR_TYPE,
 } from '../error_codes.js';
-import { InvalidValueError, BaseWeb3Error } from '../web3_error_base.js';
+import { InvalidValueError, BaseRWeb3Error } from '../rweb3_error_base';
 
-export class TransactionError<ReceiptType = TransactionReceipt> extends BaseWeb3Error {
+export class TransactionError<ReceiptType = TransactionReceipt> extends BaseRWeb3Error {
     public code = ERR_TX;
 
     public constructor(
@@ -82,7 +82,7 @@ export class TransactionError<ReceiptType = TransactionReceipt> extends BaseWeb3
     }
 }
 
-export class RevertInstructionError extends BaseWeb3Error {
+export class RevertInstructionError extends BaseRWeb3Error {
     public code = ERR_TX_REVERT_INSTRUCTION;
 
     public constructor(
@@ -99,7 +99,7 @@ export class RevertInstructionError extends BaseWeb3Error {
 
 export class TransactionRevertInstructionError<
     ReceiptType = TransactionReceipt,
-> extends BaseWeb3Error {
+> extends BaseRWeb3Error {
     public code = ERR_TX_REVERT_TRANSACTION;
 
     public constructor(
@@ -110,7 +110,7 @@ export class TransactionRevertInstructionError<
     ) {
         super(
             `Transaction has been reverted by the EVM${
-                receipt === undefined ? '' : `:\n ${BaseWeb3Error.convertToString(receipt)}`
+                receipt === undefined ? '' : `:\n ${BaseRWeb3Error.convertToString(receipt)}`
             }`,
         );
     }
@@ -186,7 +186,7 @@ export class TransactionRevertedWithoutReasonError<
     public constructor(receipt?: ReceiptType) {
         super(
             `Transaction has been reverted by the EVM${
-                receipt === undefined ? '' : `:\n ${BaseWeb3Error.convertToString(receipt)}`
+                receipt === undefined ? '' : `:\n ${BaseRWeb3Error.convertToString(receipt)}`
             }`,
             receipt,
         );
@@ -462,7 +462,7 @@ export class TransactionDataAndInputError extends InvalidValueError {
     }
 }
 
-export class TransactionSendTimeoutError extends BaseWeb3Error {
+export class TransactionSendTimeoutError extends BaseRWeb3Error {
     public code = ERR_TX_SEND_TIMEOUT;
 
     public constructor(value: { numberOfSeconds: number; transactionHash?: Bytes }) {
@@ -482,7 +482,7 @@ function transactionTimeoutHint(transactionHash?: Bytes) {
     }`;
 }
 
-export class TransactionPollingTimeoutError extends BaseWeb3Error {
+export class TransactionPollingTimeoutError extends BaseRWeb3Error {
     public code = ERR_TX_POLLING_TIMEOUT;
 
     public constructor(value: { numberOfSeconds: number; transactionHash: Bytes }) {
@@ -494,7 +494,7 @@ export class TransactionPollingTimeoutError extends BaseWeb3Error {
     }
 }
 
-export class TransactionBlockTimeoutError extends BaseWeb3Error {
+export class TransactionBlockTimeoutError extends BaseRWeb3Error {
     public code = ERR_TX_BLOCK_TIMEOUT;
 
     public constructor(value: {
@@ -535,7 +535,7 @@ export class TransactionReceiptMissingBlockNumberError extends InvalidValueError
     }
 }
 
-export class TransactionSigningError extends BaseWeb3Error {
+export class TransactionSigningError extends BaseRWeb3Error {
     public code = ERR_TX_SIGNING;
     public constructor(errorDetails: string) {
         super(`Invalid signature. "${errorDetails}"`);
@@ -552,18 +552,18 @@ export class LocalWalletNotAvailableError extends InvalidValueError {
         );
     }
 }
-export class InvalidPropertiesForTransactionTypeError extends BaseWeb3Error {
+export class InvalidPropertiesForTransactionTypeError extends BaseRWeb3Error {
     public code = ERR_TX_INVALID_PROPERTIES_FOR_TYPE;
 
     public constructor(
-        validationError: Web3ValidationErrorObject[],
+        validationError: RWeb3ValidationErrorObject[],
         txType: '0x0' | '0x1' | '0x2',
     ) {
         const invalidPropertyNames: string[] = [];
         validationError.forEach((error) =>
             invalidPropertyNames.push(
                 // These errors are erroneously reported, error
-                // has type Web3ValidationErrorObject, but eslint doesn't recognize it
+                // has type RWeb3ValidationErrorObject, but eslint doesn't recognize it
                 // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call
                 (error.keyword.match(/data.(.+)/) as string[])[1],
             ),

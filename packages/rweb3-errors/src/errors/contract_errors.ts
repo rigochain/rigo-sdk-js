@@ -31,9 +31,9 @@ import {
     ERR_CONTRACT_RESOLVER_MISSING,
     ERR_CONTRACT_TX_DATA_AND_INPUT,
 } from '../error_codes.js';
-import { BaseWeb3Error, InvalidValueError } from '../web3_error_base.js';
+import { BaseRWeb3Error, InvalidValueError } from '../rweb3_error_base';
 
-export class Web3ContractError extends BaseWeb3Error {
+export class Web3ContractError extends BaseRWeb3Error {
     public code = ERR_CONTRACT;
     public receipt?: TransactionReceipt;
 
@@ -43,7 +43,7 @@ export class Web3ContractError extends BaseWeb3Error {
         this.receipt = receipt;
     }
 }
-export class ResolverMethodMissingError extends BaseWeb3Error {
+export class ResolverMethodMissingError extends BaseRWeb3Error {
     public code = ERR_CONTRACT_RESOLVER_MISSING;
 
     public constructor(
@@ -58,7 +58,7 @@ export class ResolverMethodMissingError extends BaseWeb3Error {
     }
 }
 
-export class ContractMissingABIError extends BaseWeb3Error {
+export class ContractMissingABIError extends BaseRWeb3Error {
     public code = ERR_CONTRACT_ABI_MISSING;
 
     public constructor() {
@@ -68,7 +68,7 @@ export class ContractMissingABIError extends BaseWeb3Error {
     }
 }
 
-export class ContractOnceRequiresCallbackError extends BaseWeb3Error {
+export class ContractOnceRequiresCallbackError extends BaseRWeb3Error {
     public code = ERR_CONTRACT_REQUIRED_CALLBACK;
 
     public constructor() {
@@ -76,7 +76,7 @@ export class ContractOnceRequiresCallbackError extends BaseWeb3Error {
     }
 }
 
-export class ContractEventDoesNotExistError extends BaseWeb3Error {
+export class ContractEventDoesNotExistError extends BaseRWeb3Error {
     public code = ERR_CONTRACT_EVENT_NOT_EXISTS;
 
     public constructor(public eventName: string) {
@@ -88,7 +88,7 @@ export class ContractEventDoesNotExistError extends BaseWeb3Error {
     }
 }
 
-export class ContractReservedEventError extends BaseWeb3Error {
+export class ContractReservedEventError extends BaseRWeb3Error {
     public code = ERR_CONTRACT_RESERVED_EVENT;
 
     public constructor(public type: string) {
@@ -100,7 +100,7 @@ export class ContractReservedEventError extends BaseWeb3Error {
     }
 }
 
-export class ContractMissingDeployDataError extends BaseWeb3Error {
+export class ContractMissingDeployDataError extends BaseRWeb3Error {
     public code = ERR_CONTRACT_MISSING_DEPLOY_DATA;
 
     public constructor() {
@@ -108,7 +108,7 @@ export class ContractMissingDeployDataError extends BaseWeb3Error {
     }
 }
 
-export class ContractNoAddressDefinedError extends BaseWeb3Error {
+export class ContractNoAddressDefinedError extends BaseRWeb3Error {
     public code = ERR_CONTRACT_MISSING_ADDRESS;
 
     public constructor() {
@@ -116,7 +116,7 @@ export class ContractNoAddressDefinedError extends BaseWeb3Error {
     }
 }
 
-export class ContractNoFromAddressDefinedError extends BaseWeb3Error {
+export class ContractNoFromAddressDefinedError extends BaseRWeb3Error {
     public code = ERR_CONTRACT_MISSING_FROM_ADDRESS;
 
     public constructor() {
@@ -124,7 +124,7 @@ export class ContractNoFromAddressDefinedError extends BaseWeb3Error {
     }
 }
 
-export class ContractInstantiationError extends BaseWeb3Error {
+export class ContractInstantiationError extends BaseRWeb3Error {
     public code = ERR_CONTRACT_INSTANTIATION;
 }
 

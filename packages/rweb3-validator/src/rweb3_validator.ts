@@ -14,7 +14,7 @@
     limitations under the License.
 */
 
-import { Web3ValidationErrorObject } from 'rweb3-types';
+import { RWeb3ValidationErrorObject } from 'rweb3-types';
 
 import { Validator } from './validator.js';
 import { ethAbiToJsonSchema } from './utils.js';
@@ -32,7 +32,7 @@ export class RWeb3Validator {
         schema: object,
         data: object,
         options?: Web3ValidationOptions,
-    ): Web3ValidationErrorObject[] | undefined {
+    ): RWeb3ValidationErrorObject[] | undefined {
         return this._validator.validate(schema, data as Json, options);
     }
 
@@ -40,7 +40,7 @@ export class RWeb3Validator {
         schema: ValidationSchemaInput,
         data: ReadonlyArray<unknown>,
         options: Web3ValidationOptions = { silent: false },
-    ): Web3ValidationErrorObject[] | undefined {
+    ): RWeb3ValidationErrorObject[] | undefined {
         const jsonSchema = ethAbiToJsonSchema(schema);
         if (
             Array.isArray(jsonSchema.items) &&

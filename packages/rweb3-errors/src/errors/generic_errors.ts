@@ -26,9 +26,9 @@ import {
     ERR_EXISTING_PLUGIN_NAMESPACE,
     ERR_INVALID_METHOD_PARAMS,
 } from '../error_codes.js';
-import { BaseWeb3Error } from '../web3_error_base.js';
+import { BaseRWeb3Error } from '../rweb3_error_base';
 
-export class InvalidNumberOfParamsError extends BaseWeb3Error {
+export class InvalidNumberOfParamsError extends BaseRWeb3Error {
     public code = ERR_PARAM;
 
     public constructor(
@@ -49,7 +49,7 @@ export class InvalidNumberOfParamsError extends BaseWeb3Error {
     }
 }
 
-export class InvalidMethodParamsError extends BaseWeb3Error {
+export class InvalidMethodParamsError extends BaseRWeb3Error {
     public code = ERR_INVALID_METHOD_PARAMS;
 
     public constructor(public hint?: string) {
@@ -64,11 +64,11 @@ export class InvalidMethodParamsError extends BaseWeb3Error {
     }
 }
 
-export class FormatterError extends BaseWeb3Error {
+export class FormatterError extends BaseRWeb3Error {
     public code = ERR_FORMATTERS;
 }
 
-export class MethodNotImplementedError extends BaseWeb3Error {
+export class MethodNotImplementedError extends BaseRWeb3Error {
     public code = ERR_METHOD_NOT_IMPLEMENTED;
 
     public constructor() {
@@ -76,19 +76,19 @@ export class MethodNotImplementedError extends BaseWeb3Error {
     }
 }
 
-export class OperationTimeoutError extends BaseWeb3Error {
+export class OperationTimeoutError extends BaseRWeb3Error {
     public code = ERR_OPERATION_TIMEOUT;
 }
 
-export class OperationAbortError extends BaseWeb3Error {
+export class OperationAbortError extends BaseRWeb3Error {
     public code = ERR_OPERATION_ABORT;
 }
 
-export class AbiError extends BaseWeb3Error {
+export class AbiError extends BaseRWeb3Error {
     public code = ERR_ABI_ENCODING;
 }
 
-export class ExistingPluginNamespaceError extends BaseWeb3Error {
+export class ExistingPluginNamespaceError extends BaseRWeb3Error {
     public code = ERR_EXISTING_PLUGIN_NAMESPACE;
 
     public constructor(pluginNamespace: string) {

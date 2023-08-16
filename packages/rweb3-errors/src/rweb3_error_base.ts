@@ -16,9 +16,9 @@
 
 /* eslint-disable max-classes-per-file */
 
-import { Web3Error } from 'rweb3-types';
+import { RWeb3Error } from 'rweb3-types';
 
-export abstract class BaseWeb3Error extends Error implements Web3Error {
+export abstract class BaseRWeb3Error extends Error implements RWeb3Error {
     public readonly name: string;
     public abstract readonly code: number;
     public stack: string | undefined;
@@ -61,12 +61,12 @@ export abstract class BaseWeb3Error extends Error implements Web3Error {
     }
 }
 
-export abstract class InvalidValueError extends BaseWeb3Error {
+export abstract class InvalidValueError extends BaseRWeb3Error {
     public readonly name: string;
 
     public constructor(value: unknown, msg: string) {
         super(
-            `Invalid value given "${BaseWeb3Error.convertToString(value, true)}". Error: ${msg}.`,
+            `Invalid value given "${BaseRWeb3Error.convertToString(value, true)}". Error: ${msg}.`,
         );
         this.name = this.constructor.name;
     }

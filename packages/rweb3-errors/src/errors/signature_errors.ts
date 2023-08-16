@@ -15,7 +15,7 @@
 */
 
 import { ERR_SIGNATURE_FAILED } from '../error_codes.js';
-import { InvalidValueError } from '../web3_error_base.js';
+import { InvalidValueError } from '../rweb3_error_base';
 
 export class SignatureError extends InvalidValueError {
     public code = ERR_SIGNATURE_FAILED;
