@@ -17,7 +17,7 @@
 import {RigoExecutionAPI} from 'rweb3-types';
 import {RWeb3Context} from 'rweb3-core';
 import {rigoRpcMethods} from 'rweb3-rpc-methods';
-import {TrxProto} from 'rweb3-utils';
+import {TrxProto} from "rweb3-utils";
 
 
 export async function health(web3Context: RWeb3Context<RigoExecutionAPI>) {
@@ -47,10 +47,6 @@ export async function blockByHash(web3Context: RWeb3Context<RigoExecutionAPI>, h
 
 export async function blockResults(web3Context: RWeb3Context<RigoExecutionAPI>, height?: string | number) {
     return rigoRpcMethods.blockResults(web3Context.requestManager, height);
-}
-
-export async function account(web3Context: RWeb3Context<RigoExecutionAPI>, addr: string) {
-    return rigoRpcMethods.account(web3Context.requestManager, addr);
 }
 
 export async function commit(
@@ -87,7 +83,7 @@ export async function consensusState(web3Context: RWeb3Context<RigoExecutionAPI>
     return rigoRpcMethods.consensusState(web3Context.requestManager);
 }
 
-export async function consensusParams(web3Context: RWeb3Context<RigoExecutionAPI>, height? : number | string) {
+export async function consensusParams(web3Context: RWeb3Context<RigoExecutionAPI>, height?: number | string) {
     return rigoRpcMethods.consensusParams(web3Context.requestManager, height);
 }
 
@@ -103,22 +99,57 @@ export async function tx(web3Context: RWeb3Context<RigoExecutionAPI>, hash: stri
     return rigoRpcMethods.tx(web3Context.requestManager, hash);
 }
 
+export async function abciInfo(web3Context: RWeb3Context<RigoExecutionAPI>) {
+    return rigoRpcMethods.abciInfo(web3Context.requestManager);
+}
+
+export async function abciQuery(web3Context: RWeb3Context<RigoExecutionAPI>, path: string, data: string, height?: number | string, prove?: boolean) {
+    return rigoRpcMethods.abciQuery(web3Context.requestManager, path, data, height, prove);
+}
+
+export async function checkTx(web3Context: RWeb3Context<RigoExecutionAPI>, tx: string) {
+    return rigoRpcMethods.checkTx(web3Context.requestManager, tx);
+}
+
+export async function numUnconfirmedTxs(web3Context: RWeb3Context<RigoExecutionAPI>) {
+    return rigoRpcMethods.numUnconfirmedTxs(web3Context.requestManager);
+}
 
 
-export async function stakes(web3Context: RWeb3Context<RigoExecutionAPI>, addr: string) {
-    return rigoRpcMethods.stakes(web3Context.requestManager, addr);
+export async function broadcastEvidence(web3Context: RWeb3Context<RigoExecutionAPI>, evidence: string) {
+    return rigoRpcMethods.broadcastEvidence(web3Context.requestManager, evidence);
+}
+
+export async function broadcastTxSync(web3Context: RWeb3Context<RigoExecutionAPI>, tx: TrxProto) {
+    return rigoRpcMethods.broadcastTxSync(web3Context.requestManager, tx);
+}
+
+export async function broadcastTxAsync(web3Context: RWeb3Context<RigoExecutionAPI>, tx: TrxProto) {
+    return rigoRpcMethods.broadcastTxAsync(web3Context.requestManager, tx);
+}
+
+export async function broadcastTxCommit(web3Context: RWeb3Context<RigoExecutionAPI>, tx: TrxProto) {
+    return rigoRpcMethods.broadcastTxCommit(web3Context.requestManager, tx);
 }
 
 export async function delegatee(web3Context: RWeb3Context<RigoExecutionAPI>, addr: string) {
     return rigoRpcMethods.delegatee(web3Context.requestManager, addr);
 }
 
-export async function broadcastTrxSync(web3Context: RWeb3Context<RigoExecutionAPI>, tx: TrxProto) {
-    return rigoRpcMethods.broadcastTrxSync(web3Context.requestManager, tx);
-}
-
 export async function rule(web3Context: RWeb3Context<RigoExecutionAPI>) {
     return rigoRpcMethods.rule(web3Context.requestManager);
+}
+
+export async function account(web3Context: RWeb3Context<RigoExecutionAPI>, addr: string) {
+    return rigoRpcMethods.account(web3Context.requestManager, addr);
+}
+
+export async function proposals(web3Context: RWeb3Context<RigoExecutionAPI>, txHash: string) {
+    return rigoRpcMethods.proposals(web3Context.requestManager, txHash);
+}
+
+export async function stakes(web3Context: RWeb3Context<RigoExecutionAPI>, addr: string) {
+    return rigoRpcMethods.stakes(web3Context.requestManager, addr);
 }
 
 export async function vmCall(
@@ -130,3 +161,4 @@ export async function vmCall(
 ) {
     return rigoRpcMethods.vmCall(web3Context.requestManager, addr, to, height, data);
 }
+

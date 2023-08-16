@@ -30,7 +30,15 @@ import {
     ConsensusStateResponse,
     ConsensusParams,
     NumUnconfirmedTxsResponse,
-    UnconfirmedTxsResponse, TxResponse
+    UnconfirmedTxsResponse,
+    TxResponse,
+    AbciInfoResponse,
+    AbciQueryResponse,
+    CheckTxResponse,
+    DelegateeResponse,
+    RuleResponse,
+    VmCallResponse,
+    ProposalResponse, StakesResponse, AccountResponse
 } from "rweb3-types";
 
 
@@ -225,21 +233,6 @@ export async function unconfirmedTxs(requestManager: RWeb3RequestManager, limit:
 }
 
 
-export async function abciInfo(requestManager: RWeb3RequestManager) {
-    return requestManager.send({
-        method: 'abci_info',
-        params: {},
-    });
-}
-
-export async function numUnconfirmedTxs(requestManager: RWeb3RequestManager): Promise<NumUnconfirmedTxsResponse> {
-    return requestManager.send({
-        method: 'num_unconfirmed_txs',
-        params: {},
-    });
-}
-
-
 export async function txSearch(requestManager: RWeb3RequestManager, query: string, prove?: boolean, page?: number | string, per_page?: number | string, order_by?: string) {
 
     if (page && typeof page === 'number') {
@@ -268,24 +261,20 @@ export async function tx(requestManager: RWeb3RequestManager, hash: string | Uin
         method: 'tx',
         params: {hash: Buffer.from(hash).toString('base64'), prove: true},
     });
-
 }
 
 
-export async function broadcastTxCommit(requestManager: RWeb3RequestManager, tx: string) {
-
-    let txhash = Buffer.from(tx).toString('base64')
-
+export async function abciInfo(requestManager: RWeb3RequestManager): Promise<AbciInfoResponse> {
     return requestManager.send({
-        method: 'broadcast_tx_commit',
-        params: {tx: txhash},
+        method: 'abci_info',
+        params: {},
     });
 }
 
 
-export async function abciQuery(requestManager: RWeb3RequestManager, path: string, data: string, height: number | string, prove: boolean) {
+export async function abciQuery(requestManager: RWeb3RequestManager, path: string, data: string, height?: number | string, prove?: boolean): Promise<AbciQueryResponse> {
 
-    if (typeof height === 'number') {
+    if (height && typeof height === 'number') {
         height = height.toString(10);
     }
 
@@ -300,8 +289,88 @@ export async function abciQuery(requestManager: RWeb3RequestManager, path: strin
     });
 }
 
+export async function checkTx(requestManager: RWeb3RequestManager, tx: string): Promise<CheckTxResponse> {
+    return requestManager.send({
+        method: 'check_tx',
+        params: {tx: Buffer.from(tx).toString('base64')},
+    });
+}
 
-export async function account(requestManager: RWeb3RequestManager, addr: string) {
+export async function numUnconfirmedTxs(requestManager: RWeb3RequestManager): Promise<NumUnconfirmedTxsResponse> {
+    return requestManager.send({
+        method: 'num_unconfirmed_txs',
+        params: {},
+    });
+}
+
+
+
+export async function broadcastEvidence(requestManager: RWeb3RequestManager, evidence: string) {
+    return requestManager.send({
+        method: 'broadcast_evidence',
+        params: {evidence: evidence},
+    });
+}
+
+
+export async function broadcastTxAsync(requestManager: RWeb3RequestManager, tx: TrxProto) {
+
+    const wr = TrxProto.encode(tx);
+    const txbz = wr.finish();
+
+    return requestManager.send({
+        method: 'broadcast_tx_async',
+        params: {tx: Buffer.from(txbz).toString('base64')},
+    });
+}
+
+export async function broadcastTxSync(requestManager: RWeb3RequestManager, tx: TrxProto) {
+
+    const wr = TrxProto.encode(tx);
+    const txbz = wr.finish();
+
+    return requestManager.send({
+        method: 'broadcast_tx_sync',
+        params: {tx: Buffer.from(txbz).toString('base64')},
+    });
+}
+
+
+export async function broadcastTxCommit(requestManager: RWeb3RequestManager, tx: TrxProto) {
+
+    const wr = TrxProto.encode(tx);
+    const txbz = wr.finish();
+
+    return requestManager.send({
+        method: 'broadcast_tx_commit',
+        params: {tx: Buffer.from(txbz).toString('base64')},
+    });
+}
+
+
+// end tendermint apis
+
+
+// start not tendermint apis
+
+
+export async function delegatee(requestManager: RWeb3RequestManager, addr: string): Promise<DelegateeResponse> {
+    return requestManager.send({
+        method: 'delegatee',
+        params: {addr: addr},
+    });
+}
+
+
+export async function rule(requestManager: RWeb3RequestManager): Promise<RuleResponse> {
+    return requestManager.send({
+        method: 'rule',
+        params: {},
+    });
+}
+
+
+export async function account(requestManager: RWeb3RequestManager, addr: string): Promise<AccountResponse> {
     return requestManager.send({
         method: 'account',
         params: {
@@ -309,6 +378,58 @@ export async function account(requestManager: RWeb3RequestManager, addr: string)
         },
     });
 }
+
+
+export async function proposals(requestManager: RWeb3RequestManager, txHash: string): Promise<ProposalResponse> {
+
+    return requestManager.send({
+        method: 'proposals',
+        params: {
+            txhash: Buffer.from(txHash).toString('base64')
+        },
+    });
+}
+
+
+export async function stakes(requestManager: RWeb3RequestManager, addr: string): Promise<StakesResponse> {
+
+    if (!addr.startsWith('0x')) {
+        addr = '0x' + addr;
+    }
+
+    return requestManager.send({
+        method: 'stakes',
+        params: {addr: addr},
+    });
+}
+
+
+export async function vmCall(
+    requestManager: RWeb3RequestManager,
+    addr: string,
+    to: string,
+    height: number,
+    data: string,
+): Promise<VmCallResponse> {
+
+    if (!addr.startsWith('0x')) {
+        addr = '0x' + addr;
+    }
+    if (!to.startsWith('0x')) {
+        to = '0x' + to;
+    }
+
+    return requestManager.send({
+        method: 'vm_call',
+        params: {
+            addr: addr,
+            to: to,
+            height: height.toString(10),
+            data: Buffer.from(Bytes.fromHex(data)).toString('base64'),
+        },
+    });
+}
+
 
 export async function blockSearch(requestManager: RWeb3RequestManager, query: string, page?: number | string, per_page?: number | string, order_by?: string) {
 
@@ -327,149 +448,6 @@ export async function blockSearch(requestManager: RWeb3RequestManager, query: st
             page: page,
             per_page: per_page,
             order_by: order_by
-        },
-    });
-}
-
-export async function broadcastEvidence(requestManager: RWeb3RequestManager, evidence: string) {
-    return requestManager.send({
-        method: 'broadcast_evidence',
-        params: {evidence: evidence},
-    });
-}
-
-
-export async function broadcastTxAsync(requestManager: RWeb3RequestManager, tx: string) {
-    return requestManager.send({
-        method: 'broadcast_tx_async',
-        params: {tx: tx},
-    });
-}
-
-
-export async function broadcastTxSync(requestManager: RWeb3RequestManager, tx: string) {
-    return requestManager.send({
-        method: 'broadcast_tx_sync',
-        params: {tx: tx},
-    });
-}
-
-export async function checkTx(requestManager: RWeb3RequestManager, tx: string) {
-
-    let txhash = Buffer.from(tx).toString('base64')
-
-    return requestManager.send({
-        method: 'check_tx',
-        params: {tx: txhash},
-    });
-}
-
-
-export async function delegatee(requestManager: RWeb3RequestManager, addr: string) {
-    return requestManager.send({
-        method: 'delegatee',
-        params: {addr: addr},
-    });
-}
-
-export async function proposals(requestManager: RWeb3RequestManager, tx: string) {
-
-    let txhash = Buffer.from(tx).toString('base64')
-
-    return requestManager.send({
-        method: 'proposals',
-        params: {
-            txhash: txhash
-        },
-    });
-}
-
-
-export async function rule(requestManager: RWeb3RequestManager) {
-    return requestManager.send({
-        method: 'rule',
-        params: {},
-    });
-}
-
-
-export async function stakes(requestManager: RWeb3RequestManager, addr: string) {
-
-    if (!addr.startsWith('0x')) {
-        addr = '0x' + addr;
-    }
-
-    return requestManager.send({
-        method: 'stakes',
-        params: {addr: addr},
-    });
-}
-
-
-// TODO : WebSocket 전용
-export async function subscribe(requestManager: RWeb3RequestManager, query: string) {
-    return requestManager.send({
-        method: 'subscribe',
-        params: {
-            query: query
-        },
-    });
-}
-
-
-// TODO : WEB SOCKET 전용
-export async function unsubscribe(requestManager: RWeb3RequestManager, query: string) {
-    return requestManager.send({
-        method: 'unsubscribe',
-        params: {
-            query: query
-        },
-    });
-}
-
-
-// TODO : WEB SOCKET 전용
-export async function unsubscribeAll(requestManager: RWeb3RequestManager) {
-    return requestManager.send({
-        method: 'unsubscribe_all',
-        params: {}
-    });
-}
-
-
-export async function broadcastTrxSync(requestManager: RWeb3RequestManager, tx: TrxProto) {
-
-    const wr = TrxProto.encode(tx);
-    const txbz = wr.finish();
-
-    return requestManager.send({
-        method: 'broadcast_tx_sync',
-        params: {tx: Buffer.from(txbz).toString('base64')},
-    });
-}
-
-export async function vmCall(
-    requestManager: RWeb3RequestManager,
-    addr: string,
-    to: string,
-    height: number,
-    data: string,
-) {
-
-    if (!addr.startsWith('0x')) {
-        addr = '0x' + addr;
-    }
-    if (!to.startsWith('0x')) {
-        to = '0x' + to;
-    }
-
-    return requestManager.send({
-        method: 'vm_call',
-        params: {
-            addr: addr,
-            to: to,
-            height: height.toString(10),
-            data: Buffer.from(Bytes.fromHex(data)).toString('base64'),
         },
     });
 }

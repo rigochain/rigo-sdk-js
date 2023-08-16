@@ -14,26 +14,12 @@
     limitations under the License.
 */
 
-import {HexString} from '../primitives_types.js';
-import {
-    AddressBase,
-    StakeValue,
-    Rule,
-    AbciInfo,
-    ResponseData,
-    CheckTx,
-    Delegatee,
-    NumUnconfirmedTxs,
-} from '../rigo_types';
-
 import * as responses from "../responses";
-
-export type AddressAPI = AddressBase<HexString>;
-
 /* eslint-disable camelcase */
 export type RigoExecutionAPI = {
 
     // start tendermint apis
+
     health: () => void;
     status: () => responses.StatusResponse;
     net_info: () => responses.NetInfoResponse;
@@ -52,21 +38,28 @@ export type RigoExecutionAPI = {
     tx_search: (query: string, prove?: boolean, page?: number | string, per_page?: number | string, order_by?: string) => responses.TxSearchResponse;
     block_search: (query: string, page: string, per_page: string, order_by: string) => responses.BlockSearchResponse;
     tx: (hash: string) => responses.TxResponse;
+    abci_info: () => responses.AbciInfoResponse;
+    abci_query: (path: string, data: string, height?: string | number, prove?: boolean) => responses.AbciQueryResponse;
+    check_tx: (tx: string) => responses.CheckTxResponse;
+    num_unconfirmed_txs: () => responses.NumUnconfirmedTxsResponse;
+
+    // broadcast apis
+    broadcast_evidence: (evidence: string) => void;
+    broadcast_tx_sync: (tx: string) => responses.BroadcastTxSyncResponse;
+    broadcast_tx_async: (tx: string) => responses.BroadcastTxAsyncResponse;
+    broadcast_tx_commit: (tx: string) => responses.BroadcastTxCommitResponse;
 
     // end tendermint apis
 
 
 
-    abci_info: () => ResponseData<AbciInfo>;
-    account: (addr: string) => AddressAPI;
-    broadcast_evidence: (evidence: string) => ResponseData<null>;
-    broadcast_tx_async: (tx: string) => ResponseData<null>;
-    check_tx: (tx: string) => CheckTx;
-    delegatee: (addr: string) => Delegatee;
-    num_unconfirmed_txs: () => NumUnconfirmedTxs;
-    // TODO :  proposal: (proposalId: string) => Proposal; 필요함
-    rule: () => Rule;
-    stakes: (addr: string) => StakeValue;
-
+    // start not tendermint apis
+    delegatee: (addr: string) => responses.DelegateeResponse;
+    rule: () => responses.RuleResponse;
+    account: (addr: string) => responses.AccountResponse;
+    proposal: (txHash: string) => responses.ProposalResponse;
+    stakes: (addr: string) => responses.StakesResponse;
+    vmCall: (vmCall: string) => responses.VmCallResponse;
+    // end not tendermint apis
 
 };

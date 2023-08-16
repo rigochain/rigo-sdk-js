@@ -517,3 +517,65 @@ export interface UnconfirmedTxsResponse {
     "total_bytes": string,
     "txs": []
 }
+
+
+export interface CheckTxResponse {
+    code: string,
+    data: string,
+    log: string,
+    info: string,
+    gas_wanted: string,
+    gas_used: string,
+    events: [],
+    codespace: string
+}
+
+
+export interface DelegateeResponse {
+    "code": number,
+    "log": string,
+    "key": string
+}
+
+
+export interface RuleResponse {
+    value: {
+        version: string;
+        maxValidatorCnt: string;
+        minValidatorStake: string;
+        rewardPerPower: string;
+        lazyRewardBlocks: string;
+        lazyApplyingBlocks: string;
+        gasPrice: string;
+        minTrxFee: string;
+        minVotingPeriodBlocks: string;
+        maxVotingPeriodBlocks: string;
+        minSelfStakeRatio: string;
+        maxUpdatableStakeRatio: string;
+        slashRatio: string;
+    };
+}
+
+export interface AccountResponse {
+    key: string;
+    value: {
+        address: string;
+        nonce: string;
+        balance: string;
+    };
+}
+
+
+export interface StakesResponse {
+    key: string;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    value: any;
+}
+
+export interface ProposalResponse {
+
+}
+
+export interface VmCallResponse {
+
+}
