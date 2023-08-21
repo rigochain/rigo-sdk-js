@@ -62,4 +62,7 @@ export type RigoExecutionAPI = {
     vmCall: (vmCall: string) => responses.VmCallResponse;
     // end not tendermint apis
 
+
+    subscribe: (query: string) => any;
+
 };

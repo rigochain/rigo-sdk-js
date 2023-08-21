@@ -38,12 +38,15 @@ import {
     DelegateeResponse,
     RuleResponse,
     VmCallResponse,
-    ProposalResponse, StakesResponse, AccountResponse
+    ProposalResponse,
+    StakesResponse,
+    AccountResponse
 } from "rweb3-types";
 
 import {validator} from 'rweb3-validator';
 import {SubscriptionEvent} from "rweb3-providers-ws";
 import {Stream} from "xstream";
+import {buildQuery, Method, SubscribeRequest, SubscriptionEventType} from "./requests";
 
 export async function health(requestManager: RWeb3RequestManager): Promise<void> {
     return requestManager.send({
@@ -495,9 +498,46 @@ export async function blockSearch(requestManager: RWeb3RequestManager, query: st
     });
 }
 
-export function subscribe(requestManager: RWeb3RequestManager, query: string) : Stream<SubscriptionEvent> {
+export function subscribe(requestManager: RWeb3RequestManager, query: string): Stream<SubscriptionEvent> {
     return requestManager.subscribe({
         method: 'subscribe',
-        query: query
+        params:{
+            query: query
+        }
     });
+}
+
+
+export function subscribeNewBlock(requestManager: RWeb3RequestManager): Stream<SubscriptionEvent> {
+    const request = {type: SubscriptionEventType.NewBlock};
+    return subscribe(requestManager, encodeSubscribeQuery({
+        method: Method.Subscribe,
+        query: request,
+    }));
+}
+
+
+export function subscribeNewBlockHeader(requestManager: RWeb3RequestManager): Stream<SubscriptionEvent> {
+
+    const request = {type: SubscriptionEventType.NewBlockHeader};
+
+    return subscribe(requestManager, encodeSubscribeQuery({
+        method: Method.Subscribe,
+        query: request,
+    }));
+}
+
+export function subscribeTx(requestManager: RWeb3RequestManager, query?: string): Stream<SubscriptionEvent> {
+
+    const request = {type: SubscriptionEventType.Tx, raw: query};
+
+    return subscribe(requestManager, encodeSubscribeQuery({
+        method: Method.Subscribe,
+        query: request,
+    }));
+}
+
+function encodeSubscribeQuery(req: SubscribeRequest): string {
+    const eventTag = {key: "tm.event", value: req.query.type};
+    return buildQuery({tags: [eventTag], raw: req.query.raw});
 }

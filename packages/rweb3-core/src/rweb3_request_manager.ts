@@ -27,7 +27,7 @@ import {
     JsonRpcPayload,
     JsonRpcResponse,
     JsonRpcResponseWithError,
-    JsonRpcError
+    JsonRpcError, JsonRpcRequest
 } from 'rweb3-types';
 import {
     ContractExecutionError,
@@ -110,14 +110,6 @@ export class RWeb3RequestManager<API extends RWeb3APISpec = RigoExecutionAPI> {
         throw new ResponseError(response);
     }
 
-    public subscribe(request: any): Stream<SubscriptionEvent> {
-
-        return null;
-    }
-
-    // public async send(request: any): Promise<any> {
-    //     const {provider} = this;
-    // }
 
     // eslint-disable-next-line class-methods-use-this
     private _processJsonRpcResponse<ResultType, ErrorType, RequestType>(
@@ -229,5 +221,18 @@ export class RWeb3RequestManager<API extends RWeb3APISpec = RigoExecutionAPI> {
         if (error?.message.includes('revert')) throw new ContractExecutionError(error);
 
         return false;
+    }
+
+    public subscribe<Method extends RWeb3APIMethod<API>>(request: RWeb3APIRequest<API, Method>) : Stream<SubscriptionEvent> {
+
+        // Only Websocket Provider can subscribe.
+        if (!(this.provider instanceof WebsocketProvider)) {
+            throw new Error('Only Websocket Provider can subscribe.');
+        }
+
+        const {provider} = this;
+
+        const payload = jsonRpc.toPayload(request);
+        return provider.listen(payload as JsonRpcRequest);
     }
 }

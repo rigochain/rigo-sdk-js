@@ -212,6 +212,7 @@ export default class WebsocketProvider<API extends RWeb3APISpec = RigoExecutionA
         return this.subscriptionStreams.get(query)!.filter((response) => response.query !== undefined);
     }
 
+
     /**
      * Resolves as soon as websocket is connected. execute() queues requests automatically,
      * so this should be required for testing purposes only.
