@@ -1,6 +1,6 @@
 ﻿
 import { Address, Bytes, HexString, Numbers, ValueTypes } from 'rweb3-types';
-import { EtherUnits, hexToBytes } from '../../src/converters';
+import { RigoUnits, hexToBytes } from '../../src/converters';
 
 export const bytesToHexValidData: [Bytes, HexString][] = [
 	[new Uint8Array([72]), '0x48'],
@@ -225,7 +225,7 @@ export const toHexInvalidData: [any, string][] = [
 	[undefined, 'Invalid value given "undefined". Error: can not be converted to hex.'],
 ];
 
-const conversionBaseData: [[Numbers, EtherUnits], string][] = [
+const conversionBaseData: [[Numbers, RigoUnits], string][] = [
 	[[0, 'wei'], '0'],
 	[[123, 'wei'], '123'],
 	[['123', 'wei'], '123'],
@@ -261,12 +261,12 @@ const conversionBaseData: [[Numbers, EtherUnits], string][] = [
 	[['879123456788877661', 'tether'], '0.000000000000879123456788877661'],
 ];
 
-export const fromWeiValidData: [[Numbers, EtherUnits], string][] = [
+export const fromWeiValidData: [[Numbers, RigoUnits], string][] = [
 	...conversionBaseData,
 	[['0xff', 'wei'], '255'],
 ];
 
-export const toWeiValidData: [[Numbers, EtherUnits], string][] = [
+export const toWeiValidData: [[Numbers, RigoUnits], string][] = [
 	...conversionBaseData,
 	[['255', 'wei'], '0xFF'],
 ];

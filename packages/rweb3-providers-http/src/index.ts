@@ -34,7 +34,6 @@ export default class HttpProvider<API extends RWeb3APISpec = RigoExecutionAPI> {
     
     private readonly clientUrl: string;
     private readonly httpProviderOptions: HttpProviderOptions | undefined;
-
     public constructor(clientUrl: string, httpProviderOptions?: HttpProviderOptions) {
         this.clientUrl = clientUrl;
         this.httpProviderOptions = httpProviderOptions;

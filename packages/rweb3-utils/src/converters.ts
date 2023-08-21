@@ -38,39 +38,29 @@ import {
 const base = BigInt(10);
 const expo10 = (expo: number) => base ** BigInt(expo);
 
-// Ref: https://ethdocs.org/en/latest/ether.html
 /** @internal */
-export const ethUnitMap = {
-    noether: BigInt('0'),
-    wei: BigInt(1),
-    kwei: expo10(3),
-    Kwei: expo10(3),
-    babbage: expo10(3),
-    femtoether: expo10(3),
-    mwei: expo10(6),
-    Mwei: expo10(6),
-    lovelace: expo10(6),
-    picoether: expo10(6),
-    gwei: expo10(9),
-    Gwei: expo10(9),
-    shannon: expo10(9),
-    nanoether: expo10(9),
-    nano: expo10(9),
-    szabo: expo10(12),
-    microether: expo10(12),
-    micro: expo10(12),
-    finney: expo10(15),
-    milliether: expo10(15),
-    milli: expo10(15),
-    ether: expo10(18),
-    kether: expo10(21),
+export const rigoUnitMap = {
+    norigo: BigInt('0'),
+    fons: BigInt(1),
+    kfons: expo10(3),
+    Kfons: expo10(3),
+    mfons: expo10(6),
+    Mfons: expo10(6),
+    gfons: expo10(9),
+    Gfons: expo10(9),
+    tfons: expo10(12),
+    Tfons: expo10(12),
+    pfons: expo10(15),
+    Pfons: expo10(15),
+    rigo: expo10(18),
+    krigo: expo10(21),
     grand: expo10(21),
-    mether: expo10(24),
-    gether: expo10(27),
-    tether: expo10(30),
+    mrigo: expo10(24),
+    grigo: expo10(27),
+    trigo: expo10(30),
 };
 
-export type EtherUnits = keyof typeof ethUnitMap;
+export type RigoUnits = keyof typeof rigoUnitMap;
 /**
  * Convert a value from bytes to Uint8Array
  * @param data - Data to be converted
@@ -448,28 +438,28 @@ export const toBigInt = (value: unknown): bigint => {
 };
 
 /**
- * Takes a number of wei and converts it to any other ether unit.
- * @param number - The value in wei
+ * Takes a number of fons and converts it to any other rigo unit.
+ * @param number - The value in fons
  * @param unit - The unit to convert to
  * @returns - Returns the converted value in the given unit
  *
  * @example
  * ```ts
- * console.log(web3.utils.fromWei("1", "ether"));
+ * console.log(web3.utils.fromFons("1", "rigo"));
  * > 0.000000000000000001
  *
- * console.log(web3.utils.fromWei("1", "shannon"));
+ * console.log(web3.utils.fromFons("1", "shannon"));
  * > 0.000000001
  * ```
  */
-export const fromWei = (number: Numbers, unit: EtherUnits): string => {
-    const denomination = ethUnitMap[unit];
+export const fromFons = (number: Numbers, unit: RigoUnits): string => {
+    const denomination = rigoUnitMap[unit];
 
     if (!denomination) {
         throw new InvalidUnitError(unit);
     }
 
-    // value in wei would always be integer
+    // value in fons would always be integer
     // 13456789, 1234
     const value = String(toNumber(number));
 
@@ -507,23 +497,23 @@ export const fromWei = (number: Numbers, unit: EtherUnits): string => {
 };
 
 /**
- * Takes a number of a unit and converts it to wei.
+ * Takes a number of a unit and converts it to fons.
  *
  * @param number - The number to convert.
- * @param unit - {@link EtherUnits} The unit of the number passed.
- * @returns The number converted to wei.
+ * @param unit - {@link RigoUnits} The unit of the number passed.
+ * @returns The number converted to fons.
  *
  * @example
  * ```ts
- * console.log(web3.utils.toWei("0.001", "ether"));
- * > 1000000000000000 //(wei)
+ * console.log(web3.utils.toFons("0.001", "rigo"));
+ * > 1000000000000000 //(fons)
  * ```
  */
-// todo in 1.x unit defaults to 'ether'
-export const toWei = (number: Numbers, unit: EtherUnits): string => {
+// todo in 1.x unit defaults to 'rigo'
+export const toFons = (number: Numbers, unit: RigoUnits): string => {
     validator.validate(['number'], [number]);
 
-    const denomination = ethUnitMap[unit];
+    const denomination = rigoUnitMap[unit];
 
     if (!denomination) {
         throw new InvalidUnitError(unit);
