@@ -42,6 +42,8 @@ import {
 } from "rweb3-types";
 
 import {validator} from 'rweb3-validator';
+import {SubscriptionEvent} from "rweb3-providers-ws";
+import {Stream} from "xstream";
 
 export async function health(requestManager: RWeb3RequestManager): Promise<void> {
     return requestManager.send({
@@ -490,5 +492,12 @@ export async function blockSearch(requestManager: RWeb3RequestManager, query: st
             per_page: per_page,
             order_by: order_by
         },
+    });
+}
+
+export function subscribe(requestManager: RWeb3RequestManager, query: string) : Stream<SubscriptionEvent> {
+    return requestManager.subscribe({
+        method: 'subscribe',
+        query: query
     });
 }

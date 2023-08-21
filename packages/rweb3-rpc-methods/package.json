@@ -42,6 +42,8 @@
   },
 
   "dependencies": {
+    "xstream": "^11.14.0",
+
     "rweb3-core": "0.0.33",
     "rweb3-utils": "0.0.33",
     "rweb3-types": "0.0.33",

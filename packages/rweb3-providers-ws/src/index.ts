@@ -23,7 +23,7 @@ import {
     JsonRpcRequest,
     JsonRpcResponse,
     JsonRpcResponseWithError,
-    JsonRpcResponseWithResult
+    JsonRpcResponseWithResult, RigoExecutionAPI, RWeb3APIMethod, RWeb3APIPayload, RWeb3APIReturnType, RWeb3APISpec
 } from "rweb3-types";
 import {ConnectionStatus} from "./socket/queueing_streaming_socket";
 import {SocketWrapperMessageEvent} from "./socket/socket_wrapper";
@@ -66,7 +66,7 @@ class RpcEventProducer implements Producer<SubscriptionEvent> {
         this.running = false;
         // Tell the server we are done in order to save resources. We cannot wait for the result.
         // This may fail when socket connection is not open, thus ignore errors in queueRequest
-        const endRequest: JsonRpcRequest = { ...this.request, method: "unsubscribe" };
+        const endRequest: JsonRpcRequest = {...this.request, method: "unsubscribe"};
         try {
             this.socket.queueRequest(JSON.stringify(endRequest));
         } catch (error) {
@@ -135,7 +135,7 @@ class RpcEventProducer implements Producer<SubscriptionEvent> {
 }
 
 
-export default class WebsocketProvider {
+export default class WebsocketProvider<API extends RWeb3APISpec = RigoExecutionAPI> {
 
     private readonly url: string;
     private readonly socket: ReconnectingSocket;
@@ -170,15 +170,27 @@ export default class WebsocketProvider {
         this.socket.connect();
     }
 
-    public async execute(request: JsonRpcRequest): Promise<JsonRpcResponseWithResult> {
-        const pendingResponse = this.responseForRequestId(request.id);
-        this.socket.queueRequest(JSON.stringify(request));
+    public async request<
+        Method extends RWeb3APIMethod<API>,
+        ResponseType = RWeb3APIReturnType<API, Method>,
+    >(
+        payload: RWeb3APIPayload<API, Method>
+    ): Promise<JsonRpcResponseWithResult<ResponseType>> {
+        return this.execute(payload as JsonRpcRequest);
+    }
+
+    public async execute<
+        Method extends RWeb3APIMethod<API>,
+        ResponseType = RWeb3APIReturnType<API, Method>,
+    >(payload: RWeb3APIPayload<API, Method>): Promise<JsonRpcResponseWithResult<ResponseType>> {
+        const pendingResponse = this.responseForRequestId(payload.id);
+        this.socket.queueRequest(JSON.stringify(payload));
 
         const response = await pendingResponse;
         if (isJsonRpcErrorResponse(response)) {
             throw new Error(JSON.stringify(response.error));
         }
-        return response;
+        return response as unknown as JsonRpcResponseWithResult<ResponseType>;
     }
 
     public listen(request: JsonRpcRequest): Stream<SubscriptionEvent> {
@@ -214,6 +226,10 @@ export default class WebsocketProvider {
 
     protected async responseForRequestId(id: JsonRpcId): Promise<JsonRpcResponse> {
         return firstEvent(this.jsonRpcResponseStream.filter((r) => r.id === id));
+    }
+
+    public getClientUrl(): string {
+        return this.url;
     }
 }
 

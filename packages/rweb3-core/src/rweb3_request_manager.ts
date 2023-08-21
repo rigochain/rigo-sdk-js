@@ -15,6 +15,7 @@
 */
 
 import HttpProvider from 'rweb3-providers-http';
+import WebsocketProvider, {SubscriptionEvent} from "rweb3-providers-ws";
 import {isNullish, jsonRpc, isResponseRpcError} from 'rweb3-utils';
 import {
     RigoExecutionAPI,
@@ -35,18 +36,23 @@ import {
     RpcError,
     rpcErrorsMap,
 } from 'rweb3-errors';
+import {Stream} from "xstream";
+
 
 export let Web3RequestManagerEvent;
 (function (Web3RequestManagerEvent) {
     Web3RequestManagerEvent['PROVIDER_CHANGED'] = 'PROVIDER_CHANGED';
     Web3RequestManagerEvent['BEFORE_PROVIDER_CHANGE'] = 'BEFORE_PROVIDER_CHANGE';
 })(Web3RequestManagerEvent || (Web3RequestManagerEvent = {}));
+
+
 const availableProviders = {
     HttpProvider: HttpProvider,
+    WebsocketProvider: WebsocketProvider
 };
 
 export class RWeb3RequestManager<API extends RWeb3APISpec = RigoExecutionAPI> {
-    private _provider: HttpProvider;
+    private _provider: HttpProvider | WebsocketProvider;
     private readonly useRpcCallSpecification?: boolean;
 
     public constructor(provider?: string, useRpcCallSpecification?: boolean) {
@@ -64,6 +70,11 @@ export class RWeb3RequestManager<API extends RWeb3APISpec = RigoExecutionAPI> {
             if (/^http(s)?:\/\//i.test(provider)) {
                 this._provider = new this.providers.HttpProvider(provider);
             }
+
+            // WS
+            if (/^ws(s)?:\/\//i.test(provider)) {
+                this._provider = new this.providers.WebsocketProvider(provider);
+            }
         }
     }
 
@@ -75,6 +86,7 @@ export class RWeb3RequestManager<API extends RWeb3APISpec = RigoExecutionAPI> {
         return this._provider;
     }
 
+
     public async send<
         Method extends RWeb3APIMethod<API>,
         ResponseType = RWeb3APIReturnType<API, Method>,
@@ -83,7 +95,6 @@ export class RWeb3RequestManager<API extends RWeb3APISpec = RigoExecutionAPI> {
         const {provider} = this;
 
         const payload = jsonRpc.toPayload(request);
-
 
         const response = await provider.request<Method, ResponseType>(
             // @ts-ignore
@@ -97,6 +108,11 @@ export class RWeb3RequestManager<API extends RWeb3APISpec = RigoExecutionAPI> {
         console.error('response', response);
 
         throw new ResponseError(response);
+    }
+
+    public subscribe(request: any): Stream<SubscriptionEvent> {
+
+        return null;
     }
 
     // public async send(request: any): Promise<any> {

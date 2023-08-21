@@ -151,7 +151,6 @@ export async function proposals(web3Context: RWeb3Context<RigoExecutionAPI>, txH
 export async function stakes(web3Context: RWeb3Context<RigoExecutionAPI>, addr: string) {
     return rigoRpcMethods.stakes(web3Context.requestManager, addr);
 }
-
 export async function vmCall(
     web3Context: RWeb3Context<RigoExecutionAPI>,
     addr: string,
