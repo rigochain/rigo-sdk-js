@@ -80,6 +80,7 @@ export class RWeb3RequestManager<API extends RWeb3APISpec = RigoExecutionAPI> {
         Method extends RWeb3APIMethod<API>,
         ResponseType = RWeb3APIReturnType<API, Method>,
     >(request: RWeb3APIRequest<API, Method>): Promise<ResponseType> {
+
         const {provider} = this;
 
         const payload = jsonRpc.toPayload(request);

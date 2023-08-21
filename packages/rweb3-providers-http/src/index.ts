@@ -31,6 +31,7 @@ import {
 import { ResponseError } from 'rweb3-errors';
 
 export default class HttpProvider<API extends RWeb3APISpec = RigoExecutionAPI> {
+    
     private readonly clientUrl: string;
     private readonly httpProviderOptions: HttpProviderOptions | undefined;
 
