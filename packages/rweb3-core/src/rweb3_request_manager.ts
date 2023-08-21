@@ -26,8 +26,7 @@ import {
     JsonRpcPayload,
     JsonRpcResponse,
     JsonRpcResponseWithError,
-    JsonRpcError,
-    JsonRpcBatchResponse,
+    JsonRpcError
 } from 'rweb3-types';
 import {
     ContractExecutionError,
@@ -142,24 +141,12 @@ export class RWeb3RequestManager<API extends RWeb3APISpec = RigoExecutionAPI> {
             }
         }
 
-        // This is the majority of the cases so check these first
-        // A valid JSON-RPC response with result object
-        if (jsonRpc.isResponseWithResult<ResultType>(response)) {
-            return response;
-        }
 
         if ((response as unknown) instanceof Error) {
             RWeb3RequestManager._isReverted(response);
             throw response;
         }
 
-        if (!legacy && jsonRpc.isBatchRequest(payload) && jsonRpc.isBatchResponse(response)) {
-            return response as JsonRpcBatchResponse<ResultType>;
-        }
-
-        if (legacy && !error && jsonRpc.isBatchRequest(payload)) {
-            return response as JsonRpcBatchResponse<ResultType>;
-        }
 
         if (legacy && error && jsonRpc.isBatchRequest(payload)) {
             // In case of error batch response we don't want to throw Invalid response
@@ -172,23 +159,6 @@ export class RWeb3RequestManager<API extends RWeb3APISpec = RigoExecutionAPI> {
             !jsonRpc.isResponseWithResult(response)
         ) {
             return this._buildResponse(payload, response, error);
-        }
-
-        if (jsonRpc.isBatchRequest(payload) && !Array.isArray(response)) {
-            throw new ResponseError(response, 'Got normal response for a batch request.');
-        }
-
-        if (!jsonRpc.isBatchRequest(payload) && Array.isArray(response)) {
-            throw new ResponseError(response, 'Got batch response for a normal request.');
-        }
-
-        if (
-            (jsonRpc.isResponseWithError(response) || jsonRpc.isResponseWithResult(response)) &&
-            !jsonRpc.isBatchRequest(payload)
-        ) {
-            if (response.id && payload.id !== response.id) {
-                throw new InvalidResponseError<ErrorType>(response);
-            }
         }
 
         throw new ResponseError(response, 'Invalid response');

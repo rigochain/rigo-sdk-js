@@ -92,5 +92,5 @@ export type JsonRpcBatchResponse<Result = JsonRpcResult, Error = JsonRpcResult> 
 
 export type JsonRpcResponse<Result = JsonRpcResult, Error = JsonRpcResult> =
     | JsonRpcResponseWithError<Error>
-    | JsonRpcResponseWithResult<Result>
-    | JsonRpcBatchResponse<Result, Error>;
+    | JsonRpcResponseWithResult<Result>;
+    // | JsonRpcBatchResponse<Result, Error>;

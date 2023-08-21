@@ -14,7 +14,7 @@
     limitations under the License.
 */
 
-import { isNullish } from 'rweb3-validator';
+import {isNullish} from 'rweb3-validator';
 import {
     JsonRpcPayload,
     JsonRpcResponse,
@@ -27,8 +27,8 @@ import {
     JsonRpcBatchResponse,
     JsonRpcSubscriptionResult,
 } from 'rweb3-types';
-import { rpcErrorsMap } from 'rweb3-errors';
-import { uuidV4 } from './uuid.js';
+import {rpcErrorsMap} from 'rweb3-errors';
+import {uuidV4} from './uuid.js';
 
 // check if code is a valid rpc server error code
 export const isResponseRpcError = (rpcError: JsonRpcResponseWithError) => {
@@ -89,8 +89,9 @@ export const isValidResponse = <Result = unknown, Error = unknown>(
 
 export const isBatchResponse = <Result = unknown, Error = unknown>(
     response: JsonRpcResponse<Result, Error>,
-): response is JsonRpcBatchResponse<Result, Error> =>
-    Array.isArray(response) && response.length > 0 && isValidResponse(response);
+): boolean => {
+    return Array.isArray(response);
+}
 
 // internal optional variable to increment and use for the jsonrpc `id`
 let requestIdSeed: number | undefined;
@@ -101,7 +102,7 @@ let requestIdSeed: number | undefined;
  * But after this being called with a number, the `id` will be a number staring from the provided `start` variable.
  * However, if `undefined` was passed to this function, the `id` will be a Uuid again.
  * @param start - a number to start incrementing from.
- * 	Or `undefined` to use a new Uuid (this is the default behavior)
+ *    Or `undefined` to use a new Uuid (this is the default behavior)
  */
 export const setRequestIdStart = (start: number | undefined) => {
     requestIdSeed = start;
