@@ -1,5 +1,5 @@
 {
-  "name": "rweb3-rpc-methods",
+  "name": "rweb3-contract",
   "version": "0.0.33",
   "main": "./lib/commonjs/index.js",
   "module": "./lib/esm/index.js",
@@ -42,12 +42,10 @@
   },
 
   "dependencies": {
-    "xstream": "^11.14.0",
-
-    "rweb3-core": "0.0.33",
+    "web3-eth-abi": "^4.0.3",
+    "rweb3-accounts": "0.0.33",
     "rweb3-utils": "0.0.33",
     "rweb3-types": "0.0.33",
-    "rweb3-validator": "0.0.33",
-    "rweb3-accounts": "0.0.33"
+    "rweb3-rigo": "0.0.33"
   }
 }

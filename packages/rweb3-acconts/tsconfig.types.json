@@ -1,0 +1,26 @@
+{
+//	"extends": "../../tsconfig.base.json",
+	"compilerOptions": {
+		"declarationDir": "./lib/types",
+		"declaration": true,
+		"declarationMap": true,
+		"emitDeclarationOnly": true,
+		"resolveJsonModule": true,
+		"forceConsistentCasingInFileNames": true,
+		"target": "es2016",
+		"moduleResolution": "node",
+		"newLine": "lf",
+		"noFallthroughCasesInSwitch": true,
+		"noImplicitReturns": true,
+		"noUnusedLocals": false,
+		"noUnusedParameters": false,
+		"pretty": true,
+		"removeComments": false,
+		"sourceMap": true,
+		"strict": false,
+		"strictNullChecks": false,
+		"esModuleInterop": true,
+		"allowSyntheticDefaultImports": true
+	},
+	"include": ["src/**/*"]
+}

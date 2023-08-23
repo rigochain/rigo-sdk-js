@@ -16,7 +16,7 @@
 
 import {RWeb3Context} from 'rweb3-core';
 import * as rpcMethodsWrappers from './rpc_method_wrappers.js';
-import {TrxProto} from "rweb3-utils";
+import {TrxProto} from "rweb3-types";
 
 export class RWeb3Rigo extends RWeb3Context {
 

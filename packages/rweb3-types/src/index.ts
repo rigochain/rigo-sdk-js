@@ -25,5 +25,6 @@ export * from './utility_types.js';
 export * from './rigo_types.js';
 export * from './responses.js';
 export * from './rweb3_api_types.js';
-export * from './rweb3_base_wallet';
-export * from './rweb3_deferred_promise_type';
+export * from './rweb3_base_wallet.js';
+export * from './rweb3_deferred_promise_type.js';
+export * from './trx_proto.js';

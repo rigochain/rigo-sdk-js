@@ -18,20 +18,10 @@
 import Long from "long";
 import _m0 from "protobufjs";
 
+import { TrxProto } from "rweb3-types";
+
 export const protobufPackage = "types";
 
-export interface TrxProto {
-  version: number;
-  time: Long;
-  nonce: Long;
-  from: Uint8Array;
-  to: Uint8Array;
-  Amount: Uint8Array;
-  Gas: Uint8Array;
-  type: number;
-  Payload: Uint8Array;
-  sig: Uint8Array;
-}
 
 export interface TrxPayloadStakingProto {
 }
@@ -76,7 +66,7 @@ function createBaseTrxProto(): TrxProto {
   };
 }
 
-export const TrxProto = {
+export const TrxProtoUtils = {
   encode(message: TrxProto, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.version !== 0) {
       writer.uint32(8).uint32(message.version);
@@ -191,7 +181,7 @@ export const TrxProto = {
     return obj;
   },
 
-  fromPartial<I extends Exact<DeepPartial<TrxProto>, I>>(object: I): TrxProto {
+  fromPartial<I extends Exact<DeepPartial<TrxProto>, I>>(object: any): TrxProto {
     const message = createBaseTrxProto();
     message.version = object.version ?? 0;
     message.time = (object.time !== undefined && object.time !== null) ? Long.fromValue(object.time) : Long.ZERO;
@@ -287,7 +277,7 @@ export const TrxPayloadUnstakingProto = {
     return obj;
   },
 
-  fromPartial<I extends Exact<DeepPartial<TrxPayloadUnstakingProto>, I>>(object: I): TrxPayloadUnstakingProto {
+  fromPartial<I extends Exact<DeepPartial<TrxPayloadUnstakingProto>, I>>(object: any): TrxPayloadUnstakingProto {
     const message = createBaseTrxPayloadUnstakingProto();
     message.txHash = object.txHash ?? new Uint8Array();
     return message;
@@ -335,7 +325,7 @@ export const TrxPayloadExecContractProto = {
     return obj;
   },
 
-  fromPartial<I extends Exact<DeepPartial<TrxPayloadExecContractProto>, I>>(object: I): TrxPayloadExecContractProto {
+  fromPartial<I extends Exact<DeepPartial<TrxPayloadExecContractProto>, I>>(object: any): TrxPayloadExecContractProto {
     const message = createBaseTrxPayloadExecContractProto();
     message.Code = object.Code ?? new Uint8Array();
     return message;
@@ -421,7 +411,7 @@ export const TrxPayloadProposalProto = {
     return obj;
   },
 
-  fromPartial<I extends Exact<DeepPartial<TrxPayloadProposalProto>, I>>(object: I): TrxPayloadProposalProto {
+  fromPartial<I extends Exact<DeepPartial<TrxPayloadProposalProto>, I>>(object: any): TrxPayloadProposalProto {
     const message = createBaseTrxPayloadProposalProto();
     message.message = object.message ?? "";
     message.startVotingHeight = (object.startVotingHeight !== undefined && object.startVotingHeight !== null)
@@ -487,7 +477,7 @@ export const TrxPayloadVotingProto = {
     return obj;
   },
 
-  fromPartial<I extends Exact<DeepPartial<TrxPayloadVotingProto>, I>>(object: I): TrxPayloadVotingProto {
+  fromPartial<I extends Exact<DeepPartial<TrxPayloadVotingProto>, I>>(object: any): TrxPayloadVotingProto {
     const message = createBaseTrxPayloadVotingProto();
     message.txHash = object.txHash ?? new Uint8Array();
     message.choice = object.choice ?? 0;
@@ -536,7 +526,7 @@ export const TrxPayloadContractProto = {
     return obj;
   },
 
-  fromPartial<I extends Exact<DeepPartial<TrxPayloadContractProto>, I>>(object: I): TrxPayloadContractProto {
+  fromPartial<I extends Exact<DeepPartial<TrxPayloadContractProto>, I>>(object: any): TrxPayloadContractProto {
     const message = createBaseTrxPayloadContractProto();
     message.data = object.data ?? new Uint8Array();
     return message;

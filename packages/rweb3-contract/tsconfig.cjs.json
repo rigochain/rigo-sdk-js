@@ -1,0 +1,25 @@
+{
+//	"extends": "../../tsconfig.base.json",
+	"compilerOptions": {
+		"target": "es2016",
+		"outDir": "./lib/commonjs",
+		"esModuleInterop": true,
+		"declaration": true,
+		"module": "commonjs",
+		"resolveJsonModule": true,
+		"forceConsistentCasingInFileNames": true,
+		"moduleResolution": "node",
+		"newLine": "lf",
+		"noFallthroughCasesInSwitch": true,
+		"noImplicitReturns": true,
+		"noUnusedLocals": false,
+		"noUnusedParameters": false,
+		"pretty": true,
+		"removeComments": false,
+		"sourceMap": true,
+		"strict": false,
+		"strictNullChecks": false,
+		"allowSyntheticDefaultImports": true
+	},
+	"include": ["src/**/*"]
+}

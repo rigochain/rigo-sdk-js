@@ -17,7 +17,7 @@
 import {RigoExecutionAPI} from 'rweb3-types';
 import {RWeb3Context} from 'rweb3-core';
 import {rigoRpcMethods} from 'rweb3-rpc-methods';
-import {TrxProto} from "rweb3-utils";
+import {TrxProto} from "rweb3-types";
 
 
 export async function health(web3Context: RWeb3Context<RigoExecutionAPI>) {

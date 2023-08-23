@@ -14,13 +14,15 @@
     limitations under the License.
 */
 
-import * as trxPb from './trx_pb.js';
+import * as trxPb from './trx_pb';
 import Long from 'long';
-import { Bytes } from './bytes.js';
+import {Bytes} from 'rweb3-utils';
 import BN from 'bn.js';
-import Account from './account.js';
-import { fromNanoSecond, getNanoSecond } from './time.js';
-import { createHash } from 'crypto';
+import {Account} from './account.js';
+import {fromNanoSecond, getNanoSecond} from 'rweb3-utils';
+import {createHash} from 'crypto';
+import {TrxProtoUtils} from "./trx_pb";
+import {TrxProto} from "rweb3-types";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 function isSet(value: any): boolean {
@@ -52,7 +54,7 @@ interface TrxPayloadCreateContract {
 function DecodeTrx(d: Bytes): Trx {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     let payload: any;
-    const tx = trxPb.TrxProto.decode(d);
+    const tx = trxPb.TrxProtoUtils.decode(d);
     switch (tx.type) {
         case 1: // transfer
         case 2: // staking
@@ -85,7 +87,7 @@ function DecodeTrx(d: Bytes): Trx {
     };
 }
 
-function BuildTransferTrx(obj: Trx): trxPb.TrxProto {
+function BuildTransferTrx(obj: Trx): TrxProto {
     return {
         version: isSet(obj.version) ? Number(obj.version) : 1,
         time: isSet(obj.time) ? getNanoSecond(obj.time) : getNanoSecond(),
@@ -107,7 +109,7 @@ function BuildTransferTrx(obj: Trx): trxPb.TrxProto {
     };
 }
 
-function BuildDelegateTrx(obj: Trx): trxPb.TrxProto {
+function BuildDelegateTrx(obj: Trx): TrxProto {
     return {
         version: isSet(obj.version) ? Number(obj.version) : 1,
         time: isSet(obj.time) ? getNanoSecond(obj.time) : getNanoSecond(),
@@ -129,7 +131,7 @@ function BuildDelegateTrx(obj: Trx): trxPb.TrxProto {
     };
 }
 
-function BuildUndelegateTrx(obj: Trx): trxPb.TrxProto {
+function BuildUndelegateTrx(obj: Trx): TrxProto {
     const payload = obj.payload as TrxPayloadUndelegating;
     if (!isSet(payload) || !isSet(payload.txhash)) {
         throw Error('mandatory argument is missed');
@@ -159,7 +161,7 @@ function BuildUndelegateTrx(obj: Trx): trxPb.TrxProto {
     };
 }
 
-function buildContractTrx(obj: Trx): trxPb.TrxProto {
+function buildContractTrx(obj: Trx): TrxProto {
     const payload = obj.payload as TrxPayloadCreateContract;
     if (!isSet(payload) || !isSet(payload.data)) {
         throw Error('mandatory argument is missed');
@@ -185,22 +187,22 @@ function buildContractTrx(obj: Trx): trxPb.TrxProto {
     };
 }
 
-function SignTrx(tx: trxPb.TrxProto, acct: Account): [Bytes, Bytes] {
+function SignTrx(tx: TrxProto, acct: Account): [Bytes, Bytes] {
     tx.sig = new Uint8Array();
 
-    const buf = trxPb.TrxProto.encode(tx);
+    const buf = TrxProtoUtils.encode(tx);
     const txbz = buf.finish();
 
     tx.sig = acct.sign(new Bytes(txbz));
 
-    return [new Bytes(tx.sig), new Bytes(trxPb.TrxProto.encode(tx).finish())];
+    return [new Bytes(tx.sig), new Bytes(TrxProtoUtils.encode(tx).finish())];
 }
 
-function VerifyTrx(tx: trxPb.TrxProto, acct: Account): boolean {
+function VerifyTrx(tx: TrxProto, acct: Account): boolean {
     const oriSig = tx.sig;
     tx.sig = new Uint8Array();
 
-    const buf = trxPb.TrxProto.encode(tx);
+    const buf = TrxProtoUtils.encode(tx);
     const txbz = buf.finish();
     const ret = acct.verify(oriSig, txbz);
     tx.sig = oriSig;

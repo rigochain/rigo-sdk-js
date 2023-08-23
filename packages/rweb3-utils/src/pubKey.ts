@@ -14,12 +14,12 @@
     limitations under the License.
 */
 
-import { createHash } from 'crypto';
+import {createHash} from 'crypto';
 import * as secp256k1 from 'secp256k1';
-import PrvKey from './prvKey.js';
-import { Bytes } from './bytes.js';
+import {PrvKey} from './prvKey.js';
+import {Bytes} from './bytes.js';
 
-export default class PubKey {
+export class PubKey {
     compressed: Bytes;
     x: Bytes;
     y: Bytes;

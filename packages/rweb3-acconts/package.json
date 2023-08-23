@@ -1,5 +1,5 @@
 {
-  "name": "rweb3-rpc-methods",
+  "name": "rweb3-accounts",
   "version": "0.0.33",
   "main": "./lib/commonjs/index.js",
   "module": "./lib/esm/index.js",
@@ -42,12 +42,18 @@
   },
 
   "dependencies": {
-    "xstream": "^11.14.0",
-
-    "rweb3-core": "0.0.33",
+    "@types/crypto-js": "^4.1.1",
+    "crypto-js": "^4.1.1",
+    "bn.js": "^5.2.1",
+    "secp256k1" : "^4.0.2",
+    "ethereum-cryptography": "^2.0.0",
+    "long": "^5.2.1",
+    "ts-proto": "^1.137.0",
+    "path-browserify": "^1.0.1",
+    "constants-browserify" : "^1.0.0",
+    "crypto-browserify": "3.12.0",
+    "protobufjs": "^6.11.3",
     "rweb3-utils": "0.0.33",
-    "rweb3-types": "0.0.33",
-    "rweb3-validator": "0.0.33",
-    "rweb3-accounts": "0.0.33"
+    "rweb3-types": "0.0.33"
   }
 }

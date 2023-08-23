@@ -18,7 +18,7 @@ import * as secp256k1 from 'secp256k1';
 import { createHash, randomBytes } from 'crypto';
 import { Bytes } from './bytes.js';
 
-export default class PrvKey {
+export class PrvKey {
     private d: Bytes;
 
     constructor() {

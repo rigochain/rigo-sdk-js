@@ -15,11 +15,10 @@
 */
 
 import BN from 'bn.js';
-import PrvKey from './prvKey.js';
-import PubKey from './pubKey.js';
-import {Bytes} from './bytes.js';
+import {PrvKey, PubKey, Bytes} from 'rweb3-utils';
 
-export default class Account {
+export class Account {
+
     address: string;
     name: string;
     nonce: number;

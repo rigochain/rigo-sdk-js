@@ -29,9 +29,6 @@ export * from './chunk_response_parser.js';
 export * from './uuid.js';
 export * from './uint8array.js';
 
-export * from './account.js';
 export * from './pubKey.js';
 export * from './prvKey.js';
 export * from './time.js';
-export * from './trx.js';
-export * from './trx_pb.js';

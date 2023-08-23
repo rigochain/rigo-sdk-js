@@ -190,6 +190,9 @@ export interface TxResponse {
     readonly index: number;
     readonly result: TxData;
     readonly proof?: TxProof;
+    readonly tx_result: {
+        data : any; // TODO : need check
+    }
 }
 
 export interface TxSearchResponse {
@@ -577,5 +580,7 @@ export interface ProposalResponse {
 }
 
 export interface VmCallResponse {
-
+    value: {
+        returnData : any;
+    }
 }

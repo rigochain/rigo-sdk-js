@@ -15,7 +15,9 @@
 */
 
 import {RWeb3RequestManager} from 'rweb3-core';
-import {Bytes, TrxProto} from 'rweb3-utils';
+import {TrxProto} from "rweb3-types";
+import {Bytes} from 'rweb3-utils';
+
 import {
     BlockchainResponse,
     BlockResponse,
@@ -47,6 +49,7 @@ import {validator} from 'rweb3-validator';
 import {SubscriptionEvent} from "rweb3-providers-ws";
 import {Stream} from "xstream";
 import {buildQuery, Method, SubscribeRequest, SubscriptionEventType} from "./requests";
+import {TrxProtoUtils} from "rweb3-accounts";
 
 export async function health(requestManager: RWeb3RequestManager): Promise<void> {
     return requestManager.send({
@@ -341,7 +344,7 @@ export async function broadcastEvidence(requestManager: RWeb3RequestManager, evi
 
 export async function broadcastTxAsync(requestManager: RWeb3RequestManager, tx: TrxProto) {
 
-    const wr = TrxProto.encode(tx);
+    const wr = TrxProtoUtils.encode(tx);
     const txbz = wr.finish();
 
     return requestManager.send({
@@ -352,7 +355,7 @@ export async function broadcastTxAsync(requestManager: RWeb3RequestManager, tx: 
 
 export async function broadcastTxSync(requestManager: RWeb3RequestManager, tx: TrxProto) {
 
-    const wr = TrxProto.encode(tx);
+    const wr = TrxProtoUtils.encode(tx);
     const txbz = wr.finish();
 
     return requestManager.send({
@@ -364,7 +367,7 @@ export async function broadcastTxSync(requestManager: RWeb3RequestManager, tx: T
 
 export async function broadcastTxCommit(requestManager: RWeb3RequestManager, tx: TrxProto) {
 
-    const wr = TrxProto.encode(tx);
+    const wr = TrxProtoUtils.encode(tx);
     const txbz = wr.finish();
 
     return requestManager.send({
@@ -501,7 +504,7 @@ export async function blockSearch(requestManager: RWeb3RequestManager, query: st
 export function subscribe(requestManager: RWeb3RequestManager, query: string): Stream<SubscriptionEvent> {
     return requestManager.subscribe({
         method: 'subscribe',
-        params:{
+        params: {
             query: query
         }
     });
