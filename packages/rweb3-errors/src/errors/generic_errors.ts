@@ -31,11 +31,7 @@ import { BaseRWeb3Error } from '../rweb3_error_base';
 export class InvalidNumberOfParamsError extends BaseRWeb3Error {
     public code = ERR_PARAM;
 
-    public constructor(
-        public got: number,
-        public expected: number,
-        public method: string,
-    ) {
+    public constructor(public got: number, public expected: number, public method: string) {
         super(`Invalid number of parameters for "${method}". Got "${got}" expected "${expected}"!`);
     }
 

@@ -38,6 +38,7 @@ export class RpcError extends BaseRWeb3Error {
     public id: JsonRpcId;
     public jsonrpc: string;
     public jsonRpcError: JsonRpcError;
+
     public constructor(rpcError: JsonRpcResponseWithError, message?: string) {
         super(message ?? `An Rpc error has occured with a code of ${rpcError.error.code}`);
         this.code = rpcError.error.code;
@@ -53,6 +54,7 @@ export class RpcError extends BaseRWeb3Error {
 
 export class ParseError extends RpcError {
     public code = ERR_RPC_INVALID_JSON;
+
     public constructor(rpcError: JsonRpcResponseWithError) {
         super(rpcError, 'Parse error');
     }
@@ -60,6 +62,7 @@ export class ParseError extends RpcError {
 
 export class InvalidRequestError extends RpcError {
     public code = ERR_RPC_INVALID_REQUEST;
+
     public constructor(rpcError: JsonRpcResponseWithError) {
         super(rpcError, 'Invalid request');
     }
@@ -67,6 +70,7 @@ export class InvalidRequestError extends RpcError {
 
 export class MethodNotFoundError extends RpcError {
     public code = ERR_RPC_INVALID_METHOD;
+
     public constructor(rpcError: JsonRpcResponseWithError) {
         super(rpcError, 'Method not found');
     }
@@ -74,6 +78,7 @@ export class MethodNotFoundError extends RpcError {
 
 export class InvalidParamsError extends RpcError {
     public code = ERR_RPC_INVALID_PARAMS;
+
     public constructor(rpcError: JsonRpcResponseWithError) {
         super(rpcError, 'Invalid request');
     }
@@ -81,6 +86,7 @@ export class InvalidParamsError extends RpcError {
 
 export class InternalError extends RpcError {
     public code = ERR_RPC_INTERNAL_ERROR;
+
     public constructor(rpcError: JsonRpcResponseWithError) {
         super(rpcError, 'Internal error');
     }
@@ -88,6 +94,7 @@ export class InternalError extends RpcError {
 
 export class InvalidInputError extends RpcError {
     public code = ERR_RPC_INVALID_INPUT;
+
     public constructor(rpcError: JsonRpcResponseWithError) {
         super(rpcError, 'Invalid input');
     }
@@ -95,6 +102,7 @@ export class InvalidInputError extends RpcError {
 
 export class MethodNotSupported extends RpcError {
     public code = ERR_RPC_UNSUPPORTED_METHOD;
+
     public constructor(rpcError: JsonRpcResponseWithError) {
         super(rpcError, 'Method not supported');
     }
@@ -102,6 +110,7 @@ export class MethodNotSupported extends RpcError {
 
 export class ResourceUnavailableError extends RpcError {
     public code = ERR_RPC_UNAVAILABLE_RESOURCE;
+
     public constructor(rpcError: JsonRpcResponseWithError) {
         super(rpcError, 'Resource unavailable');
     }
@@ -109,6 +118,7 @@ export class ResourceUnavailableError extends RpcError {
 
 export class ResourcesNotFoundError extends RpcError {
     public code = ERR_RPC_MISSING_RESOURCE;
+
     public constructor(rpcError: JsonRpcResponseWithError) {
         super(rpcError, 'Resource not found');
     }
@@ -116,6 +126,7 @@ export class ResourcesNotFoundError extends RpcError {
 
 export class VersionNotSupportedError extends RpcError {
     public code = ERR_RPC_NOT_SUPPORTED;
+
     public constructor(rpcError: JsonRpcResponseWithError) {
         super(rpcError, 'JSON-RPC version not supported');
     }
@@ -123,6 +134,7 @@ export class VersionNotSupportedError extends RpcError {
 
 export class TransactionRejectedError extends RpcError {
     public code = ERR_RPC_TRANSACTION_REJECTED;
+
     public constructor(rpcError: JsonRpcResponseWithError) {
         super(rpcError, 'Transaction rejected');
     }
@@ -130,6 +142,7 @@ export class TransactionRejectedError extends RpcError {
 
 export class LimitExceededError extends RpcError {
     public code = ERR_RPC_LIMIT_EXCEEDED;
+
     public constructor(rpcError: JsonRpcResponseWithError) {
         super(rpcError, 'Limit exceeded');
     }

@@ -31,6 +31,7 @@ import { BaseRWeb3Error } from '../rweb3_error_base';
 
 export class PrivateKeyLengthError extends BaseRWeb3Error {
     public code = ERR_PRIVATE_KEY_LENGTH;
+
     public constructor() {
         super(`Private key must be 32 bytes.`);
     }
@@ -38,6 +39,7 @@ export class PrivateKeyLengthError extends BaseRWeb3Error {
 
 export class InvalidPrivateKeyError extends BaseRWeb3Error {
     public code = ERR_INVALID_PRIVATE_KEY;
+
     public constructor() {
         super(`Invalid Private Key, Not a valid string or uint8Array`);
     }
@@ -45,6 +47,7 @@ export class InvalidPrivateKeyError extends BaseRWeb3Error {
 
 export class InvalidSignatureError extends BaseRWeb3Error {
     public code = ERR_INVALID_SIGNATURE;
+
     public constructor(errorDetails: string) {
         super(`"${errorDetails}"`);
     }
@@ -52,6 +55,7 @@ export class InvalidSignatureError extends BaseRWeb3Error {
 
 export class InvalidKdfError extends BaseRWeb3Error {
     public code = ERR_UNSUPPORTED_KDF;
+
     public constructor() {
         super(`Invalid key derivation function`);
     }
@@ -59,6 +63,7 @@ export class InvalidKdfError extends BaseRWeb3Error {
 
 export class KeyDerivationError extends BaseRWeb3Error {
     public code = ERR_KEY_DERIVATION_FAIL;
+
     public constructor() {
         super(`Key derivation failed - possibly wrong password`);
     }
@@ -66,6 +71,7 @@ export class KeyDerivationError extends BaseRWeb3Error {
 
 export class KeyStoreVersionError extends BaseRWeb3Error {
     public code = ERR_KEY_VERSION_UNSUPPORTED;
+
     public constructor() {
         super('Unsupported key store version');
     }
@@ -73,6 +79,7 @@ export class KeyStoreVersionError extends BaseRWeb3Error {
 
 export class InvalidPasswordError extends BaseRWeb3Error {
     public code = ERR_INVALID_PASSWORD;
+
     public constructor() {
         super('Password cannot be empty');
     }
@@ -80,6 +87,7 @@ export class InvalidPasswordError extends BaseRWeb3Error {
 
 export class IVLengthError extends BaseRWeb3Error {
     public code = ERR_IV_LENGTH;
+
     public constructor() {
         super('Initialization vector must be 16 bytes');
     }
@@ -87,6 +95,7 @@ export class IVLengthError extends BaseRWeb3Error {
 
 export class PBKDF2IterationsError extends BaseRWeb3Error {
     public code = ERR_PBKDF2_ITERATIONS;
+
     public constructor() {
         super('c > 1000, pbkdf2 is less secure with less iterations');
     }
