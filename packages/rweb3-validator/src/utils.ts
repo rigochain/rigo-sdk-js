@@ -15,7 +15,7 @@
 */
 
 import { InvalidBytesError, InvalidNumberError } from 'rweb3-errors';
-import { VALID_ETH_BASE_TYPES } from './constants.js';
+import { VALID_RIGO_BASE_TYPES } from './constants.js';
 import {
     FullValidationSchema,
     JsonSchema,
@@ -26,11 +26,11 @@ import {
 } from './types.js';
 import { isAbiParameterSchema } from './validation/abi.js';
 import { isHexStrict } from './validation';
-import { Web3ValidatorError } from './errors.js';
+import { RWeb3ValidatorError } from './errors.js';
 
 const extraTypes = ['hex', 'number', 'blockNumber', 'blockNumberOrTag', 'filter', 'bloom'];
 
-export const parseBaseType = <T = (typeof VALID_ETH_BASE_TYPES)[number]>(
+export const parseBaseType = <T = (typeof VALID_RIGO_BASE_TYPES)[number]>(
     type: string,
 ): {
     baseType?: T;
@@ -55,7 +55,7 @@ export const parseBaseType = <T = (typeof VALID_ETH_BASE_TYPES)[number]>(
         isArray = arraySizes.length > 0;
     }
 
-    if (VALID_ETH_BASE_TYPES.includes(strippedType)) {
+    if (VALID_RIGO_BASE_TYPES.includes(strippedType)) {
         return { baseType: strippedType as unknown as T, isArray, baseTypeSize, arraySizes };
     }
 
@@ -75,18 +75,18 @@ export const parseBaseType = <T = (typeof VALID_ETH_BASE_TYPES)[number]>(
     return { baseType: strippedType as unknown as T, isArray, baseTypeSize, arraySizes };
 };
 
-const convertEthType = (
+const convertRigoType = (
     type: string,
     parentSchema: Schema = {},
 ): { format?: string; required?: boolean } => {
     const typePropertyPresent = Object.keys(parentSchema).includes('type');
 
     if (typePropertyPresent) {
-        throw new Web3ValidatorError([
+        throw new RWeb3ValidatorError([
             {
-                keyword: 'eth',
-                message: 'Either "eth" or "type" can be presented in schema',
-                params: { eth: type },
+                keyword: 'rigo',
+                message: 'Rigo "rigo" or "type" can be presented in schema',
+                params: { rigo: type },
                 instancePath: '',
                 schemaPath: '',
             },
@@ -96,11 +96,11 @@ const convertEthType = (
     const { baseType, baseTypeSize } = parseBaseType(type);
 
     if (!baseType && !extraTypes.includes(type)) {
-        throw new Web3ValidatorError([
+        throw new RWeb3ValidatorError([
             {
-                keyword: 'eth',
-                message: `Eth data type "${type}" is not valid`,
-                params: { eth: type },
+                keyword: 'rigo',
+                message: `Rigo data type "${type}" is not valid`,
+                params: { rigo: type },
                 instancePath: '',
                 schemaPath: '',
             },
@@ -216,7 +216,7 @@ export const abiSchemaToJsonSchema = (
             const item: JsonSchema = {
                 type: 'array',
                 $id: abiName,
-                items: convertEthType(String(baseType)),
+                items: convertRigoType(String(baseType)),
                 minItems: arraySize,
                 maxItems: arraySize,
             };
@@ -229,12 +229,12 @@ export const abiSchemaToJsonSchema = (
             (lastSchema.items as JsonSchema[]).push(item);
         } else if (Array.isArray(lastSchema.items)) {
             // Array of non-tuple items
-            lastSchema.items.push({ $id: abiName, ...convertEthType(abiType) });
+            lastSchema.items.push({ $id: abiName, ...convertRigoType(abiType) });
         } else {
             // Nested object
             ((lastSchema.items as JsonSchema).items as JsonSchema[]).push({
                 $id: abiName,
-                ...convertEthType(abiType),
+                ...convertRigoType(abiType),
             });
         }
     }
@@ -242,7 +242,7 @@ export const abiSchemaToJsonSchema = (
     return schema;
 };
 
-export const ethAbiToJsonSchema = (abis: ValidationSchemaInput) => abiSchemaToJsonSchema(abis);
+export const rigoAbiToJsonSchema = (abis: ValidationSchemaInput) => abiSchemaToJsonSchema(abis);
 
 export const fetchArrayElement = (data: Array<unknown>, level: number): unknown => {
     if (level === 1) {

@@ -109,7 +109,6 @@ export const isInt = (
     }
 };
 
-
 export const isIntOrEmpty = (
     value: ValidInputTypes,
     options: { abiType: string; bitSize?: never } | { bitSize: number; abiType?: never } = {
@@ -118,7 +117,6 @@ export const isIntOrEmpty = (
 ) => {
     return value === '' || isInt(value, options);
 };
-
 
 export const isNumber = (value: ValidInputTypes) => {
     if (isInt(value)) {

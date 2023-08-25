@@ -14,12 +14,12 @@
     limitations under the License.
 */
 
-import {ValidInputTypes} from './types.js';
-import {isAddress, isRigoAddress} from './validation';
-import {isBoolean, isBooleanOrEmpty} from './validation';
-import {isBytes} from './validation';
-import {isHexStrict, isString} from './validation';
-import {isNumber, isInt, isUInt, isIntOrEmpty} from './validation';
+import { ValidInputTypes } from './types.js';
+import { isAddress, isRigoAddress } from './validation';
+import { isBoolean, isBooleanOrEmpty } from './validation';
+import { isBytes } from './validation';
+import { isHexStrict, isString } from './validation';
+import { isNumber, isInt, isUInt, isIntOrEmpty } from './validation';
 
 const formats: { [key: string]: (data: unknown) => boolean } = {
     address: (data: unknown) => isAddress(data as ValidInputTypes),
@@ -37,13 +37,13 @@ const formats: { [key: string]: (data: unknown) => boolean } = {
 // generate formats for all numbers types
 for (let i = 3; i <= 8; i += 1) {
     const bitSize = 2 ** i;
-    formats[`int${bitSize}`] = (data) => isInt(data as ValidInputTypes, {bitSize});
-    formats[`uint${bitSize}`] = (data) => isUInt(data as ValidInputTypes, {bitSize});
+    formats[`int${bitSize}`] = (data) => isInt(data as ValidInputTypes, { bitSize });
+    formats[`uint${bitSize}`] = (data) => isUInt(data as ValidInputTypes, { bitSize });
 }
 // generate bytes
 for (let size = 1; size <= 32; size += 1) {
     formats[`bytes${size}`] = (data) =>
-        isBytes(data as ValidInputTypes | Uint8Array | number[], {size});
+        isBytes(data as ValidInputTypes | Uint8Array | number[], { size });
 }
 
 export default formats;

@@ -19,21 +19,25 @@ import { toHex, utf8ToBytes } from 'ethereum-cryptography/utils.js';
 import { blake2b } from 'ethereum-cryptography/blake2b.js';
 import validator from 'is-my-json-valid';
 import formats from './formats.js';
-import { Web3ValidatorError } from './errors.js';
+import { RWeb3ValidatorError } from './errors.js';
 import { Validate, Json, Schema, RawValidationError } from './types.js';
 
 export class Validator {
     // eslint-disable-next-line no-use-before-define
     private static validatorInstance?: Validator;
+
     // eslint-disable-next-line no-useless-constructor, @typescript-eslint/no-empty-function
     private constructor() {}
+
     public static factory(): Validator {
         if (!Validator.validatorInstance) {
             Validator.validatorInstance = new Validator();
         }
         return Validator.validatorInstance;
     }
+
     private readonly _schemas: Map<string, Validate> = new Map();
+
     public getSchema(key: string) {
         return this._schemas.get(key);
     }
@@ -66,11 +70,12 @@ export class Validator {
                 if (options?.silent) {
                     return errors;
                 }
-                throw new Web3ValidatorError(errors);
+                throw new RWeb3ValidatorError(errors);
             }
         }
         return undefined;
     }
+
     private convertErrors(
         errors: RawValidationError[] | undefined,
         schema: Schema,
@@ -156,6 +161,7 @@ export class Validator {
     public static getKey(schema: Schema) {
         return toHex(blake2b(utf8ToBytes(JSON.stringify(schema))));
     }
+
     private getObjectValueByPath(obj: object, pointer: string, objpath?: object[]) {
         try {
             if (typeof obj !== 'object') throw new Error('Invalid input object');
@@ -184,6 +190,7 @@ export class Validator {
             return '';
         }
     }
+
     // eslint-disable-next-line class-methods-use-this
     private untilde(string: string) {
         if (!string.includes('~')) return string;

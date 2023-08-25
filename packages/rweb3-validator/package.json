@@ -34,8 +34,6 @@
     "format": "prettier --write '**/*'",
     "test": "jest --config=./test/unit/jest.config.js"
   },
-
-
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^5.30.7",
     "@typescript-eslint/parser": "^5.30.7",
@@ -55,7 +53,6 @@
     "ts-jest": "^28.0.7",
     "@types/jest": "^28.1.6"
   },
-
   "dependencies": {
     "ethereum-cryptography": "2.1.2",
     "is-my-json-valid": "^2.20.6",

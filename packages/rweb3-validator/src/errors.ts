@@ -42,7 +42,7 @@ const errorFormatter = (error: RWeb3ValidationErrorObject): string => {
     return 'unspecified error';
 };
 
-export class Web3ValidatorError extends BaseRWeb3Error {
+export class RWeb3ValidatorError extends BaseRWeb3Error {
     public code = ERR_VALIDATION;
     public readonly errors: RWeb3ValidationErrorObject[];
 

@@ -14,4 +14,4 @@
     limitations under the License.
 */
 
-export const VALID_ETH_BASE_TYPES = ['bool', 'int', 'uint', 'bytes', 'string', 'address', 'tuple'];
+export const VALID_RIGO_BASE_TYPES = ['bool', 'int', 'uint', 'bytes', 'string', 'address', 'tuple'];

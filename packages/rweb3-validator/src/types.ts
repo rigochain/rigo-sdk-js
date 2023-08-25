@@ -14,10 +14,8 @@
     limitations under the License.
 */
 
-import {AbiParameter} from 'rweb3-types';
-import {ValidationError} from 'is-my-json-valid';
-
-// TODO : 여기 Abi 타입 체크를 이더가 아닌 RIGO 로 해야 된다.
+import { AbiParameter } from 'rweb3-types';
+import { ValidationError } from 'is-my-json-valid';
 
 export type ValidInputTypes = Uint8Array | bigint | string | number | boolean;
 export type RigoBaseTypes = 'bool' | 'bytes' | 'string' | 'uint' | 'int' | 'address' | 'tuple';
@@ -45,11 +43,7 @@ export type RigoExtendedTypes =
 
 export type FullValidationSchema = ReadonlyArray<AbiParameter>;
 export type ShortValidationSchema = ReadonlyArray<
-    | string
-    | RigoBaseTypes
-    | RigoExtendedTypes
-    | RigoBaseTypesWithMeta
-    | ShortValidationSchema
+    string | RigoBaseTypes | RigoExtendedTypes | RigoBaseTypesWithMeta | ShortValidationSchema
 >;
 export type ValidationSchemaInput = ShortValidationSchema;
 
@@ -138,7 +132,7 @@ export type Schema = {
     $comment?: string;
     // optimization hint and error filtering only, does not affect validation result
     discriminator?: { propertyName: string; mapping?: { [value: string]: string } };
-    readonly eth?: string;
+    readonly rigo?: string;
     items?: Schema | Schema[];
 };
 

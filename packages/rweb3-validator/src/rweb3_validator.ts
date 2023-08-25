@@ -17,9 +17,9 @@
 import { RWeb3ValidationErrorObject } from 'rweb3-types';
 
 import { Validator } from './validator.js';
-import { ethAbiToJsonSchema } from './utils.js';
+import { rigoAbiToJsonSchema } from './utils.js';
 import { Json, ValidationSchemaInput, Web3ValidationOptions } from './types.js';
-import { Web3ValidatorError } from './errors.js';
+import { RWeb3ValidatorError } from './errors.js';
 
 export class RWeb3Validator {
     private readonly _validator: Validator;
@@ -41,7 +41,7 @@ export class RWeb3Validator {
         data: ReadonlyArray<unknown>,
         options: Web3ValidationOptions = { silent: false },
     ): RWeb3ValidationErrorObject[] | undefined {
-        const jsonSchema = ethAbiToJsonSchema(schema);
+        const jsonSchema = rigoAbiToJsonSchema(schema);
         if (
             Array.isArray(jsonSchema.items) &&
             jsonSchema.items?.length === 0 &&
@@ -55,7 +55,7 @@ export class RWeb3Validator {
             jsonSchema.items?.length === 0 &&
             data.length !== 0
         ) {
-            throw new Web3ValidatorError([
+            throw new RWeb3ValidatorError([
                 {
                     instancePath: '/0',
                     schemaPath: '/',

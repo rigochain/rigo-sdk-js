@@ -290,7 +290,7 @@ export const format = <
     }
 
     // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-    const jsonSchema: JsonSchema = isObject(schema) ? schema : utils.ethAbiToJsonSchema(schema);
+    const jsonSchema: JsonSchema = isObject(schema) ? schema : utils.rigoAbiToJsonSchema(schema);
 
     if (!jsonSchema.properties && !jsonSchema.items && !jsonSchema.format) {
         throw new FormatterError('Invalid json schema for formatting');

@@ -3,6 +3,7 @@
   "types": "lib/definitions/index.d.ts",
   "version": "0.0.33",
   "description": "Javascript SDK for RIGO",
+  "private": true,
   "keywords": [
     "rigo",
     "rigochain",
