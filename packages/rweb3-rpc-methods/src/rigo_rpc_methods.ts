@@ -14,9 +14,9 @@
     limitations under the License.
 */
 
-import {RWeb3RequestManager} from 'rweb3-core';
-import {TrxProto} from "rweb3-types";
-import {Bytes} from 'rweb3-utils';
+import { RWeb3RequestManager } from 'rweb3-core';
+import { TrxProto } from 'rweb3-types';
+import { Bytes } from 'rweb3-utils';
 
 import {
     BlockchainResponse,
@@ -42,20 +42,21 @@ import {
     VmCallResponse,
     ProposalResponse,
     StakesResponse,
-    AccountResponse
-} from "rweb3-types";
+    AccountResponse,
+    HealthResponse,
+} from 'rweb3-types';
 
-import {validator} from 'rweb3-validator';
-import {SubscriptionEvent} from "rweb3-providers-ws";
-import {Stream} from "xstream";
-import {buildQuery, Method, SubscribeRequest, SubscriptionEventType} from "./requests";
-import {TrxProtoUtils} from "rweb3-accounts";
+import { validator } from 'rweb3-validator';
+import { SubscriptionEvent } from 'rweb3-providers-ws';
+import { Stream } from 'xstream';
+import { buildQuery, Method, SubscribeRequest, SubscriptionEventType } from './requests';
+import { TrxProtoUtils } from 'rweb3-accounts';
 
-export async function health(requestManager: RWeb3RequestManager): Promise<void> {
+export async function health(requestManager: RWeb3RequestManager): Promise<HealthResponse> {
     return requestManager.send({
         method: 'health',
         params: {},
-    })
+    });
 }
 
 export async function status(requestManager: RWeb3RequestManager): Promise<StatusResponse> {
@@ -72,9 +73,11 @@ export async function netInfo(requestManager: RWeb3RequestManager): Promise<NetI
     });
 }
 
-
-export async function blockchain(requestManager: RWeb3RequestManager, minHeight?: number | string, maxHeight?: number | string): Promise<BlockchainResponse> {
-
+export async function blockchain(
+    requestManager: RWeb3RequestManager,
+    minHeight?: number | string,
+    maxHeight?: number | string,
+): Promise<BlockchainResponse> {
     if (minHeight && typeof minHeight === 'number') {
         minHeight = minHeight.toString(10);
     }
@@ -83,20 +86,21 @@ export async function blockchain(requestManager: RWeb3RequestManager, minHeight?
         maxHeight = maxHeight.toString(10);
     }
 
-    validator.validate(['intOrEmpty', 'intOrEmpty'], [minHeight, maxHeight]);
+    // validator.validate(['int', 'int'], [minHeight, maxHeight]);
 
     return requestManager.send({
         method: 'blockchain',
         params: {
             minHeight: minHeight,
-            maxHeight: maxHeight
-        }
+            maxHeight: maxHeight,
+        },
     });
 }
 
-
-export async function block(requestManager: RWeb3RequestManager, height?: string | number): Promise<BlockResponse> {
-
+export async function block(
+    requestManager: RWeb3RequestManager,
+    height?: string | number,
+): Promise<BlockResponse> {
     if (height && typeof height === 'number') {
         height = height.toString(10);
     }
@@ -105,27 +109,29 @@ export async function block(requestManager: RWeb3RequestManager, height?: string
 
     return requestManager.send({
         method: 'block',
-        params: {height: height},
+        params: { height: height },
     });
 }
 
-
 // TODO : 여기 테스트 파라미터 알아 내야 함.
-export async function blockByHash(requestManager: RWeb3RequestManager, hash: string | Uint8Array): Promise<BlockResponse> {
-
+export async function blockByHash(
+    requestManager: RWeb3RequestManager,
+    hash: string | Uint8Array,
+): Promise<BlockResponse> {
     if (typeof hash === 'string') {
-        hash = Bytes.fromHex(hash)
+        hash = Bytes.fromHex(hash);
     }
 
     return requestManager.send({
         method: 'block_by_hash',
-        params: {hash: Buffer.from(hash).toString('base64')},
+        params: { hash: Buffer.from(hash).toString('base64') },
     });
 }
 
-
-export async function blockResults(requestManager: RWeb3RequestManager, height?: string | number): Promise<BlockResultsResponse> {
-
+export async function blockResults(
+    requestManager: RWeb3RequestManager,
+    height?: string | number,
+): Promise<BlockResultsResponse> {
     if (height && typeof height === 'number') {
         height = height.toString(10);
     }
@@ -134,34 +140,32 @@ export async function blockResults(requestManager: RWeb3RequestManager, height?:
 
     return requestManager.send({
         method: 'block_results',
-        params: {height: height},
+        params: { height: height },
     });
 }
 
-
-export async function commit(requestManager: RWeb3RequestManager, height?: number | string): Promise<CommitResponse> {
-
+export async function commit(
+    requestManager: RWeb3RequestManager,
+    height?: number | string,
+): Promise<CommitResponse> {
     if (height && typeof height === 'number') {
         height = height.toString(10);
     }
 
     validator.validate(['intOrEmpty'], [height]);
 
-
     return requestManager.send({
         method: 'commit',
-        params: {height: height},
+        params: { height: height },
     });
 }
-
 
 export async function validators(
     requestManager: RWeb3RequestManager,
     height?: number | string,
     page?: number | string,
-    per_page?: number | string
+    per_page?: number | string,
 ): Promise<ValidatorsResponse> {
-
     if (height && typeof height === 'number') {
         height = height.toString(10);
     }
@@ -176,17 +180,15 @@ export async function validators(
 
     validator.validate(['intOrEmpty', 'intOrEmpty', 'intOrEmpty'], [height, page, per_page]);
 
-
     return requestManager.send({
         method: 'validators',
         params: {
             height: height,
             page: page,
-            per_page: per_page
+            per_page: per_page,
         },
     });
 }
-
 
 export async function genesis(requestManager: RWeb3RequestManager): Promise<GenesisResponse> {
     return requestManager.send({
@@ -195,9 +197,10 @@ export async function genesis(requestManager: RWeb3RequestManager): Promise<Gene
     });
 }
 
-
-export async function genesisChunked(requestManager: RWeb3RequestManager, chunk: number | string): Promise<GenesisChunkedResponse> {
-
+export async function genesisChunked(
+    requestManager: RWeb3RequestManager,
+    chunk: number | string,
+): Promise<GenesisChunkedResponse> {
     if (typeof chunk === 'number') {
         chunk = chunk.toString(10);
     }
@@ -205,45 +208,49 @@ export async function genesisChunked(requestManager: RWeb3RequestManager, chunk:
     return requestManager.send({
         method: 'genesis_chunked',
         params: {
-            chunk: chunk
+            chunk: chunk,
         },
     });
 }
 
-export async function dumpConsensusState(requestManager: RWeb3RequestManager): Promise<DumpConsensusStateResponse> {
+export async function dumpConsensusState(
+    requestManager: RWeb3RequestManager,
+): Promise<DumpConsensusStateResponse> {
     return requestManager.send({
         method: 'dump_consensus_state',
         params: {},
     });
 }
 
-
-export async function consensusState(requestManager: RWeb3RequestManager): Promise<ConsensusStateResponse> {
+export async function consensusState(
+    requestManager: RWeb3RequestManager,
+): Promise<ConsensusStateResponse> {
     return requestManager.send({
         method: 'consensus_state',
         params: {},
     });
 }
 
-
-export async function consensusParams(requestManager: RWeb3RequestManager, height?: number | string): Promise<ConsensusParams> {
-
+export async function consensusParams(
+    requestManager: RWeb3RequestManager,
+    height?: number | string,
+): Promise<ConsensusParams> {
     if (height && typeof height === 'number') {
         height = height.toString(10);
     }
 
     validator.validate(['intOrEmpty'], [height]);
 
-
     return requestManager.send({
         method: 'consensus_params',
-        params: {height: height},
+        params: { height: height },
     });
 }
 
-
-export async function unconfirmedTxs(requestManager: RWeb3RequestManager, limit: number | string): Promise<UnconfirmedTxsResponse> {
-
+export async function unconfirmedTxs(
+    requestManager: RWeb3RequestManager,
+    limit: number | string,
+): Promise<UnconfirmedTxsResponse> {
     if (typeof limit === 'number') {
         limit = limit.toString(10);
     }
@@ -253,14 +260,19 @@ export async function unconfirmedTxs(requestManager: RWeb3RequestManager, limit:
     return requestManager.send({
         method: 'unconfirmed_txs',
         params: {
-            limit: limit
+            limit: limit,
         },
     });
 }
 
-
-export async function txSearch(requestManager: RWeb3RequestManager, query: string, prove?: boolean, page?: number | string, per_page?: number | string, order_by?: string) {
-
+export async function txSearch(
+    requestManager: RWeb3RequestManager,
+    query: string,
+    prove?: boolean,
+    page?: number | string,
+    per_page?: number | string,
+    order_by?: string,
+) {
     if (page && typeof page === 'number') {
         page = page.toString(10);
     }
@@ -278,19 +290,20 @@ export async function txSearch(requestManager: RWeb3RequestManager, query: strin
             prove: prove,
             page: page,
             per_page: per_page,
-            order_by: order_by
+            order_by: order_by,
         },
     });
 }
 
-
-export async function tx(requestManager: RWeb3RequestManager, hash: string | Uint8Array): Promise<TxResponse> {
+export async function tx(
+    requestManager: RWeb3RequestManager,
+    hash: string | Uint8Array,
+): Promise<TxResponse> {
     return requestManager.send({
         method: 'tx',
-        params: {hash: Buffer.from(hash).toString('base64'), prove: true},
+        params: { hash: Buffer.from(hash).toString('base64'), prove: true },
     });
 }
-
 
 export async function abciInfo(requestManager: RWeb3RequestManager): Promise<AbciInfoResponse> {
     return requestManager.send({
@@ -299,9 +312,13 @@ export async function abciInfo(requestManager: RWeb3RequestManager): Promise<Abc
     });
 }
 
-
-export async function abciQuery(requestManager: RWeb3RequestManager, path: string, data: string, height?: number | string, prove?: boolean): Promise<AbciQueryResponse> {
-
+export async function abciQuery(
+    requestManager: RWeb3RequestManager,
+    path: string,
+    data: string,
+    height?: number | string,
+    prove?: boolean,
+): Promise<AbciQueryResponse> {
     if (height && typeof height === 'number') {
         height = height.toString(10);
     }
@@ -314,77 +331,75 @@ export async function abciQuery(requestManager: RWeb3RequestManager, path: strin
             path: path,
             data: data,
             height: height,
-            prove: prove
+            prove: prove,
         },
     });
 }
 
-export async function checkTx(requestManager: RWeb3RequestManager, tx: string): Promise<CheckTxResponse> {
+export async function checkTx(
+    requestManager: RWeb3RequestManager,
+    tx: string,
+): Promise<CheckTxResponse> {
     return requestManager.send({
         method: 'check_tx',
-        params: {tx: Buffer.from(tx).toString('base64')},
+        params: { tx: Buffer.from(tx).toString('base64') },
     });
 }
 
-export async function numUnconfirmedTxs(requestManager: RWeb3RequestManager): Promise<NumUnconfirmedTxsResponse> {
+export async function numUnconfirmedTxs(
+    requestManager: RWeb3RequestManager,
+): Promise<NumUnconfirmedTxsResponse> {
     return requestManager.send({
         method: 'num_unconfirmed_txs',
         params: {},
     });
 }
 
-
 export async function broadcastEvidence(requestManager: RWeb3RequestManager, evidence: string) {
     return requestManager.send({
         method: 'broadcast_evidence',
-        params: {evidence: evidence},
+        params: { evidence: evidence },
     });
 }
 
-
 export async function broadcastTxAsync(requestManager: RWeb3RequestManager, tx: TrxProto) {
-
     const wr = TrxProtoUtils.encode(tx);
     const txbz = wr.finish();
 
     return requestManager.send({
         method: 'broadcast_tx_async',
-        params: {tx: Buffer.from(txbz).toString('base64')},
+        params: { tx: Buffer.from(txbz).toString('base64') },
     });
 }
 
 export async function broadcastTxSync(requestManager: RWeb3RequestManager, tx: TrxProto) {
-
     const wr = TrxProtoUtils.encode(tx);
     const txbz = wr.finish();
 
     return requestManager.send({
         method: 'broadcast_tx_sync',
-        params: {tx: Buffer.from(txbz).toString('base64')},
+        params: { tx: Buffer.from(txbz).toString('base64') },
     });
 }
 
-
 export async function broadcastTxCommit(requestManager: RWeb3RequestManager, tx: TrxProto) {
-
     const wr = TrxProtoUtils.encode(tx);
     const txbz = wr.finish();
 
     return requestManager.send({
         method: 'broadcast_tx_commit',
-        params: {tx: Buffer.from(txbz).toString('base64')},
+        params: { tx: Buffer.from(txbz).toString('base64') },
     });
 }
 
-
 // end tendermint apis
-
 
 // start not tendermint apis
 
-
-export async function delegatee(requestManager: RWeb3RequestManager, addr: string): Promise<DelegateeResponse> {
-
+export async function delegatee(
+    requestManager: RWeb3RequestManager,
+    addr: string,
+): Promise<DelegateeResponse> {
     if (!addr.startsWith('0x')) {
         addr = '0x' + addr;
     }
@@ -393,10 +408,9 @@ export async function delegatee(requestManager: RWeb3RequestManager, addr: strin
 
     return requestManager.send({
         method: 'delegatee',
-        params: {addr: addr},
+        params: { addr: addr },
     });
 }
-
 
 export async function rule(requestManager: RWeb3RequestManager): Promise<RuleResponse> {
     return requestManager.send({
@@ -405,9 +419,10 @@ export async function rule(requestManager: RWeb3RequestManager): Promise<RuleRes
     });
 }
 
-
-export async function account(requestManager: RWeb3RequestManager, addr: string): Promise<AccountResponse> {
-
+export async function account(
+    requestManager: RWeb3RequestManager,
+    addr: string,
+): Promise<AccountResponse> {
     if (!addr.startsWith('0x')) {
         addr = '0x' + addr;
     }
@@ -422,20 +437,22 @@ export async function account(requestManager: RWeb3RequestManager, addr: string)
     });
 }
 
-
-export async function proposals(requestManager: RWeb3RequestManager, txHash: string): Promise<ProposalResponse> {
-
+export async function proposals(
+    requestManager: RWeb3RequestManager,
+    txHash: string,
+): Promise<ProposalResponse> {
     return requestManager.send({
         method: 'proposals',
         params: {
-            txhash: Buffer.from(txHash).toString('base64')
+            txhash: Buffer.from(txHash).toString('base64'),
         },
     });
 }
 
-
-export async function stakes(requestManager: RWeb3RequestManager, addr: string): Promise<StakesResponse> {
-
+export async function stakes(
+    requestManager: RWeb3RequestManager,
+    addr: string,
+): Promise<StakesResponse> {
     if (!addr.startsWith('0x')) {
         addr = '0x' + addr;
     }
@@ -444,10 +461,9 @@ export async function stakes(requestManager: RWeb3RequestManager, addr: string):
 
     return requestManager.send({
         method: 'stakes',
-        params: {addr: addr},
+        params: { addr: addr },
     });
 }
-
 
 export async function vmCall(
     requestManager: RWeb3RequestManager,
@@ -456,7 +472,6 @@ export async function vmCall(
     height: number,
     data: string,
 ): Promise<VmCallResponse> {
-
     if (!addr.startsWith('0x')) {
         addr = '0x' + addr;
     }
@@ -477,9 +492,13 @@ export async function vmCall(
     });
 }
 
-
-export async function blockSearch(requestManager: RWeb3RequestManager, query: string, page?: number | string, per_page?: number | string, order_by?: string) {
-
+export async function blockSearch(
+    requestManager: RWeb3RequestManager,
+    query: string,
+    page?: number | string,
+    per_page?: number | string,
+    order_by?: string,
+) {
     if (typeof page === 'number') {
         page = page.toString(10);
     }
@@ -496,51 +515,64 @@ export async function blockSearch(requestManager: RWeb3RequestManager, query: st
             query: query,
             page: page,
             per_page: per_page,
-            order_by: order_by
+            order_by: order_by,
         },
     });
 }
 
-export function subscribe(requestManager: RWeb3RequestManager, query: string): Stream<SubscriptionEvent> {
+export function subscribe(
+    requestManager: RWeb3RequestManager,
+    query: string,
+): Stream<SubscriptionEvent> {
     return requestManager.subscribe({
         method: 'subscribe',
         params: {
-            query: query
-        }
+            query: query,
+        },
     });
 }
 
-
 export function subscribeNewBlock(requestManager: RWeb3RequestManager): Stream<SubscriptionEvent> {
-    const request = {type: SubscriptionEventType.NewBlock};
-    return subscribe(requestManager, encodeSubscribeQuery({
-        method: Method.Subscribe,
-        query: request,
-    }));
+    const request = { type: SubscriptionEventType.NewBlock };
+    return subscribe(
+        requestManager,
+        encodeSubscribeQuery({
+            method: Method.Subscribe,
+            query: request,
+        }),
+    );
 }
 
+export function subscribeNewBlockHeader(
+    requestManager: RWeb3RequestManager,
+): Stream<SubscriptionEvent> {
+    const request = { type: SubscriptionEventType.NewBlockHeader };
 
-export function subscribeNewBlockHeader(requestManager: RWeb3RequestManager): Stream<SubscriptionEvent> {
-
-    const request = {type: SubscriptionEventType.NewBlockHeader};
-
-    return subscribe(requestManager, encodeSubscribeQuery({
-        method: Method.Subscribe,
-        query: request,
-    }));
+    return subscribe(
+        requestManager,
+        encodeSubscribeQuery({
+            method: Method.Subscribe,
+            query: request,
+        }),
+    );
 }
 
-export function subscribeTx(requestManager: RWeb3RequestManager, query?: string): Stream<SubscriptionEvent> {
+export function subscribeTx(
+    requestManager: RWeb3RequestManager,
+    query?: string,
+): Stream<SubscriptionEvent> {
+    const request = { type: SubscriptionEventType.Tx, raw: query };
 
-    const request = {type: SubscriptionEventType.Tx, raw: query};
-
-    return subscribe(requestManager, encodeSubscribeQuery({
-        method: Method.Subscribe,
-        query: request,
-    }));
+    return subscribe(
+        requestManager,
+        encodeSubscribeQuery({
+            method: Method.Subscribe,
+            query: request,
+        }),
+    );
 }
 
 function encodeSubscribeQuery(req: SubscribeRequest): string {
-    const eventTag = {key: "tm.event", value: req.query.type};
-    return buildQuery({tags: [eventTag], raw: req.query.raw});
+    const eventTag = { key: 'tm.event', value: req.query.type };
+    return buildQuery({ tags: [eventTag], raw: req.query.raw });
 }

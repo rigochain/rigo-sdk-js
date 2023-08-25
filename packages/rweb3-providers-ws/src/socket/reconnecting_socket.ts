@@ -1,8 +1,8 @@
-import {Listener, Producer, Stream} from "xstream";
+import { Listener, Producer, Stream } from 'xstream';
 
-import {ConnectionStatus, QueueingStreamingSocket} from "./queueing_streaming_socket";
-import {SocketWrapperMessageEvent} from "./socket_wrapper";
-import {ValueAndUpdates} from "../stream/valueandupdates";
+import { ConnectionStatus, QueueingStreamingSocket } from './queueing_streaming_socket';
+import { SocketWrapperMessageEvent } from './socket_wrapper';
+import { ValueAndUpdates } from '../stream/valueandupdates';
 
 /**
  * A wrapper around QueueingStreamingSocket that reconnects automatically.
@@ -66,7 +66,7 @@ export class ReconnectingSocket {
 
     public connect(): void {
         if (!this.unconnected) {
-            throw new Error("Cannot connect: socket has already connected");
+            throw new Error('Cannot connect: socket has already connected');
         }
         this.socket.connect();
         this.unconnected = false;
@@ -74,7 +74,7 @@ export class ReconnectingSocket {
 
     public disconnect(): void {
         if (this.unconnected) {
-            throw new Error("Cannot disconnect: socket has not yet connected");
+            throw new Error('Cannot disconnect: socket has not yet connected');
         }
         this.socket.disconnect();
         if (this.eventProducerListener) {
@@ -85,7 +85,7 @@ export class ReconnectingSocket {
 
     public queueRequest(request: string): void {
         if (this.disconnected) {
-            throw new Error("Cannot queue request: socket has disconnected");
+            throw new Error('Cannot queue request: socket has disconnected');
         }
         this.socket.queueRequest(request);
     }

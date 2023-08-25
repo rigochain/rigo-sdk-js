@@ -19,7 +19,7 @@ import * as responses from '../responses';
 export type RigoExecutionAPI = {
     // start tendermint apis
 
-    health: () => void;
+    health: () => responses.HealthResponse;
     status: () => responses.StatusResponse;
     net_info: () => responses.NetInfoResponse;
     blockchain: (

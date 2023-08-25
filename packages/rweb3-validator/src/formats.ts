@@ -15,8 +15,8 @@
 */
 
 import { ValidInputTypes } from './types.js';
-import { isAddress, isRigoAddress } from './validation';
-import { isBoolean, isBooleanOrEmpty } from './validation';
+import { isAddress, isBoolean, isRigoAddress } from './validation';
+import { isBooleanOrEmpty } from './validation';
 import { isBytes } from './validation';
 import { isHexStrict, isString } from './validation';
 import { isNumber, isInt, isUInt, isIntOrEmpty } from './validation';

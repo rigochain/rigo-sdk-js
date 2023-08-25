@@ -1,9 +1,9 @@
-import {Listener, Producer, Stream} from "xstream";
+import { Listener, Producer, Stream } from 'xstream';
 
-import {SocketWrapperMessageEvent} from "./socket_wrapper";
-import {Streaming_socket} from "./streaming_socket";
-import {ValueAndUpdates} from "../stream/valueandupdates";
-import {DefaultValueProducer} from "../stream/defaultvalueproducer";
+import { SocketWrapperMessageEvent } from './socket_wrapper';
+import { Streaming_socket } from './streaming_socket';
+import { ValueAndUpdates } from '../stream/valueandupdates';
+import { DefaultValueProducer } from '../stream/defaultvalueproducer';
 
 export enum ConnectionStatus {
     Unconnected,
@@ -16,7 +16,6 @@ export enum ConnectionStatus {
  * A wrapper around Streaming_socket that can queue requests.
  */
 export class QueueingStreamingSocket {
-
     public readonly connectionStatus: ValueAndUpdates<ConnectionStatus>;
     public readonly events: Stream<SocketWrapperMessageEvent>;
 
@@ -39,13 +38,15 @@ export class QueueingStreamingSocket {
             stop: () => (this.eventProducerListener = undefined),
         };
         this.events = Stream.create(eventProducer);
-        this.connectionStatusProducer = new DefaultValueProducer<ConnectionStatus>(ConnectionStatus.Unconnected);
+        this.connectionStatusProducer = new DefaultValueProducer<ConnectionStatus>(
+            ConnectionStatus.Unconnected,
+        );
         this.connectionStatus = new ValueAndUpdates(this.connectionStatusProducer);
 
         this.socket = new Streaming_socket(this.url, this.timeout);
         this.socket.events.subscribe({
             next: (event) => {
-                if (!this.eventProducerListener) throw new Error("No event producer listener set");
+                if (!this.eventProducerListener) throw new Error('No event producer listener set');
                 this.eventProducerListener.next(event);
             },
             error: () => this.connectionStatusProducer.update(ConnectionStatus.Disconnected),
@@ -53,9 +54,11 @@ export class QueueingStreamingSocket {
     }
 
     public connect(): void {
+        console.log('ReconnectingSocket.connect()');
         this.connectionStatusProducer.update(ConnectionStatus.Connecting);
         this.socket.connected.then(
             async () => {
+                console.log('ReconnectingSocket.connect().than()');
                 this.connectionStatusProducer.update(ConnectionStatus.Connected);
                 return this.processQueue();
             },
@@ -73,7 +76,7 @@ export class QueueingStreamingSocket {
         this.socket = new Streaming_socket(this.url, this.timeout);
         this.socket.events.subscribe({
             next: (event) => {
-                if (!this.eventProducerListener) throw new Error("No event producer listener set");
+                if (!this.eventProducerListener) throw new Error('No event producer listener set');
                 this.eventProducerListener.next(event);
             },
             error: () => this.connectionStatusProducer.update(ConnectionStatus.Disconnected),

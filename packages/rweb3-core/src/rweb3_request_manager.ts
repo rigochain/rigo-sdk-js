@@ -15,8 +15,8 @@
 */
 
 import HttpProvider from 'rweb3-providers-http';
-import WebsocketProvider, {SubscriptionEvent} from "rweb3-providers-ws";
-import {isNullish, jsonRpc, isResponseRpcError} from 'rweb3-utils';
+import WebsocketProvider, { SubscriptionEvent } from 'rweb3-providers-ws';
+import { isNullish, jsonRpc, isResponseRpcError } from 'rweb3-utils';
 import {
     RigoExecutionAPI,
     RWeb3APISpec,
@@ -27,16 +27,11 @@ import {
     JsonRpcPayload,
     JsonRpcResponse,
     JsonRpcResponseWithError,
-    JsonRpcError, JsonRpcRequest
+    JsonRpcError,
+    JsonRpcRequest,
 } from 'rweb3-types';
-import {
-    InvalidResponseError,
-    ResponseError,
-    RpcError,
-    rpcErrorsMap,
-} from 'rweb3-errors';
-import {Stream} from "xstream";
-
+import { InvalidResponseError, ResponseError, RpcError, rpcErrorsMap } from 'rweb3-errors';
+import { Stream } from 'xstream';
 
 export let Web3RequestManagerEvent;
 (function (Web3RequestManagerEvent) {
@@ -44,10 +39,9 @@ export let Web3RequestManagerEvent;
     Web3RequestManagerEvent['BEFORE_PROVIDER_CHANGE'] = 'BEFORE_PROVIDER_CHANGE';
 })(Web3RequestManagerEvent || (Web3RequestManagerEvent = {}));
 
-
 const availableProviders = {
     HttpProvider: HttpProvider,
-    WebsocketProvider: WebsocketProvider
+    WebsocketProvider: WebsocketProvider,
 };
 
 export class RWeb3RequestManager<API extends RWeb3APISpec = RigoExecutionAPI> {
@@ -81,17 +75,15 @@ export class RWeb3RequestManager<API extends RWeb3APISpec = RigoExecutionAPI> {
         return availableProviders;
     }
 
-    public get provider() {
+    public get provider(): HttpProvider | WebsocketProvider {
         return this._provider;
     }
-
 
     public async send<
         Method extends RWeb3APIMethod<API>,
         ResponseType = RWeb3APIReturnType<API, Method>,
     >(request: RWeb3APIRequest<API, Method>): Promise<ResponseType> {
-
-        const {provider} = this;
+        const { provider } = this;
 
         const payload = jsonRpc.toPayload(request);
 
@@ -109,12 +101,11 @@ export class RWeb3RequestManager<API extends RWeb3APISpec = RigoExecutionAPI> {
         throw new ResponseError(response);
     }
 
-
     // eslint-disable-next-line class-methods-use-this
     private _processJsonRpcResponse<ResultType, ErrorType, RequestType>(
         payload: JsonRpcPayload<RequestType>,
         response: JsonRpcResponse<ResultType, ErrorType>,
-        {legacy, error}: { legacy: boolean; error: boolean },
+        { legacy, error }: { legacy: boolean; error: boolean },
     ): JsonRpcResponse<ResultType> | never {
         if (isNullish(response)) {
             return this._buildResponse(
@@ -148,12 +139,10 @@ export class RWeb3RequestManager<API extends RWeb3APISpec = RigoExecutionAPI> {
             }
         }
 
-
         if ((response as unknown) instanceof Error) {
             RWeb3RequestManager._isReverted(response);
             throw response;
         }
-
 
         if (legacy && error && jsonRpc.isBatchRequest(payload)) {
             // In case of error batch response we don't want to throw Invalid response
@@ -184,10 +173,10 @@ export class RWeb3RequestManager<API extends RWeb3APISpec = RigoExecutionAPI> {
             id: jsonRpc.isBatchRequest(payload)
                 ? payload[0].id
                 : 'id' in payload
-                    ? payload.id
-                    : // Have to use the null here explicitly
-                      // eslint-disable-next-line no-null/no-null
-                    null,
+                ? payload.id
+                : // Have to use the null here explicitly
+                  // eslint-disable-next-line no-null/no-null
+                  null,
         };
 
         if (error) {
@@ -222,14 +211,15 @@ export class RWeb3RequestManager<API extends RWeb3APISpec = RigoExecutionAPI> {
         return false;
     }
 
-    public subscribe<Method extends RWeb3APIMethod<API>>(request: RWeb3APIRequest<API, Method>) : Stream<SubscriptionEvent> {
-
+    public subscribe<Method extends RWeb3APIMethod<API>>(
+        request: RWeb3APIRequest<API, Method>,
+    ): Stream<SubscriptionEvent> {
         // Only Websocket Provider can subscribe.
         if (!(this.provider instanceof WebsocketProvider)) {
             throw new Error('Only Websocket Provider can subscribe.');
         }
 
-        const {provider} = this;
+        const { provider } = this;
 
         const payload = jsonRpc.toPayload(request);
         return provider.listen(payload as JsonRpcRequest);

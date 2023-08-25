@@ -14,18 +14,16 @@
     limitations under the License.
 */
 
-import {RWeb3Context} from 'rweb3-core';
+import { RWeb3Context } from 'rweb3-core';
 import * as rpcMethodsWrappers from './rpc_method_wrappers.js';
-import {TrxProto} from "rweb3-types";
+import { TrxProto } from 'rweb3-types';
 
 export class RWeb3Rigo extends RWeb3Context {
-
     public constructor() {
         super();
     }
 
     getUrl(): string {
-        // TODO : ValidateW RequestManger
         return this.requestManager.provider.getClientUrl();
     }
 
@@ -156,6 +154,4 @@ export class RWeb3Rigo extends RWeb3Context {
     vmCall(addr: string, to: string, height: number, data: string) {
         return rpcMethodsWrappers.vmCall(this, addr, to, height, data);
     }
-
-
 }

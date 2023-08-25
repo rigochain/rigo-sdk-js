@@ -51,7 +51,7 @@ export class RWeb3ValidatorError extends BaseRWeb3Error {
 
         this.errors = errors;
 
-        super.message = `Web3 validator found ${
+        super.message = `RWeb3 validator found ${
             errors.length
         } error[s]:\n${this._compileErrors().join('\n')}`;
     }

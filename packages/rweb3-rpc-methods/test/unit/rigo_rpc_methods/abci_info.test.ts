@@ -1,10 +1,9 @@
-import {RWeb3RequestManager} from 'rweb3-core';
-import {AbciInfo, ResponseData} from 'rweb3-types';
+import { RWeb3RequestManager } from 'rweb3-core';
+import { AbciInfo, ResponseData } from 'rweb3-types';
 
-
-import {rigoRpcMethods} from '../../../src/index';
-import {testData} from "./fixtures/abci_info";
-import {getDevServer} from "../e2e_utils";
+import { rigoRpcMethods } from '../../../src/index';
+import { testData } from './fixtures/abci_info';
+import { getDevServer } from '../e2e_utils';
 
 describe('abciInfo', () => {
     let requestManagerSendSpy: jest.Mock;
@@ -18,40 +17,35 @@ describe('abciInfo', () => {
     });
 
     it('should call requestManager.send with getAbciInfo method', async () => {
-
         await rigoRpcMethods.abciInfo(requestManager);
 
         expect(requestManagerSendSpy).toHaveBeenCalledWith({
             method: 'abci_info',
-            params: {}
+            params: {},
         });
     });
 });
 
-
 describe('abciInfo develop server call', () => {
-
     let requestManager: RWeb3RequestManager;
 
     beforeAll(() => {
         requestManager = new RWeb3RequestManager(getDevServer());
     });
 
-    it.each(testData)(
-        'abciInfo should call success return',
-        async (_return) => {
+    it.each(testData)('abciInfo should call success return', async (_return) => {
+        let returnValue = await rigoRpcMethods.abciInfo(requestManager);
+        console.log(JSON.stringify(returnValue));
 
-            let returnValue = await rigoRpcMethods.abciInfo(requestManager);
-            console.log(JSON.stringify(returnValue));
-
-            expect(isResponseAbciInfo(returnValue)).toBeTruthy();
-        }
-    );
+        expect(isResponseAbciInfo(returnValue)).toBeTruthy();
+    });
 });
 
 function isResponseAbciInfo(obj: any): obj is ResponseData<AbciInfo> {
-    return typeof obj.response.version === 'string' &&
+    return (
+        typeof obj.response.version === 'string' &&
         typeof obj.response.app_version === 'string' &&
         typeof obj.response.last_block_height === 'string' &&
-        typeof obj.response.last_block_app_hash === 'string';
+        typeof obj.response.last_block_app_hash === 'string'
+    );
 }

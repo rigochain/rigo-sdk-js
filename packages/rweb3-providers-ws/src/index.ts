@@ -177,7 +177,7 @@ export default class WebsocketProvider<API extends RWeb3APISpec = RigoExecutionA
         Method extends RWeb3APIMethod<API>,
         ResponseType = RWeb3APIReturnType<API, Method>,
     >(payload: RWeb3APIPayload<API, Method>): Promise<JsonRpcResponseWithResult<ResponseType>> {
-        console.log('websocket provider request', payload);
+        console.log('websocket connected', this.socket.connectionStatus.value);
 
         // {
         //     jsonrpc: '2.0',
