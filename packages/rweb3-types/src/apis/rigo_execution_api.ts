@@ -14,16 +14,18 @@
     limitations under the License.
 */
 
-import * as responses from "../responses";
+import * as responses from '../responses';
 /* eslint-disable camelcase */
 export type RigoExecutionAPI = {
-
     // start tendermint apis
 
     health: () => void;
     status: () => responses.StatusResponse;
     net_info: () => responses.NetInfoResponse;
-    blockchain: (minHeight?: string | number, maxHeight?: string | number) => responses.BlockchainResponse;
+    blockchain: (
+        minHeight?: string | number,
+        maxHeight?: string | number,
+    ) => responses.BlockchainResponse;
     block: (height?: string | number) => responses.BlockResponse;
     block_by_hash: (hash: Uint8Array) => responses.BlockchainResponse;
     block_results: (height?: string | number) => responses.BlockResultsResponse;
@@ -35,11 +37,27 @@ export type RigoExecutionAPI = {
     consensus_state: () => responses.ConsensusStateResponse;
     consensus_params: (height?: number | string) => responses.ConsensusParams;
     unconfirmed_txs: (limit?: number | string) => responses.UnconfirmedTxsResponse;
-    tx_search: (query: string, prove?: boolean, page?: number | string, per_page?: number | string, order_by?: string) => responses.TxSearchResponse;
-    block_search: (query: string, page: string, per_page: string, order_by: string) => responses.BlockSearchResponse;
+    tx_search: (
+        query: string,
+        prove?: boolean,
+        page?: number | string,
+        per_page?: number | string,
+        order_by?: string,
+    ) => responses.TxSearchResponse;
+    block_search: (
+        query: string,
+        page: string,
+        per_page: string,
+        order_by: string,
+    ) => responses.BlockSearchResponse;
     tx: (hash: string) => responses.TxResponse;
     abci_info: () => responses.AbciInfoResponse;
-    abci_query: (path: string, data: string, height?: string | number, prove?: boolean) => responses.AbciQueryResponse;
+    abci_query: (
+        path: string,
+        data: string,
+        height?: string | number,
+        prove?: boolean,
+    ) => responses.AbciQueryResponse;
     check_tx: (tx: string) => responses.CheckTxResponse;
     num_unconfirmed_txs: () => responses.NumUnconfirmedTxsResponse;
 
@@ -50,8 +68,6 @@ export type RigoExecutionAPI = {
     broadcast_tx_commit: (tx: string) => responses.BroadcastTxCommitResponse;
 
     // end tendermint apis
-
-
 
     // start not tendermint apis
     delegatee: (addr: string) => responses.DelegateeResponse;

@@ -14,7 +14,7 @@
     limitations under the License.
 */
 
-import {HexString} from './primitives_types.js';
+import { HexString } from './primitives_types.js';
 
 export type ValueTypes = 'address' | 'bool' | 'string' | 'int256' | 'uint256' | 'bytes' | 'bigint';
 // Hex encoded 32 bytes

@@ -1,20 +1,21 @@
-import {ReadonlyDate} from "readonly-date";
+import { ReadonlyDate } from 'readonly-date';
 
 export interface ReadonlyDateWithNanoseconds extends ReadonlyDate {
     readonly nanoseconds?: number;
 }
 
 export interface ValidatorEd25519Pubkey {
-    readonly algorithm: "ed25519";
+    readonly algorithm: 'ed25519';
     readonly data: Uint8Array;
 }
 
 export interface ValidatorSecp256k1Pubkey {
-    readonly algorithm: "secp256k1";
+    readonly algorithm: 'secp256k1';
     readonly data: Uint8Array;
 }
 
 export type ValidatorPubkey = ValidatorEd25519Pubkey | ValidatorSecp256k1Pubkey;
+
 export enum BlockIdFlag {
     Unknown = 0,
     Absent = 1,
@@ -140,7 +141,6 @@ export function broadcastTxCommitSuccess(response: BroadcastTxCommitResponse): b
 
 export interface CommitResponse {
     readonly signed_header: SignedHeader;
-
 }
 
 export interface SignedHeader {
@@ -159,9 +159,9 @@ export interface GenesisResponse {
 }
 
 export interface GenesisChunkedResponse {
-    chunk: string,
-    total: string,
-    data: string
+    chunk: string;
+    total: string;
+    data: string;
 }
 
 export type HealthResponse = null;
@@ -190,8 +190,8 @@ export interface TxResponse {
     readonly result: TxData;
     readonly proof?: TxProof;
     readonly tx_result: {
-        data : any; // TODO : need check
-    }
+        data: any; // TODO : need check
+    };
 }
 
 export interface TxSearchResponse {
@@ -208,11 +208,9 @@ export interface ValidatorsResponse {
 
 // Events
 
-export interface NewBlockEvent extends Block {
-}
+export interface NewBlockEvent extends Block {}
 
-export interface NewBlockHeaderEvent extends Header {
-}
+export interface NewBlockHeaderEvent extends Header {}
 
 export interface TxEvent {
     readonly tx: Uint8Array;
@@ -437,108 +435,105 @@ export interface EvidenceParams {
     readonly max_age_duration: number;
 }
 
-
 // TODO : 상세히 작성해야됨
 export interface NetInfoResponse {
-    listening: boolean,
-    listeners: [],
-    n_peers: string,
-    peers: []
+    listening: boolean;
+    listeners: [];
+    n_peers: string;
+    peers: [];
 }
-
 
 // TODO : 재 작성
 export interface DumpConsensusStateResponse {
-    "round_state": {
-        "height": string,
-        "round": number,
-        "step": number,
-        "start_time": string,
-        "commit_time": string,
-        "validators": {
-            "validators": [],
-            "proposer": {
-                "address": string,
-                "pub_key": {
-                    "type": string,
-                    "value": string
-                },
-                "voting_power": string,
-                "proposer_priority": string
-            }
-        },
-        "locked_round": number,
-        "valid_round": string,
-        "votes": [],
-        "commit_round": number,
-        "last_commit": {
-            "votes": [],
-            "votes_bit_array": string,
-            "peer_maj_23s": {}
-        },
-        "last_validators": {
-            "validators": [],
-            "proposer": {
-                "address": string,
-                "pub_key": {
-                    "type": string,
-                    "value": string
-                },
-                "voting_power": string,
-                "proposer_priority": string
-            }
-        },
-        "triggered_timeout_precommit": boolean
-    },
-    "peers": []
+    round_state: {
+        height: string;
+        round: number;
+        step: number;
+        start_time: string;
+        commit_time: string;
+        validators: {
+            validators: [];
+            proposer: {
+                address: string;
+                pub_key: {
+                    type: string;
+                    value: string;
+                };
+                voting_power: string;
+                proposer_priority: string;
+            };
+        };
+        locked_round: number;
+        valid_round: string;
+        votes: [];
+        commit_round: number;
+        last_commit: {
+            votes: [];
+            votes_bit_array: string;
+            peer_maj_23s: {};
+        };
+        last_validators: {
+            validators: [];
+            proposer: {
+                address: string;
+                pub_key: {
+                    type: string;
+                    value: string;
+                };
+                voting_power: string;
+                proposer_priority: string;
+            };
+        };
+        triggered_timeout_precommit: boolean;
+    };
+    peers: [];
 }
 
 // TODO : 재 작성
 export interface ConsensusStateResponse {
-    "round_state": {
-        "height/round/step": string,
-        "start_time": string,
-        "proposal_block_hash": string,
-        "locked_block_hash": string,
-        "valid_block_hash": string,
-        "height_vote_set": [{
-            "round": number,
-            "prevotes": [],
-            "prevotes_bit_array": string,
-            "precommits": [],
-            "precommits_bit_array": string
-        }],
-        "proposer": { "address": string, "index": number }
-    }
+    round_state: {
+        'height/round/step': string;
+        start_time: string;
+        proposal_block_hash: string;
+        locked_block_hash: string;
+        valid_block_hash: string;
+        height_vote_set: [
+            {
+                round: number;
+                prevotes: [];
+                prevotes_bit_array: string;
+                precommits: [];
+                precommits_bit_array: string;
+            },
+        ];
+        proposer: { address: string; index: number };
+    };
 }
 
 // TODO : 재 작성
 export interface UnconfirmedTxsResponse {
-    "n_txs": string,
-    "total": string,
-    "total_bytes": string,
-    "txs": []
+    n_txs: string;
+    total: string;
+    total_bytes: string;
+    txs: [];
 }
-
 
 export interface CheckTxResponse {
-    code: string,
-    data: string,
-    log: string,
-    info: string,
-    gas_wanted: string,
-    gas_used: string,
-    events: [],
-    codespace: string
+    code: string;
+    data: string;
+    log: string;
+    info: string;
+    gas_wanted: string;
+    gas_used: string;
+    events: [];
+    codespace: string;
 }
-
 
 export interface DelegateeResponse {
-    "code": number,
-    "log": string,
-    "key": string
+    code: number;
+    log: string;
+    key: string;
 }
-
 
 export interface RuleResponse {
     value: {
@@ -567,19 +562,16 @@ export interface AccountResponse {
     };
 }
 
-
 export interface StakesResponse {
     key: string;
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     value: any;
 }
 
-export interface ProposalResponse {
-
-}
+export interface ProposalResponse {}
 
 export interface VmCallResponse {
     value: {
-        returnData : any;
-    }
+        returnData: any;
+    };
 }

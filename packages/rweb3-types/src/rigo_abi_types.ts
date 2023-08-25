@@ -61,12 +61,14 @@ export type Components = {
 
 export interface AbiStruct {
     [key: string]: unknown;
+
     name?: string;
     type: string;
 }
 
 export interface AbiCoderStruct extends AbiStruct {
     [key: string]: unknown;
+
     components?: Array<AbiStruct>;
 }
 

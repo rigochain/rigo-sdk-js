@@ -13,7 +13,7 @@
     See the License for the specific language governing permissions and
     limitations under the License.
 */
-
+// TODO : Wallet 작업 필요함
 import { HexString } from './primitives_types.js';
 
 export type Cipher = 'aes-128-ctr' | 'aes-128-cbc' | 'aes-256-cbc';
@@ -61,6 +61,7 @@ export type KeyStore = {
 
 export interface Web3BaseWalletAccount {
     [key: string]: unknown;
+
     readonly address: string;
     readonly privateKey: string;
     readonly signTransaction: (tx: any) => Promise<{
@@ -101,19 +102,27 @@ export abstract class Web3BaseWallet<T extends Web3BaseWalletAccount> extends Ar
     }
 
     public abstract create(numberOfAccounts: number): this;
+
     public abstract add(account: T | string): this;
+
     public abstract get(addressOrIndex: string | number): T | undefined;
+
     public abstract remove(addressOrIndex: string | number): boolean;
+
     public abstract clear(): this;
+
     public abstract encrypt(
         password: string,
         options?: Record<string, unknown>,
     ): Promise<KeyStore[]>;
+
     public abstract decrypt(
         encryptedWallet: KeyStore[],
         password: string,
         options?: Record<string, unknown>,
     ): Promise<this>;
+
     public abstract save(password: string, keyName?: string): Promise<boolean | never>;
+
     public abstract load(password: string, keyName?: string): Promise<this | never>;
 }
