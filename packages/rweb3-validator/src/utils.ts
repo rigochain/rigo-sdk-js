@@ -25,7 +25,7 @@ import {
     ValidInputTypes,
 } from './types.js';
 import { isAbiParameterSchema } from './validation/abi.js';
-import { isHexStrict } from './validation/string.js';
+import { isHexStrict } from './validation';
 import { Web3ValidatorError } from './errors.js';
 
 const extraTypes = ['hex', 'number', 'blockNumber', 'blockNumberOrTag', 'filter', 'bloom'];

@@ -14,12 +14,12 @@
     limitations under the License.
 */
 
-import { BlockNumberOrTag, HexString } from 'rweb3-types';
+import { HexString } from 'rweb3-types';
 
 export interface RWeb3ConfigOptions {
     handleRevert: boolean;
     defaultAccount?: HexString;
-    defaultBlock: BlockNumberOrTag;
+    defaultBlock: number | HexString;
 }
 
 export abstract class RWeb3Config {

@@ -21,5 +21,5 @@ module.exports = getWebPackConfig(
 	'rweb3.min.js',
 	'rWeb3',
 	'src/rweb3.ts',
-	'tsconfig.cjs.json',
+	'tsconfig.ems.json',
 );

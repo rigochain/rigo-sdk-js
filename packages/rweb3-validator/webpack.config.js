@@ -6,5 +6,5 @@ module.exports = getWebPackConfig(
 	'rweb3-validator.min.js',
 	'rweb3-validator',
 	'src/index.ts',
-	'tsconfig.cjs.json',
+	'tsconfig.ems.json',
 );

@@ -15,7 +15,6 @@ export interface ValidatorSecp256k1Pubkey {
 }
 
 export type ValidatorPubkey = ValidatorEd25519Pubkey | ValidatorSecp256k1Pubkey;
-
 export enum BlockIdFlag {
     Unknown = 0,
     Absent = 1,

@@ -49,7 +49,6 @@ export type ShortValidationSchema = ReadonlyArray<
     | RigoBaseTypes
     | RigoExtendedTypes
     | RigoBaseTypesWithMeta
-    | RigoBaseTypesWithMeta
     | ShortValidationSchema
 >;
 export type ValidationSchemaInput = ShortValidationSchema;

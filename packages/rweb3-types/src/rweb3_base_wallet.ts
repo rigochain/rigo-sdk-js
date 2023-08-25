@@ -14,7 +14,6 @@
     limitations under the License.
 */
 
-import { Transaction } from './eth_types.js';
 import { HexString } from './primitives_types.js';
 
 export type Cipher = 'aes-128-ctr' | 'aes-128-cbc' | 'aes-256-cbc';
@@ -64,7 +63,7 @@ export interface Web3BaseWalletAccount {
     [key: string]: unknown;
     readonly address: string;
     readonly privateKey: string;
-    readonly signTransaction: (tx: Transaction) => Promise<{
+    readonly signTransaction: (tx: any) => Promise<{
         readonly messageHash: HexString;
         readonly r: HexString;
         readonly s: HexString;

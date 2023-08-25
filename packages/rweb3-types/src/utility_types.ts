@@ -16,11 +16,6 @@
 
 import { Numbers } from './primitives_types.js';
 
-// Make each attribute mutable by removing `readonly`
-export type Mutable<T> = {
-    -readonly [P in keyof T]: T[P];
-};
-
 export type ConnectionEvent = {
     code: number;
     reason: string;
@@ -41,12 +36,6 @@ export type TypedObjectAbbreviated = {
 };
 
 export type Sha3Input = TypedObject | TypedObjectAbbreviated | Numbers | boolean | object;
-
-export type IndexKeysForArray<A extends readonly unknown[]> = Exclude<keyof A, keyof []>;
-
-export type ArrayToIndexObject<T extends ReadonlyArray<unknown>> = {
-    [K in IndexKeysForArray<T>]: T[K];
-};
 
 type _Grow<T, A extends Array<T>> = ((x: T, ...xs: A) => void) extends (...a: infer X) => void
     ? X

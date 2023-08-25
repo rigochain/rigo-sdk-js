@@ -19,8 +19,11 @@ import { RWeb3Context } from 'rweb3-core';
 import RWeb3Rigo from 'rweb3-rigo';
 import { isNullish } from 'rweb3-validator';
 import { RWeb3RigoInterface } from './types';
+import { initAccountsForContext } from './accounts.js';
 
 export class RWeb3 extends RWeb3Context {
+
+
     public static version = RWeb3PkgInfo.version;
     public static modules = {
         RWeb3Rigo,
@@ -37,6 +40,8 @@ export class RWeb3 extends RWeb3Context {
             );
         }
 
+        const accounts = initAccountsForContext(this);
+
         // Have to use local alias to initiate contract context
         // eslint-disable-next-line @typescript-eslint/no-this-alias
         const self = this;
@@ -45,7 +50,9 @@ export class RWeb3 extends RWeb3Context {
         console.log('rigo', rigo);
         //
         // // Rigo Module
-        this.rigo = Object.assign(rigo, {});
+        this.rigo = Object.assign(rigo, {
+            accounts
+        });
 
         console.log('this.rigo', this.rigo);
     }

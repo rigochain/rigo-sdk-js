@@ -17,7 +17,7 @@
 import { BaseRWeb3Error, ERR_VALIDATION } from 'rweb3-errors';
 import { RWeb3ValidationErrorObject } from 'rweb3-types';
 
-import { isNullish } from './validation/object.js';
+import { isNullish } from './validation';
 
 const errorFormatter = (error: RWeb3ValidationErrorObject): string => {
     if (error.message && error.instancePath && error.params && !isNullish(error.params.value)) {

@@ -14,7 +14,6 @@
     limitations under the License.
 */
 
-import { Address } from './eth_types.js';
 import { Bytes, Numbers } from './primitives_types.js';
 import { FixedSizeArray } from './utility_types.js';
 
@@ -185,12 +184,6 @@ type _TypedArray<Type, Size extends string> = Size extends ''
     ? Type[]
     : FixedSizeArray<Type, ConvertToNumber<Size>>;
 
-export type PrimitiveAddressType<Type extends string> = Type extends `address[${infer Size}]`
-    ? _TypedArray<Address, Size>
-    : Type extends 'address'
-    ? Address
-    : never;
-
 export type PrimitiveStringType<Type extends string> = Type extends `string${string}[${infer Size}]`
     ? _TypedArray<string, Size>
     : Type extends 'string' | `string${string}`
@@ -252,7 +245,6 @@ export type MatchPrimitiveType<
     Type extends string,
     TypeComponents extends ReadonlyArray<AbiParameter> | undefined | unknown,
 > =
-    | PrimitiveAddressType<Type>
     | PrimitiveStringType<Type>
     | PrimitiveBooleanType<Type>
     | PrimitiveIntegerType<Type>

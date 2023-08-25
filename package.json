@@ -27,10 +27,13 @@
       "tools/*"
     ]
   },
+  "engines": {
+    "node": ">=19.5.0"
+  },
   "scripts": {
     "bootstrap": "lerna bootstrap",
     "version": "yarn run bootstrap && yarn build",
-    "prebuild": "yarn clean",
+    "prebuild": "yarn clean && lerna bootstrap",
     "build": "lerna run build --stream",
     "build:types": "lerna run build:types --stream",
     "build:cjs": "lerna run build:cjs --stream",
@@ -83,6 +86,6 @@
     "path-browserify": "^1.0.1",
     "constants-browserify" : "^1.0.0",
     "crypto-browserify": "^3.12.0",
-    "webpack-bundle-analyzer": "^4.7.0"
+    "webpack-bundle-analyzer": "4.9.0"
   }
 }

@@ -21,7 +21,7 @@ const config = getWebPackConfig(
 	'rweb3.min.js',
 	'RWeb3',
 	'src/rweb3.ts',
-	'tsconfig.cjs.json',
+	'tsconfig.ems.json',
 );
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 
