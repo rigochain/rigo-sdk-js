@@ -22,8 +22,6 @@ import { RWeb3RigoInterface } from './types';
 import { initAccountsForContext } from './accounts.js';
 
 export class RWeb3 extends RWeb3Context {
-
-
     public static version = RWeb3PkgInfo.version;
     public static modules = {
         RWeb3Rigo,
@@ -46,15 +44,11 @@ export class RWeb3 extends RWeb3Context {
         // eslint-disable-next-line @typescript-eslint/no-this-alias
         const self = this;
         const rigo = self.use(RWeb3Rigo);
-
-        console.log('rigo', rigo);
         //
         // // Rigo Module
         this.rigo = Object.assign(rigo, {
-            accounts
+            accounts,
         });
-
-        console.log('this.rigo', this.rigo);
     }
 }
 
