@@ -14,21 +14,24 @@
     limitations under the License.
 */
 
+import { ReconnectingSocket } from './socket/reconnecting_socket';
 
-import {ReconnectingSocket} from "./socket/reconnecting_socket";
-
-import {Listener, Producer, Stream, Subscription} from "xstream";
+import { Listener, Producer, Stream, Subscription } from 'xstream';
 import {
     JsonRpcId,
     JsonRpcRequest,
     JsonRpcResponse,
     JsonRpcResponseWithError,
-    JsonRpcResponseWithResult, RigoExecutionAPI, RWeb3APIMethod, RWeb3APIPayload, RWeb3APIReturnType, RWeb3APISpec
-} from "rweb3-types";
-import {ConnectionStatus} from "./socket/queueing_streaming_socket";
-import {SocketWrapperMessageEvent} from "./socket/socket_wrapper";
-import {isNullish} from "rweb3-utils";
-
+    JsonRpcResponseWithResult,
+    RigoExecutionAPI,
+    RWeb3APIMethod,
+    RWeb3APIPayload,
+    RWeb3APIReturnType,
+    RWeb3APISpec,
+} from 'rweb3-types';
+import { ConnectionStatus } from './socket/queueing_streaming_socket';
+import { SocketWrapperMessageEvent } from './socket/socket_wrapper';
+import { isNullish } from 'rweb3-utils';
 
 class RpcEventProducer implements Producer<SubscriptionEvent> {
     private readonly request: JsonRpcRequest;
@@ -47,7 +50,7 @@ class RpcEventProducer implements Producer<SubscriptionEvent> {
      */
     public start(listener: Listener<SubscriptionEvent>): void {
         if (this.running) {
-            throw Error("Already started. Please stop first before restarting.");
+            throw Error('Already started. Please stop first before restarting.');
         }
         this.running = true;
 
@@ -66,7 +69,7 @@ class RpcEventProducer implements Producer<SubscriptionEvent> {
         this.running = false;
         // Tell the server we are done in order to save resources. We cannot wait for the result.
         // This may fail when socket connection is not open, thus ignore errors in queueRequest
-        const endRequest: JsonRpcRequest = {...this.request, method: "unsubscribe"};
+        const endRequest: JsonRpcRequest = { ...this.request, method: 'unsubscribe' };
         try {
             this.socket.queueRequest(JSON.stringify(endRequest));
         } catch (error) {
@@ -134,9 +137,7 @@ class RpcEventProducer implements Producer<SubscriptionEvent> {
     }
 }
 
-
 export default class WebsocketProvider<API extends RWeb3APISpec = RigoExecutionAPI> {
-
     private readonly url: string;
     private readonly socket: ReconnectingSocket;
 
@@ -150,10 +151,12 @@ export default class WebsocketProvider<API extends RWeb3APISpec = RigoExecutionA
     private readonly subscriptionStreams = new Map<string, Stream<SubscriptionEvent>>();
 
     public constructor(baseUrl: string, onError: (err: any) => void = defaultErrorHandler) {
+        console.log('run websocket provider');
+
         // accept host.name:port and assume ws protocol
         // make sure we don't end up with ...//websocket
-        const path = baseUrl.endsWith("/") ? "websocket" : "/websocket";
-        const cleanBaseUrl = hasProtocol(baseUrl) ? baseUrl : "ws://" + baseUrl;
+        const path = baseUrl.endsWith('/') ? 'websocket' : '/websocket';
+        const cleanBaseUrl = hasProtocol(baseUrl) ? baseUrl : 'ws://' + baseUrl;
         this.url = cleanBaseUrl + path;
 
         this.socket = new ReconnectingSocket(this.url);
@@ -173,9 +176,16 @@ export default class WebsocketProvider<API extends RWeb3APISpec = RigoExecutionA
     public async request<
         Method extends RWeb3APIMethod<API>,
         ResponseType = RWeb3APIReturnType<API, Method>,
-    >(
-        payload: RWeb3APIPayload<API, Method>
-    ): Promise<JsonRpcResponseWithResult<ResponseType>> {
+    >(payload: RWeb3APIPayload<API, Method>): Promise<JsonRpcResponseWithResult<ResponseType>> {
+        console.log('websocket provider request', payload);
+
+        // {
+        //     jsonrpc: '2.0',
+        //         id: '8fcd801c-cfc4-4f88-8f7d-f6e5d9200dde',
+        //     method: 'status',
+        //     params: {}
+        // }
+
         return this.execute(payload as JsonRpcRequest);
     }
 
@@ -194,13 +204,13 @@ export default class WebsocketProvider<API extends RWeb3APISpec = RigoExecutionA
     }
 
     public listen(request: JsonRpcRequest): Stream<SubscriptionEvent> {
-        if (request.method !== "subscribe") {
+        if (request.method !== 'subscribe') {
             throw new Error(`Request method must be "subscribe" to start event listening`);
         }
 
         const query = (request.params as any).query;
-        if (typeof query !== "string") {
-            throw new Error("request.params.query must be a string");
+        if (typeof query !== 'string') {
+            throw new Error('request.params.query must be a string');
         }
 
         if (!this.subscriptionStreams.has(query)) {
@@ -209,9 +219,10 @@ export default class WebsocketProvider<API extends RWeb3APISpec = RigoExecutionA
             this.subscriptionStreams.set(query, stream);
         }
         // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-        return this.subscriptionStreams.get(query)!.filter((response) => response.query !== undefined);
+        return this.subscriptionStreams
+            .get(query)!
+            .filter((response) => response.query !== undefined);
     }
-
 
     /**
      * Resolves as soon as websocket is connected. execute() queues requests automatically,
@@ -243,9 +254,8 @@ export interface SubscriptionEvent {
 }
 
 export function hasProtocol(url: string): boolean {
-    return url.search("://") !== -1;
+    return url.search('://') !== -1;
 }
-
 
 function defaultErrorHandler(error: any): never {
     throw error;
@@ -253,13 +263,12 @@ function defaultErrorHandler(error: any): never {
 
 function toJsonRpcResponse(message: SocketWrapperMessageEvent): JsonRpcResponse {
     // this should never happen, but I want an alert if it does
-    if (message.type !== "message") {
+    if (message.type !== 'message') {
         throw new Error(`Unexcepted message type on websocket: ${message.type}`);
     }
 
     return parseJsonRpcResponse(JSON.parse(message.data));
 }
-
 
 /**
  * Returns a JsonRpcErrorResponse if input can be parsed as a JSON-RPC error. Otherwise parses
@@ -275,49 +284,47 @@ export function parseJsonRpcResponse(data: any): JsonRpcResponse {
     return response;
 }
 
-
 /** Throws if data is not a JsonRpcErrorResponse */
 export function parseJsonRpcErrorResponse(data: any): JsonRpcResponseWithError {
-
     const id = data.id;
-    if (typeof id !== "number" && typeof id !== "string" && id !== null) {
-        throw new Error("Invalid id field");
+    if (typeof id !== 'number' && typeof id !== 'string' && id !== null) {
+        throw new Error('Invalid id field');
     }
 
-    if (typeof data.error === "undefined" || isNullish(data.error)) {
-        throw new Error("Invalid error field");
+    if (typeof data.error === 'undefined' || isNullish(data.error)) {
+        throw new Error('Invalid error field');
     }
 
     return {
-        jsonrpc: "2.0",
+        jsonrpc: '2.0',
         id: id,
-        error: data.error
+        error: data.error,
     };
 }
 
 export function parseJsonRpcSuccessResponse(data: any): JsonRpcResponseWithResult {
-
     const id = data.id;
-    if (typeof id !== "number" && typeof id !== "string") {
-        throw new Error("Invalid id field");
+    if (typeof id !== 'number' && typeof id !== 'string') {
+        throw new Error('Invalid id field');
     }
 
-    if (typeof data.result === "undefined") {
-        throw new Error("Invalid result field");
+    if (typeof data.result === 'undefined') {
+        throw new Error('Invalid result field');
     }
 
     const result = data.result;
 
     return {
-        jsonrpc: "2.0",
+        jsonrpc: '2.0',
         id: id,
         result: result,
     };
 }
 
-
-export function isJsonRpcErrorResponse(response: JsonRpcResponse): response is JsonRpcResponseWithError {
-    return typeof (response as JsonRpcResponseWithError).error === "object";
+export function isJsonRpcErrorResponse(
+    response: JsonRpcResponse,
+): response is JsonRpcResponseWithError {
+    return typeof (response as JsonRpcResponseWithError).error === 'object';
 }
 
 /**
@@ -346,7 +353,7 @@ export async function toListPromise<T>(stream: Stream<T>, count: number): Promis
             complete: () => {
                 reject(
                     `Stream completed before all events could be collected. ` +
-                    `Collected ${events.length}, expected ${count}`,
+                        `Collected ${events.length}, expected ${count}`,
                 );
             },
             error: (error) => reject(error),
@@ -363,5 +370,4 @@ export async function firstEvent<T>(stream: Stream<T>): Promise<T> {
     return (await toListPromise(stream, 1))[0];
 }
 
-
-export {WebsocketProvider};
+export { WebsocketProvider };
