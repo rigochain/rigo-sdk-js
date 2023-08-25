@@ -14,7 +14,7 @@
     limitations under the License.
 */
 
-import {isNullish} from 'rweb3-validator';
+import { isNullish } from 'rweb3-validator';
 import {
     JsonRpcPayload,
     JsonRpcResponse,
@@ -27,8 +27,8 @@ import {
     JsonRpcBatchResponse,
     JsonRpcSubscriptionResult,
 } from 'rweb3-types';
-import {rpcErrorsMap} from 'rweb3-errors';
-import {uuidV4} from './uuid.js';
+import { rpcErrorsMap } from 'rweb3-errors';
+import { uuidV4 } from './uuid.js';
 
 // check if code is a valid rpc server error code
 export const isResponseRpcError = (rpcError: JsonRpcResponseWithError) => {
@@ -91,7 +91,7 @@ export const isBatchResponse = <Result = unknown, Error = unknown>(
     response: JsonRpcResponse<Result, Error>,
 ): boolean => {
     return Array.isArray(response);
-}
+};
 
 // internal optional variable to increment and use for the jsonrpc `id`
 let requestIdSeed: number | undefined;

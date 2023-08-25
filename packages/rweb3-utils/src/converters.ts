@@ -553,7 +553,7 @@ export const toFons = (number: Numbers, unit: RigoUnits): string => {
 /**
  * Will convert an upper or lowercase Ethereum address to a checksum address.
  * @param address - An address string
- * @returns	The checksum address
+ * @returns    The checksum address
  * @example
  * ```ts
  * web3.utils.toChecksumAddress('0xc1912fee45d61c87cc5ea59dae31190fffff232d');

@@ -36,6 +36,7 @@ export class PrvKey {
         const ret = secp256k1.ecdsaSign(hmsg, this.d);
         return ret;
     }
+
     export(): Bytes {
         return this.d;
     }

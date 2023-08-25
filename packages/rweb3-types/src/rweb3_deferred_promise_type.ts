@@ -14,7 +14,7 @@
     limitations under the License.
 */
 
-export interface Web3DeferredPromiseInterface<T> extends Promise<T> {
+export interface RWeb3DeferredPromiseInterface<T> extends Promise<T> {
     state: 'pending' | 'fulfilled' | 'rejected';
 
     resolve(value: T | PromiseLike<T>): void;

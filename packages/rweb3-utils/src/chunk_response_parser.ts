@@ -29,6 +29,7 @@ export class ChunkResponseParser {
         this.eventEmitter = eventEmitter;
         this.autoReconnect = autoReconnect;
     }
+
     private clearQueues(): void {
         if (typeof this._clearQueues === 'function') {
             this._clearQueues();

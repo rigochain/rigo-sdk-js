@@ -15,14 +15,14 @@
 */
 
 import { OperationTimeoutError } from 'rweb3-errors';
-import { Web3DeferredPromiseInterface } from 'rweb3-types';
+import { RWeb3DeferredPromiseInterface } from 'rweb3-types';
 
 /**
  * The class is a simple implementation of a deferred promise with optional timeout functionality,
  * which can be useful when dealing with asynchronous tasks.
  *
  */
-export class Web3DeferredPromise<T> implements Promise<T>, Web3DeferredPromiseInterface<T> {
+export class RWeb3DeferredPromise<T> implements Promise<T>, RWeb3DeferredPromiseInterface<T> {
     // public tag to treat object as promise by different libs
     // eslint-disable-next-line @typescript-eslint/prefer-as-const
     public [Symbol.toStringTag]: 'Promise' = 'Promise';
@@ -64,6 +64,7 @@ export class Web3DeferredPromise<T> implements Promise<T>, Web3DeferredPromiseIn
             this.startTimer();
         }
     }
+
     /**
      * Returns the current state of the promise.
      * @returns 'pending' | 'fulfilled' | 'rejected'
@@ -71,6 +72,7 @@ export class Web3DeferredPromise<T> implements Promise<T>, Web3DeferredPromiseIn
     public get state(): 'pending' | 'fulfilled' | 'rejected' {
         return this._state;
     }
+
     /**
      *
      * @param onfulfilled - (optional) The callback to execute when the promise is fulfilled.
@@ -83,6 +85,7 @@ export class Web3DeferredPromise<T> implements Promise<T>, Web3DeferredPromiseIn
     ): Promise<TResult1 | TResult2> {
         return this._promise.then(onfulfilled, onrejected);
     }
+
     /**
      *
      * @param onrejected - (optional) The callback to execute when the promise is rejected.

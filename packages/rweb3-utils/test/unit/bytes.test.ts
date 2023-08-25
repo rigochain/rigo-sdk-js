@@ -1,45 +1,44 @@
 import { Bytes } from '../../src';
 import cryptojs from 'crypto-js';
 
-describe("Bytes class tests", () => {
-
-    test("fromHex", () => {
+describe('Bytes class tests', () => {
+    test('fromHex', () => {
         const hex = '0x123abc';
         const bytes = Bytes.fromHex(hex);
         expect(bytes.toHex()).toBe(hex.substring(2));
     });
 
-    test("fromWords", () => {
+    test('fromWords', () => {
         const wordArray = cryptojs.enc.Hex.parse('123abc');
         const bytes = Bytes.fromWords(wordArray);
         expect(bytes.toHex()).toBe(wordArray.toString());
     });
 
-    test("parse - hex", () => {
+    test('parse - hex', () => {
         const hex = '123abc';
         const bytes = Bytes.parse(hex, 'hex');
         expect(bytes.toHex()).toBe(hex);
     });
 
-    test("parse - words", () => {
+    test('parse - words', () => {
         const wordArray = cryptojs.enc.Hex.parse('123abc');
         const bytes = Bytes.parse(wordArray, 'words');
         expect(bytes.toHex()).toBe(wordArray.toString());
     });
 
-    test("toHex", () => {
+    test('toHex', () => {
         const hex = '123abc';
         const bytes = Bytes.fromHex(hex);
         expect(bytes.toHex()).toBe(hex);
     });
 
-    test("toWords", () => {
+    test('toWords', () => {
         const wordArray = cryptojs.enc.Hex.parse('123abc');
         const bytes = Bytes.fromWords(wordArray);
         expect(bytes.toWords().toString()).toBe(wordArray.toString());
     });
 
-    test("isEqual", () => {
+    test('isEqual', () => {
         const hex = '123abc';
         const bytes1 = Bytes.fromHex(hex);
         const bytes2 = Bytes.fromHex(hex);
@@ -48,10 +47,9 @@ describe("Bytes class tests", () => {
         expect(bytes1.isEqual(bytes3)).toBeFalsy();
     });
 
-    test("b64ToBytes", () => {
+    test('b64ToBytes', () => {
         const base64 = Buffer.from('123abc', 'hex').toString('base64');
         const bytes = Bytes.b64ToBytes(base64);
         expect(bytes.toHex()).toBe('123abc');
     });
-
 });

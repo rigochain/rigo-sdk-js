@@ -34,13 +34,13 @@ export const uuidV4 = (): string => {
     // Section: 4.1.3:
     // - time_hi_and_version[12:16] = 0b0100
     /* eslint-disable-next-line */
-	bytes[6] = (bytes[6] & 0x0f) | 0x40;
+    bytes[6] = (bytes[6] & 0x0f) | 0x40;
 
     // Section 4.4
     // - clock_seq_hi_and_reserved[6] = 0b0
     // - clock_seq_hi_and_reserved[7] = 0b1
     /* eslint-disable-next-line */
-	bytes[8] = (bytes[8] & 0x3f) | 0x80;
+    bytes[8] = (bytes[8] & 0x3f) | 0x80;
 
     const hexString = bytesToHex(bytes);
 

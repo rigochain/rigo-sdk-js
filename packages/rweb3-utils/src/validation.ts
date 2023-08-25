@@ -48,5 +48,4 @@ export const checkAddressCheckSum = checkAddressCheckSumValidator;
  */
 export const isAddress = isAddressValidator;
 
-
 export const isNullish = isNullishValidator;

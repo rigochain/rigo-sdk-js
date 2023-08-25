@@ -68,6 +68,7 @@ export async function waitWithTimeout<T>(
     }
     return result;
 }
+
 /**
  * Repeatedly calls an async function with a given interval until the result of the function is defined (not undefined or null),
  * or until a timeout is reached.
@@ -110,6 +111,7 @@ export async function pollTillDefined<T>(
 
     return polledRes;
 }
+
 /**
  * Enforce a timeout on a promise, so that it can be rejected if it takes too long to complete
  * @param timeout - The timeout to enforced in milliseconds.
@@ -130,6 +132,7 @@ export function rejectIfTimeout(timeout: number, error: Error): [NodeJS.Timer, P
     });
     return [timeoutId as unknown as NodeJS.Timer, rejectOnTimeout];
 }
+
 /**
  * Sets an interval that repeatedly executes the given cond function with the specified interval between each call.
  * If the condition is met, the interval is cleared and a Promise that rejects with the returned value is returned.
