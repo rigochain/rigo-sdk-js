@@ -46,7 +46,6 @@ import {
     HealthResponse,
 } from 'rweb3-types';
 
-import { validator } from 'rweb3-validator';
 import { SubscriptionEvent } from 'rweb3-providers-ws';
 import { Stream } from 'xstream';
 import { buildQuery, Method, SubscribeRequest, SubscriptionEventType } from './requests';
@@ -105,15 +104,12 @@ export async function block(
         height = height.toString(10);
     }
 
-    validator.validate(['intOrEmpty'], [height]);
-
     return requestManager.send({
         method: 'block',
         params: { height: height },
     });
 }
 
-// TODO : 여기 테스트 파라미터 알아 내야 함.
 export async function blockByHash(
     requestManager: RWeb3RequestManager,
     hash: string | Uint8Array,
@@ -136,8 +132,6 @@ export async function blockResults(
         height = height.toString(10);
     }
 
-    validator.validate(['intOrEmpty'], [height]);
-
     return requestManager.send({
         method: 'block_results',
         params: { height: height },
@@ -152,8 +146,6 @@ export async function commit(
         height = height.toString(10);
     }
 
-    validator.validate(['intOrEmpty'], [height]);
-
     return requestManager.send({
         method: 'commit',
         params: { height: height },
@@ -162,11 +154,11 @@ export async function commit(
 
 export async function validators(
     requestManager: RWeb3RequestManager,
-    height?: number | string,
+    height: number | string,
     page?: number | string,
     per_page?: number | string,
 ): Promise<ValidatorsResponse> {
-    if (height && typeof height === 'number') {
+    if (typeof height === 'number') {
         height = height.toString(10);
     }
 
@@ -177,8 +169,6 @@ export async function validators(
     if (per_page && typeof per_page === 'number') {
         per_page = per_page.toString(10);
     }
-
-    validator.validate(['intOrEmpty', 'intOrEmpty', 'intOrEmpty'], [height, page, per_page]);
 
     return requestManager.send({
         method: 'validators',
@@ -239,8 +229,6 @@ export async function consensusParams(
         height = height.toString(10);
     }
 
-    validator.validate(['intOrEmpty'], [height]);
-
     return requestManager.send({
         method: 'consensus_params',
         params: { height: height },
@@ -254,8 +242,6 @@ export async function unconfirmedTxs(
     if (typeof limit === 'number') {
         limit = limit.toString(10);
     }
-
-    validator.validate(['intOrEmpty'], [limit]);
 
     return requestManager.send({
         method: 'unconfirmed_txs',
@@ -280,8 +266,6 @@ export async function txSearch(
     if (per_page && typeof per_page === 'number') {
         per_page = per_page.toString(10);
     }
-
-    validator.validate(['boolOrEmpty', 'intOrEmpty', 'intOrEmpty'], [prove, page, per_page]);
 
     return requestManager.send({
         method: 'tx_search',
@@ -322,8 +306,6 @@ export async function abciQuery(
     if (height && typeof height === 'number') {
         height = height.toString(10);
     }
-
-    validator.validate(['intOrEmpty', 'boolOrEmpty'], [height, prove]);
 
     return requestManager.send({
         method: 'abci_query',
@@ -404,8 +386,6 @@ export async function delegatee(
         addr = '0x' + addr;
     }
 
-    validator.validate(['rigoAddress'], [addr]);
-
     return requestManager.send({
         method: 'delegatee',
         params: { addr: addr },
@@ -426,8 +406,6 @@ export async function account(
     if (!addr.startsWith('0x')) {
         addr = '0x' + addr;
     }
-
-    validator.validate(['rigoAddress'], [addr]);
 
     return requestManager.send({
         method: 'account',
@@ -457,8 +435,6 @@ export async function stakes(
         addr = '0x' + addr;
     }
 
-    validator.validate(['rigoAddress'], [addr]);
-
     return requestManager.send({
         method: 'stakes',
         params: { addr: addr },
@@ -478,8 +454,6 @@ export async function vmCall(
     if (!to.startsWith('0x')) {
         to = '0x' + to;
     }
-
-    validator.validate(['rigoAddress', 'rigoAddress'], [addr, to]);
 
     return requestManager.send({
         method: 'vm_call',
@@ -506,8 +480,6 @@ export async function blockSearch(
     if (typeof per_page === 'number') {
         per_page = per_page.toString(10);
     }
-
-    validator.validate(['intOrEmpty', 'intOrEmpty'], [page, per_page]);
 
     return requestManager.send({
         method: 'block_search',

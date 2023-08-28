@@ -1,5 +1,4 @@
 import { RWeb3RequestManager } from 'rweb3-core';
-import { AbciInfo, ResponseData } from 'rweb3-types';
 
 import { rigoRpcMethods } from '../../../src/index';
 import { testData } from './fixtures/abci_info';
@@ -40,12 +39,3 @@ describe('abciInfo develop server call', () => {
         expect(isResponseAbciInfo(returnValue)).toBeTruthy();
     });
 });
-
-function isResponseAbciInfo(obj: any): obj is ResponseData<AbciInfo> {
-    return (
-        typeof obj.response.version === 'string' &&
-        typeof obj.response.app_version === 'string' &&
-        typeof obj.response.last_block_height === 'string' &&
-        typeof obj.response.last_block_app_hash === 'string'
-    );
-}

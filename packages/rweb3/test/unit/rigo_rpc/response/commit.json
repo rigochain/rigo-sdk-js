@@ -1,0 +1,55 @@
+{
+  "signed_header": {
+    "header": {
+      "version": {
+        "block": "11",
+        "app": "72057594050421542"
+      },
+      "chain_id": "devnet0",
+      "height": "842289",
+      "time": "2023-08-28T04:18:11.960645738Z",
+      "last_block_id": {
+        "hash": "DDBB9BB433F1EC7FDEF5CF2932BCA0C97E4F620F7EF1E634DDB888AC5DA048E2",
+        "parts": {
+          "total": 1,
+          "hash": "407DE52F69003FD629D87A3D24F1088B8C7B2452D10EC89BBFE5A6372FDCC5FC"
+        }
+      },
+      "last_commit_hash": "D0541917BEFB31CE5AA9AD513BC5D0E4E1D2DC757DA3B0F047E2703122B1C91D",
+      "data_hash": "E3B0C44298FC1C149AFBF4C8996FB92427AE41E4649B934CA495991B7852B855",
+      "validators_hash": "820C35BB36F40773F5456779582DEB2AAEE0D497CC59D1DB6CFB17A43860BC4B",
+      "next_validators_hash": "820C35BB36F40773F5456779582DEB2AAEE0D497CC59D1DB6CFB17A43860BC4B",
+      "consensus_hash": "048091BC7DDC283F77BFBF91D73C44DA58C3DF8A9CBC867405D8B7F3DAADA22F",
+      "app_hash": "E027DB46B541A4532F113744A2EC68D4B100F2BEFDC5A3FC107D1294A8F25CCC",
+      "last_results_hash": "E3B0C44298FC1C149AFBF4C8996FB92427AE41E4649B934CA495991B7852B855",
+      "evidence_hash": "E3B0C44298FC1C149AFBF4C8996FB92427AE41E4649B934CA495991B7852B855",
+      "proposer_address": "4F0668EC7E655EDD9B647455F291F3057BE6CD6D"
+    },
+    "commit": {
+      "height": "842289",
+      "round": 0,
+      "block_id": {
+        "hash": "F5E597803E11CCCD5A280DD1907C0C88E539AD6B67ADD1605E25758B82C566CD",
+        "parts": {
+          "total": 1,
+          "hash": "D8425735732076B27A6965979D19AD833F46D432C36614D2474E9C1F54F6ED7D"
+        }
+      },
+      "signatures": [
+        {
+          "block_id_flag": 2,
+          "validator_address": "4F0668EC7E655EDD9B647455F291F3057BE6CD6D",
+          "timestamp": "2023-08-28T04:18:12.967621511Z",
+          "signature": "zfg4VL3i3zT8QBDEFTnzfL2obDCT7lbAWruMLvhzVMxC1ON4zH7CLRqLGb3OmEJbwAeNOTuTs92r7aswfA5yfg=="
+        },
+        {
+          "block_id_flag": 1,
+          "validator_address": "",
+          "timestamp": "0001-01-01T00:00:00Z",
+          "signature": null
+        }
+      ]
+    }
+  },
+  "canonical": false
+}

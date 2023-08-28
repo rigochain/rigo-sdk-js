@@ -1,0 +1,136 @@
+{
+  "round_state": {
+    "height": "845579",
+    "round": 0,
+    "step": 1,
+    "start_time": "2023-08-28T05:16:23.196972075Z",
+    "commit_time": "2023-08-28T05:16:22.196972075Z",
+    "validators": {
+      "validators": [
+        {
+          "address": "4F0668EC7E655EDD9B647455F291F3057BE6CD6D",
+          "pub_key": {
+            "type": "tendermint/PubKeySecp256k1",
+            "value": "AilueMocy4WE/RBxdcJ0+73ptZXEAUu3nRFy5kYEOtPs"
+          },
+          "voting_power": "20000010",
+          "proposer_priority": "-6869349"
+        },
+        {
+          "address": "32ADA67A1177A5D7EAB958D16E287B3A89A33011",
+          "pub_key": {
+            "type": "tendermint/PubKeySecp256k1",
+            "value": "AykNjxZHyUtjMlmJNxP/2JBCf+XnZZXJWTHhVJ/nl15k"
+          },
+          "voting_power": "7000010",
+          "proposer_priority": "6869350"
+        }
+      ],
+      "proposer": {
+        "address": "4F0668EC7E655EDD9B647455F291F3057BE6CD6D",
+        "pub_key": {
+          "type": "tendermint/PubKeySecp256k1",
+          "value": "AilueMocy4WE/RBxdcJ0+73ptZXEAUu3nRFy5kYEOtPs"
+        },
+        "voting_power": "20000010",
+        "proposer_priority": "-6869349"
+      }
+    },
+    "proposal": null,
+    "proposal_block": null,
+    "proposal_block_parts": null,
+    "locked_round": -1,
+    "locked_block": null,
+    "locked_block_parts": null,
+    "valid_round": -1,
+    "valid_block": null,
+    "valid_block_parts": null,
+    "votes": [
+      {
+        "round": 0,
+        "prevotes": [
+          "nil-Vote",
+          "nil-Vote"
+        ],
+        "prevotes_bit_array": "BA{2:__} 0/27000020 = 0.00",
+        "precommits": [
+          "nil-Vote",
+          "nil-Vote"
+        ],
+        "precommits_bit_array": "BA{2:__} 0/27000020 = 0.00"
+      }
+    ],
+    "commit_round": -1,
+    "last_commit": {
+      "votes": [
+        "Vote{0:4F0668EC7E65 845578/00/SIGNED_MSG_TYPE_PRECOMMIT(Precommit) FFA5FA86E50E 649107179B2F @ 2023-08-28T05:16:22.195577756Z}",
+        "Vote{1:32ADA67A1177 845578/00/SIGNED_MSG_TYPE_PRECOMMIT(Precommit) 000000000000 8B64B3C09AFA @ 2023-08-28T05:16:22.299313072Z}"
+      ],
+      "votes_bit_array": "BA{2:xx} 27000020/27000020 = 1.00",
+      "peer_maj_23s": {}
+    },
+    "last_validators": {
+      "validators": [
+        {
+          "address": "4F0668EC7E655EDD9B647455F291F3057BE6CD6D",
+          "pub_key": {
+            "type": "tendermint/PubKeySecp256k1",
+            "value": "AilueMocy4WE/RBxdcJ0+73ptZXEAUu3nRFy5kYEOtPs"
+          },
+          "voting_power": "20000010",
+          "proposer_priority": "130661"
+        },
+        {
+          "address": "32ADA67A1177A5D7EAB958D16E287B3A89A33011",
+          "pub_key": {
+            "type": "tendermint/PubKeySecp256k1",
+            "value": "AykNjxZHyUtjMlmJNxP/2JBCf+XnZZXJWTHhVJ/nl15k"
+          },
+          "voting_power": "7000010",
+          "proposer_priority": "-130660"
+        }
+      ],
+      "proposer": {
+        "address": "4F0668EC7E655EDD9B647455F291F3057BE6CD6D",
+        "pub_key": {
+          "type": "tendermint/PubKeySecp256k1",
+          "value": "AilueMocy4WE/RBxdcJ0+73ptZXEAUu3nRFy5kYEOtPs"
+        },
+        "voting_power": "20000010",
+        "proposer_priority": "130661"
+      }
+    },
+    "triggered_timeout_precommit": false
+  },
+  "peers": [
+    {
+      "node_address": "8d82d26b73bc7df1f0853acb8dd5f037abf13c91@192.168.252.51:39300",
+      "peer_state": {
+        "round_state": {
+          "height": "845579",
+          "round": 0,
+          "step": 1,
+          "start_time": "2023-08-28T05:16:22.388945355Z",
+          "proposal": false,
+          "proposal_block_part_set_header": {
+            "total": 0,
+            "hash": ""
+          },
+          "proposal_block_parts": null,
+          "proposal_pol_round": -1,
+          "proposal_pol": "__",
+          "prevotes": "__",
+          "precommits": "__",
+          "last_commit_round": 0,
+          "last_commit": "xx",
+          "catchup_commit_round": -1,
+          "catchup_commit": "__"
+        },
+        "stats": {
+          "votes": "953245",
+          "block_parts": "134261"
+        }
+      }
+    }
+  ]
+}

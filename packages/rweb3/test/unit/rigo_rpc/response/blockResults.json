@@ -1,0 +1,50 @@
+{
+  "height": "602494",
+  "txs_results": [
+    {
+      "code": 0,
+      "data": null,
+      "log": "",
+      "info": "",
+      "gas_wanted": "1000000000000000",
+      "gas_used": "1000000000000000",
+      "events": [
+        {
+          "type": "tx",
+          "attributes": [
+            {
+              "key": "dHlwZQ==",
+              "value": "dHJhbnNmZXI=",
+              "index": true
+            },
+            {
+              "key": "c2VuZGVy",
+              "value": "MzJBREE2N0ExMTc3QTVEN0VBQjk1OEQxNkUyODdCM0E4OUEzMzAxMQ==",
+              "index": true
+            },
+            {
+              "key": "cmVjZWl2ZXI=",
+              "value": "QTVERTAwNzMwRDA1QjdFMzUxQjVDNjdCMTdGMDE5OTdGREI3MUNGMw==",
+              "index": true
+            },
+            {
+              "key": "YWRkcnBhaXI=",
+              "value": "MzJBREE2N0ExMTc3QTVEN0VBQjk1OEQxNkUyODdCM0E4OUEzMzAxMUE1REUwMDczMEQwNUI3RTM1MUI1QzY3QjE3RjAxOTk3RkRCNzFDRjM=",
+              "index": true
+            },
+            {
+              "key": "YW1vdW50",
+              "value": "NTAwMDAwMDAwMDAwMDAwMDAwMA==",
+              "index": false
+            }
+          ]
+        }
+      ],
+      "codespace": ""
+    }
+  ],
+  "begin_block_events": null,
+  "end_block_events": null,
+  "validator_updates": null,
+  "consensus_param_updates": null
+}

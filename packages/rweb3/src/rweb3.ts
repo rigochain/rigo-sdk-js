@@ -38,7 +38,7 @@ export class RWeb3 extends RWeb3Context {
             );
         }
 
-        const accounts = initAccountsForContext(this);
+        const accounts = initAccountsForContext();
 
         // Have to use local alias to initiate contract context
         // eslint-disable-next-line @typescript-eslint/no-this-alias

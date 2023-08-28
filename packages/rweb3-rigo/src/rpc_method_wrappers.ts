@@ -14,11 +14,10 @@
     limitations under the License.
 */
 
-import {RigoExecutionAPI} from 'rweb3-types';
-import {RWeb3Context} from 'rweb3-core';
-import {rigoRpcMethods} from 'rweb3-rpc-methods';
-import {TrxProto} from "rweb3-types";
-
+import { RigoExecutionAPI } from 'rweb3-types';
+import { RWeb3Context } from 'rweb3-core';
+import { rigoRpcMethods } from 'rweb3-rpc-methods';
+import { TrxProto } from 'rweb3-types';
 
 export async function health(web3Context: RWeb3Context<RigoExecutionAPI>) {
     return rigoRpcMethods.health(web3Context.requestManager);
@@ -32,7 +31,11 @@ export async function netInfo(web3Context: RWeb3Context<RigoExecutionAPI>) {
     return rigoRpcMethods.netInfo(web3Context.requestManager);
 }
 
-export async function blockchain(web3Context: RWeb3Context<RigoExecutionAPI>, minHeight?: number | string, maxHeight?: number | string) {
+export async function blockchain(
+    web3Context: RWeb3Context<RigoExecutionAPI>,
+    minHeight?: number | string,
+    maxHeight?: number | string,
+) {
     return rigoRpcMethods.blockchain(web3Context.requestManager, minHeight, maxHeight);
 }
 
@@ -40,28 +43,32 @@ export async function block(web3Context: RWeb3Context<RigoExecutionAPI>, height?
     return rigoRpcMethods.block(web3Context.requestManager, height);
 }
 
-
-export async function blockByHash(web3Context: RWeb3Context<RigoExecutionAPI>, hash: Uint8Array) {
+export async function blockByHash(
+    web3Context: RWeb3Context<RigoExecutionAPI>,
+    hash: string | Uint8Array,
+) {
     return rigoRpcMethods.blockByHash(web3Context.requestManager, hash);
 }
 
-export async function blockResults(web3Context: RWeb3Context<RigoExecutionAPI>, height?: string | number) {
+export async function blockResults(
+    web3Context: RWeb3Context<RigoExecutionAPI>,
+    height?: string | number,
+) {
     return rigoRpcMethods.blockResults(web3Context.requestManager, height);
 }
 
 export async function commit(
     web3Context: RWeb3Context<RigoExecutionAPI>,
-    height?: number | string
+    height?: number | string,
 ) {
     return rigoRpcMethods.commit(web3Context.requestManager, height);
 }
 
-
 export async function validators(
     web3Context: RWeb3Context<RigoExecutionAPI>,
-    height?: number | string,
+    height: number | string,
     page?: number | string,
-    per_page?: number | string
+    per_page?: number | string,
 ) {
     return rigoRpcMethods.validators(web3Context.requestManager, height, page, per_page);
 }
@@ -70,8 +77,10 @@ export async function genesis(web3Context: RWeb3Context<RigoExecutionAPI>) {
     return rigoRpcMethods.genesis(web3Context.requestManager);
 }
 
-
-export async function genesisChunked(web3Context: RWeb3Context<RigoExecutionAPI>, chunk: number | string) {
+export async function genesisChunked(
+    web3Context: RWeb3Context<RigoExecutionAPI>,
+    chunk: number | string,
+) {
     return rigoRpcMethods.genesisChunked(web3Context.requestManager, chunk);
 }
 
@@ -83,16 +92,36 @@ export async function consensusState(web3Context: RWeb3Context<RigoExecutionAPI>
     return rigoRpcMethods.consensusState(web3Context.requestManager);
 }
 
-export async function consensusParams(web3Context: RWeb3Context<RigoExecutionAPI>, height?: number | string) {
+export async function consensusParams(
+    web3Context: RWeb3Context<RigoExecutionAPI>,
+    height?: number | string,
+) {
     return rigoRpcMethods.consensusParams(web3Context.requestManager, height);
 }
 
-export async function unconfirmedTxs(web3Context: RWeb3Context<RigoExecutionAPI>, limit: number | string) {
+export async function unconfirmedTxs(
+    web3Context: RWeb3Context<RigoExecutionAPI>,
+    limit: number | string,
+) {
     return rigoRpcMethods.unconfirmedTxs(web3Context.requestManager, limit);
 }
 
-export async function txSearch(web3Context: RWeb3Context<RigoExecutionAPI>, query: string, prove?: boolean, page?: number | string, per_page?: number | string, order_by?: string) {
-    return rigoRpcMethods.txSearch(web3Context.requestManager, query, prove, page, per_page, order_by);
+export async function txSearch(
+    web3Context: RWeb3Context<RigoExecutionAPI>,
+    query: string,
+    prove?: boolean,
+    page?: number | string,
+    per_page?: number | string,
+    order_by?: string,
+) {
+    return rigoRpcMethods.txSearch(
+        web3Context.requestManager,
+        query,
+        prove,
+        page,
+        per_page,
+        order_by,
+    );
 }
 
 export async function tx(web3Context: RWeb3Context<RigoExecutionAPI>, hash: string | Uint8Array) {
@@ -103,7 +132,13 @@ export async function abciInfo(web3Context: RWeb3Context<RigoExecutionAPI>) {
     return rigoRpcMethods.abciInfo(web3Context.requestManager);
 }
 
-export async function abciQuery(web3Context: RWeb3Context<RigoExecutionAPI>, path: string, data: string, height?: number | string, prove?: boolean) {
+export async function abciQuery(
+    web3Context: RWeb3Context<RigoExecutionAPI>,
+    path: string,
+    data: string,
+    height?: number | string,
+    prove?: boolean,
+) {
     return rigoRpcMethods.abciQuery(web3Context.requestManager, path, data, height, prove);
 }
 
@@ -115,8 +150,10 @@ export async function numUnconfirmedTxs(web3Context: RWeb3Context<RigoExecutionA
     return rigoRpcMethods.numUnconfirmedTxs(web3Context.requestManager);
 }
 
-
-export async function broadcastEvidence(web3Context: RWeb3Context<RigoExecutionAPI>, evidence: string) {
+export async function broadcastEvidence(
+    web3Context: RWeb3Context<RigoExecutionAPI>,
+    evidence: string,
+) {
     return rigoRpcMethods.broadcastEvidence(web3Context.requestManager, evidence);
 }
 
@@ -151,6 +188,7 @@ export async function proposals(web3Context: RWeb3Context<RigoExecutionAPI>, txH
 export async function stakes(web3Context: RWeb3Context<RigoExecutionAPI>, addr: string) {
     return rigoRpcMethods.stakes(web3Context.requestManager, addr);
 }
+
 export async function vmCall(
     web3Context: RWeb3Context<RigoExecutionAPI>,
     addr: string,
@@ -160,6 +198,3 @@ export async function vmCall(
 ) {
     return rigoRpcMethods.vmCall(web3Context.requestManager, addr, to, height, data);
 }
-
-
-

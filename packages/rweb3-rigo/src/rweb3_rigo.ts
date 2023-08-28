@@ -47,7 +47,7 @@ export class RWeb3Rigo extends RWeb3Context {
         return rpcMethodsWrappers.block(this, height);
     }
 
-    blockByHash(hash: Uint8Array) {
+    blockByHash(hash: string | Uint8Array) {
         return rpcMethodsWrappers.blockByHash(this, hash);
     }
 
@@ -59,7 +59,7 @@ export class RWeb3Rigo extends RWeb3Context {
         return rpcMethodsWrappers.commit(this, height);
     }
 
-    validators(height?: string | number, page?: number, per_page?: number) {
+    validators(height: string | number, page?: number, per_page?: number) {
         return rpcMethodsWrappers.validators(this, height, page, per_page);
     }
 

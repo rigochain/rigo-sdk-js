@@ -1,0 +1,98 @@
+{
+  "genesis": {
+    "genesis_time": "2023-08-18T00:52:53.079977688Z",
+    "chain_id": "devnet0",
+    "initial_height": "1",
+    "consensus_params": {
+      "block": {
+        "max_bytes": "22020096",
+        "max_gas": "-1",
+        "time_iota_ms": "1000"
+      },
+      "evidence": {
+        "max_age_num_blocks": "100000",
+        "max_age_duration": "172800000000000",
+        "max_bytes": "1048576"
+      },
+      "validator": {
+        "pub_key_types": [
+          "secp256k1"
+        ]
+      },
+      "version": {
+        "app_version": "1"
+      }
+    },
+    "validators": [
+      {
+        "address": "4F0668EC7E655EDD9B647455F291F3057BE6CD6D",
+        "pub_key": {
+          "type": "tendermint/PubKeySecp256k1",
+          "value": "AilueMocy4WE/RBxdcJ0+73ptZXEAUu3nRFy5kYEOtPs"
+        },
+        "power": "10",
+        "name": ""
+      }
+    ],
+    "app_hash": "F3C5AC10E5659C2F120EDC809E5475F0DC44D18A5EEE46FBCA5F734DB45ECBC3",
+    "app_state": {
+      "assetHolders": [
+        {
+          "address": "68BBA14E71813A2A8C750D7B3A285DE44AA4401A",
+          "balance": "0x52b7d2dcc80cd2e4000000"
+        },
+        {
+          "address": "01D9A59E4FB2DD7F617188764078AF578FE9515E",
+          "balance": "0x52b7d2dcc80cd2e4000000"
+        },
+        {
+          "address": "B5C86EB472E306AC21F7E208433F894A56D72A66",
+          "balance": "0x52b7d2dcc80cd2e4000000"
+        },
+        {
+          "address": "6E73637962A2FD9D7BE90354007C14258EFE6EE8",
+          "balance": "0x52b7d2dcc80cd2e4000000"
+        },
+        {
+          "address": "1AB365DD8B10FB46E6A3D6E36A2C0955EE04783E",
+          "balance": "0x52b7d2dcc80cd2e4000000"
+        },
+        {
+          "address": "62CAAD4B4E6BE0BF8758735BB6209724C1BC1E92",
+          "balance": "0x52b7d2dcc80cd2e4000000"
+        },
+        {
+          "address": "C605434EE997000EFFD4F9C54A7A1A30458E5857",
+          "balance": "0x52b7d2dcc80cd2e4000000"
+        },
+        {
+          "address": "5CA2B202AF15A092CB90E61F009C1217D3EEA313",
+          "balance": "0x52b7d2dcc80cd2e4000000"
+        },
+        {
+          "address": "4831471B8AD3953CA71AEEFFD639193999DACF23",
+          "balance": "0x52b7d2dcc80cd2e4000000"
+        },
+        {
+          "address": "4F0668EC7E655EDD9B647455F291F3057BE6CD6D",
+          "balance": "0x52b7d2dcc80cd2e4000000"
+        }
+      ],
+      "govRule": {
+        "version": "1",
+        "maxValidatorCnt": "21",
+        "minValidatorStake": "0x5ca4ec2a79a7f67000000",
+        "rewardPerPower": "4756468797",
+        "lazyRewardBlocks": "2592000",
+        "lazyApplyingBlocks": "259200",
+        "gasPrice": "0x2540be400",
+        "minTrxFee": "0x38d7ea4c68000",
+        "minVotingPeriodBlocks": "259200",
+        "maxVotingPeriodBlocks": "2592000",
+        "minSelfStakeRatio": "50",
+        "maxUpdatableStakeRatio": "30",
+        "slashRatio": "50"
+      }
+    }
+  }
+}

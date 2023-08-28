@@ -29,8 +29,12 @@ export type RigoExecutionAPI = {
     block: (height?: string | number) => responses.BlockResponse;
     block_by_hash: (hash: Uint8Array) => responses.BlockchainResponse;
     block_results: (height?: string | number) => responses.BlockResultsResponse;
-    commit: (height: string) => responses.CommitResponse;
-    validators: (height: string) => responses.ValidatorsResponse;
+    commit: (height?: string) => responses.CommitResponse;
+    validators: (
+        height: string | number,
+        page?: number | string,
+        per_page?: number | string,
+    ) => responses.ValidatorsResponse;
     genesis: () => responses.GenesisResponse;
     genesis_chunked: (chunk: number | string) => responses.GenesisChunkedResponse;
     dump_consensus_state: () => responses.DumpConsensusStateResponse;

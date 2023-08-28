@@ -8,6 +8,7 @@ describe('status check ', () => {
 
     beforeAll(() => {
         devServerRWeb3Instance = new RWeb3(getDevServer());
+        // testServerRWeb3Instance = new RWeb3(getTestServer());
         testWebsocketRWeb3Instance = new RWeb3(getTestWsServer());
     });
 
@@ -17,6 +18,15 @@ describe('status check ', () => {
         expect(statusResponse.node_info.channels).toEqual('40202122233038606100');
         expect(statusResponse.validator_info.pub_key.type).toEqual('tendermint/PubKeySecp256k1');
     });
+
+    // it('should call rweb3 with testWebsocketRWeb3Instance.getstatus method success return', async () => {
+    //     let testStatusResponse: StatusResponse = await testServerRWeb3Instance.rigo.status();
+    //
+    //     expect(testStatusResponse.node_info.channels).toEqual('40202122233038606100');
+    //     expect(testStatusResponse.validator_info.pub_key.type).toEqual(
+    //         'tendermint/PubKeySecp256k1',
+    //     );
+    // });
 
     it('should call rweb3 with testWebsocketRWeb3Instance.getstatus method success return', async () => {
         let websocketStatusResponse: StatusResponse =

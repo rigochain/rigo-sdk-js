@@ -15,18 +15,12 @@ You should have received a copy of the GNU Lesser General Public License
 along with web3.js.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-import {RigoExecutionAPI} from "rweb3-types";
-import {RWeb3Context} from "rweb3-core";
-import {Account} from "rweb3-accounts";
+import { Account } from 'rweb3-accounts';
 
-export const initAccountsForContext = (context: RWeb3Context<RigoExecutionAPI>) => {
-
-
-    console.log("initAccountsForContext", context)
-
-    let account = new Account()
+export const initAccountsForContext = () => {
+    let account = new Account();
 
     return {
-        account: account
+        account: account,
     };
 };
