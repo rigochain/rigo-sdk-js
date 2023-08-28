@@ -39,7 +39,7 @@ export type RigoExecutionAPI = {
     genesis_chunked: (chunk: number | string) => responses.GenesisChunkedResponse;
     dump_consensus_state: () => responses.DumpConsensusStateResponse;
     consensus_state: () => responses.ConsensusStateResponse;
-    consensus_params: (height?: number | string) => responses.ConsensusParams;
+    consensus_params: (height?: number | string) => responses.ConsensusParamsResponse;
     unconfirmed_txs: (limit?: number | string) => responses.UnconfirmedTxsResponse;
     tx_search: (
         query: string,

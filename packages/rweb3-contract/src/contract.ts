@@ -138,7 +138,9 @@ export default class Contract {
         const transactionData: TxResponse = await this._rweb3.tx(txHash);
         if (!transactionData.tx_result || !transactionData.tx_result.data)
             throw Error('not found contract address');
-        const bytes = Bytes.b64ToBytes(transactionData.tx_result.data);
+
+        // TODO : 여기 확인해야됨.. Response 값이  Uint8Array 로 셋팅 됨..
+        const bytes = Bytes.b64ToBytes(transactionData.tx_result.data.toString());
         let bytesToHex = bytes.toHex();
         if (!bytesToHex.startsWith('0x')) bytesToHex = '0x' + bytesToHex;
         return bytesToHex.toLowerCase();

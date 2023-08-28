@@ -87,12 +87,12 @@ export type Response =
  * Represents a response containing general information about the ABCI application.
  */
 export interface AbciInfoResponse {
-    /** Data or message from the ABCI application */
-    readonly data?: string;
-    /** Last block's height processed by the ABCI application */
-    readonly last_block_height?: number;
-    /** Hash representation of the last block processed */
-    readonly last_block_app_hash?: Uint8Array;
+    response: {
+        version: string;
+        app_version: string;
+        last_block_height?: number;
+        last_block_app_hash?: Uint8Array;
+    };
 }
 
 /**
@@ -323,9 +323,7 @@ export interface TxResponse {
     /** Proof of the transaction (if available) */
     readonly proof?: TxProof;
     /** Result of the transaction execution */
-    readonly tx_result: {
-        data: any;
-    };
+    readonly tx_result: TxData;
 }
 
 /**
@@ -651,6 +649,11 @@ export interface ValidatorUpdate {
     readonly pubkey: ValidatorPubkey;
     /** Updated voting power of the validator */
     readonly voting_power: bigint;
+}
+
+export interface ConsensusParamsResponse {
+    block_height: number;
+    consensus_params: ConsensusParams;
 }
 
 /**

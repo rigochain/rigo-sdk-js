@@ -15,7 +15,7 @@
 */
 
 import { RWeb3RequestManager } from 'rweb3-core';
-import { TrxProto } from 'rweb3-types';
+import { ConsensusParamsResponse, TrxProto } from 'rweb3-types';
 import { Bytes } from 'rweb3-utils';
 
 import {
@@ -30,7 +30,6 @@ import {
     ValidatorsResponse,
     DumpConsensusStateResponse,
     ConsensusStateResponse,
-    ConsensusParams,
     NumUnconfirmedTxsResponse,
     UnconfirmedTxsResponse,
     TxResponse,
@@ -224,7 +223,7 @@ export async function consensusState(
 export async function consensusParams(
     requestManager: RWeb3RequestManager,
     height?: number | string,
-): Promise<ConsensusParams> {
+): Promise<ConsensusParamsResponse> {
     if (height && typeof height === 'number') {
         height = height.toString(10);
     }
@@ -283,6 +282,10 @@ export async function tx(
     requestManager: RWeb3RequestManager,
     hash: string | Uint8Array,
 ): Promise<TxResponse> {
+    if (typeof hash === 'string') {
+        hash = Bytes.fromHex(hash);
+    }
+
     return requestManager.send({
         method: 'tx',
         params: { hash: Buffer.from(hash).toString('base64'), prove: true },
