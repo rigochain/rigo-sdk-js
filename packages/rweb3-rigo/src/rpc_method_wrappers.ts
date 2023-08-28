@@ -142,7 +142,10 @@ export async function abciQuery(
     return rigoRpcMethods.abciQuery(web3Context.requestManager, path, data, height, prove);
 }
 
-export async function checkTx(web3Context: RWeb3Context<RigoExecutionAPI>, tx: string) {
+export async function checkTx(
+    web3Context: RWeb3Context<RigoExecutionAPI>,
+    tx: string | Uint8Array,
+) {
     return rigoRpcMethods.checkTx(web3Context.requestManager, tx);
 }
 

@@ -323,7 +323,7 @@ export async function abciQuery(
 
 export async function checkTx(
     requestManager: RWeb3RequestManager,
-    tx: string,
+    tx: string | Uint8Array,
 ): Promise<CheckTxResponse> {
     return requestManager.send({
         method: 'check_tx',

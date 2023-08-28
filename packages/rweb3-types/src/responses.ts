@@ -288,10 +288,12 @@ export type HealthResponse = null;
  * Represents a response containing information about unconfirmed transactions.
  */
 export interface NumUnconfirmedTxsResponse {
+    readonly n_txs: number;
     /** Total number of unconfirmed transactions */
     readonly total: number;
     /** Total size (in bytes) of all unconfirmed transactions */
     readonly total_bytes: number;
+    readonly txs: TxData[];
 }
 
 /**
@@ -905,8 +907,8 @@ export interface UnconfirmedTxsResponse {
  * Represents the response after checking a transaction.
  */
 export interface CheckTxResponse {
-    code: string;
-    data: string;
+    code: number;
+    data?: string;
     log: string;
     info: string;
     gas_wanted: string;
@@ -919,9 +921,32 @@ export interface CheckTxResponse {
  * Represents the response related to a delegatee.
  */
 export interface DelegateeResponse {
-    code: number;
-    log: string;
     key: string;
+    log?: string;
+    code?: number;
+    value?: DelegateeValue;
+}
+
+export interface DelegateeValue {
+    address: string;
+    pubKey: string;
+    selfAmount: string;
+    selfPower: number;
+    totalAmount: string;
+    totalPower: number;
+    rewardAmount: string;
+    stakes: DelegateeStake[];
+}
+
+export interface DelegateeStake {
+    owner: string;
+    to: string;
+    amount: string;
+    power: number;
+    ReceivedReward: string;
+    txhash: string;
+    startHeight: number;
+    refundHeight: number;
 }
 
 /**
@@ -929,19 +954,19 @@ export interface DelegateeResponse {
  */
 export interface RuleResponse {
     value: {
-        version: string;
-        maxValidatorCnt: string;
-        minValidatorStake: string;
-        rewardPerPower: string;
-        lazyRewardBlocks: string;
-        lazyApplyingBlocks: string;
-        gasPrice: string;
-        minTrxFee: string;
-        minVotingPeriodBlocks: string;
-        maxVotingPeriodBlocks: string;
-        minSelfStakeRatio: string;
-        maxUpdatableStakeRatio: string;
-        slashRatio: string;
+        version: number; // Protocol or data structure version
+        maxValidatorCnt: number; // Maximum number of validators allowed
+        minValidatorStake: string; // Minimum stake amount required for a validator
+        rewardPerPower: bigint; // Reward given per unit of computational power for validators
+        lazyRewardBlocks: number; // Number of blocks before the rewards are distributed (latency)
+        lazyApplyingBlocks: number; // Number of blocks before changes are applied (latency)
+        gasPrice: string; // Price of the transaction fee (gas price)
+        minTrxFee: string; // Minimum transaction fee required
+        minVotingPeriodBlocks: number; // Minimum number of blocks for a voting period
+        maxVotingPeriodBlocks: number; // Maximum number of blocks for a voting period
+        minSelfStakeRatio: number; // Minimum ratio of stake that a validator must self-bond
+        maxUpdatableStakeRatio: number; // Maximum ratio by which the stake can be updated frequently
+        slashRatio: number; // Ratio of tokens to be slashed when a validator engages in malicious behavior
     };
 }
 

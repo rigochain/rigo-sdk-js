@@ -103,7 +103,7 @@ export class RWeb3Rigo extends RWeb3Context {
         return rpcMethodsWrappers.abciQuery(this, path, data, height, prove);
     }
 
-    checkTx(tx: string) {
+    checkTx(tx: string | Uint8Array) {
         return rpcMethodsWrappers.checkTx(this, tx);
     }
 

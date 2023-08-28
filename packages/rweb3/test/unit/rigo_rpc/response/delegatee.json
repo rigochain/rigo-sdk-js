@@ -1,0 +1,64 @@
+{
+  "key": "736A9F6FA280A88599DC7FCD24E42975DA89A5AE",
+  "value": {
+    "address": "736A9F6FA280A88599DC7FCD24E42975DA89A5AE",
+    "pubKey": "0279C63DB19F0BFAC5BA69555517C34C9DAEE17B60C68F14F7B9D04DCD43014797",
+    "selfAmount": "0xb949e1df70eb6ff4c0000",
+    "selfPower": "14000011",
+    "totalAmount": "0xb949e1df70eb6ff4c0000",
+    "totalPower": "14000011",
+    "rewardAmount": "0x3a97be156c0923647a70",
+    "stakes": [
+      {
+        "owner": "736A9F6FA280A88599DC7FCD24E42975DA89A5AE",
+        "to": "736A9F6FA280A88599DC7FCD24E42975DA89A5AE",
+        "amount": "0x5ca4ec2a79a7f67000000",
+        "power": "7000000",
+        "ReceivedReward": "0x1d4bdecb1fc22b55e7c0",
+        "txhash": "DD157B45170CE529DD011179BD019626367AE7458176C79341B962F6733F529E",
+        "startHeight": "959241",
+        "refundHeight": "0"
+      },
+      {
+        "owner": "736A9F6FA280A88599DC7FCD24E42975DA89A5AE",
+        "to": "736A9F6FA280A88599DC7FCD24E42975DA89A5AE",
+        "amount": "0x5ca4ec2a79a7f67000000",
+        "power": "7000000",
+        "ReceivedReward": "0x1d4bddde8bfe7ce8e640",
+        "txhash": "7887C048D6A8BF9E67416CC94A6910CCD565A4385D0B1B8539E6F90478C80D85",
+        "startHeight": "959246",
+        "refundHeight": "0"
+      },
+      {
+        "owner": "736A9F6FA280A88599DC7FCD24E42975DA89A5AE",
+        "to": "736A9F6FA280A88599DC7FCD24E42975DA89A5AE",
+        "amount": "0x4563918244f40000",
+        "power": "5",
+        "ReceivedReward": "0x1022acab92711f7",
+        "txhash": "8E909F630DBBBB13559F7063F58A48B0FEE6C4FEEEABF91E40CA14932742A112",
+        "startHeight": "2058914",
+        "refundHeight": "0"
+      },
+      {
+        "owner": "736A9F6FA280A88599DC7FCD24E42975DA89A5AE",
+        "to": "736A9F6FA280A88599DC7FCD24E42975DA89A5AE",
+        "amount": "0xde0b6b3a7640000",
+        "power": "1",
+        "ReceivedReward": "0x338dcf178655eb",
+        "txhash": "6DDD9D6C0E62A429006904E24B9A666DF4E8BC7831152BFEE87250AE48C9C98C",
+        "startHeight": "2063618",
+        "refundHeight": "0"
+      },
+      {
+        "owner": "736A9F6FA280A88599DC7FCD24E42975DA89A5AE",
+        "to": "736A9F6FA280A88599DC7FCD24E42975DA89A5AE",
+        "amount": "0x4563918244f40000",
+        "power": "5",
+        "ReceivedReward": "0x3607aeaa78448e",
+        "txhash": "2DE5AF4744DFA073B09E58B38F9A02E82F9156412111883F056224372A2D3701",
+        "startHeight": "4475012",
+        "refundHeight": "0"
+      }
+    ]
+  }
+}

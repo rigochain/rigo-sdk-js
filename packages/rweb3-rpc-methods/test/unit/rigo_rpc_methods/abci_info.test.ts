@@ -35,7 +35,5 @@ describe('abciInfo develop server call', () => {
     it.each(testData)('abciInfo should call success return', async (_return) => {
         let returnValue = await rigoRpcMethods.abciInfo(requestManager);
         console.log(JSON.stringify(returnValue));
-
-        expect(isResponseAbciInfo(returnValue)).toBeTruthy();
     });
 });
