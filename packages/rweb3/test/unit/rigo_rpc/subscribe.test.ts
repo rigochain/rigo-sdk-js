@@ -24,6 +24,7 @@ describe('subscribe check ', () => {
                 expect(event.query).toEqual(query);
 
                 console.log('event', event);
+                console.log('height', event.data.value);
 
                 if (events.length === 2) {
                     // make sure they are consecutive heights
