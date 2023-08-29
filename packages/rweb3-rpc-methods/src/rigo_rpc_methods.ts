@@ -502,6 +502,7 @@ export function subscribe(
     requestManager: RWeb3RequestManager,
     query: string,
 ): Stream<SubscriptionEvent> {
+    console.log('subscribe query 3', query);
     return requestManager.subscribe({
         method: 'subscribe',
         params: {

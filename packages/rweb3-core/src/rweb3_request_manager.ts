@@ -216,12 +216,14 @@ export class RWeb3RequestManager<API extends RWeb3APISpec = RigoExecutionAPI> {
     ): Stream<SubscriptionEvent> {
         // Only Websocket Provider can subscribe.
         if (!(this.provider instanceof WebsocketProvider)) {
-            throw new Error('Only Websocket Provider can subscribe.');
+            throw new Error('only websocket provider can subscribe.');
         }
 
         const { provider } = this;
 
         const payload = jsonRpc.toPayload(request);
+
+        console.log('subscribe', payload);
         return provider.listen(payload as JsonRpcRequest);
     }
 }

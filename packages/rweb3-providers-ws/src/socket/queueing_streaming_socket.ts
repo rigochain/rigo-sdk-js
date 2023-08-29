@@ -54,11 +54,9 @@ export class QueueingStreamingSocket {
     }
 
     public connect(): void {
-        console.log('ReconnectingSocket.connect()');
         this.connectionStatusProducer.update(ConnectionStatus.Connecting);
         this.socket.connected.then(
             async () => {
-                console.log('ReconnectingSocket.connect().than()');
                 this.connectionStatusProducer.update(ConnectionStatus.Connected);
                 return this.processQueue();
             },

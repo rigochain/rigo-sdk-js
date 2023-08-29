@@ -31,11 +31,9 @@ export type RWeb3ContextObject<API extends RWeb3APISpec = RigoExecutionAPI> = {
 
 export class RWeb3Context<API extends RWeb3APISpec = unknown> extends RWeb3Config {
     protected _requestManager: RWeb3RequestManager<API>;
-
     public get requestManager() {
         return this._requestManager;
     }
-
     public constructor(providerOrContext?: string) {
         super();
         // If "providerOrContext" is provided as "string" or an objects matching "SupportedProviders" interface

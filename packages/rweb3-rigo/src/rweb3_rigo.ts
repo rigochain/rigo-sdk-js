@@ -154,4 +154,9 @@ export class RWeb3Rigo extends RWeb3Context {
     vmCall(addr: string, to: string, height: number, data: string) {
         return rpcMethodsWrappers.vmCall(this, addr, to, height, data);
     }
+
+    subscribe(query: string) {
+        console.log('subscribe query', query);
+        return rpcMethodsWrappers.subscribe(this, query);
+    }
 }

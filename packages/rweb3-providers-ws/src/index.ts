@@ -213,6 +213,8 @@ export default class WebsocketProvider<API extends RWeb3APISpec = RigoExecutionA
             throw new Error('request.params.query must be a string');
         }
 
+        console.log('listen', query);
+
         if (!this.subscriptionStreams.has(query)) {
             const producer = new RpcEventProducer(request, this.socket);
             const stream = Stream.create(producer);

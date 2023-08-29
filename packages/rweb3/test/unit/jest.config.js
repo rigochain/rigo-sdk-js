@@ -28,7 +28,8 @@ module.exports = {
     // testMatch: ['<rootDir>/test/unit/**/stake.(spec|test).(js|ts)'], // 단일 테스트
     // testMatch: ['<rootDir>/test/unit/**/broadcastTxSync.(spec|test).(js|ts)'], // 단일 테스트
     // testMatch: ['<rootDir>/test/unit/**/broadcastTxAsync.(spec|test).(js|ts)'], // 단일 테스트
-    testMatch: ['<rootDir>/test/unit/**/broadcastTxCommit.(spec|test).(js|ts)'], // 단일 테스트
+    // testMatch: ['<rootDir>/test/unit/**/broadcastTxCommit.(spec|test).(js|ts)'], // 단일 테스트
+    testMatch: ['<rootDir>/test/unit/**/subscribe.(spec|test).(js|ts)'], // 단일 테스트
 
     coverageDirectory: '../../.coverage/unit',
     collectCoverageFrom: ['src/**'],

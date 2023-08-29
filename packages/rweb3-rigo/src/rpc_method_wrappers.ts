@@ -18,6 +18,8 @@ import { RigoExecutionAPI } from 'rweb3-types';
 import { RWeb3Context } from 'rweb3-core';
 import { rigoRpcMethods } from 'rweb3-rpc-methods';
 import { TrxProto } from 'rweb3-types';
+import { Stream } from 'xstream';
+import { SubscriptionEvent } from 'rweb3-providers-ws';
 
 export async function health(web3Context: RWeb3Context<RigoExecutionAPI>) {
     return rigoRpcMethods.health(web3Context.requestManager);
@@ -197,4 +199,12 @@ export async function vmCall(
     data: string,
 ) {
     return rigoRpcMethods.vmCall(web3Context.requestManager, addr, to, height, data);
+}
+
+export function subscribe(
+    web3Context: RWeb3Context<RigoExecutionAPI>,
+    query: string,
+): Stream<SubscriptionEvent> {
+    console.log('subscribe query 2 ', query);
+    return rigoRpcMethods.subscribe(web3Context.requestManager, query);
 }
