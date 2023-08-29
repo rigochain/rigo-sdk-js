@@ -15,17 +15,15 @@
 */
 
 import BN from 'bn.js';
-import {PrvKey, PubKey, Bytes} from 'rweb3-utils';
+import { PrvKey, PubKey, Bytes } from 'rweb3-utils';
 
 export class Account {
-
     address: string;
     name: string;
     nonce: number;
     balance: string;
     prvKey: PrvKey;
     pubKey: PubKey;
-
     static New(nm: string): Account {
         const ret = new Account();
         ret.name = nm;

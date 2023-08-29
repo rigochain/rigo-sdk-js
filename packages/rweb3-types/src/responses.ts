@@ -977,8 +977,8 @@ export interface AccountResponse {
     key: string;
     value: {
         address: string;
-        nonce: string;
-        balance: string;
+        nonce: number;
+        balance: bigint;
     };
 }
 
@@ -987,7 +987,18 @@ export interface AccountResponse {
  */
 export interface StakesResponse {
     key: string;
-    value: any;
+    value?: StakesValue[];
+}
+
+export interface StakesValue {
+    owner: string;
+    to: string;
+    amount: string;
+    power: number;
+    ReceivedReward: string;
+    txhash: string;
+    startHeight: number;
+    refundHeight: number;
 }
 
 /**

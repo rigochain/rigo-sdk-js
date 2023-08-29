@@ -323,11 +323,14 @@ export async function abciQuery(
 
 export async function checkTx(
     requestManager: RWeb3RequestManager,
-    tx: string | Uint8Array,
+    tx: TrxProto,
 ): Promise<CheckTxResponse> {
+    const wr = TrxProtoUtils.encode(tx);
+    const txbz = wr.finish();
+
     return requestManager.send({
         method: 'check_tx',
-        params: { tx: Buffer.from(tx).toString('base64') },
+        params: { tx: Buffer.from(txbz).toString('base64') },
     });
 }
 
