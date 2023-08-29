@@ -4,7 +4,7 @@ import { Account, TrxBuilder } from 'rweb3-accounts';
 import { Bytes, PrvKey } from 'rweb3-utils';
 import { AccountResponse, CheckTxResponse } from 'rweb3-types';
 
-describe('health check ', () => {
+describe('checkTx check ', () => {
     let devServerRWeb3Instance: RWeb3;
     let testWebsocketRWeb3Instance: RWeb3;
 
@@ -66,6 +66,7 @@ describe('health check ', () => {
         // build a tx.
         const tx = TrxBuilder.BuildTransferTrx({
             from: acct.address,
+            nonce: acct.nonce,
             to: '6fff13a50450039c943c9987fa43cef0d7421904',
             amount: '1000000000000000',
             gas: '1000000000000000',

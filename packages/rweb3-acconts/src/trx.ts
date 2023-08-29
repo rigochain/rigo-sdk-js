@@ -16,13 +16,13 @@
 
 import * as trxPb from './trx_pb';
 import Long from 'long';
-import {Bytes} from 'rweb3-utils';
+import { Bytes } from 'rweb3-utils';
 import BN from 'bn.js';
-import {Account} from './account.js';
-import {fromNanoSecond, getNanoSecond} from 'rweb3-utils';
-import {createHash} from 'crypto';
-import {TrxProtoUtils} from "./trx_pb";
-import {TrxProto} from "rweb3-types";
+import { Account } from './account.js';
+import { fromNanoSecond, getNanoSecond } from 'rweb3-utils';
+import { createHash } from 'crypto';
+import { TrxProtoUtils } from './trx_pb';
+import { TrxProto } from 'rweb3-types';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 function isSet(value: any): boolean {
@@ -91,7 +91,7 @@ function BuildTransferTrx(obj: Trx): TrxProto {
     return {
         version: isSet(obj.version) ? Number(obj.version) : 1,
         time: isSet(obj.time) ? getNanoSecond(obj.time) : getNanoSecond(),
-        nonce: isSet(obj.nonce) ? Long.fromValue(obj.nonce) : Long.fromValue(1),
+        nonce: isSet(obj.nonce) ? Long.fromValue(obj.nonce) : Long.fromValue(0),
         from: Bytes.fromHex(obj.from),
         to: Bytes.fromHex(obj.to),
         // proto3 default rule: If the field has default value, the filed should be omitted.

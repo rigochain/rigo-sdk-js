@@ -417,9 +417,9 @@ export interface TxData {
     /** Information about the transaction */
     readonly info?: string;
     /** Gas limit specified for the transaction */
-    readonly gas_wanted: number;
+    readonly gas_wanted?: number;
     /** Actual amount of gas used by the transaction */
-    readonly gas_used: number;
+    readonly gas_used?: number;
 }
 
 /**
@@ -915,8 +915,8 @@ export interface CheckTxResponse {
     gas_used: string;
     events: [];
     codespace: string;
+    mempoolError?: string;
 }
-
 /**
  * Represents the response related to a delegatee.
  */
