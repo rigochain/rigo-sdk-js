@@ -978,7 +978,7 @@ export interface AccountResponse {
     value: {
         address: string;
         nonce: number;
-        balance: bigint;
+        balance: string;
     };
 }
 
