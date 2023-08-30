@@ -1,6 +1,6 @@
 import BN from 'bn.js';
-import { Bytes } from '../../src/bytes';
-import Account from '../../src/Account';
+import { Bytes } from '../../src';
+import { Account } from 'rweb3-accounts';
 
 // Mock the PrvKey and PubKey classes
 jest.mock('../../src/prvKey');
