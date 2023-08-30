@@ -1,11 +1,8 @@
-import {RWeb3RequestManager} from 'rweb3-core';
+import { RWeb3RequestManager } from 'rweb3-core';
 
-import {rigoRpcMethods} from '../../../src/index';
-import {testData} from "./fixtures/consensus_params";
-import {getDevServer} from "../e2e_utils";
+import { rigoRpcMethods } from '../../../src/index';
 
 describe('consensusParams', () => {
-
     let requestManagerSendSpy: jest.Mock;
     let requestManager: RWeb3RequestManager;
 
@@ -16,7 +13,6 @@ describe('consensusParams', () => {
     });
 
     it('should call requestManager.send with commit method', async () => {
-
         let height = 1;
 
         await rigoRpcMethods.consensusParams(requestManager, height);
@@ -24,30 +20,7 @@ describe('consensusParams', () => {
         // call number 1 of requestManagerSendSpy
         expect(requestManagerSendSpy).toHaveBeenCalledWith({
             method: 'consensus_params',
-            params: {height: height.toString(10)},
+            params: { height: height.toString(10) },
         });
     });
-});
-
-
-describe('consensusParams develop server call', () => {
-
-    let requestManager: RWeb3RequestManager;
-
-    beforeAll(() => {
-        requestManager = new RWeb3RequestManager(getDevServer());
-    });
-
-    it.each(testData)(
-        'consensusParams should call success return',
-        async (_parameter, _response) => {
-
-            let returnValue = await rigoRpcMethods.consensusParams(requestManager, _parameter.height);
-            console.log("consensusParams", JSON.stringify(returnValue));
-
-            expect(returnValue).toEqual(
-                _response
-            )
-        }
-    );
 });

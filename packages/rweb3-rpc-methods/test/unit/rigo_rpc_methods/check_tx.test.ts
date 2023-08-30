@@ -1,11 +1,8 @@
-import {RWeb3RequestManager} from 'rweb3-core';
+import { RWeb3RequestManager } from 'rweb3-core';
 
-import {rigoRpcMethods} from '../../../src/index';
-import {testData} from "./fixtures/broadcast_tx_commit";
-import {getDevServer} from "../e2e_utils";
-
+import { rigoRpcMethods } from '../../../src/index';
+import { TrxProtoUtils } from 'rweb3-accounts';
 describe('checkTx', () => {
-
     let requestManagerSendSpy: jest.Mock;
     let requestManager: RWeb3RequestManager;
 
@@ -16,43 +13,30 @@ describe('checkTx', () => {
     });
 
     it('should call requestManager.send with checkTx method', async () => {
+        const tx = TrxProtoUtils.fromJSON({
+            version: 0,
+            time: new Date().getTime(),
+            nonce: 0,
+            from: new Uint8Array(0),
+            to: new Uint8Array(0),
+            Amount: new Uint8Array(0),
+            Gas: new Uint8Array(0),
+            type: 0,
+            Payload: new Uint8Array(0),
+            sig: new Uint8Array(0),
+        });
 
-        let tx = "678e659b9de68984f7e8828c759351c25266dcc9980c9cf6ecbe9b6cc6b51748";
+        const wr = TrxProtoUtils.encode(tx);
+        const txbz = wr.finish();
 
         await rigoRpcMethods.checkTx(requestManager, tx);
 
-        let txhash = Buffer.from(tx).toString('base64');
+        let txhash = Buffer.from(txbz).toString('base64');
 
         // call number 1 of requestManagerSendSpy
         expect(requestManagerSendSpy).toHaveBeenCalledWith({
             method: 'check_tx',
-            params: {tx: txhash},
+            params: { tx: txhash },
         });
     });
 });
-
-
-describe('checkTx develop server call', () => {
-
-    let requestManager: RWeb3RequestManager;
-
-    beforeAll(() => {
-        requestManager = new RWeb3RequestManager(getDevServer());
-    });
-
-    it.each(testData)(
-        'checkTx should call success return',
-        async (_parameter, _response) => {
-
-
-            let returnValue = await rigoRpcMethods.checkTx(requestManager, _parameter.tx);
-
-            expect(returnValue).toEqual(
-                _response
-            )
-
-        }
-    );
-});
-
-

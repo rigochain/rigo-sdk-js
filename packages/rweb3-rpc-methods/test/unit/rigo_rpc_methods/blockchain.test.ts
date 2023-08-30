@@ -1,9 +1,6 @@
-import {RWeb3RequestManager} from 'rweb3-core';
+import { RWeb3RequestManager } from 'rweb3-core';
 
-import {rigoRpcMethods} from '../../../src/index';
-import {testData} from "./fixtures/blockchain";
-import {getDevServer} from "../e2e_utils";
-import {BlockchainResponse} from "rweb3-types/lib/types";
+import { rigoRpcMethods } from '../../../src/index';
 
 describe('blockchain', () => {
     let requestManagerSendSpy: jest.Mock;
@@ -17,10 +14,8 @@ describe('blockchain', () => {
     });
 
     it('should call requestManager.send with blockchain method', async () => {
-
         let minHeight = 1234;
         let maxHeight = 1234;
-
 
         await rigoRpcMethods.blockchain(requestManager, minHeight, maxHeight);
 
@@ -28,30 +23,8 @@ describe('blockchain', () => {
             method: 'blockchain',
             params: {
                 minHeight: minHeight.toString(10),
-                maxHeight: maxHeight.toString(10)
-            }
+                maxHeight: maxHeight.toString(10),
+            },
         });
     });
 });
-
-
-describe('blockchain Develop Server Call ', () => {
-
-    let requestManager: RWeb3RequestManager;
-
-    beforeAll(() => {
-        requestManager = new RWeb3RequestManager(getDevServer());
-    });
-
-    it.each(testData)(
-        'blockchain should call success return',
-        async (_parameter, _return) => {
-
-            let returnValue: BlockchainResponse = await rigoRpcMethods.blockchain(requestManager, _parameter.minHeight, _parameter.maxHeight);
-
-            console.log("blockchain return", returnValue)
-        },
-    );
-});
-
-

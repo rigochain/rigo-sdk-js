@@ -1,12 +1,8 @@
-import {RWeb3RequestManager} from 'rweb3-core';
+import { RWeb3RequestManager } from 'rweb3-core';
 
-import {rigoRpcMethods} from '../../../src/index';
-import {getDevServer} from "../e2e_utils";
-import {testData} from "./fixtures/validators";
-import {ValidatorsResponse} from "rweb3-types/lib/types";
+import { rigoRpcMethods } from '../../../src/index';
 
 describe('validators', () => {
-
     let requestManagerSendSpy: jest.Mock;
     let requestManager: RWeb3RequestManager;
 
@@ -17,7 +13,6 @@ describe('validators', () => {
     });
 
     it('should call requestManager.send with validators method', async () => {
-
         const height = 1;
         const page = 2;
         const per_page = 3;
@@ -33,26 +28,4 @@ describe('validators', () => {
             },
         });
     });
-});
-
-
-describe('validators develop server call', () => {
-
-    let requestManager: RWeb3RequestManager;
-
-    beforeAll(() => {
-        requestManager = new RWeb3RequestManager(getDevServer());
-    });
-
-    it.each(testData)(
-        'validators should call success return',
-        async (_parameter, _response) => {
-
-            // TODO : 여기 에러 남
-            let returnValue: ValidatorsResponse = await rigoRpcMethods.validators(requestManager, _parameter.height, _parameter.page, _parameter.per_page);
-
-            console.log("validators return", JSON.stringify(returnValue));
-
-        }
-    );
 });

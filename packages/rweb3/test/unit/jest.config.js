@@ -3,7 +3,7 @@ const base = require('../config/jest.config');
 module.exports = {
     ...base,
     testTimeout: 10000,
-    // testMatch: ['<rootDir>/test/unit/**/*.(spec|test).(js|ts)'],
+    testMatch: ['<rootDir>/test/unit/**/*.(spec|test).(js|ts)'],
     // testMatch: ['<rootDir>/test/unit/**/status.(spec|test).(js|ts)'], // 단일 테스트
     // testMatch: ['<rootDir>/test/unit/**/blockchain.(spec|test).(js|ts)'], // 단일 테스트
     // testMatch: ['<rootDir>/test/unit/**/block.(spec|test).(js|ts)'], // 단일 테스트
@@ -29,7 +29,7 @@ module.exports = {
     // testMatch: ['<rootDir>/test/unit/**/broadcastTxSync.(spec|test).(js|ts)'], // 단일 테스트
     // testMatch: ['<rootDir>/test/unit/**/broadcastTxAsync.(spec|test).(js|ts)'], // 단일 테스트
     // testMatch: ['<rootDir>/test/unit/**/broadcastTxCommit.(spec|test).(js|ts)'], // 단일 테스트
-    testMatch: ['<rootDir>/test/unit/**/subscribe.(spec|test).(js|ts)'], // 단일 테스트
+    // testMatch: ['<rootDir>/test/unit/**/subscribe.(spec|test).(js|ts)'], // 단일 테스트
 
     coverageDirectory: '../../.coverage/unit',
     collectCoverageFrom: ['src/**'],

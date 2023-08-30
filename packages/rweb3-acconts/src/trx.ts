@@ -91,7 +91,7 @@ function BuildTransferTrx(obj: Trx): TrxProto {
     return {
         version: isSet(obj.version) ? Number(obj.version) : 1,
         time: isSet(obj.time) ? getNanoSecond(obj.time) : getNanoSecond(),
-        nonce: isSet(obj.nonce) ? Long.fromValue(obj.nonce) : Long.fromValue(0),
+        nonce: isSet(obj.nonce) && obj.nonce ? Long.fromValue(obj.nonce) : Long.fromValue(0),
         from: Bytes.fromHex(obj.from),
         to: Bytes.fromHex(obj.to),
         // proto3 default rule: If the field has default value, the filed should be omitted.
@@ -113,7 +113,7 @@ function BuildDelegateTrx(obj: Trx): TrxProto {
     return {
         version: isSet(obj.version) ? Number(obj.version) : 1,
         time: isSet(obj.time) ? getNanoSecond(obj.time) : getNanoSecond(),
-        nonce: isSet(obj.nonce) ? Long.fromValue(obj.nonce) : Long.fromValue(1),
+        nonce: isSet(obj.nonce) && obj.nonce ? Long.fromValue(obj.nonce) : Long.fromValue(1),
         from: Bytes.fromHex(obj.from),
         to: Bytes.fromHex(obj.to),
         // proto3 default rule: If the field has default value, the filed should be omitted.
@@ -144,7 +144,7 @@ function BuildUndelegateTrx(obj: Trx): TrxProto {
     return {
         version: isSet(obj.version) ? Number(obj.version) : 1,
         time: isSet(obj.time) ? getNanoSecond(obj.time) : getNanoSecond(),
-        nonce: isSet(obj.nonce) ? Long.fromValue(obj.nonce) : Long.fromValue(1),
+        nonce: isSet(obj.nonce) && obj.nonce ? Long.fromValue(obj.nonce) : Long.fromValue(1),
         from: Bytes.fromHex(obj.from),
         to: Bytes.fromHex(obj.to),
         Amount:
@@ -173,7 +173,7 @@ function buildContractTrx(obj: Trx): TrxProto {
     return {
         version: isSet(obj.version) ? Number(obj.version) : 1,
         time: isSet(obj.time) ? getNanoSecond(obj.time) : getNanoSecond(),
-        nonce: isSet(obj.nonce) ? Long.fromValue(obj.nonce) : Long.fromValue(1),
+        nonce: isSet(obj.nonce) && obj.nonce ? Long.fromValue(obj.nonce) : Long.fromValue(1),
         from: Bytes.fromHex(obj.from),
         to: Bytes.fromHex(obj.to),
         Amount: new Uint8Array(),

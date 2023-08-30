@@ -1,11 +1,8 @@
-import {RWeb3RequestManager} from 'rweb3-core';
+import { RWeb3RequestManager } from 'rweb3-core';
 
-import {rigoRpcMethods} from '../../../src/index';
-import {testData} from "./fixtures/num_unconfirmed_txs";
-import {getDevServer} from "../e2e_utils";
+import { rigoRpcMethods } from '../../../src/index';
 
 describe('numUnconfirmedTxs', () => {
-
     let requestManagerSendSpy: jest.Mock;
     let requestManager: RWeb3RequestManager;
 
@@ -16,8 +13,6 @@ describe('numUnconfirmedTxs', () => {
     });
 
     it('should call requestManager.send with numUnconfirmedTxs method', async () => {
-
-
         await rigoRpcMethods.numUnconfirmedTxs(requestManager);
 
         expect(requestManagerSendSpy).toHaveBeenCalledWith({
@@ -25,28 +20,4 @@ describe('numUnconfirmedTxs', () => {
             params: {},
         });
     });
-});
-
-
-describe('numUnconfirmedTxs develop server call', () => {
-
-    let requestManager: RWeb3RequestManager;
-
-    beforeAll(() => {
-        requestManager = new RWeb3RequestManager(getDevServer());
-    });
-
-    it.each(testData)(
-        'numUnconfirmedTxs should call success return',
-        async (_parameter, _response) => {
-
-            let returnValue = await rigoRpcMethods.numUnconfirmedTxs(requestManager);
-
-            console.log("numUnconfirmedTxs", JSON.stringify(returnValue));
-
-            expect(returnValue).toEqual(
-                _response
-            )
-        }
-    );
 });

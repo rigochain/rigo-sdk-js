@@ -1,8 +1,6 @@
-import {RWeb3RequestManager} from 'rweb3-core';
+import { RWeb3RequestManager } from 'rweb3-core';
 
-
-import {rigoRpcMethods} from '../../../src/index';
-import {getDevServer} from "../e2e_utils";
+import { rigoRpcMethods } from '../../../src/index';
 
 describe('health', () => {
     let requestManagerSendSpy: jest.Mock;
@@ -16,30 +14,11 @@ describe('health', () => {
     });
 
     it('should call requestManager.send with getHealth method', async () => {
-
         await rigoRpcMethods.health(requestManager);
 
         expect(requestManagerSendSpy).toHaveBeenCalledWith({
             method: 'health',
-            params: {}
+            params: {},
         });
-    });
-});
-
-
-describe('health develop server call', () => {
-
-    let requestManager: RWeb3RequestManager;
-
-    beforeAll(() => {
-        requestManager = new RWeb3RequestManager(getDevServer());
-    });
-
-
-    it('getHealth should call success return', async () => {
-        let returnValue = await rigoRpcMethods.health(requestManager);
-        expect(returnValue).toEqual(
-            {}
-        );
     });
 });

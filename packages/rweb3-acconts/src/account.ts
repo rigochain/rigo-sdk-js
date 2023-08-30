@@ -24,6 +24,16 @@ export class Account {
     balance: string;
     prvKey: PrvKey;
     pubKey: PubKey;
+
+    constructor() {
+        this.address = '';
+        this.name = '';
+        this.nonce = 0;
+        this.balance = '0';
+        this.prvKey = new PrvKey();
+        this.pubKey = new PubKey(this.prvKey);
+    }
+
     static New(nm: string): Account {
         const ret = new Account();
         ret.name = nm;
@@ -46,6 +56,9 @@ export class Account {
         ret.prvKey = PrvKey.import(d);
         ret.pubKey = new PubKey(ret.prvKey);
         ret.address = ret.pubKey.toAddress().toHex();
+
+        secret = secret.trim();
+
         return ret;
     }
 

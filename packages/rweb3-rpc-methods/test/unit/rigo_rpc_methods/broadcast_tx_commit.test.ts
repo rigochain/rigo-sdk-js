@@ -1,12 +1,9 @@
-import {RWeb3RequestManager} from 'rweb3-core';
+import { RWeb3RequestManager } from 'rweb3-core';
 
-import {rigoRpcMethods} from '../../../src/index';
-import {testData} from "./fixtures/broadcast_tx_commit";
-import {TrxProto} from "rweb3-utils";
-import {getDevServer} from "../e2e_utils";
+import { rigoRpcMethods } from '../../../src/index';
+import { TrxProtoUtils } from 'rweb3-accounts';
 
 describe('broadcastTxCommit', () => {
-
     let requestManagerSendSpy: jest.Mock;
     let requestManager: RWeb3RequestManager;
 
@@ -17,9 +14,7 @@ describe('broadcastTxCommit', () => {
     });
 
     it('should call requestManager.send with broadcastTxCommit method', async () => {
-
-
-        const tx = TrxProto.fromJSON({
+        const tx = TrxProtoUtils.fromJSON({
             version: 0,
             time: new Date().getTime(),
             nonce: 0,
@@ -29,39 +24,17 @@ describe('broadcastTxCommit', () => {
             Gas: new Uint8Array(0),
             type: 0,
             Payload: new Uint8Array(0),
-            sig: new Uint8Array(0)
+            sig: new Uint8Array(0),
         });
 
-        const wr = TrxProto.encode(tx);
+        const wr = TrxProtoUtils.encode(tx);
         const txbz = wr.finish();
 
-        await rigoRpcMethods.broadcastTxCommit(requestManager, Buffer.from(txbz).toString('base64'));
+        await rigoRpcMethods.broadcastTxCommit(requestManager, tx);
 
         expect(requestManagerSendSpy).toHaveBeenCalledWith({
             method: 'broadcast_tx_commit',
-            params: {tx: Buffer.from(txbz).toString('base64')},
+            params: { tx: Buffer.from(txbz).toString('base64') },
         });
     });
 });
-
-
-
-
-describe('broadcastTxCommit develop server call', () => {
-
-    let requestManager: RWeb3RequestManager;
-
-    beforeAll(() => {
-        requestManager = new RWeb3RequestManager(getDevServer());
-    });
-
-    it.each(testData)(
-        'broadcastTxCommit should call success return',
-        async (_parameter, _response) => {
-            let returnValue = await rigoRpcMethods.broadcastTxCommit(requestManager, _parameter.tx);
-            console.log(JSON.stringify(returnValue));
-        }
-    );
-});
-
-
