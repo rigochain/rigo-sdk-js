@@ -16,6 +16,9 @@
 
 import { RWeb3RequestManager } from 'rweb3-core';
 import {
+    BroadcastTxAsyncResponse,
+    BroadcastTxCommitResponse,
+    BroadcastTxSyncResponse,
     ConsensusParamsResponse,
     ResponsesDecoder,
     SubscriptionEvent,
@@ -387,7 +390,6 @@ export async function numUnconfirmedTxs(
     );
 }
 
-// TODO
 export async function broadcastEvidence(requestManager: RWeb3RequestManager, evidence: string) {
     return requestManager.send({
         method: 'broadcast_evidence',
@@ -395,38 +397,49 @@ export async function broadcastEvidence(requestManager: RWeb3RequestManager, evi
     });
 }
 
-// TODO
-
-export async function broadcastTxAsync(requestManager: RWeb3RequestManager, tx: TrxProto) {
+export async function broadcastTxAsync(
+    requestManager: RWeb3RequestManager,
+    tx: TrxProto,
+): Promise<BroadcastTxAsyncResponse> {
     const wr = TrxProtoUtils.encode(tx);
     const txbz = wr.finish();
 
-    return requestManager.send({
-        method: 'broadcast_tx_async',
-        params: { tx: Buffer.from(txbz).toString('base64') },
-    });
+    return ResponsesDecoder.decodeBroadcastTxAsync(
+        await requestManager.send({
+            method: 'broadcast_tx_async',
+            params: { tx: Buffer.from(txbz).toString('base64') },
+        }),
+    );
 }
 
-// TODO
-export async function broadcastTxSync(requestManager: RWeb3RequestManager, tx: TrxProto) {
+export async function broadcastTxSync(
+    requestManager: RWeb3RequestManager,
+    tx: TrxProto,
+): Promise<BroadcastTxSyncResponse> {
     const wr = TrxProtoUtils.encode(tx);
     const txbz = wr.finish();
 
-    return requestManager.send({
-        method: 'broadcast_tx_sync',
-        params: { tx: Buffer.from(txbz).toString('base64') },
-    });
+    return ResponsesDecoder.decodeBroadcastTxSync(
+        await requestManager.send({
+            method: 'broadcast_tx_sync',
+            params: { tx: Buffer.from(txbz).toString('base64') },
+        }),
+    );
 }
 
-// TODO
-export async function broadcastTxCommit(requestManager: RWeb3RequestManager, tx: TrxProto) {
+export async function broadcastTxCommit(
+    requestManager: RWeb3RequestManager,
+    tx: TrxProto,
+): Promise<BroadcastTxCommitResponse> {
     const wr = TrxProtoUtils.encode(tx);
     const txbz = wr.finish();
 
-    return requestManager.send({
-        method: 'broadcast_tx_commit',
-        params: { tx: Buffer.from(txbz).toString('base64') },
-    });
+    return ResponsesDecoder.decodeBroadcastTxCommit(
+        await requestManager.send({
+            method: 'broadcast_tx_commit',
+            params: { tx: Buffer.from(txbz).toString('base64') },
+        }),
+    );
 }
 
 // end tendermint apis

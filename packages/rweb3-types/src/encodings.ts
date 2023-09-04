@@ -172,16 +172,6 @@ export function encodeBytes(bytes: Uint8Array): Uint8Array {
     return bytes.length ? Uint8Array.from([bytes.length, ...bytes]) : new Uint8Array();
 }
 
-export function encodeVersion(version: Version): Uint8Array {
-    const blockArray = version.block
-        ? Uint8Array.from([0x08, ...encodeUvarint(version.block)])
-        : new Uint8Array();
-    const appArray = version.app
-        ? Uint8Array.from([0x10, ...encodeUvarint(version.app)])
-        : new Uint8Array();
-    return Uint8Array.from([...blockArray, ...appArray]);
-}
-
 declare const TextEncoder: any;
 declare const TextDecoder: any;
 

@@ -11,10 +11,9 @@ import {
     dictionaryToStringMap,
     may,
 } from './encodings';
-import { apiToBigInt, apiToSmallInt } from './inthelpers';
+import { apiToSmallInt } from './inthelpers';
 import { HexString } from './primitives_types';
 import { fromRfc3339 } from './rfc3339';
-import { fromBase64 } from './base64';
 import assert from 'assert';
 import { SubscriptionEvent } from './subscription_event';
 
@@ -560,7 +559,7 @@ export interface Version {
     /** Version number for the blockchain protocol */
     readonly block: number;
     /** Version number for the application running on the node */
-    readonly app: number;
+    readonly app: string;
 }
 
 /**
@@ -656,7 +655,7 @@ export interface Validator {
     /** Public key of the validator */
     readonly pub_key: ValidatorPubkey;
     /** Voting power of the validator in the consensus algorithm */
-    readonly power: bigint;
+    readonly power: string;
     /** Name of the validator */
     readonly name?: string;
 }
@@ -668,7 +667,7 @@ export interface ValidatorUpdate {
     /** Public key of the validator */
     readonly pubkey: string;
     /** Updated voting power of the validator */
-    readonly voting_power: bigint;
+    readonly voting_power: string;
 }
 
 export interface ConsensusParamsResponse {
@@ -866,8 +865,8 @@ export interface DumpConsensusValidator {
     /** Public key of the validator */
     readonly pub_key: ValidatorPubkey;
     /** Voting power of the validator in the consensus algorithm */
-    readonly voting_power: bigint;
-    readonly proposer_priority: bigint;
+    readonly voting_power: string;
+    readonly proposer_priority: string;
 }
 
 /**
@@ -976,7 +975,7 @@ export interface RuleResponse {
         version: number; // Protocol or data structure version
         maxValidatorCnt: number; // Maximum number of validators allowed
         minValidatorStake: string; // Minimum stake amount required for a validator
-        rewardPerPower: bigint; // Reward given per unit of computational power for validators
+        rewardPerPower: string; // Reward given per unit of computational power for validators
         lazyRewardBlocks: number; // Number of blocks before the rewards are distributed (latency)
         lazyApplyingBlocks: number; // Number of blocks before changes are applied (latency)
         gasPrice: string; // Price of the transaction fee (gas price)
@@ -993,9 +992,9 @@ export interface RuleResponse {
  * Represents the details of an account on the blockchain.
  */
 export interface AccountResponse {
-    key: string;
+    key: HexString;
     value: {
-        address: string;
+        address: HexString;
         nonce: number;
         balance: string;
     };
@@ -1374,7 +1373,7 @@ interface RpcTxData {
 export function decodeValidatorUpdate(data: RpcValidatorUpdate): ValidatorUpdate {
     return {
         pubkey: assertObject(data.pub_key),
-        voting_power: apiToBigInt(data.power ?? '0'),
+        voting_power: data.power ?? '0',
     };
 }
 
@@ -1515,7 +1514,7 @@ export function decodeValidatorGenesis(data: RpcValidatorGenesis): Validator {
             type: 'tendermint/PubKeyEd25519',
             value: assertNotEmpty(data.pub_key),
         },
-        power: apiToBigInt(assertNotEmpty(data.power)),
+        power: assertNotEmpty(data.power),
         name: data.name,
     };
 }
@@ -1647,7 +1646,7 @@ export function decodeValidatorInfo(data: RpcValidatorInfo): Validator {
             type: 'tendermint/PubKeyEd25519',
             value: assertNotEmpty(data.pub_key),
         },
-        power: apiToBigInt(assertNotEmpty(data.voting_power)),
+        power: assertNotEmpty(data.voting_power),
         address: assertNotEmpty(data.address),
         name: data.name,
     };
@@ -1721,6 +1720,26 @@ function decodeTxResponse(data: RpcTxResponse): TxResponse {
         result: decodeTxData(assertObject(data.tx_result)),
         proof: may(decodeTxProof, data.proof),
         tx_result: decodeTxData(assertObject(data.tx_result)),
+    };
+}
+
+interface RpcAccountResponse {
+    readonly key: string;
+    readonly value: {
+        address: string;
+        nonce: string;
+        balance: string;
+    };
+}
+
+function decodeAccount(data: RpcAccountResponse): AccountResponse {
+    return {
+        key: assertNotEmpty(data.key),
+        value: {
+            address: assertNotEmpty(data.value.address),
+            nonce: apiToSmallInt(assertNotEmpty(data.value.nonce)),
+            balance: assertNotEmpty(data.value.balance),
+        },
     };
 }
 
@@ -1906,9 +1925,9 @@ export class ResponsesDecoder {
     }
 
     public static decodeAccount(
-        response: JsonRpcResponseWithResult<AccountResponse>,
+        response: JsonRpcResponseWithResult<RpcAccountResponse>,
     ): AccountResponse {
-        return response.result as AccountResponse;
+        return decodeAccount(response.result as RpcAccountResponse);
     }
 
     public static decodeStakes(
@@ -1943,7 +1962,7 @@ function decodeBlockMeta(data: RpcBlockMeta): BlockMeta {
 function decodeBlockVersion(data: RpcBlockVersion): Version {
     return {
         block: apiToSmallInt(data.block),
-        app: apiToSmallInt(data.app ?? 0),
+        app: data.app ?? '0',
     };
 }
 

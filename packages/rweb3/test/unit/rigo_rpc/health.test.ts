@@ -2,19 +2,12 @@ import { RWeb3 } from '../../../src';
 import { getDevServer, getTestServer } from '../e2e_utils';
 
 describe('health check ', () => {
-    let devServerRWeb3Instance: RWeb3;
     let testServerRWeb3Instance: RWeb3;
     let notConnectServerRWeb3Instance: RWeb3;
 
     beforeAll(() => {
-        devServerRWeb3Instance = new RWeb3(getDevServer());
         testServerRWeb3Instance = new RWeb3(getTestServer());
         notConnectServerRWeb3Instance = new RWeb3('http://localhost:8545');
-    });
-
-    it('should call rweb3 with devServerRWeb3Instance.getHealth method success return', async () => {
-        let healthResponse = await devServerRWeb3Instance.rigo.health();
-        expect(healthResponse).toEqual({});
     });
 
     it('should call rweb3 with testServerRWeb3Instance.getHealth method success return', async () => {
