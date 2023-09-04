@@ -59,23 +59,26 @@ export async function health(requestManager: RWeb3RequestManager): Promise<Healt
         method: 'health',
         params: {},
     });
+
     return ResponsesDecoder.decodeHealth();
 }
 
 export async function status(requestManager: RWeb3RequestManager): Promise<StatusResponse> {
-    // @ts-ignore
-    return requestManager.send({
-        method: 'status',
-        params: {},
-    });
+    return ResponsesDecoder.decodeStatus(
+        await requestManager.send({
+            method: 'status',
+            params: {},
+        }),
+    );
 }
 
 export async function netInfo(requestManager: RWeb3RequestManager): Promise<NetInfoResponse> {
-    // @ts-ignore
-    return requestManager.send({
-        method: 'net_info',
-        params: {},
-    });
+    return ResponsesDecoder.decodeNetInfo(
+        await requestManager.send({
+            method: 'net_info',
+            params: {},
+        }),
+    );
 }
 
 export async function blockchain(
@@ -110,11 +113,13 @@ export async function block(
     if (height && typeof height === 'number') {
         height = height.toString(10);
     }
-    // @ts-ignore
-    return requestManager.send({
-        method: 'block',
-        params: { height: height },
-    });
+
+    return ResponsesDecoder.decodeBlock(
+        await requestManager.send({
+            method: 'block',
+            params: { height: height },
+        }),
+    );
 }
 
 export async function blockByHash(
@@ -124,11 +129,13 @@ export async function blockByHash(
     if (typeof hash === 'string') {
         hash = Bytes.fromHex(hash);
     }
-    // @ts-ignore
-    return requestManager.send({
-        method: 'block_by_hash',
-        params: { hash: Buffer.from(hash).toString('base64') },
-    });
+
+    return ResponsesDecoder.decodeBlockByHash(
+        await requestManager.send({
+            method: 'block_by_hash',
+            params: { hash: Buffer.from(hash).toString('base64') },
+        }),
+    );
 }
 
 export async function blockResults(
@@ -138,11 +145,13 @@ export async function blockResults(
     if (height && typeof height === 'number') {
         height = height.toString(10);
     }
-    // @ts-ignore
-    return requestManager.send({
-        method: 'block_results',
-        params: { height: height },
-    });
+
+    return ResponsesDecoder.decodeBlockResults(
+        await requestManager.send({
+            method: 'block_results',
+            params: { height: height },
+        }),
+    );
 }
 
 export async function commit(
@@ -152,11 +161,13 @@ export async function commit(
     if (height && typeof height === 'number') {
         height = height.toString(10);
     }
-    // @ts-ignore
-    return requestManager.send({
-        method: 'commit',
-        params: { height: height },
-    });
+
+    return ResponsesDecoder.decodeCommit(
+        await requestManager.send({
+            method: 'commit',
+            params: { height: height },
+        }),
+    );
 }
 
 export async function validators(
@@ -176,23 +187,26 @@ export async function validators(
     if (per_page && typeof per_page === 'number') {
         per_page = per_page.toString(10);
     }
-    // @ts-ignore
-    return requestManager.send({
-        method: 'validators',
-        params: {
-            height: height,
-            page: page,
-            per_page: per_page,
-        },
-    });
+
+    return ResponsesDecoder.decodeValidators(
+        await requestManager.send({
+            method: 'validators',
+            params: {
+                height: height,
+                page: page,
+                per_page: per_page,
+            },
+        }),
+    );
 }
 
 export async function genesis(requestManager: RWeb3RequestManager): Promise<GenesisResponse> {
-    // @ts-ignore
-    return requestManager.send({
-        method: 'genesis',
-        params: {},
-    });
+    return ResponsesDecoder.decodeGenesis(
+        await requestManager.send({
+            method: 'genesis',
+            params: {},
+        }),
+    );
 }
 
 export async function genesisChunked(
@@ -202,33 +216,37 @@ export async function genesisChunked(
     if (typeof chunk === 'number') {
         chunk = chunk.toString(10);
     }
-    // @ts-ignore
-    return requestManager.send({
-        method: 'genesis_chunked',
-        params: {
-            chunk: chunk,
-        },
-    });
+
+    return ResponsesDecoder.decodeGenesisChunked(
+        await requestManager.send({
+            method: 'genesis_chunked',
+            params: {
+                chunk: chunk,
+            },
+        }),
+    );
 }
 
 export async function dumpConsensusState(
     requestManager: RWeb3RequestManager,
 ): Promise<DumpConsensusStateResponse> {
-    // @ts-ignore
-    return requestManager.send({
-        method: 'dump_consensus_state',
-        params: {},
-    });
+    return ResponsesDecoder.decodeDumpConsensusState(
+        await requestManager.send({
+            method: 'dump_consensus_state',
+            params: {},
+        }),
+    );
 }
 
 export async function consensusState(
     requestManager: RWeb3RequestManager,
 ): Promise<ConsensusStateResponse> {
-    // @ts-ignore
-    return requestManager.send({
-        method: 'consensus_state',
-        params: {},
-    });
+    return ResponsesDecoder.decodeConsensusState(
+        await requestManager.send({
+            method: 'consensus_state',
+            params: {},
+        }),
+    );
 }
 
 export async function consensusParams(
@@ -238,11 +256,13 @@ export async function consensusParams(
     if (height && typeof height === 'number') {
         height = height.toString(10);
     }
-    // @ts-ignore
-    return requestManager.send({
-        method: 'consensus_params',
-        params: { height: height },
-    });
+
+    return ResponsesDecoder.decodeConsensusParams(
+        await requestManager.send({
+            method: 'consensus_params',
+            params: { height: height },
+        }),
+    );
 }
 
 export async function unconfirmedTxs(
@@ -252,13 +272,14 @@ export async function unconfirmedTxs(
     if (typeof limit === 'number') {
         limit = limit.toString(10);
     }
-    // @ts-ignore
-    return requestManager.send({
-        method: 'unconfirmed_txs',
-        params: {
-            limit: limit,
-        },
-    });
+    return ResponsesDecoder.decodeUnconfirmedTxs(
+        await requestManager.send({
+            method: 'unconfirmed_txs',
+            params: {
+                limit: limit,
+            },
+        }),
+    );
 }
 
 export async function txSearch(
@@ -277,17 +298,18 @@ export async function txSearch(
         per_page = per_page.toString(10);
     }
 
-    // @ts-ignore
-    return requestManager.send({
-        method: 'tx_search',
-        params: {
-            query: query,
-            prove: prove,
-            page: page,
-            per_page: per_page,
-            order_by: order_by,
-        },
-    });
+    return ResponsesDecoder.decodeTxSearch(
+        await requestManager.send({
+            method: 'tx_search',
+            params: {
+                query: query,
+                prove: prove,
+                page: page,
+                per_page: per_page,
+                order_by: order_by,
+            },
+        }),
+    );
 }
 
 export async function tx(
@@ -297,11 +319,13 @@ export async function tx(
     if (typeof hash === 'string') {
         hash = Bytes.fromHex(hash);
     }
-    // @ts-ignore
-    return requestManager.send({
-        method: 'tx',
-        params: { hash: Buffer.from(hash).toString('base64'), prove: true },
-    });
+
+    return ResponsesDecoder.decodeTx(
+        await requestManager.send({
+            method: 'tx',
+            params: { hash: Buffer.from(hash).toString('base64'), prove: true },
+        }),
+    );
 }
 
 export async function abciInfo(requestManager: RWeb3RequestManager): Promise<AbciInfoResponse> {
@@ -344,57 +368,60 @@ export async function checkTx(
     const wr = TrxProtoUtils.encode(tx);
     const txbz = wr.finish();
 
-    // @ts-ignore
-    return requestManager.send({
-        method: 'check_tx',
-        params: { tx: Buffer.from(txbz).toString('base64') },
-    });
+    return ResponsesDecoder.decodeCheckTx(
+        await requestManager.send({
+            method: 'check_tx',
+            params: { tx: Buffer.from(txbz).toString('base64') },
+        }),
+    );
 }
 
 export async function numUnconfirmedTxs(
     requestManager: RWeb3RequestManager,
 ): Promise<NumUnconfirmedTxsResponse> {
-    // @ts-ignore
-    return requestManager.send({
-        method: 'num_unconfirmed_txs',
-        params: {},
-    });
+    return ResponsesDecoder.decodeNumUnconfirmedTxs(
+        await requestManager.send({
+            method: 'num_unconfirmed_txs',
+            params: {},
+        }),
+    );
 }
 
+// TODO
 export async function broadcastEvidence(requestManager: RWeb3RequestManager, evidence: string) {
-    // @ts-ignore
     return requestManager.send({
         method: 'broadcast_evidence',
         params: { evidence: evidence },
     });
 }
 
+// TODO
+
 export async function broadcastTxAsync(requestManager: RWeb3RequestManager, tx: TrxProto) {
     const wr = TrxProtoUtils.encode(tx);
     const txbz = wr.finish();
-    // @ts-ignore
+
     return requestManager.send({
         method: 'broadcast_tx_async',
         params: { tx: Buffer.from(txbz).toString('base64') },
     });
 }
 
+// TODO
 export async function broadcastTxSync(requestManager: RWeb3RequestManager, tx: TrxProto) {
     const wr = TrxProtoUtils.encode(tx);
     const txbz = wr.finish();
 
-    // @ts-ignore
     return requestManager.send({
         method: 'broadcast_tx_sync',
         params: { tx: Buffer.from(txbz).toString('base64') },
     });
 }
 
+// TODO
 export async function broadcastTxCommit(requestManager: RWeb3RequestManager, tx: TrxProto) {
     const wr = TrxProtoUtils.encode(tx);
     const txbz = wr.finish();
-
-    // @ts-ignore
 
     return requestManager.send({
         method: 'broadcast_tx_commit',
@@ -413,19 +440,22 @@ export async function delegatee(
     if (!addr.startsWith('0x')) {
         addr = '0x' + addr;
     }
-    // @ts-ignore
-    return requestManager.send({
-        method: 'delegatee',
-        params: { addr: addr },
-    });
+
+    return ResponsesDecoder.decodeDelegatee(
+        await requestManager.send({
+            method: 'delegatee',
+            params: { addr: addr },
+        }),
+    );
 }
 
 export async function rule(requestManager: RWeb3RequestManager): Promise<RuleResponse> {
-    // @ts-ignore
-    return requestManager.send({
-        method: 'rule',
-        params: {},
-    });
+    return ResponsesDecoder.decodeRule(
+        await requestManager.send({
+            method: 'rule',
+            params: {},
+        }),
+    );
 }
 
 export async function account(
@@ -436,20 +466,20 @@ export async function account(
         addr = '0x' + addr;
     }
 
-    // @ts-ignore
-    return requestManager.send({
-        method: 'account',
-        params: {
-            addr: addr,
-        },
-    });
+    return ResponsesDecoder.decodeAccount(
+        await requestManager.send({
+            method: 'account',
+            params: {
+                addr: addr,
+            },
+        }),
+    );
 }
 
 export async function proposals(
     requestManager: RWeb3RequestManager,
     txHash: string,
 ): Promise<ProposalResponse> {
-    // @ts-ignore
     return requestManager.send({
         method: 'proposals',
         params: {
@@ -466,11 +496,12 @@ export async function stakes(
         addr = '0x' + addr;
     }
 
-    // @ts-ignore
-    return requestManager.send({
-        method: 'stakes',
-        params: { addr: addr },
-    });
+    return ResponsesDecoder.decodeStakes(
+        await requestManager.send({
+            method: 'stakes',
+            params: { addr: addr },
+        }),
+    );
 }
 
 export async function vmCall(
@@ -487,16 +518,17 @@ export async function vmCall(
         to = '0x' + to;
     }
 
-    // @ts-ignore
-    return requestManager.send({
-        method: 'vm_call',
-        params: {
-            addr: addr,
-            to: to,
-            height: height.toString(10),
-            data: Buffer.from(Bytes.fromHex(data)).toString('base64'),
-        },
-    });
+    return ResponsesDecoder.decodeVmCall(
+        await requestManager.send({
+            method: 'vm_call',
+            params: {
+                addr: addr,
+                to: to,
+                height: height.toString(10),
+                data: Buffer.from(Bytes.fromHex(data)).toString('base64'),
+            },
+        }),
+    );
 }
 
 export async function blockSearch(
@@ -514,7 +546,6 @@ export async function blockSearch(
         per_page = per_page.toString(10);
     }
 
-    // @ts-ignore
     return requestManager.send({
         method: 'block_search',
         params: {
@@ -532,7 +563,6 @@ export function subscribe(
 ): Stream<SubscriptionEvent> {
     console.log('subscribe query 3', query);
 
-    // @ts-ignore
     return requestManager.subscribe({
         method: 'subscribe',
         params: {

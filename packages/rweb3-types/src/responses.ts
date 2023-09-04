@@ -1496,6 +1496,7 @@ interface RpcValidatorGenesis {
 interface GenesisResult {
     readonly genesis: RpcGenesisResponse;
 }
+
 function decodeCommitResponse(data: RpcCommitResponse): CommitResponse {
     return {
         canonical: assertBoolean(data.canonical),
@@ -1744,6 +1745,12 @@ export class ResponsesDecoder {
         return null;
     }
 
+    public static decodeNetInfo(
+        response: JsonRpcResponseWithResult<NetInfoResponse>,
+    ): NetInfoResponse {
+        return assertObject(response.result);
+    }
+
     public static decodeAbciInfo(
         response: JsonRpcResponseWithResult<AbciInfoResult>,
     ): AbciInfoResponse {
@@ -1756,7 +1763,19 @@ export class ResponsesDecoder {
         return decodeAbciQuery(assertObject((response.result as AbciQueryResult).response));
     }
 
+    public static decodeCheckTx(
+        response: JsonRpcResponseWithResult<CheckTxResponse>,
+    ): CheckTxResponse {
+        return response.result as CheckTxResponse;
+    }
+
     public static decodeBlock(
+        response: JsonRpcResponseWithResult<RpcBlockResponse>,
+    ): BlockResponse {
+        return decodeBlockResponse(response.result as RpcBlockResponse);
+    }
+
+    public static decodeBlockByHash(
         response: JsonRpcResponseWithResult<RpcBlockResponse>,
     ): BlockResponse {
         return decodeBlockResponse(response.result as RpcBlockResponse);
@@ -1810,6 +1829,36 @@ export class ResponsesDecoder {
         return decodeGenesis(assertObject((response.result as GenesisResult).genesis));
     }
 
+    public static decodeGenesisChunked(
+        response: JsonRpcResponseWithResult<GenesisChunkedResponse>,
+    ): GenesisChunkedResponse {
+        return response.result as GenesisChunkedResponse;
+    }
+
+    public static decodeDumpConsensusState(
+        response: JsonRpcResponseWithResult<DumpConsensusStateResponse>,
+    ): DumpConsensusStateResponse {
+        return response.result as DumpConsensusStateResponse;
+    }
+
+    public static decodeConsensusState(
+        response: JsonRpcResponseWithResult<ConsensusStateResponse>,
+    ): ConsensusStateResponse {
+        return response.result as ConsensusStateResponse;
+    }
+
+    public static decodeConsensusParams(
+        response: JsonRpcResponseWithResult<ConsensusParamsResponse>,
+    ): ConsensusParamsResponse {
+        return response.result as ConsensusParamsResponse;
+    }
+
+    public static decodeUnconfirmedTxs(
+        response: JsonRpcResponseWithResult<UnconfirmedTxsResponse>,
+    ): UnconfirmedTxsResponse {
+        return response.result as UnconfirmedTxsResponse;
+    }
+
     public static decodeNumUnconfirmedTxs(
         response: JsonRpcResponseWithResult<RpcNumUnconfirmedTxsResponse>,
     ): NumUnconfirmedTxsResponse {
@@ -1844,6 +1893,34 @@ export class ResponsesDecoder {
         response: JsonRpcResponseWithResult<RpcValidatorsResponse>,
     ): ValidatorsResponse {
         return decodeValidators(response.result as RpcValidatorsResponse);
+    }
+
+    public static decodeDelegatee(
+        response: JsonRpcResponseWithResult<DelegateeResponse>,
+    ): DelegateeResponse {
+        return response.result as DelegateeResponse;
+    }
+
+    public static decodeRule(response: JsonRpcResponseWithResult<RuleResponse>): RuleResponse {
+        return response.result as RuleResponse;
+    }
+
+    public static decodeAccount(
+        response: JsonRpcResponseWithResult<AccountResponse>,
+    ): AccountResponse {
+        return response.result as AccountResponse;
+    }
+
+    public static decodeStakes(
+        response: JsonRpcResponseWithResult<StakesResponse>,
+    ): StakesResponse {
+        return response.result as StakesResponse;
+    }
+
+    public static decodeVmCall(
+        response: JsonRpcResponseWithResult<VmCallResponse>,
+    ): VmCallResponse {
+        return response.result as VmCallResponse;
     }
 }
 
