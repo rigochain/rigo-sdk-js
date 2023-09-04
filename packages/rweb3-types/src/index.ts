@@ -28,3 +28,4 @@ export * from './rweb3_api_types.js';
 export * from './rweb3_base_wallet.js';
 export * from './rweb3_deferred_promise_type.js';
 export * from './trx_proto.js';
+export * from './subscription_event.js';

@@ -28,6 +28,7 @@ import {
     RWeb3APIPayload,
     RWeb3APIReturnType,
     RWeb3APISpec,
+    SubscriptionEvent,
 } from 'rweb3-types';
 import { ConnectionStatus } from './socket/queueing_streaming_socket';
 import { SocketWrapperMessageEvent } from './socket/socket_wrapper';
@@ -245,14 +246,6 @@ export default class WebsocketProvider<API extends RWeb3APISpec = RigoExecutionA
     public getClientUrl(): string {
         return this.url;
     }
-}
-
-export interface SubscriptionEvent {
-    readonly query: string;
-    readonly data: {
-        readonly type: string;
-        readonly value: any;
-    };
 }
 
 export function hasProtocol(url: string): boolean {

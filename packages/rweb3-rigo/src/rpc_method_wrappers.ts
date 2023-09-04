@@ -14,12 +14,11 @@
     limitations under the License.
 */
 
-import { RigoExecutionAPI } from 'rweb3-types';
+import { RigoExecutionAPI, SubscriptionEvent } from 'rweb3-types';
 import { RWeb3Context } from 'rweb3-core';
 import { rigoRpcMethods } from 'rweb3-rpc-methods';
 import { TrxProto } from 'rweb3-types';
 import { Stream } from 'xstream';
-import { SubscriptionEvent } from 'rweb3-providers-ws';
 
 export async function health(web3Context: RWeb3Context<RigoExecutionAPI>) {
     return rigoRpcMethods.health(web3Context.requestManager);

@@ -3,7 +3,7 @@ const base = require('../config/jest.config');
 module.exports = {
     ...base,
     testTimeout: 10000,
-    testMatch: ['<rootDir>/test/unit/**/*.(spec|test).(js|ts)'],
+    // testMatch: ['<rootDir>/test/unit/**/*.(spec|test).(js|ts)'],
     // testMatch: ['<rootDir>/test/unit/**/status.(spec|test).(js|ts)'], // 단일 테스트
     // testMatch: ['<rootDir>/test/unit/**/blockchain.(spec|test).(js|ts)'], // 단일 테스트
     // testMatch: ['<rootDir>/test/unit/**/block.(spec|test).(js|ts)'], // 단일 테스트
@@ -19,7 +19,7 @@ module.exports = {
     // testMatch: ['<rootDir>/test/unit/**/unconfirmedTxs.(spec|test).(js|ts)'], // 단일 테스트
     // testMatch: ['<rootDir>/test/unit/**/txSearch.(spec|test).(js|ts)'], // 단일 테스트
     // testMatch: ['<rootDir>/test/unit/**/tx.(spec|test).(js|ts)'], // 단일 테스트
-    // testMatch: ['<rootDir>/test/unit/**/abciInfo.(spec|test).(js|ts)'], // 단일 테스트
+    testMatch: ['<rootDir>/test/unit/**/abciInfo.(spec|test).(js|ts)'], // 단일 테스트
     // testMatch: ['<rootDir>/test/unit/**/checkTx.(spec|test).(js|ts)'], // 단일 테스트
     // testMatch: ['<rootDir>/test/unit/**/numUnconfirmedTxs.(spec|test).(js|ts)'], // 단일 테스트
     // testMatch: ['<rootDir>/test/unit/**/delegatee.(spec|test).(js|ts)'], // 단일 테스트

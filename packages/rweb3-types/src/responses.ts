@@ -1,4 +1,22 @@
 import { ReadonlyDate } from 'readonly-date';
+import { JsonRpcResponseWithResult } from './json_rpc_types';
+import {
+    assertArray,
+    assertBoolean,
+    assertNotEmpty,
+    assertNumber,
+    assertObject,
+    assertSet,
+    assertString,
+    dictionaryToStringMap,
+    may,
+} from './encodings';
+import { apiToBigInt, apiToSmallInt } from './inthelpers';
+import { HexString } from './primitives_types';
+import { fromRfc3339 } from './rfc3339';
+import { fromBase64 } from './base64';
+import assert from 'assert';
+import { SubscriptionEvent } from './subscription_event';
 
 /**
  * Represents a date object with additional nanoseconds precision.
@@ -56,11 +74,11 @@ export interface CommitSignature {
     /** Indicates the status/type of the block ID */
     block_id_flag: BlockIdFlag;
     /** Address of the validator responsible for the signature */
-    validator_address: Uint8Array | undefined;
+    validator_address: HexString | undefined;
     /** Timestamp of when the signature was created, with optional nanosecond precision */
     timestamp: ReadonlyDateWithNanoseconds | undefined;
     /** Actual data of the signature */
-    signature: Uint8Array | undefined;
+    signature: HexString | undefined;
 }
 
 export type Response =
@@ -91,7 +109,7 @@ export interface AbciInfoResponse {
         version: string;
         app_version: string;
         last_block_height?: number;
-        last_block_app_hash?: Uint8Array;
+        last_block_app_hash?: HexString;
     };
 }
 
@@ -102,9 +120,9 @@ export interface ProofOp {
     /** Type of the proof operation */
     readonly type: string;
     /** Key associated with the proof operation */
-    readonly key: Uint8Array;
+    readonly key: HexString;
     /** Data associated with the proof operation */
-    readonly data: Uint8Array;
+    readonly data: HexString;
 }
 
 /**
@@ -119,8 +137,8 @@ export interface QueryProof {
  * Represents a response to an ABCI query.
  */
 export interface AbciQueryResponse {
-    readonly key: Uint8Array;
-    readonly value: Uint8Array;
+    readonly key: HexString;
+    readonly value: HexString;
     readonly proof?: QueryProof;
     readonly height?: number;
     readonly index?: number;
@@ -183,7 +201,7 @@ export interface BlockchainResponse {
  */
 export interface BroadcastTxAsyncResponse {
     /** The hash of the broadcasted transaction */
-    readonly hash: Uint8Array;
+    readonly hash: HexString;
 }
 
 /**
@@ -191,7 +209,7 @@ export interface BroadcastTxAsyncResponse {
  */
 export interface BroadcastTxSyncResponse extends TxData {
     /** The hash of the broadcasted transaction */
-    readonly hash: Uint8Array;
+    readonly hash: HexString;
 }
 
 /**
@@ -209,7 +227,7 @@ export interface BroadcastTxCommitResponse {
     /** The height of the block containing the transaction */
     readonly height: number;
     /** The hash of the broadcasted transaction */
-    readonly hash: Uint8Array;
+    readonly hash: HexString;
     /** Result of the check transaction */
     readonly check_tx: TxData;
     /** Result of the delivery transaction */
@@ -262,7 +280,7 @@ export interface GenesisResponse {
     /** List of validators at genesis */
     readonly validators: readonly Validator[];
     /** App hash at genesis */
-    readonly app_hash: Uint8Array;
+    readonly app_hash: HexString;
     /** The state of the app at genesis */
     readonly app_state: Record<string, unknown> | undefined;
 }
@@ -313,9 +331,9 @@ export interface StatusResponse {
  */
 export interface TxResponse {
     /** The transaction data */
-    readonly tx: Uint8Array;
+    readonly tx: HexString;
     /** The hash of the transaction */
-    readonly hash: Uint8Array;
+    readonly hash: HexString;
     /** The height of the block containing the transaction */
     readonly height: number;
     /** Index of the transaction within the block */
@@ -369,9 +387,9 @@ export interface NewBlockHeaderEvent extends Header {}
  */
 export interface TxEvent {
     /** The transaction data */
-    readonly tx: Uint8Array;
+    readonly tx: HexString;
     /** The hash of the transaction */
-    readonly hash: Uint8Array;
+    readonly hash: HexString;
     /** The height of the block containing the transaction */
     readonly height: number;
     /** Result data associated with the transaction */
@@ -411,7 +429,7 @@ export interface TxData {
     /** Log data associated with the transaction */
     readonly log?: string;
     /** Data returned by the transaction (if available) */
-    readonly data?: Uint8Array;
+    readonly data?: HexString;
     /** Events triggered by the transaction */
     readonly events: readonly Event[];
     /** Information about the transaction */
@@ -427,9 +445,9 @@ export interface TxData {
  */
 export interface TxProof {
     /** Transaction data for which the proof is generated */
-    readonly data: Uint8Array;
+    readonly data: HexString;
     /** Root hash of the Merkle tree */
-    readonly root_hash: Uint8Array;
+    readonly root_hash: HexString;
     /** Details of the proof */
     readonly proof: {
         /** Total number of leaves in the Merkle tree */
@@ -437,9 +455,9 @@ export interface TxProof {
         /** Index of the leaf in the Merkle tree */
         readonly index: number;
         /** Hash of the leaf node */
-        readonly leaf_hash: Uint8Array;
+        readonly leaf_hash: HexString;
         /** Hashes of the aunt nodes in the Merkle tree */
-        readonly aunts: readonly Uint8Array[];
+        readonly aunts: readonly HexString[];
     };
 }
 
@@ -462,13 +480,13 @@ export interface BlockMeta {
  */
 export interface BlockId {
     /** Hash of the block */
-    readonly hash: Uint8Array;
+    readonly hash: HexString;
     /** Details of the block parts */
     readonly parts: {
         /** Total number of parts the block is divided into */
         readonly total: number;
         /** Combined hash of all the parts */
-        readonly hash: Uint8Array;
+        readonly hash: HexString;
     };
 }
 
@@ -487,7 +505,7 @@ export interface Block {
 
 export interface BlockTxs {
     /** Transactions included in the block */
-    readonly txs: readonly Uint8Array[];
+    readonly txs: readonly HexString[];
 }
 
 /** Placeholder type for evidence associated with a block. */
@@ -520,7 +538,7 @@ export interface Vote {
     /** Type of the vote (either PreVote or PreCommit) */
     readonly type: VoteType;
     /** Address of the validator making the vote */
-    readonly validator_address: Uint8Array;
+    readonly validator_address: HexString;
     /** Index of the validator in the validator set */
     readonly validator_index: number;
     /** Height of the block for which the vote is made */
@@ -532,7 +550,7 @@ export interface Vote {
     /** Identifier of the block for which the vote is made */
     readonly block_id: BlockId;
     /** Signature of the validator for the vote */
-    readonly signature: Uint8Array;
+    readonly signature: HexString;
 }
 
 /**
@@ -560,23 +578,23 @@ export interface Header {
     /** Identifier of the last block in the blockchain */
     readonly last_block_id: BlockId | null;
     /** Hash of the last commit associated with the previous block */
-    readonly last_commit_hash: Uint8Array;
+    readonly last_commit_hash: HexString;
     /** Hash of the data within the block */
-    readonly data_hash: Uint8Array;
+    readonly data_hash: HexString;
     /** Hash of the current validator set */
-    readonly validators_hash: Uint8Array;
+    readonly validators_hash: HexString;
     /** Hash of the next validator set */
-    readonly next_validators_hash: Uint8Array;
+    readonly next_validators_hash: HexString;
     /** Hash of the consensus state after processing the block */
-    readonly consensus_hash: Uint8Array;
+    readonly consensus_hash: HexString;
     /** Hash representing the application state after processing the block */
-    readonly app_hash: Uint8Array;
+    readonly app_hash: HexString;
     /** Hash of the results from executing the transactions in the last block */
-    readonly last_results_hash: Uint8Array;
+    readonly last_results_hash: HexString;
     /** Hash of the evidence (if any) included in the block */
-    readonly evidence_hash: Uint8Array;
+    readonly evidence_hash: HexString;
     /** Address of the validator that proposed the block */
-    readonly proposer_address: Uint8Array;
+    readonly proposer_address: HexString;
 }
 
 /**
@@ -584,7 +602,7 @@ export interface Header {
  */
 export interface NodeInfo {
     /** Unique identifier of the node */
-    readonly id: Uint8Array;
+    readonly id: HexString;
     /** Address where the node is listening for incoming connections */
     readonly listen_addr: string;
     /** Name of the network to which the node belongs */
@@ -610,17 +628,17 @@ export interface NodeInfo {
  */
 export interface SyncInfo {
     /** Hash of the earliest known application state */
-    readonly earliest_app_hash?: Uint8Array;
+    readonly earliest_app_hash?: HexString;
     /** Hash of the earliest known block */
-    readonly earliest_block_hash?: Uint8Array;
+    readonly earliest_block_hash?: HexString;
     /** Height of the earliest known block */
     readonly earliest_block_height?: number;
     /** Timestamp of the earliest known block */
     readonly earliest_block_time?: ReadonlyDate;
     /** Hash of the latest block in the node's blockchain */
-    readonly latest_block_hash: Uint8Array;
+    readonly latest_block_hash: HexString;
     /** Hash of the latest application state in the node's blockchain */
-    readonly latest_app_hash: Uint8Array;
+    readonly latest_app_hash: HexString;
     /** Height of the latest block in the node's blockchain */
     readonly latest_block_height: number;
     /** Timestamp of the latest block */
@@ -634,7 +652,7 @@ export interface SyncInfo {
  */
 export interface Validator {
     /** Address of the validator */
-    readonly address: Uint8Array;
+    readonly address: HexString;
     /** Public key of the validator */
     readonly pub_key: ValidatorPubkey;
     /** Voting power of the validator in the consensus algorithm */
@@ -648,7 +666,7 @@ export interface Validator {
  */
 export interface ValidatorUpdate {
     /** Public key of the validator */
-    readonly pubkey: ValidatorPubkey;
+    readonly pubkey: string;
     /** Updated voting power of the validator */
     readonly voting_power: bigint;
 }
@@ -844,7 +862,7 @@ export interface DumpConsensusValidators {
 
 export interface DumpConsensusValidator {
     /** Address of the validator */
-    readonly address: Uint8Array;
+    readonly address: HexString;
     /** Public key of the validator */
     readonly pub_key: ValidatorPubkey;
     /** Voting power of the validator in the consensus algorithm */
@@ -917,6 +935,7 @@ export interface CheckTxResponse {
     codespace: string;
     mempoolError?: string;
 }
+
 /**
  * Represents the response related to a delegatee.
  */
@@ -1016,4 +1035,904 @@ export interface VmCallResponse {
         /** Data returned by the VM after the call */
         returnData: any;
     };
+}
+
+interface AbciInfoResult {
+    readonly response: RpcAbciInfoResponse;
+}
+
+interface RpcBlockchainResponse {
+    readonly last_height: string;
+    readonly block_metas: readonly RpcBlockMeta[];
+}
+
+interface RpcBlockId {
+    /** hex encoded */
+    readonly hash: string;
+    readonly parts: {
+        readonly total: number;
+        /** hex encoded */
+        readonly hash: HexString;
+    };
+}
+
+interface RpcBlockVersion {
+    readonly block: string;
+    readonly app?: string;
+}
+
+interface RpcHeader {
+    readonly version: RpcBlockVersion;
+    readonly chain_id: string;
+    readonly height: string;
+    readonly time: string;
+
+    readonly last_block_id: RpcBlockId;
+
+    /** hex encoded */
+    readonly last_commit_hash: string;
+    /** hex encoded */
+    readonly data_hash: string;
+
+    /** hex encoded */
+    readonly validators_hash: string;
+    /** hex encoded */
+    readonly next_validators_hash: string;
+    /** hex encoded */
+    readonly consensus_hash: string;
+    /** hex encoded */
+    readonly app_hash: string;
+    /** hex encoded */
+    readonly last_results_hash: string;
+
+    /** hex encoded */
+    readonly evidence_hash: string;
+    /** hex encoded */
+    readonly proposer_address: string;
+}
+
+interface RpcBlockMeta {
+    readonly block_id: RpcBlockId;
+    readonly block_size: string;
+    readonly header: RpcHeader;
+    readonly num_txs: string;
+}
+
+interface RpcAbciQueryResponse {
+    /**
+     * Base64 encoded
+     *
+     * This can be null since this iy a byte slice and due to
+     * https://github.com/tendermint/tendermint/blob/v0.34.19/abci/types/result.go#L50
+     */
+    readonly key?: string | null;
+    /**
+     * Base64 encoded
+     *
+     * This can be null since this is a byte slice and due to
+     * https://github.com/tendermint/tendermint/blob/v0.34.19/abci/types/result.go#L50
+     */
+    readonly value?: string | null;
+    readonly proofOps?: RpcQueryProof | null;
+    readonly height?: string;
+    /** An integer; can be negative */
+    readonly index?: string;
+    readonly code?: number; // only for errors
+    readonly codespace?: string;
+    readonly log?: string;
+    readonly info?: string;
+}
+
+export interface RpcQueryProof {
+    readonly ops: readonly RpcProofOp[];
+}
+
+export interface RpcProofOp {
+    readonly type: string;
+    /** base64 encoded */
+    readonly key: string;
+    /** base64 encoded */
+    readonly data: string;
+}
+
+function decodeQueryProof(data: RpcQueryProof): QueryProof {
+    return {
+        ops: data.ops.map((op) => ({
+            type: op.type,
+            key: op.key,
+            data: op.data,
+        })),
+    };
+}
+
+function decodeAbciQuery(data: RpcAbciQueryResponse): AbciQueryResponse {
+    return {
+        key: assertString(data.key ?? ''),
+        value: assertString(data.value ?? ''),
+        proof: may(decodeQueryProof, data.proofOps),
+        height: may(apiToSmallInt, data.height),
+        code: may(apiToSmallInt, data.code),
+        codespace: assertString(data.codespace ?? ''),
+        index: may(apiToSmallInt, data.index),
+        log: data.log,
+        info: assertString(data.info ?? ''),
+    };
+}
+
+interface AbciQueryResult {
+    readonly response: RpcAbciQueryResponse;
+}
+
+type RpcSignature = {
+    readonly block_id_flag: number;
+    /** hex encoded */
+    readonly validator_address: string;
+    readonly timestamp: string;
+    /**
+     * Base64 encoded signature.
+     * There are cases when this is not set, see https://github.com/cosmos/cosmjs/issues/704#issuecomment-797122415.
+     */
+    readonly signature: string | null;
+};
+// We lost track on how the evidence structure actually looks like.
+// This is any now and passed to the caller untouched.
+type RpcEvidence = any;
+
+interface RpcCommit {
+    readonly block_id: RpcBlockId;
+    readonly height: string;
+    readonly round: string;
+    readonly signatures: readonly RpcSignature[];
+}
+
+interface RpcBlock {
+    readonly header: RpcHeader;
+    readonly last_commit: RpcCommit;
+    readonly data: {
+        /** Raw tx bytes, base64 encoded */
+        readonly txs?: readonly string[];
+    };
+    // It's currently unclear why the deep nesting is requied.
+    // See https://github.com/tendermint/tendermint/issues/7697.
+    readonly evidence?: {
+        readonly evidence?: readonly RpcEvidence[];
+    };
+}
+
+interface RpcBlockResponse {
+    readonly block_id: RpcBlockId;
+    readonly block: RpcBlock;
+}
+
+function decodeBlockResponse(data: RpcBlockResponse): BlockResponse {
+    return {
+        block_id: decodeBlockId(data.block_id),
+        block: decodeBlock(data.block),
+    };
+}
+
+function decodeBlockIdFlag(blockIdFlag: number): BlockIdFlag {
+    assert(blockIdFlag in BlockIdFlag);
+    return blockIdFlag;
+}
+
+/**
+ * In some cases a timestamp is optional and set to the value 0 in Go.
+ * This can lead to strings like "0001-01-01T00:00:00Z" (see https://github.com/cosmos/cosmjs/issues/704#issuecomment-797122415).
+ * This decoder tries to clean up such encoding from the API and turn them
+ * into undefined values.
+ */
+function decodeOptionalTime(timestamp: string): DateWithNanoseconds | undefined {
+    const nonZeroTime = timestamp && !timestamp.startsWith('0001-01-01');
+    return nonZeroTime ? fromRfc3339WithNanoseconds(timestamp) : undefined;
+}
+
+function decodeCommitSignature(data: RpcSignature): CommitSignature {
+    return {
+        block_id_flag: decodeBlockIdFlag(data.block_id_flag),
+        validator_address: data.validator_address ? data.validator_address : undefined,
+        timestamp: decodeOptionalTime(data.timestamp),
+        signature: data.signature ? data.signature : undefined,
+    };
+}
+
+function decodeCommit(data: RpcCommit): Commit {
+    return {
+        block_id: decodeBlockId(assertObject(data.block_id)),
+        height: apiToSmallInt(assertNotEmpty(data.height)),
+        round: apiToSmallInt(data.round),
+        signatures: assertArray(data.signatures).map(decodeCommitSignature),
+    };
+}
+
+function decodeBlockData(data: RpcBlock['data']): BlockTxs {
+    return {
+        txs: data.txs ? assertArray(data.txs).map(assertString) : [],
+    };
+}
+
+function decodeBlock(data: RpcBlock): Block {
+    return {
+        header: decodeHeader(assertObject(data.header)),
+        // For the block at height 1, last commit is not set. This is represented in an empty object like this:
+        // { height: '0', round: 0, block_id: { hash: '', parts: [Object] }, signatures: [] }
+        last_commit: data.last_commit.block_id.hash
+            ? decodeCommit(assertObject(data.last_commit))
+            : null,
+        data: decodeBlockData(data.data),
+        // Lift up .evidence.evidence to just .evidence
+        // See https://github.com/tendermint/tendermint/issues/7697
+        evidence: data.evidence?.evidence ?? [],
+    };
+}
+
+interface RpcBlockResultsResponse {
+    readonly height: string;
+    readonly txs_results: readonly RpcTxData[] | null;
+    readonly begin_block_events: readonly RpcEvent[] | null;
+    readonly end_block_events: readonly RpcEvent[] | null;
+    readonly validator_updates: readonly RpcValidatorUpdate[] | null;
+    readonly consensus_param_updates: RpcConsensusParams | null;
+}
+
+interface RpcBlockParams {
+    readonly max_bytes: string;
+    readonly max_gas: string;
+    readonly time_iota_ms: string;
+}
+
+interface RpcEvidenceParams {
+    readonly max_age_num_blocks: string;
+    readonly max_age_duration: string;
+    readonly max_bytes: string;
+}
+
+interface RpcValidatorParams {
+    readonly pub_key_types: readonly string[];
+}
+
+interface RpcVersionParams {
+    readonly app_version: string;
+}
+
+function decodeBlockParams(data: RpcBlockParams): BlockParams {
+    return {
+        max_bytes: apiToSmallInt(assertNotEmpty(data.max_bytes)),
+        max_gas: apiToSmallInt(assertNotEmpty(data.max_gas)),
+        time_iota_ms: apiToSmallInt(assertNotEmpty(data.time_iota_ms)),
+    };
+}
+
+function decodeConsensusParams(data: RpcConsensusParams): ConsensusParams {
+    return {
+        block: decodeBlockParams(assertObject(data.block)),
+        evidence: decodeEvidenceParams(assertObject(data.evidence)),
+        validator: decodeValidatorParams(assertObject(data.validator)),
+        version: decodeVersionParams(assertObject(data.version)),
+    };
+}
+
+function decodeValidatorParams(data: RpcValidatorParams): ValidatorParams {
+    return {
+        pub_key_types: assertArray(data.pub_key_types).map(assertString),
+    };
+}
+
+function decodeVersionParams(data: RpcVersionParams): VersionParams {
+    return {
+        app_version: apiToSmallInt(data.app_version),
+    };
+}
+
+function decodeEvidenceParams(data: RpcEvidenceParams): EvidenceParams {
+    return {
+        max_age_num_blocks: apiToSmallInt(assertNotEmpty(data.max_age_num_blocks)),
+        max_age_duration: apiToSmallInt(assertNotEmpty(data.max_age_duration)),
+        max_bytes: apiToSmallInt(assertNotEmpty(data.max_bytes)),
+    };
+}
+
+interface RpcConsensusParams {
+    readonly block: RpcBlockParams;
+    readonly evidence: RpcEvidenceParams;
+    readonly validator: RpcValidatorParams;
+    readonly version: RpcVersionParams;
+}
+
+// for block results
+interface RpcValidatorUpdate {
+    readonly pub_key: string;
+    // When omitted, this means zero (see https://github.com/cosmos/cosmjs/issues/1177#issuecomment-1160115080)
+    readonly power?: string;
+}
+
+interface RpcEvent {
+    readonly type: string;
+    /** Can be omitted (see https://github.com/cosmos/cosmjs/pull/1198) */
+    readonly attributes?: readonly RpcAttribute[];
+}
+
+interface RpcAttribute {
+    /** base64 encoded */
+    readonly key: string;
+    /** base64 encoded */
+    readonly value?: string | null;
+    readonly index: boolean;
+}
+
+interface RpcTxData {
+    readonly codespace?: string;
+    readonly code?: number;
+    readonly log?: string;
+    /** base64 encoded */
+    readonly data?: string;
+    readonly events?: readonly RpcEvent[];
+    readonly gas_wanted?: string;
+    readonly gas_used?: string;
+}
+
+export function decodeValidatorUpdate(data: RpcValidatorUpdate): ValidatorUpdate {
+    return {
+        pubkey: assertObject(data.pub_key),
+        voting_power: apiToBigInt(data.power ?? '0'),
+    };
+}
+
+function decodeAttributes(attributes: readonly RpcAttribute[]): EventAttribute[] {
+    return assertArray(attributes).map(decodeAttribute);
+}
+
+function decodeAttribute(attribute: RpcAttribute): EventAttribute {
+    return {
+        key: assertNotEmpty(attribute.key),
+        value: assertString(attribute.value ?? ''),
+        index: attribute.index,
+    };
+}
+
+export function decodeEvent(event: RpcEvent): Event {
+    return {
+        type: event.type,
+        attributes: event.attributes ? decodeAttributes(event.attributes) : [],
+    };
+}
+
+interface RpcBlockSearchResponse {
+    readonly blocks: readonly RpcBlockResponse[];
+    readonly total_count: string;
+}
+
+function decodeEvents(events: readonly RpcEvent[]): readonly Event[] {
+    return assertArray(events).map(decodeEvent);
+}
+
+function decodeTxData(data: RpcTxData): TxData {
+    return {
+        code: apiToSmallInt(assertNumber(data.code ?? 0)),
+        codespace: data.codespace,
+        log: data.log,
+        data: data.data,
+        events: data.events ? decodeEvents(data.events) : [],
+        gas_wanted: apiToSmallInt(data.gas_wanted ?? 0),
+        gas_used: apiToSmallInt(data.gas_used ?? 0),
+    };
+}
+
+function decodeBlockResults(data: RpcBlockResultsResponse): BlockResultsResponse {
+    return {
+        height: apiToSmallInt(assertNotEmpty(data.height)),
+        txs_results: (data.txs_results || []).map(decodeTxData),
+        validator_updates: (data.validator_updates || []).map(decodeValidatorUpdate),
+        consensus_params_updates: may(decodeConsensusParams, data.consensus_param_updates),
+        begin_block_events: decodeEvents(data.begin_block_events || []),
+        end_block_events: decodeEvents(data.end_block_events || []),
+    };
+}
+
+function decodeBlockSearch(data: RpcBlockSearchResponse): BlockSearchResponse {
+    return {
+        total_count: apiToSmallInt(assertNotEmpty(data.total_count)),
+        blocks: assertArray(data.blocks).map(decodeBlockResponse),
+    };
+}
+
+interface RpcBroadcastTxSyncResponse extends RpcTxData {
+    /** hex encoded */
+    readonly hash: string;
+}
+
+function decodeBroadcastTxSync(data: RpcBroadcastTxSyncResponse): BroadcastTxSyncResponse {
+    return {
+        ...decodeTxData(data),
+        hash: assertNotEmpty(data.hash),
+    };
+}
+
+interface RpcBroadcastTxCommitResponse {
+    readonly height: string;
+    /** hex encoded */
+    readonly hash: string;
+    readonly check_tx: RpcTxData;
+    readonly deliver_tx?: RpcTxData;
+}
+
+function decodeBroadcastTxCommit(data: RpcBroadcastTxCommitResponse): BroadcastTxCommitResponse {
+    return {
+        height: apiToSmallInt(data.height),
+        hash: assertNotEmpty(data.hash),
+        check_tx: decodeTxData(assertObject(data.check_tx)),
+        deliver_tx: may(decodeTxData, data.deliver_tx),
+    };
+}
+
+interface RpcCommitResponse {
+    readonly signed_header: {
+        readonly header: RpcHeader;
+        readonly commit: RpcCommit;
+    };
+    readonly canonical: boolean;
+}
+
+interface RpcGenesisResponse {
+    readonly genesis_time: string;
+    readonly chain_id: string;
+    readonly consensus_params: RpcConsensusParams;
+    // The validators key is used to specify a set of validators for testnets or PoA blockchains.
+    // PoS blockchains use the app_state.genutil.gentxs field to stake and bond a number of validators in the first block.
+    readonly validators?: readonly RpcValidatorGenesis[];
+    /** hex encoded */
+    readonly app_hash: string;
+    readonly app_state: Record<string, unknown> | undefined;
+}
+
+interface RpcValidatorGenesis {
+    /** hex-encoded */
+    readonly address: string;
+    readonly pub_key: string;
+    readonly power: string;
+    readonly name?: string;
+}
+
+interface GenesisResult {
+    readonly genesis: RpcGenesisResponse;
+}
+function decodeCommitResponse(data: RpcCommitResponse): CommitResponse {
+    return {
+        canonical: assertBoolean(data.canonical),
+        signed_header: {
+            header: decodeHeader(data.signed_header.header),
+            commit: decodeCommit(data.signed_header.commit),
+            canonical: assertBoolean(data.canonical),
+        },
+    };
+}
+
+export function decodeValidatorGenesis(data: RpcValidatorGenesis): Validator {
+    return {
+        address: assertNotEmpty(data.address),
+        pub_key: {
+            type: 'tendermint/PubKeyEd25519',
+            value: assertNotEmpty(data.pub_key),
+        },
+        power: apiToBigInt(assertNotEmpty(data.power)),
+        name: data.name,
+    };
+}
+
+function decodeGenesis(data: RpcGenesisResponse): GenesisResponse {
+    return {
+        genesis_time: fromRfc3339WithNanoseconds(assertNotEmpty(data.genesis_time)),
+        chain_id: assertNotEmpty(data.chain_id),
+        initial_height: 1,
+        consensus_params: decodeConsensusParams(data.consensus_params),
+        validators: data.validators ? assertArray(data.validators).map(decodeValidatorGenesis) : [],
+        app_hash: assertSet(data.app_hash), // empty string in kvstore app
+        app_state: data.app_state,
+    };
+}
+
+interface RpcNumUnconfirmedTxsResponse {
+    readonly total: string;
+    readonly total_bytes: string;
+    readonly n_txs: string;
+    readonly txs: readonly RpcTxData[];
+}
+
+function decodeNumUnconfirmedTxs(data: RpcNumUnconfirmedTxsResponse): NumUnconfirmedTxsResponse {
+    return {
+        n_txs: apiToSmallInt(assertNotEmpty(data.n_txs)),
+        total: apiToSmallInt(assertNotEmpty(data.total)),
+        total_bytes: apiToSmallInt(assertNotEmpty(data.total_bytes)),
+        txs: assertArray(data.txs).map(decodeTxData),
+    };
+}
+
+interface RpcNodeInfo {
+    /** hex encoded */
+    readonly id: string;
+    /** IP and port */
+    readonly listen_addr: string;
+    readonly network: string;
+    readonly version: string;
+    readonly channels: string; // ???
+    readonly moniker: string;
+    readonly protocol_version: {
+        readonly p2p: string;
+        readonly block: string;
+        readonly app: string;
+    };
+    /**
+     * Additional information. E.g.
+     * {
+     *   "tx_index": "on",
+     *   "rpc_address":"tcp://0.0.0.0:26657"
+     * }
+     */
+    readonly other: Record<string, unknown>;
+}
+
+interface RpcSyncInfo {
+    /** hex encoded */
+    readonly earliest_app_hash: string;
+    /** hex encoded */
+    readonly earliest_block_hash: string;
+    readonly earliest_block_height: string;
+    readonly earliest_block_time: string;
+    /** hex encoded */
+    readonly latest_block_hash: string;
+    /** hex encoded */
+    readonly latest_app_hash: string;
+    readonly latest_block_height: string;
+    readonly latest_block_time: string;
+    readonly catching_up: boolean;
+}
+
+// this is in status
+interface RpcValidatorInfo {
+    /** hex encoded */
+    readonly address: string;
+    readonly pub_key: string;
+    readonly voting_power: string;
+    readonly name?: string;
+}
+
+interface RpcStatusResponse {
+    readonly node_info: RpcNodeInfo;
+    readonly sync_info: RpcSyncInfo;
+    readonly validator_info: RpcValidatorInfo;
+}
+
+function decodeNodeInfo(data: RpcNodeInfo): NodeInfo {
+    return {
+        id: assertNotEmpty(data.id),
+        listen_addr: assertNotEmpty(data.listen_addr),
+        network: assertNotEmpty(data.network),
+        version: assertString(data.version), // Can be empty (https://github.com/cosmos/cosmos-sdk/issues/7963)
+        channels: assertNotEmpty(data.channels),
+        moniker: assertNotEmpty(data.moniker),
+        other: dictionaryToStringMap(data.other),
+        protocol_version: {
+            app: apiToSmallInt(assertNotEmpty(data.protocol_version.app)),
+            block: apiToSmallInt(assertNotEmpty(data.protocol_version.block)),
+            p2p: apiToSmallInt(assertNotEmpty(data.protocol_version.p2p)),
+        },
+    };
+}
+
+function decodeSyncInfo(data: RpcSyncInfo): SyncInfo {
+    const earliestBlockHeight = data.earliest_block_height
+        ? apiToSmallInt(data.earliest_block_height)
+        : undefined;
+    const earliestBlockTime = data.earliest_block_time
+        ? fromRfc3339WithNanoseconds(data.earliest_block_time)
+        : undefined;
+
+    return {
+        earliest_app_hash: data.earliest_app_hash ? data.earliest_app_hash : undefined,
+        earliest_block_hash: data.earliest_block_hash ? data.earliest_block_hash : undefined,
+        earliest_block_height: earliestBlockHeight || undefined,
+        earliest_block_time: earliestBlockTime?.getTime() ? earliestBlockTime : undefined,
+        latest_block_hash: assertNotEmpty(data.latest_block_hash),
+        latest_app_hash: assertNotEmpty(data.latest_app_hash),
+        latest_block_time: fromRfc3339WithNanoseconds(assertNotEmpty(data.latest_block_time)),
+        latest_block_height: apiToSmallInt(assertNotEmpty(data.latest_block_height)),
+        catching_up: assertBoolean(data.catching_up),
+    };
+}
+
+export function decodeValidatorInfo(data: RpcValidatorInfo): Validator {
+    return {
+        pub_key: {
+            type: 'tendermint/PubKeyEd25519',
+            value: assertNotEmpty(data.pub_key),
+        },
+        power: apiToBigInt(assertNotEmpty(data.voting_power)),
+        address: assertNotEmpty(data.address),
+        name: data.name,
+    };
+}
+
+function decodeStatus(data: RpcStatusResponse): StatusResponse {
+    return {
+        node_info: decodeNodeInfo(data.node_info),
+        sync_info: decodeSyncInfo(data.sync_info),
+        validator_info: decodeValidatorInfo(data.validator_info),
+    };
+}
+
+interface RpcTxResponse {
+    /** Raw tx bytes, base64 encoded */
+    readonly tx: string;
+    readonly tx_result: RpcTxData;
+    readonly height: string;
+    readonly index: number;
+    /** hex encoded */
+    readonly hash: string;
+    readonly proof?: RpcTxProof;
+}
+
+interface RpcTxProof {
+    /** base64 encoded */
+    readonly data: string;
+    /** hex encoded */
+    readonly root_hash: string;
+    readonly proof: {
+        readonly total: string;
+        readonly index: string;
+        /** base64 encoded */
+        readonly leaf_hash: string;
+        /** base64 encoded */
+        readonly aunts: readonly string[];
+    };
+}
+
+function decodeTxProof(data: RpcTxProof): TxProof {
+    return {
+        data: assertNotEmpty(data.data),
+        root_hash: assertNotEmpty(data.root_hash),
+        proof: {
+            total: apiToSmallInt(assertNotEmpty(data.proof.total)),
+            index: apiToSmallInt(assertNotEmpty(data.proof.index)),
+            leaf_hash: assertNotEmpty(data.proof.leaf_hash),
+            aunts: assertArray(data.proof.aunts).map(assertNotEmpty),
+        },
+    };
+}
+
+interface RpcTxSearchResponse {
+    readonly txs: readonly RpcTxResponse[];
+    readonly total_count: string;
+}
+
+function decodeTxSearch(data: RpcTxSearchResponse): TxSearchResponse {
+    return {
+        total_count: apiToSmallInt(assertNotEmpty(data.total_count)),
+        txs: assertArray(data.txs).map(decodeTxResponse),
+    };
+}
+
+function decodeTxResponse(data: RpcTxResponse): TxResponse {
+    return {
+        tx: assertNotEmpty(data.tx),
+        hash: assertNotEmpty(data.hash),
+        height: apiToSmallInt(assertNotEmpty(data.height)),
+        index: apiToSmallInt(assertNumber(data.index)),
+        result: decodeTxData(assertObject(data.tx_result)),
+        proof: may(decodeTxProof, data.proof),
+        tx_result: decodeTxData(assertObject(data.tx_result)),
+    };
+}
+
+interface RpcValidatorsResponse {
+    readonly block_height: string;
+    readonly validators: readonly RpcValidatorInfo[];
+    readonly count: string;
+    readonly total: string;
+}
+
+function decodeValidators(data: RpcValidatorsResponse): ValidatorsResponse {
+    return {
+        block_height: apiToSmallInt(assertNotEmpty(data.block_height)),
+        validators: assertArray(data.validators).map(decodeValidatorInfo),
+        count: apiToSmallInt(assertNotEmpty(data.count)),
+        total: apiToSmallInt(assertNotEmpty(data.total)),
+    };
+}
+
+export class ResponsesDecoder {
+    public static decodeHealth(): HealthResponse {
+        return null;
+    }
+
+    public static decodeAbciInfo(
+        response: JsonRpcResponseWithResult<AbciInfoResult>,
+    ): AbciInfoResponse {
+        return decodeAbciInfo(assertObject((response.result as AbciInfoResult).response));
+    }
+
+    public static decodeAbciQuery(
+        response: JsonRpcResponseWithResult<AbciQueryResult>,
+    ): AbciQueryResponse {
+        return decodeAbciQuery(assertObject((response.result as AbciQueryResult).response));
+    }
+
+    public static decodeBlock(
+        response: JsonRpcResponseWithResult<RpcBlockResponse>,
+    ): BlockResponse {
+        return decodeBlockResponse(response.result as RpcBlockResponse);
+    }
+
+    public static decodeBlockResults(
+        response: JsonRpcResponseWithResult<RpcBlockResultsResponse>,
+    ): BlockResultsResponse {
+        return decodeBlockResults(response.result as RpcBlockResultsResponse);
+    }
+
+    public static decodeBlockSearch(
+        response: JsonRpcResponseWithResult<RpcBlockSearchResponse>,
+    ): BlockSearchResponse {
+        return decodeBlockSearch(response.result as RpcBlockSearchResponse);
+    }
+
+    public static decodeBlockchain(
+        response: JsonRpcResponseWithResult<RpcBlockchainResponse>,
+    ): BlockchainResponse {
+        return decodeBlockchain(response.result as RpcBlockchainResponse);
+    }
+
+    public static decodeBroadcastTxSync(
+        response: JsonRpcResponseWithResult<RpcBroadcastTxSyncResponse>,
+    ): BroadcastTxSyncResponse {
+        return decodeBroadcastTxSync(response.result as RpcBroadcastTxSyncResponse);
+    }
+
+    public static decodeBroadcastTxAsync(
+        response: JsonRpcResponseWithResult<RpcBroadcastTxSyncResponse>,
+    ): BroadcastTxAsyncResponse {
+        return ResponsesDecoder.decodeBroadcastTxSync(response);
+    }
+
+    public static decodeBroadcastTxCommit(
+        response: JsonRpcResponseWithResult<RpcBroadcastTxCommitResponse>,
+    ): BroadcastTxCommitResponse {
+        return decodeBroadcastTxCommit(response.result as RpcBroadcastTxCommitResponse);
+    }
+
+    public static decodeCommit(
+        response: JsonRpcResponseWithResult<RpcCommitResponse>,
+    ): CommitResponse {
+        return decodeCommitResponse(response.result as RpcCommitResponse);
+    }
+
+    public static decodeGenesis(
+        response: JsonRpcResponseWithResult<GenesisResult>,
+    ): GenesisResponse {
+        return decodeGenesis(assertObject((response.result as GenesisResult).genesis));
+    }
+
+    public static decodeNumUnconfirmedTxs(
+        response: JsonRpcResponseWithResult<RpcNumUnconfirmedTxsResponse>,
+    ): NumUnconfirmedTxsResponse {
+        return decodeNumUnconfirmedTxs(response.result as RpcNumUnconfirmedTxsResponse);
+    }
+
+    public static decodeStatus(
+        response: JsonRpcResponseWithResult<RpcStatusResponse>,
+    ): StatusResponse {
+        return decodeStatus(response.result as RpcStatusResponse);
+    }
+
+    public static decodeNewBlockEvent(event: SubscriptionEvent): NewBlockEvent {
+        return decodeBlock(event.data.value.block as RpcBlock);
+    }
+
+    public static decodeNewBlockHeaderEvent(event: SubscriptionEvent): NewBlockHeaderEvent {
+        return decodeHeader(event.data.value.header as RpcHeader);
+    }
+
+    public static decodeTx(response: JsonRpcResponseWithResult<RpcTxResponse>): TxResponse {
+        return decodeTxResponse(response.result as RpcTxResponse);
+    }
+
+    public static decodeTxSearch(
+        response: JsonRpcResponseWithResult<RpcTxSearchResponse>,
+    ): TxSearchResponse {
+        return decodeTxSearch(response.result as RpcTxSearchResponse);
+    }
+
+    public static decodeValidators(
+        response: JsonRpcResponseWithResult<RpcValidatorsResponse>,
+    ): ValidatorsResponse {
+        return decodeValidators(response.result as RpcValidatorsResponse);
+    }
+}
+
+function decodeBlockchain(data: RpcBlockchainResponse): BlockchainResponse {
+    return {
+        last_height: apiToSmallInt(assertNotEmpty(data.last_height)),
+        block_metas: assertArray(data.block_metas).map(decodeBlockMeta),
+    };
+}
+
+function decodeBlockMeta(data: RpcBlockMeta): BlockMeta {
+    return {
+        block_id: decodeBlockId(data.block_id),
+        block_size: apiToSmallInt(assertNotEmpty(data.block_size)),
+        header: decodeHeader(data.header),
+        num_txs: apiToSmallInt(assertNotEmpty(data.num_txs)),
+    };
+}
+
+function decodeBlockVersion(data: RpcBlockVersion): Version {
+    return {
+        block: apiToSmallInt(data.block),
+        app: apiToSmallInt(data.app ?? 0),
+    };
+}
+
+export interface DateWithNanoseconds extends Date {
+    /** Nanoseconds after the time stored in a vanilla Date (millisecond granularity) */
+    nanoseconds?: number;
+}
+
+export function fromRfc3339WithNanoseconds(dateTimeString: string): DateWithNanoseconds {
+    const out: DateWithNanoseconds = fromRfc3339(dateTimeString);
+    const nanosecondsMatch = dateTimeString.match(/\.(\d+)Z$/);
+    const nanoseconds = nanosecondsMatch ? nanosecondsMatch[1].slice(3) : '';
+    out.nanoseconds = parseInt(nanoseconds.padEnd(6, '0'), 10);
+    return out;
+}
+
+function decodeHeader(data: RpcHeader): Header {
+    return {
+        version: decodeBlockVersion(data.version),
+        chain_id: assertNotEmpty(data.chain_id),
+        height: apiToSmallInt(assertNotEmpty(data.height)),
+        time: fromRfc3339WithNanoseconds(assertNotEmpty(data.time)),
+
+        // When there is no last block ID (i.e. this block's height is 1), we get an empty structure like this:
+        // { hash: '', parts: { total: 0, hash: '' } }
+        last_block_id: data.last_block_id.hash ? decodeBlockId(data.last_block_id) : null,
+
+        last_commit_hash: assertSet(data.last_commit_hash),
+        data_hash: assertSet(data.data_hash),
+
+        validators_hash: assertSet(data.validators_hash),
+        next_validators_hash: assertSet(data.next_validators_hash),
+        consensus_hash: assertSet(data.consensus_hash),
+        app_hash: assertSet(data.app_hash),
+        last_results_hash: assertSet(data.last_results_hash),
+
+        evidence_hash: assertSet(data.evidence_hash),
+        proposer_address: assertNotEmpty(data.proposer_address),
+    };
+}
+
+function decodeBlockId(data: RpcBlockId): BlockId {
+    return {
+        hash: assertNotEmpty(data.hash),
+        parts: {
+            total: assertNotEmpty(data.parts.total),
+            hash: assertNotEmpty(data.parts.hash),
+        },
+    };
+}
+
+function decodeAbciInfo(data: RpcAbciInfoResponse): AbciInfoResponse {
+    return {
+        response: {
+            version: data.version,
+            app_version: data.app_version,
+            last_block_height: may(apiToSmallInt, data.last_block_height),
+            last_block_app_hash: data.last_block_app_hash,
+        },
+    };
+}
+
+interface RpcAbciInfoResponse {
+    readonly version: string;
+    readonly app_version: string;
+    readonly last_block_height?: string;
+    /** base64 encoded */
+    readonly last_block_app_hash?: string;
 }

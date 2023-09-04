@@ -15,7 +15,7 @@
 */
 
 import HttpProvider from 'rweb3-providers-http';
-import WebsocketProvider, { SubscriptionEvent } from 'rweb3-providers-ws';
+import WebsocketProvider from 'rweb3-providers-ws';
 import { isNullish, jsonRpc, isResponseRpcError } from 'rweb3-utils';
 import {
     RigoExecutionAPI,
@@ -29,7 +29,11 @@ import {
     JsonRpcResponseWithError,
     JsonRpcError,
     JsonRpcRequest,
+    JsonRpcSuccessResponse,
+    JsonRpcResponseWithResult,
+    SubscriptionEvent,
 } from 'rweb3-types';
+import * as responses from 'rweb3-types';
 import { InvalidResponseError, ResponseError, RpcError, rpcErrorsMap } from 'rweb3-errors';
 import { Stream } from 'xstream';
 
@@ -43,6 +47,9 @@ const availableProviders = {
     HttpProvider: HttpProvider,
     WebsocketProvider: WebsocketProvider,
 };
+
+// Decoder is a generic that matches all methods of Responses
+export type Decoder<T extends responses.Response> = (res: JsonRpcSuccessResponse) => T;
 
 export class RWeb3RequestManager<API extends RWeb3APISpec = RigoExecutionAPI> {
     private _provider: HttpProvider | WebsocketProvider;
@@ -82,7 +89,7 @@ export class RWeb3RequestManager<API extends RWeb3APISpec = RigoExecutionAPI> {
     public async send<
         Method extends RWeb3APIMethod<API>,
         ResponseType = RWeb3APIReturnType<API, Method>,
-    >(request: RWeb3APIRequest<API, Method>): Promise<ResponseType> {
+    >(request: RWeb3APIRequest<API, Method>): Promise<JsonRpcResponseWithResult<ResponseType>> {
         const { provider } = this;
 
         const payload = jsonRpc.toPayload(request);
@@ -93,7 +100,7 @@ export class RWeb3RequestManager<API extends RWeb3APISpec = RigoExecutionAPI> {
         );
 
         if (jsonRpc.isResponseWithResult(response)) {
-            return response.result;
+            return response;
         }
 
         console.error('response', response);
