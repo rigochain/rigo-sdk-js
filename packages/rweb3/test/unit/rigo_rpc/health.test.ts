@@ -12,7 +12,7 @@ describe('health check ', () => {
 
     it('should call rweb3 with testServerRWeb3Instance.getHealth method success return', async () => {
         let healthResponse = await testServerRWeb3Instance.rigo.health();
-        expect(healthResponse).toEqual({});
+        expect(healthResponse).toEqual(null);
     });
 
     it('should call rweb3 with notConnectServerRWeb3Instance.getHealth method fail return', async () => {

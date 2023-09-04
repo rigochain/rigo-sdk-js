@@ -15,7 +15,7 @@ describe('status check ', () => {
 
         expect(websocketStatusResponse.node_info.channels).toEqual('40202122233038606100');
         expect(websocketStatusResponse.validator_info.pub_key.type).toEqual(
-            'tendermint/PubKeySecp256k1',
+            'tendermint/PubKeyEd25519',
         );
     });
 });

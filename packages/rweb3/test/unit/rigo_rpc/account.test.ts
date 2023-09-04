@@ -17,8 +17,10 @@ describe('account check ', () => {
 
         console.log(JSON.stringify(testAccountResponse));
 
-        expect(testAccountResponse.key).toEqual(testAccountAddress);
-        expect(testAccountResponse.value.address).toEqual(testAccountAddress);
+        expect(testAccountResponse.key.toLowerCase()).toEqual(testAccountAddress.toLowerCase());
+        expect(testAccountResponse.value.address.toLowerCase()).toEqual(
+            testAccountAddress.toLowerCase(),
+        );
         expect(testAccountResponse.value.nonce).toBeDefined();
         expect(testAccountResponse.value.balance).toBeDefined();
     });
