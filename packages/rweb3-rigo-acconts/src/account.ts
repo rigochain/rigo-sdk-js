@@ -15,7 +15,8 @@
 */
 
 import BN from 'bn.js';
-import { PrvKey, PubKey, Bytes } from 'rweb3-utils';
+import { Bytes } from 'rweb3-utils';
+import { PrvKey, PubKey } from './tx/types';
 
 export class Account {
     address: string;

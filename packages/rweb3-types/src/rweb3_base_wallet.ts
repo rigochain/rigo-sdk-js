@@ -64,23 +64,23 @@ export interface Web3BaseWalletAccount {
 
     readonly address: string;
     readonly privateKey: string;
-    readonly signTransaction: (tx: any) => Promise<{
-        readonly messageHash: HexString;
-        readonly r: HexString;
-        readonly s: HexString;
-        readonly v: HexString;
-        readonly rawTransaction: HexString;
-        readonly transactionHash: HexString;
-    }>;
-    readonly sign: (data: Record<string, unknown> | string) => {
-        readonly messageHash: HexString;
-        readonly r: HexString;
-        readonly s: HexString;
-        readonly v: HexString;
-        readonly message?: string;
-        readonly signature: HexString;
-    };
-    readonly encrypt: (password: string, options?: Record<string, unknown>) => Promise<KeyStore>;
+    // readonly signTransaction: (tx: any) => Promise<{
+    //     readonly messageHash: HexString;
+    //     readonly r: HexString;
+    //     readonly s: HexString;
+    //     readonly v: HexString;
+    //     readonly rawTransaction: HexString;
+    //     readonly transactionHash: HexString;
+    // }>;
+    // readonly sign: (data: Record<string, unknown> | string) => {
+    //     readonly messageHash: HexString;
+    //     readonly r: HexString;
+    //     readonly s: HexString;
+    //     readonly v: HexString;
+    //     readonly message?: string;
+    //     readonly signature: HexString;
+    // };
+    // readonly encrypt: (password: string, options?: Record<string, unknown>) => Promise<KeyStore>;
 }
 
 export interface Web3AccountProvider<T> {
