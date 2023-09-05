@@ -18,7 +18,7 @@ import * as trxPb from './trx_pb';
 import Long from 'long';
 import { Bytes } from 'rweb3-utils';
 import BN from 'bn.js';
-import { Account } from './account.js';
+import { Account } from '../account';
 import { fromNanoSecond, getNanoSecond } from 'rweb3-utils';
 import { createHash } from 'crypto';
 import { TrxProtoUtils } from './trx_pb';

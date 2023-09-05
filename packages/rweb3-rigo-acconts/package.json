@@ -1,5 +1,5 @@
 {
-  "name": "rweb3-accounts",
+  "name": "rweb3-rigo-accounts",
   "version": "0.0.33",
   "main": "./lib/commonjs/index.js",
   "module": "./lib/esm/index.js",
@@ -46,7 +46,6 @@
     "eslint-plugin-prettier": "^5.0.0",
     "jest": "^28.1.3",
     "jest-extended": "^3.0.1",
-    "prettier": "^3.0.0",
     "ts-jest": "^28.0.7",
     "typescript": "^4.7.4"
   },

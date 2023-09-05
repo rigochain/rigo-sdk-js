@@ -22,4 +22,22 @@
 import RWeb3 from './rweb3.js';
 
 export default RWeb3;
+
+/**
+ * Named exports for all objects which are the default-exported-object in their packages
+ */
+
 export { RWeb3 };
+
+/**
+ * Export all packages grouped by name spaces
+ */
+export * as rigo from './rigo.exports.js';
+
+/**
+ * Export all types from `rweb3-types` without a namespace (in addition to being available at `types` namespace).
+ * To enable the user to write: `function something(): RWeb3Api` without the need for `types.RWeb3Api`.
+ * And the same for `rweb3-errors`. Because this package contains error classes and constants.
+ */
+export * from 'rweb3-errors';
+export * from 'rweb3-types';

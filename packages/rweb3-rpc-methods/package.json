@@ -58,6 +58,6 @@
     "rweb3-utils": "0.0.33",
     "rweb3-types": "0.0.33",
     "rweb3-validator": "0.0.33",
-    "rweb3-accounts": "0.0.33"
+    "rweb3-rigo-accounts": "0.0.33"
   }
 }

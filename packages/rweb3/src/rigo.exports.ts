@@ -15,3 +15,6 @@
 */
 
 export * from 'rweb3-rigo';
+
+export * as accounts from 'rweb3-rigo-accounts';
+export * as contract from 'rweb3-rigo-contract';

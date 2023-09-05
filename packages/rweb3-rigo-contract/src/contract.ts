@@ -16,7 +16,7 @@
 
 import RWeb3Rigo from 'rweb3-rigo'; // --> rpc 통신으로 변경해야 됨.
 import Web3EthAbi from 'web3-eth-abi';
-import { TrxBuilder, Account } from 'rweb3-accounts';
+import { TrxBuilder, Account } from 'rweb3-rigo-accounts';
 import { Bytes } from 'rweb3-utils';
 import { TxResponse, VmCallResponse } from 'rweb3-types';
 

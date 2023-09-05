@@ -1,7 +1,7 @@
 import { RWeb3RequestManager } from 'rweb3-core';
 
 import { rigoRpcMethods } from '../../../src/index';
-import { TrxProtoUtils } from 'rweb3-accounts';
+import { TrxProtoUtils } from 'rweb3-rigo-accounts';
 import { TrxProto } from 'rweb3-types';
 
 describe('broadcastTrxSync', () => {

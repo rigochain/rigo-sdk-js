@@ -15,7 +15,7 @@ You should have received a copy of the GNU Lesser General Public License
 along with web3.js.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-import { Account } from 'rweb3-accounts';
+import { Account } from 'rweb3-rigo-accounts';
 
 export const initAccountsForContext = () => {
     let account = new Account();
