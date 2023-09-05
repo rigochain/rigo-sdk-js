@@ -127,6 +127,18 @@ export class RWeb3Rigo extends RWeb3Context {
         return rpcMethodsWrappers.broadcastTxCommit(this, tx);
     }
 
+    broadcastRawTxSync(signedRawTx: string) {
+        return rpcMethodsWrappers.broadcastRawTxSync(this, signedRawTx);
+    }
+
+    broadcastRawTxAsync(signedRawTx: string) {
+        return rpcMethodsWrappers.broadcastRawTxAsync(this, signedRawTx);
+    }
+
+    broadcastRawTxCommit(signedRawTx: string) {
+        return rpcMethodsWrappers.broadcastRawTxCommit(this, signedRawTx);
+    }
+
     delegatee(addr: string) {
         return rpcMethodsWrappers.delegatee(this, addr);
     }

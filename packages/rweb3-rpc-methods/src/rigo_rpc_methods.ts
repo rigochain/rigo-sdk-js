@@ -442,8 +442,43 @@ export async function broadcastTxCommit(
     );
 }
 
-// end tendermint apis
+export async function broadcastRawTxAsync(
+    requestManager: RWeb3RequestManager,
+    signedRawTx: string,
+): Promise<BroadcastTxAsyncResponse> {
+    return ResponsesDecoder.decodeBroadcastTxAsync(
+        await requestManager.send({
+            method: 'broadcast_tx_async',
+            params: { tx: signedRawTx },
+        }),
+    );
+}
 
+export async function broadcastRawTxSync(
+    requestManager: RWeb3RequestManager,
+    signedRawTx: string,
+): Promise<BroadcastTxSyncResponse> {
+    return ResponsesDecoder.decodeBroadcastTxSync(
+        await requestManager.send({
+            method: 'broadcast_tx_sync',
+            params: { tx: signedRawTx },
+        }),
+    );
+}
+
+export async function broadcastRawTxCommit(
+    requestManager: RWeb3RequestManager,
+    signedRawTx: string,
+): Promise<BroadcastTxCommitResponse> {
+    return ResponsesDecoder.decodeBroadcastTxCommit(
+        await requestManager.send({
+            method: 'broadcast_tx_commit',
+            params: { tx: signedRawTx },
+        }),
+    );
+}
+
+// end tendermint apis
 // start not tendermint apis
 
 export async function delegatee(

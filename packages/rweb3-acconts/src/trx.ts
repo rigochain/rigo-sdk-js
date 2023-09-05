@@ -22,7 +22,7 @@ import { Account } from './account.js';
 import { fromNanoSecond, getNanoSecond } from 'rweb3-utils';
 import { createHash } from 'crypto';
 import { TrxProtoUtils } from './trx_pb';
-import { TrxProto } from 'rweb3-types';
+import { HexString, ResponsesDecoder, TrxProto } from 'rweb3-types';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 function isSet(value: any): boolean {
@@ -198,6 +198,19 @@ function SignTrx(tx: TrxProto, acct: Account): [Bytes, Bytes] {
     return [new Bytes(tx.sig), new Bytes(TrxProtoUtils.encode(tx).finish())];
 }
 
+function signedRawTransaction(tx: TrxProto, acct: Account): HexString {
+    tx.sig = new Uint8Array();
+
+    const buf = TrxProtoUtils.encode(tx);
+    const txbz = buf.finish();
+
+    tx.sig = acct.sign(new Bytes(txbz));
+
+    const signedTxByte = new Bytes(TrxProtoUtils.encode(tx).finish());
+
+    return Buffer.from(signedTxByte).toString('base64');
+}
+
 function VerifyTrx(tx: TrxProto, acct: Account): boolean {
     const oriSig = tx.sig;
     tx.sig = new Uint8Array();
@@ -217,4 +230,5 @@ export const TrxBuilder = {
     VerifyTrx,
     SignTrx,
     buildContractTrx,
+    signedRawTransaction,
 };

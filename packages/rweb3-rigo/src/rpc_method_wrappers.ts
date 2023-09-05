@@ -170,6 +170,27 @@ export async function broadcastTxCommit(web3Context: RWeb3Context<RigoExecutionA
     return rigoRpcMethods.broadcastTxCommit(web3Context.requestManager, tx);
 }
 
+export async function broadcastRawTxSync(
+    web3Context: RWeb3Context<RigoExecutionAPI>,
+    signedRawTx: string,
+) {
+    return rigoRpcMethods.broadcastRawTxSync(web3Context.requestManager, signedRawTx);
+}
+
+export async function broadcastRawTxAsync(
+    web3Context: RWeb3Context<RigoExecutionAPI>,
+    signedRawTx: string,
+) {
+    return rigoRpcMethods.broadcastRawTxAsync(web3Context.requestManager, signedRawTx);
+}
+
+export async function broadcastRawTxCommit(
+    web3Context: RWeb3Context<RigoExecutionAPI>,
+    signedRawTx: string,
+) {
+    return rigoRpcMethods.broadcastRawTxCommit(web3Context.requestManager, signedRawTx);
+}
+
 export async function delegatee(web3Context: RWeb3Context<RigoExecutionAPI>, addr: string) {
     return rigoRpcMethods.delegatee(web3Context.requestManager, addr);
 }

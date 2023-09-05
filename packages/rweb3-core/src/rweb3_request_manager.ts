@@ -100,7 +100,6 @@ export class RWeb3RequestManager<API extends RWeb3APISpec = RigoExecutionAPI> {
         );
 
         if (jsonRpc.isResponseWithResult(response)) {
-            console.log('response', JSON.stringify(response));
             return response;
         }
 
