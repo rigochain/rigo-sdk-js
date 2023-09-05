@@ -16,6 +16,7 @@
 // TODO : Wallet 작업 필요함
 import { HexString } from './primitives_types.js';
 import { BytesUint8Array } from './bytes_unit8array';
+import { TrxProto } from './trx_proto';
 
 export type Cipher = 'aes-128-ctr' | 'aes-128-cbc' | 'aes-256-cbc';
 
@@ -81,23 +82,10 @@ export interface Web3BaseWalletAccount {
 
     sign(msg: Uint8Array): BytesUint8Array;
 
-    // readonly signTransaction: (tx: any) => Promise<{
-    //     readonly messageHash: HexString;
-    //     readonly r: HexString;
-    //     readonly s: HexString;
-    //     readonly v: HexString;
-    //     readonly rawTransaction: HexString;
-    //     readonly transactionHash: HexString;
-    // }>;
-    // readonly sign: (data: Record<string, unknown> | string) => {
-    //     readonly messageHash: HexString;
-    //     readonly r: HexString;
-    //     readonly s: HexString;
-    //     readonly v: HexString;
-    //     readonly message?: string;
-    //     readonly signature: HexString;
-    // };
-    // readonly encrypt: (password: string, options?: Record<string, unknown>) => Promise<KeyStore>;
+    signTransaction(trxProto: TrxProto): {
+        rawTransaction: string;
+        transactionHash: string;
+    };
 }
 
 export interface Web3AccountProvider<T> {

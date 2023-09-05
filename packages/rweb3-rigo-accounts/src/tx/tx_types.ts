@@ -2,7 +2,7 @@ import { BytesUint8Array } from 'rweb3-types';
 import { createHash, randomBytes } from 'crypto';
 import * as secp256k1 from 'secp256k1';
 
-export interface TxData {
+export interface Transaction {
     hash?: string;
     version?: number;
     time?: Date;
@@ -12,11 +12,11 @@ export interface TxData {
     amount: string;
     gas: string;
     type?: number;
-    payload?: object | TrxPayloadUnDelegating;
+    payload?: object | TransactionPayloadUnDelegating;
     sig?: string;
 }
 
-interface TrxPayloadUnDelegating {
+export interface TransactionPayloadUnDelegating {
     txhash: string;
 }
 

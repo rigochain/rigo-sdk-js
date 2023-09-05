@@ -16,7 +16,7 @@
 
 import RWeb3Rigo from 'rweb3-rigo'; // --> rpc 통신으로 변경해야 됨.
 import Web3EthAbi from 'web3-eth-abi';
-import { TrxBuilder, Account } from 'rweb3-rigo-accounts';
+import { TrxProtoBuilder, RWeb3Account } from 'rweb3-rigo-accounts';
 import { BytesUint8Array } from 'rweb3-types';
 import { TxResponse, VmCallResponse } from 'rweb3-types';
 
@@ -65,7 +65,7 @@ export default class Contract {
         return encodeFunctionSignature;
     }
 
-    public deploy(account: Account, bytecode: string, args: any[]) {
+    public deploy(account: RWeb3Account, nonce: number, bytecode: string, args: any[]) {
         let abi = this._jsonInterface.find((item: { type: any }) => item.type === 'constructor');
         if (!abi) {
             abi = {
@@ -83,42 +83,42 @@ export default class Contract {
         } else {
             bytecodeWithArguments = bytecode;
         }
-        const tx = TrxBuilder.buildContractTrx({
+        const tx = TrxProtoBuilder.buildContractTrxProto({
             from: account.address,
             to: '0000000000000000000000000000000000000000',
-            nonce: account.nonce,
+            nonce: nonce,
             gas: this.gas,
             amount: '0',
             payload: { data: bytecodeWithArguments },
         });
-        const [sig] = TrxBuilder.SignTrx(tx, account);
+        const [sig] = TrxProtoBuilder.signTrxProto(tx, account);
         tx.sig = sig;
-        const verification = TrxBuilder.VerifyTrx(tx, account);
+        const verification = TrxProtoBuilder.verifyTrxProto(tx, account);
         if (!verification) throw Error('sign transaction verification failed');
 
         return this._rweb3.broadcastTxSync(tx);
     }
 
-    public execute(account: Account, functionName: string, values: any[]) {
+    public execute(account: RWeb3Account, nonce: number, functionName: string, values: any[]) {
         const functionSignature = this.getFunctionSignature(functionName);
         const encodeFunctionSignature = this.getEncodeFunctionSignature(functionSignature, values);
-        const tx = TrxBuilder.buildContractTrx({
+        const tx = TrxProtoBuilder.buildContractTrxProto({
             from: account.address,
             to: this._contractAddress,
-            nonce: account.nonce,
+            nonce: nonce,
             gas: this.gas,
             amount: '0',
             payload: { data: encodeFunctionSignature },
         });
-        const [sig] = TrxBuilder.SignTrx(tx, account);
+        const [sig] = TrxProtoBuilder.signTrxProto(tx, account);
         tx.sig = sig;
-        const verification = TrxBuilder.VerifyTrx(tx, account);
+        const verification = TrxProtoBuilder.verifyTrxProto(tx, account);
         if (!verification) throw Error('sign transaction verification failed');
 
         return this._rweb3.broadcastTxSync(tx);
     }
 
-    public async query(account: Account, functionName: string, values: any[]) {
+    public async query(account: RWeb3Account, functionName: string, values: any[]) {
         const functionSignature = this.getFunctionSignature(functionName);
         const encodeFunctionSignature = this.getEncodeFunctionSignature(functionSignature, values);
         const vmCallResult: VmCallResponse = await this._rweb3.vmCall(

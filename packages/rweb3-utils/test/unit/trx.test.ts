@@ -1,5 +1,5 @@
-import { TrxBuilder, Trx } from '../../../rweb3-rigo-acconts/src/tx/trx'; // Replace 'your-file' with your actual file name
-import * as trxPb from '../../../rweb3-rigo-acconts/src/tx/trx_pb';
+import { TrxBuilder, Trx } from '../../../rweb3-rigo-accounts/src/tx/trx'; // Replace 'your-file' with your actual file name
+import * as trxPb from '../../../rweb3-rigo-accounts/src/tx/trx_pb';
 import Long from 'long';
 import { Account } from '../../src';
 

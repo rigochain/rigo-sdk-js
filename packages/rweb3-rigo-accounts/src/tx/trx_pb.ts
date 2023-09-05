@@ -164,25 +164,25 @@ export const TrxProtoUtils = {
         message.version !== undefined && (obj.version = Math.round(message.version));
         message.time !== undefined && (obj.time = (message.time || Long.ZERO).toString());
         message.nonce !== undefined && (obj.nonce = (message.nonce || Long.UZERO).toString());
-        message.from !== undefined &&
-            (obj.from = base64FromBytes(
-                message.from !== undefined ? message.from : new Uint8Array(),
-            ));
-        message.to !== undefined &&
-            (obj.to = base64FromBytes(message.to !== undefined ? message.to : new Uint8Array()));
-        message.Amount !== undefined &&
-            (obj.Amount = base64FromBytes(
-                message.Amount !== undefined ? message.Amount : new Uint8Array(),
-            ));
-        message.Gas !== undefined &&
-            (obj.Gas = base64FromBytes(message.Gas !== undefined ? message.Gas : new Uint8Array()));
+        message.from !== undefined
+            ? (obj.from = base64FromBytes(message.from))
+            : (obj.from = new Uint8Array());
+        message.to !== undefined
+            ? (obj.to = base64FromBytes(message.to))
+            : (obj.to = new Uint8Array());
+        message.Amount !== undefined
+            ? (obj.Amount = base64FromBytes(message.Amount))
+            : (message.Amount = new Uint8Array());
+        message.Gas !== undefined
+            ? (obj.Gas = base64FromBytes(message.Gas))
+            : (message.Gas = new Uint8Array());
         message.type !== undefined && (obj.type = Math.round(message.type));
-        message.Payload !== undefined &&
-            (obj.Payload = base64FromBytes(
-                message.Payload !== undefined ? message.Payload : new Uint8Array(),
-            ));
-        message.sig !== undefined &&
-            (obj.sig = base64FromBytes(message.sig !== undefined ? message.sig : new Uint8Array()));
+        message.Payload !== undefined
+            ? (obj.Payload = base64FromBytes(message.Payload))
+            : (message.Payload = new Uint8Array());
+        message.sig !== undefined
+            ? (obj.sig = base64FromBytes(message.sig))
+            : (message.sig = new Uint8Array());
         return obj;
     },
 
@@ -237,15 +237,13 @@ export const TrxPayloadStakingProto = {
     },
 
     toJSON(_: TrxPayloadStakingProto): unknown {
-        const obj: any = {};
-        return obj;
+        return {};
     },
 
     fromPartial<I extends Exact<DeepPartial<TrxPayloadStakingProto>, I>>(
         _: I,
     ): TrxPayloadStakingProto {
-        const message = createBaseTrxPayloadStakingProto();
-        return message;
+        return createBaseTrxPayloadStakingProto();
     },
 };
 

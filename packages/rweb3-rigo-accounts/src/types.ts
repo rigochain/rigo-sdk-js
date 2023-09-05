@@ -15,8 +15,8 @@ You should have received a copy of the GNU Lesser General Public License
 along with web3.js.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-import { Web3BaseWalletAccount, HexString } from 'rweb3-types';
-import { PrvKey, PubKey, TxData } from './tx/types.js';
+import { Web3BaseWalletAccount } from 'rweb3-types';
+import { PrvKey, PubKey, Transaction } from './tx/tx_types';
 
 export type SignTransactionResult = {
     rawTransaction: string;
@@ -24,7 +24,7 @@ export type SignTransactionResult = {
 };
 
 export type SignTransactionFunction = (
-    transaction: TxData | Record<string, unknown>,
+    transaction: Transaction | Record<string, unknown>,
 ) => SignTransactionResult;
 
 export interface RWeb3Account extends Web3BaseWalletAccount {

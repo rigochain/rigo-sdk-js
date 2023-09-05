@@ -203,6 +203,19 @@ export async function account(web3Context: RWeb3Context<RigoExecutionAPI>, addr:
     return rigoRpcMethods.account(web3Context.requestManager, addr);
 }
 
+// export async function getTransactionCount(
+//   requestManager: Web3RequestManager,
+//   address: Address,
+//   blockNumber: BlockNumberOrTag,
+// ) {
+//     validator.validate(['address', 'blockNumberOrTag'], [address, blockNumber]);
+//
+//     return requestManager.send({
+//         method: 'eth_getTransactionCount',
+//         params: [address, blockNumber],
+//     });
+// }
+
 export async function proposals(web3Context: RWeb3Context<RigoExecutionAPI>, txHash: string) {
     return rigoRpcMethods.proposals(web3Context.requestManager, txHash);
 }

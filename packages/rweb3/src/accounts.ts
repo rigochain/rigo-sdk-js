@@ -15,12 +15,23 @@ You should have received a copy of the GNU Lesser General Public License
 along with web3.js.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-import { Account } from 'rweb3-rigo-accounts';
+import {
+    create,
+    privateKeyToAccount,
+    privateKeyToPrvKey,
+    prvKeyToAccount,
+    sign,
+    signTransaction,
+} from 'rweb3-rigo-accounts';
+import { RWeb3Context } from 'rweb3-core';
 
 export const initAccountsForContext = () => {
-    let account = new Account();
-
     return {
-        account: account,
+        create: create,
+        privateKeyToAccount: privateKeyToAccount,
+        privateKeyToPrvKey: privateKeyToPrvKey,
+        prvKeyToAccount: prvKeyToAccount,
+        sign: sign,
+        signTransaction: signTransaction,
     };
 };

@@ -1,7 +1,7 @@
 ﻿import { create, privateKeyToAccount } from '../../src';
 import { RWeb3Account } from '../../src/types';
 
-describe('func.ts class test', () => {
+describe('account.ts class test', () => {
     it('create func test && privateKeyToAccount Equal', () => {
         let account: RWeb3Account = create();
         console.log(account.address);
