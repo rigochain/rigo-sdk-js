@@ -24,7 +24,7 @@ import {
     SubscriptionEvent,
     TrxProto,
 } from 'rweb3-types';
-import { Bytes } from 'rweb3-utils';
+import { BytesUint8Array } from 'rweb3-types';
 
 import {
     BlockchainResponse,
@@ -130,7 +130,7 @@ export async function blockByHash(
     hash: string | Uint8Array,
 ): Promise<BlockResponse> {
     if (typeof hash === 'string') {
-        hash = Bytes.fromHex(hash);
+        hash = BytesUint8Array.fromHex(hash);
     }
 
     return ResponsesDecoder.decodeBlockByHash(
@@ -320,7 +320,7 @@ export async function tx(
     hash: string | Uint8Array,
 ): Promise<TxResponse> {
     if (typeof hash === 'string') {
-        hash = Bytes.fromHex(hash);
+        hash = BytesUint8Array.fromHex(hash);
     }
 
     return ResponsesDecoder.decodeTx(
@@ -573,7 +573,7 @@ export async function vmCall(
                 addr: addr,
                 to: to,
                 height: height.toString(10),
-                data: Buffer.from(Bytes.fromHex(data)).toString('base64'),
+                data: Buffer.from(BytesUint8Array.fromHex(data)).toString('base64'),
             },
         }),
     );

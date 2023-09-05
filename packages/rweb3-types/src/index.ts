@@ -14,6 +14,7 @@
     limitations under the License.
 */
 
+export * from './bytes_unit8array';
 export * from './error_types.js';
 export * from './apis/rigo_execution_api.js';
 

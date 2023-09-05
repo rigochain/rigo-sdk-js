@@ -1,6 +1,5 @@
 import { RWeb3 } from '../../../src';
 import { getTestAccountPrivateKey, getTestWsServer } from '../e2e_utils';
-import { PrvKey } from 'rweb3-utils';
 import { Account, TrxBuilder } from 'rweb3-rigo-accounts';
 import { AccountResponse, BroadcastTxAsyncResponse } from 'rweb3-types';
 

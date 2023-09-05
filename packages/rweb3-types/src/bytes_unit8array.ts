@@ -17,23 +17,23 @@
 import * as cryptojs from 'crypto-js';
 import { webcrypto } from 'crypto';
 
-export class Bytes extends Uint8Array {
-    static fromHex(hex: string): Bytes {
+export class BytesUint8Array extends Uint8Array {
+    static fromHex(hex: string): BytesUint8Array {
         if (hex.startsWith('0x')) {
             hex = hex.substring(2);
         }
         if (hex.length % 2 !== 0) {
             hex = '0' + hex;
         }
-        const ret = new Bytes(hex.length / 2);
+        const ret = new BytesUint8Array(hex.length / 2);
         for (let i = 0; i < ret.length; i++) {
             ret[i] = parseInt(hex.substring(i * 2, i * 2 + 2), 16);
         }
         return ret;
     }
 
-    static fromWords(w: cryptojs.lib.WordArray): Bytes {
-        const hexBytes = new Bytes(w.sigBytes);
+    static fromWords(w: cryptojs.lib.WordArray): BytesUint8Array {
+        const hexBytes = new BytesUint8Array(w.sigBytes);
         for (let i = 0; i < w.sigBytes; i++) {
             hexBytes[i] = (w.words[i >>> 0x2] >>> (0x18 - (i % 0x4) * 0x8)) & 0xff;
         }
@@ -41,7 +41,7 @@ export class Bytes extends Uint8Array {
     }
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    static parse(d: any, enc: string): Bytes {
+    static parse(d: any, enc: string): BytesUint8Array {
         switch (enc) {
             case 'hex':
                 return this.fromHex(d);
@@ -74,7 +74,7 @@ export class Bytes extends Uint8Array {
         return cryptojs.lib.WordArray.create(words);
     }
 
-    isEqual(o: Bytes): boolean {
+    isEqual(o: BytesUint8Array): boolean {
         for (let i = 0; i < this.length; i++) {
             if (this[i] !== o[i]) {
                 return false;
@@ -83,17 +83,17 @@ export class Bytes extends Uint8Array {
         return true;
     }
 
-    static rand(n: number): Bytes {
-        return webcrypto.getRandomValues(new Bytes(n));
+    static rand(n: number): BytesUint8Array {
+        return webcrypto.getRandomValues(new BytesUint8Array(n));
     }
 
-    static b64ToBytes(base64: string): Bytes {
+    static b64ToBytes(base64: string): BytesUint8Array {
         const binary_string =
             typeof window !== 'undefined'
                 ? window.atob(base64)
                 : Uint8Array.from(Buffer.from(base64, 'base64'));
         const len = binary_string.length;
-        const bytes = new Bytes(len);
+        const bytes = new BytesUint8Array(len);
         for (let i = 0; i < len; i++) {
             if (typeof binary_string === 'string') {
                 bytes[i] = binary_string.charCodeAt(i);

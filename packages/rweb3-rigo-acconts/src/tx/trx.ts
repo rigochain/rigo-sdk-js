@@ -16,7 +16,7 @@
 
 import * as trxPb from './trx_pb';
 import Long from 'long';
-import { Bytes } from 'rweb3-utils';
+import { BytesUint8Array } from 'rweb3-types';
 import BN from 'bn.js';
 import { Account } from '../account';
 import { fromNanoSecond, getNanoSecond } from 'rweb3-utils';
@@ -51,7 +51,7 @@ interface TrxPayloadCreateContract {
     data: string;
 }
 
-function DecodeTrx(d: Bytes): Trx {
+function DecodeTrx(d: BytesUint8Array): Trx {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     let payload: any;
     const tx = trxPb.TrxProtoUtils.decode(d);
@@ -64,7 +64,7 @@ function DecodeTrx(d: Bytes): Trx {
                 tx.Payload,
             );
             payload = {
-                txhash: new Bytes(p.txHash).toHex(),
+                txhash: new BytesUint8Array(p.txHash).toHex(),
             };
             break;
     }
@@ -77,13 +77,13 @@ function DecodeTrx(d: Bytes): Trx {
         version: tx.version,
         time: fromNanoSecond(tx.time),
         nonce: tx.nonce.toNumber(),
-        from: new Bytes(tx.from).toHex(),
-        to: new Bytes(tx.to).toHex(),
+        from: new BytesUint8Array(tx.from).toHex(),
+        to: new BytesUint8Array(tx.to).toHex(),
         amount: new BN(tx.Amount).toString(10),
         gas: new BN(tx.Gas).toString(10),
         type: tx.type,
         payload: payload,
-        sig: new Bytes(tx.sig).toHex(),
+        sig: new BytesUint8Array(tx.sig).toHex(),
     };
 }
 
@@ -92,8 +92,8 @@ function BuildTransferTrx(obj: Trx): TrxProto {
         version: isSet(obj.version) ? Number(obj.version) : 1,
         time: isSet(obj.time) ? getNanoSecond(obj.time) : getNanoSecond(),
         nonce: isSet(obj.nonce) && obj.nonce ? Long.fromValue(obj.nonce) : Long.fromValue(0),
-        from: Bytes.fromHex(obj.from),
-        to: Bytes.fromHex(obj.to),
+        from: BytesUint8Array.fromHex(obj.from),
+        to: BytesUint8Array.fromHex(obj.to),
         // proto3 default rule: If the field has default value, the filed should be omitted.
         Amount:
             obj.amount === '0'
@@ -114,8 +114,8 @@ function BuildDelegateTrx(obj: Trx): TrxProto {
         version: isSet(obj.version) ? Number(obj.version) : 1,
         time: isSet(obj.time) ? getNanoSecond(obj.time) : getNanoSecond(),
         nonce: isSet(obj.nonce) && obj.nonce ? Long.fromValue(obj.nonce) : Long.fromValue(1),
-        from: Bytes.fromHex(obj.from),
-        to: Bytes.fromHex(obj.to),
+        from: BytesUint8Array.fromHex(obj.from),
+        to: BytesUint8Array.fromHex(obj.to),
         // proto3 default rule: If the field has default value, the filed should be omitted.
         Amount:
             obj.amount === '0'
@@ -138,15 +138,15 @@ function BuildUndelegateTrx(obj: Trx): TrxProto {
     }
 
     const payloadBytes = trxPb.TrxPayloadUnstakingProto.encode({
-        txHash: Bytes.fromHex(payload.txhash),
+        txHash: BytesUint8Array.fromHex(payload.txhash),
     }).finish();
 
     return {
         version: isSet(obj.version) ? Number(obj.version) : 1,
         time: isSet(obj.time) ? getNanoSecond(obj.time) : getNanoSecond(),
         nonce: isSet(obj.nonce) && obj.nonce ? Long.fromValue(obj.nonce) : Long.fromValue(1),
-        from: Bytes.fromHex(obj.from),
-        to: Bytes.fromHex(obj.to),
+        from: BytesUint8Array.fromHex(obj.from),
+        to: BytesUint8Array.fromHex(obj.to),
         Amount:
             obj.amount === '0'
                 ? new Uint8Array()
@@ -167,15 +167,15 @@ function buildContractTrx(obj: Trx): TrxProto {
         throw Error('mandatory argument is missed');
     }
     const payloadBytes = trxPb.TrxPayloadContractProto.encode({
-        data: Bytes.fromHex(payload.data),
+        data: BytesUint8Array.fromHex(payload.data),
     }).finish();
 
     return {
         version: isSet(obj.version) ? Number(obj.version) : 1,
         time: isSet(obj.time) ? getNanoSecond(obj.time) : getNanoSecond(),
         nonce: isSet(obj.nonce) && obj.nonce ? Long.fromValue(obj.nonce) : Long.fromValue(1),
-        from: Bytes.fromHex(obj.from),
-        to: Bytes.fromHex(obj.to),
+        from: BytesUint8Array.fromHex(obj.from),
+        to: BytesUint8Array.fromHex(obj.to),
         Amount: new Uint8Array(),
         Gas:
             obj.gas === '0'
@@ -187,15 +187,15 @@ function buildContractTrx(obj: Trx): TrxProto {
     };
 }
 
-function SignTrx(tx: TrxProto, acct: Account): [Bytes, Bytes] {
+function SignTrx(tx: TrxProto, acct: Account): [BytesUint8Array, BytesUint8Array] {
     tx.sig = new Uint8Array();
 
     const buf = TrxProtoUtils.encode(tx);
     const txbz = buf.finish();
 
-    tx.sig = acct.sign(new Bytes(txbz));
+    tx.sig = acct.sign(new BytesUint8Array(txbz));
 
-    return [new Bytes(tx.sig), new Bytes(TrxProtoUtils.encode(tx).finish())];
+    return [new BytesUint8Array(tx.sig), new BytesUint8Array(TrxProtoUtils.encode(tx).finish())];
 }
 
 function signedRawTransaction(tx: TrxProto, acct: Account): HexString {
@@ -204,9 +204,9 @@ function signedRawTransaction(tx: TrxProto, acct: Account): HexString {
     const buf = TrxProtoUtils.encode(tx);
     const txbz = buf.finish();
 
-    tx.sig = acct.sign(new Bytes(txbz));
+    tx.sig = acct.sign(new BytesUint8Array(txbz));
 
-    const signedTxByte = new Bytes(TrxProtoUtils.encode(tx).finish());
+    const signedTxByte = new BytesUint8Array(TrxProtoUtils.encode(tx).finish());
 
     return Buffer.from(signedTxByte).toString('base64');
 }

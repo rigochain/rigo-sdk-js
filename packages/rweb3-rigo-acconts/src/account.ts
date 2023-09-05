@@ -15,7 +15,7 @@
 */
 
 import BN from 'bn.js';
-import { Bytes } from 'rweb3-utils';
+import { BytesUint8Array } from 'rweb3-types';
 import { PrvKey, PubKey } from './tx/types';
 
 export class Account {
@@ -46,7 +46,7 @@ export class Account {
         return ret;
     }
 
-    static Import(nm: string, secret: string, d: Bytes, dsecret?: string): Account {
+    static Import(nm: string, secret: string, d: BytesUint8Array, dsecret?: string): Account {
         const ret = new Account();
         ret.name = nm;
         ret.nonce = 0;
@@ -92,16 +92,16 @@ export class Account {
         this.balance = _bal.toString(10);
     }
 
-    sign(msg: Uint8Array): Bytes {
+    sign(msg: Uint8Array): BytesUint8Array {
         const sigobj = this.prvKey.sign(msg);
-        return new Bytes([...sigobj.signature, sigobj.recid & 0xff]);
+        return new BytesUint8Array([...sigobj.signature, sigobj.recid & 0xff]);
     }
 
     verify(sig: Uint8Array, msg: Uint8Array): boolean {
         return this.pubKey.verify(sig, msg);
     }
 
-    export(): Bytes {
+    export(): BytesUint8Array {
         return this.prvKey.export();
     }
 
@@ -112,7 +112,7 @@ export class Account {
             nonce: this.nonce,
             balance: this.balance,
             prvKey: this.prvKey.export().toHex(),
-            pubKey: new Bytes([...this.pubKey.x, ...this.pubKey.y]).toHex(),
+            pubKey: new BytesUint8Array([...this.pubKey.x, ...this.pubKey.y]).toHex(),
         };
         return JSON.stringify(tmp);
     }

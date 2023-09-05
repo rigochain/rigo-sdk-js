@@ -1,4 +1,4 @@
-import { Bytes } from 'rweb3-utils';
+import { BytesUint8Array } from 'rweb3-types';
 import { createHash, randomBytes } from 'crypto';
 import * as secp256k1 from 'secp256k1';
 
@@ -21,16 +21,16 @@ interface TrxPayloadUnDelegating {
 }
 
 export class PubKey {
-    compressed: Bytes;
-    x: Bytes;
-    y: Bytes;
+    compressed: BytesUint8Array;
+    x: BytesUint8Array;
+    y: BytesUint8Array;
 
     constructor(k: PrvKey) {
         const decompressed = secp256k1.publicKeyCreate(k.export(), false);
-        this.x = new Bytes(decompressed.subarray(1, 33));
-        this.y = new Bytes(decompressed.subarray(33, 65));
+        this.x = new BytesUint8Array(decompressed.subarray(1, 33));
+        this.y = new BytesUint8Array(decompressed.subarray(33, 65));
 
-        this.compressed = new Bytes(33);
+        this.compressed = new BytesUint8Array(33);
         if ((this.y[this.y.length - 1] & 1) === 0) {
             this.compressed[0] = 0x02;
         } else {
@@ -39,26 +39,26 @@ export class PubKey {
         this.compressed.set(this.x, 1);
     }
 
-    toAddress(): Bytes {
+    toAddress(): BytesUint8Array {
         return this.btcAddress();
     }
 
-    shaAddress(): Bytes {
+    shaAddress(): BytesUint8Array {
         const sha256 = createHash('sha256');
-        const decompressed = new Bytes([...this.x, ...this.y]);
+        const decompressed = new BytesUint8Array([...this.x, ...this.y]);
         const hash = sha256.update(decompressed).digest();
-        return new Bytes(hash.subarray(hash.length - 20));
+        return new BytesUint8Array(hash.subarray(hash.length - 20));
     }
 
-    btcAddress(): Bytes {
+    btcAddress(): BytesUint8Array {
         const sha256 = createHash('sha256');
         const ripemd160 = createHash('ripemd160');
         const hash = sha256.update(this.compressed).digest();
         const addr = ripemd160.update(hash).digest();
-        return new Bytes(addr);
+        return new BytesUint8Array(addr);
     }
 
-    ethAddress(): Bytes {
+    ethAddress(): BytesUint8Array {
         throw Error('not supported');
     }
 
@@ -76,7 +76,7 @@ export class PubKey {
 }
 
 export class PrvKey {
-    private d: Bytes;
+    private d: BytesUint8Array;
 
     constructor() {
         let rn;
@@ -84,7 +84,7 @@ export class PrvKey {
             rn = randomBytes(32);
         } while (!secp256k1.privateKeyVerify(rn));
 
-        this.d = new Bytes(rn);
+        this.d = new BytesUint8Array(rn);
     }
 
     sign(msg: Uint8Array): { signature: Uint8Array; recid: number } {
@@ -93,16 +93,16 @@ export class PrvKey {
         return secp256k1.ecdsaSign(hmsg, this.d);
     }
 
-    export(): Bytes {
+    export(): BytesUint8Array {
         return this.d;
     }
 
     static import(k: string | ArrayBufferLike): PrvKey {
         const ret = new PrvKey();
         if (typeof k === 'string') {
-            ret.d = Bytes.fromHex(k);
+            ret.d = BytesUint8Array.fromHex(k);
         } else {
-            ret.d = new Bytes(k);
+            ret.d = new BytesUint8Array(k);
         }
         return ret;
     }

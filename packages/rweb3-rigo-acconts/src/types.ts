@@ -18,14 +18,7 @@ along with web3.js.  If not, see <http://www.gnu.org/licenses/>.
 import { Web3BaseWalletAccount, HexString } from 'rweb3-types';
 import { PrvKey, PubKey, TxData } from './tx/types.js';
 
-export type SignatureObject = {
-    messageHash: string;
-    r: string;
-    s: string;
-    v: string;
-};
-
-export type SignTransactionResult = SignatureObject & {
+export type SignTransactionResult = {
     rawTransaction: string;
     transactionHash: string;
 };
@@ -34,14 +27,6 @@ export type SignTransactionFunction = (
     transaction: TxData | Record<string, unknown>,
 ) => SignTransactionResult;
 
-export type SignResult = SignatureObject & {
-    message?: string;
-    signature: string;
-};
-
-export type SignFunction = (data: string, privateKey: string) => SignResult;
-
-// TODO
 export interface RWeb3Account extends Web3BaseWalletAccount {
     address: string;
     prvKey: PrvKey;

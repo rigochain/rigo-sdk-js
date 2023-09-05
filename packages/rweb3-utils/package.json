@@ -54,7 +54,6 @@
     "@types/crypto-js": "^4.1.1",
     "crypto-js": "^4.1.1",
     "bn.js": "^5.2.1",
-    "secp256k1": "^4.0.2",
     "ethereum-cryptography": "2.1.2",
     "long": "5.2.3",
     "ts-proto": "^1.137.0",

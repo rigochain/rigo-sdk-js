@@ -14,18 +14,20 @@
     limitations under the License.
 */
 
-export * from './validation.js';
-export * from './formatter.js';
-export * from './hash.js';
-export * from './random.js';
-export * from './string_manipulation.js';
-export * from './objects.js';
-export * from './promise_helpers.js';
-export * from './json_rpc.js';
-export * as jsonRpc from './json_rpc.js';
-export * from './web3_deferred_promise.js';
-export * from './chunk_response_parser.js';
-export * from './uuid.js';
-export * from './uint8array.js';
+export interface Transaction {
+    hash?: string;
+    version?: number;
+    time?: Date;
+    nonce?: number;
+    from: string;
+    to: string;
+    amount: string;
+    gas: string;
+    type?: number;
+    payload?: object | TransactionPayloadUnDelegating;
+    sig?: string;
+}
 
-export * from './time.js';
+interface TransactionPayloadUnDelegating {
+    txhash: string;
+}

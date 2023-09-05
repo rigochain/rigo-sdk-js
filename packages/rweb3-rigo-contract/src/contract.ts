@@ -17,7 +17,7 @@
 import RWeb3Rigo from 'rweb3-rigo'; // --> rpc 통신으로 변경해야 됨.
 import Web3EthAbi from 'web3-eth-abi';
 import { TrxBuilder, Account } from 'rweb3-rigo-accounts';
-import { Bytes } from 'rweb3-utils';
+import { BytesUint8Array } from 'rweb3-types';
 import { TxResponse, VmCallResponse } from 'rweb3-types';
 
 export default class Contract {
@@ -128,7 +128,7 @@ export default class Contract {
             encodeFunctionSignature,
         );
         if (vmCallResult.value.returnData) {
-            const bytes = Bytes.b64ToBytes(vmCallResult.value.returnData);
+            const bytes = BytesUint8Array.b64ToBytes(vmCallResult.value.returnData);
             vmCallResult.value.returnData = bytes.toHex();
         }
         return vmCallResult;
@@ -140,7 +140,7 @@ export default class Contract {
             throw Error('not found contract address');
 
         // TODO : 여기 확인해야됨.. Response 값이  Uint8Array 로 셋팅 됨..
-        const bytes = Bytes.b64ToBytes(transactionData.tx_result.data.toString());
+        const bytes = BytesUint8Array.b64ToBytes(transactionData.tx_result.data.toString());
         let bytesToHex = bytes.toHex();
         if (!bytesToHex.startsWith('0x')) bytesToHex = '0x' + bytesToHex;
         return bytesToHex.toLowerCase();

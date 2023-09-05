@@ -1,7 +1,6 @@
 import { RWeb3 } from '../../../src';
 import { getTestAccountPrivateKey, getTestWsServer } from '../e2e_utils';
-import { PrvKey } from 'rweb3-utils';
-import { Account, TrxBuilder } from 'rweb3-rigo-accounts';
+import { Account, privateKeyToAccount, TrxBuilder } from 'rweb3-rigo-accounts';
 import { AccountResponse, BroadcastTxAsyncResponse } from 'rweb3-types';
 
 describe('broadcastTxAsync check ', () => {
@@ -14,24 +13,22 @@ describe('broadcastTxAsync check ', () => {
     it('should call rweb3 with testWebsocketRWeb3Instance.broadcastTxAsync() method success return', async () => {
         let secretKey = getTestAccountPrivateKey();
 
-        const d = PrvKey.import(secretKey).export();
-        const acct = Account.Import('test', secretKey, d);
+        const rWeb3Account = privateKeyToAccount(secretKey);
 
         let accountResponse: AccountResponse = await testWebsocketRWeb3Instance.rigo.account(
-            acct.address,
+            rWeb3Account.address,
         );
 
-        acct.balance = accountResponse.value.balance;
-        acct.nonce = accountResponse.value.nonce;
+        rWeb3Account.balance = accountResponse.value.balance;
 
-        console.log('address acct.balance', acct.balance);
-        console.log('address acct.nonce', acct.nonce);
+        console.log('address acct.balance', rWeb3Account.balance);
+        console.log('address acct.nonce', rWeb3Account.nonce);
 
         //
         // build a tx.
         const tx = TrxBuilder.BuildTransferTrx({
-            from: acct.address,
-            nonce: acct.nonce,
+            from: rWeb3Account.address,
+            nonce: accountResponse.value.nonce,
             to: '6fff13a50450039c943c9987fa43cef0d7421904',
             amount: '1000000000000000',
             gas: '1000000000000000',
