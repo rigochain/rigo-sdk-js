@@ -1,6 +1,6 @@
 import { RWeb3 } from '../../../src';
 import { getTestAccountPrivateKey, getTestWsServer } from '../e2e_utils';
-import { Account, TrxBuilder } from 'rweb3-rigo-accounts';
+import { privateKeyToAccount, RWeb3Account, TrxProtoBuilder } from 'rweb3-rigo-accounts';
 import { AccountResponse, BroadcastTxSyncResponse } from 'rweb3-types';
 
 describe('broadcastTxSync check ', () => {
@@ -13,8 +13,7 @@ describe('broadcastTxSync check ', () => {
     it('should call rweb3 with testWebsocketRWeb3Instance.broadcastTxSync() method success return', async () => {
         let secretKey = getTestAccountPrivateKey();
 
-        const d = PrvKey.import(secretKey).export();
-        const acct = Account.Import('test', secretKey, d);
+        const acct = privateKeyToAccount(secretKey) as RWeb3Account;
 
         let accountResponse: AccountResponse = await testWebsocketRWeb3Instance.rigo.account(
             acct.address,
@@ -28,16 +27,16 @@ describe('broadcastTxSync check ', () => {
 
         //
         // build a tx.
-        const tx = TrxBuilder.BuildTransferTrx({
+        const tx = TrxProtoBuilder.buildTransferTrxProto({
             from: acct.address,
-            nonce: acct.nonce,
+            nonce: accountResponse.value.nonce,
             to: '6fff13a50450039c943c9987fa43cef0d7421904',
             amount: '1000000000000000',
             gas: '1000000000000000',
         });
 
         // signed the tx.
-        const signedTx = TrxBuilder.signedRawTransaction(tx, acct);
+        const signedTx = TrxProtoBuilder.signedRawTrxProto(tx, acct);
         console.log('signedTx', signedTx);
 
         console.log('nonce', tx.nonce);

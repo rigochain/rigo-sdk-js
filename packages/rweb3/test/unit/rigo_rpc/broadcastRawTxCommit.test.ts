@@ -1,6 +1,6 @@
 import { RWeb3 } from '../../../src';
 import { getTestAccountPrivateKey, getTestWsServer } from '../e2e_utils';
-import { Account, TrxBuilder } from 'rweb3-rigo-accounts';
+import { privateKeyToAccount, PrvKey, RWeb3Account, TrxProtoBuilder } from 'rweb3-rigo-accounts';
 import { AccountResponse, BroadcastTxCommitResponse } from 'rweb3-types';
 
 describe('broadcastTxCommit check ', () => {
@@ -14,27 +14,26 @@ describe('broadcastTxCommit check ', () => {
         let secretKey = getTestAccountPrivateKey();
 
         const d = PrvKey.import(secretKey).export();
-        const acct = Account.Import('test', secretKey, d);
+        const acct = privateKeyToAccount(secretKey) as RWeb3Account;
 
         let accountResponse: AccountResponse = await testWebsocketRWeb3Instance.rigo.account(
             acct.address,
         );
 
         acct.balance = accountResponse.value.balance;
-        acct.nonce = accountResponse.value.nonce;
 
         //
         // build a tx.
-        const tx = TrxBuilder.BuildTransferTrx({
+        const tx = TrxProtoBuilder.buildTransferTrxProto({
             from: acct.address,
-            nonce: acct.nonce,
+            nonce: accountResponse.value.nonce,
             to: '6fff13a50450039c943c9987fa43cef0d7421904',
             amount: '1000000000000000',
             gas: '1000000000000000',
         });
 
         // signedTx the tx.
-        const signedTx = TrxBuilder.signedRawTransaction(tx, acct);
+        const signedTx = TrxProtoBuilder.signedRawTrxProto(tx, acct);
 
         let broadcastTxCommitResponse: BroadcastTxCommitResponse =
             await testWebsocketRWeb3Instance.rigo.broadcastRawTxCommit(signedTx);

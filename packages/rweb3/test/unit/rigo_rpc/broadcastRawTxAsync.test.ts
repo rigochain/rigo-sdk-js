@@ -1,6 +1,6 @@
 import { RWeb3 } from '../../../src';
 import { getTestAccountPrivateKey, getTestWsServer } from '../e2e_utils';
-import { Account, privateKeyToAccount, TrxBuilder } from 'rweb3-rigo-accounts';
+import { privateKeyToAccount, TrxProtoBuilder } from 'rweb3-rigo-accounts';
 import { AccountResponse, BroadcastTxAsyncResponse } from 'rweb3-types';
 
 describe('broadcastTxAsync check ', () => {
@@ -26,7 +26,7 @@ describe('broadcastTxAsync check ', () => {
 
         //
         // build a tx.
-        const tx = TrxBuilder.BuildTransferTrx({
+        const tx = TrxProtoBuilder.buildTransferTrxProto({
             from: rWeb3Account.address,
             nonce: accountResponse.value.nonce,
             to: '6fff13a50450039c943c9987fa43cef0d7421904',
@@ -35,7 +35,7 @@ describe('broadcastTxAsync check ', () => {
         });
 
         // signed the tx.
-        const signedTx = TrxBuilder.signedRawTransaction(tx, acct);
+        const signedTx = TrxProtoBuilder.signedRawTrxProto(tx, rWeb3Account);
 
         let broadcastTxAsyncResponse: BroadcastTxAsyncResponse =
             await testWebsocketRWeb3Instance.rigo.broadcastRawTxAsync(signedTx);
