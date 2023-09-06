@@ -225,71 +225,63 @@ export const toHexInvalidData: [any, string][] = [
 ];
 
 const conversionBaseData: [[Numbers, RigoUnits], string][] = [
-    [[0, 'wei'], '0'],
-    [[123, 'wei'], '123'],
-    [['123', 'wei'], '123'],
-    [[BigInt(123), 'wei'], '123'],
-    [['1000', 'wei'], '1000'],
-    [['1', 'kwei'], '0.001'],
-    [['1', 'mwei'], '0.000001'],
-    [['1', 'gwei'], '0.000000001'],
-    [['1', 'micro'], '0.000000000001'],
-    [['1', 'milli'], '0.000000000000001'],
-    [['1', 'ether'], '0.000000000000000001'],
-    [['1', 'kether'], '0.000000000000000000001'],
-    [['1', 'mether'], '0.000000000000000000000001'],
-    [['1', 'gether'], '0.000000000000000000000000001'],
-    [['1', 'tether'], '0.000000000000000000000000000001'],
-    [['900000000000000000000000000001', 'tether'], '0.900000000000000000000000000001'],
-    [['1000', 'kwei'], '1'],
-    [['1000000', 'mwei'], '1'],
-    [['1000000000', 'gwei'], '1'],
-    [['1000000000000', 'micro'], '1'],
-    [['1000000000000000', 'milli'], '1'],
-    [['1000000000000000000', 'ether'], '1'],
-    [['1000000000000000000000', 'kether'], '1'],
-    [['1000000000000000000000000', 'mether'], '1'],
-    [['1000000000000000000000000000', 'gether'], '1'],
-    [['1000000000000000000000000000000', 'tether'], '1'],
-    [['1000000000000000000000000000000', 'tether'], '1'],
-    [['12345678', 'gwei'], '0.012345678'],
-    [['76912345678', 'gwei'], '76.912345678'],
-    [['134439381738', 'gwei'], '134.439381738'],
-    [['178373938391829348', 'ether'], '0.178373938391829348'],
-    [['879123456788877661', 'gwei'], '879123456.788877661'],
-    [['879123456788877661', 'tether'], '0.000000000000879123456788877661'],
+    [[0, 'fons'], '0'],
+    [[123, 'fons'], '123'],
+    [['123', 'fons'], '123'],
+    [[BigInt(123), 'fons'], '123'],
+    [['1000', 'fons'], '1000'],
+    [['1', 'kfons'], '0.001'],
+    [['1', 'mfons'], '0.000001'],
+    [['1', 'gfons'], '0.000000001'],
+    [['1', 'rigo'], '0.000000000000000001'],
+    [['1', 'krigo'], '0.000000000000000000001'],
+    [['1', 'mrigo'], '0.000000000000000000000001'],
+    [['1', 'grigo'], '0.000000000000000000000000001'],
+    [['1', 'trigo'], '0.000000000000000000000000000001'],
+    [['1000', 'kfons'], '1'],
+    [['1000000', 'mfons'], '1'],
+    [['1000000000', 'gfons'], '1'],
+    [['1000000000000000000', 'rigo'], '1'],
+    [['1000000000000000000000', 'kfons'], '1'],
+    [['1000000000000000000000000', 'mfons'], '1'],
+    [['1000000000000000000000000000', 'grigo'], '1'],
+    [['12345678', 'gfons'], '0.012345678'],
+    [['76912345678', 'gfons'], '76.912345678'],
+    [['134439381738', 'gfons'], '134.439381738'],
+    [['178373938391829348', 'rigo'], '0.178373938391829348'],
+    [['879123456788877661', 'gfons'], '879123456.788877661'],
 ];
 
 export const fromWeiValidData: [[Numbers, RigoUnits], string][] = [
     ...conversionBaseData,
-    [['0xff', 'wei'], '255'],
+    [['0xff', 'fons'], '255'],
 ];
 
 export const toWeiValidData: [[Numbers, RigoUnits], string][] = [
     ...conversionBaseData,
-    [['255', 'wei'], '0xFF'],
+    [['255', 'fons'], '0xFF'],
 ];
 
-export const fromWeiInvalidData: [[any, any], string][] = [
+export const fromFonsInvalidData: [[any, any], string][] = [
     // eslint-disable-next-line no-useless-escape
-    [['123.34', 'kwei'], 'Invalid value given "123.34". Error: can not parse as number data.'],
+    [['123.34', 'kfons'], 'Invalid value given "123.34". Error: can not parse as number data.'],
     // Using "null" value intentionally for validation
     // eslint-disable-next-line no-null/no-null
-    [[null, 'kwei'], 'Invalid value given "undefined". Error: can not parse as number data.'],
-    [[undefined, 'kwei'], 'Invalid value given "undefined". Error: can not parse as number data.'],
-    [[{}, 'kwei'], 'Invalid value given "{}". Error: can not parse as number data'],
-    [['data', 'kwei'], 'Invalid value given "data". Error: can not parse as number data.'],
-    [['1234', 'uwei'], 'Invalid value given "uwei". Error: invalid unit.'],
+    [[null, 'kfons'], 'Invalid value given "undefined". Error: can not parse as number data.'],
+    [[undefined, 'kfons'], 'Invalid value given "undefined". Error: can not parse as number data.'],
+    [[{}, 'kfons'], 'Invalid value given "{}". Error: can not parse as number data'],
+    [['data', 'kfons'], 'Invalid value given "data". Error: can not parse as number data.'],
+    [['1234', 'ufons'], 'Invalid value given "uwei". Error: invalid unit.'],
 ];
 
-export const toWeiInvalidData: [[any, any], string][] = [
+export const toFonsInvalidData: [[any, any], string][] = [
     // Using "null" value intentionally for validation
     // eslint-disable-next-line no-null/no-null
-    [[null, 'kwei'], 'value at "/0" must pass "number" validation'],
-    [[undefined, 'kwei'], 'Web3 validator found 1 error[s]:\nvalue at "/0" is required'],
-    [[{}, 'kwei'], 'value "[object Object]" at "/0" must pass "number" validation'],
-    [['data', 'kwei'], 'value "data" at "/0" must pass "number" validation'],
-    [['1234', 'uwei'], 'Invalid value given "uwei". Error: invalid unit.'],
+    [[null, 'kfons'], 'value at "/0" must pass "number" validation'],
+    [[undefined, 'kfons'], 'Web3 validator found 1 error[s]:\nvalue at "/0" is required'],
+    [[{}, 'kfons'], 'value "[object Object]" at "/0" must pass "number" validation'],
+    [['data', 'kfons'], 'value "data" at "/0" must pass "number" validation'],
+    [['1234', 'ufons'], 'Invalid value given "uwei". Error: invalid unit.'],
 ];
 export const toCheckSumValidData: [string, string][] = [
     ['0x0089d53f703f7e0843953d48133f74ce247184c2', '0x0089d53F703f7E0843953D48133f74cE247184c2'],
@@ -297,7 +289,7 @@ export const toCheckSumValidData: [string, string][] = [
     ['0xa54D3c09E34aC96807c1CC397404bF2B98DC4eFb', '0xa54d3c09E34aC96807c1CC397404bF2B98DC4eFb'],
 ];
 export const toCheckSumInvalidData: [string, string][] = [
-    ['not an address', 'Invalid value given "not an address". Error: invalid ethereum address.'],
+    ['not an address', 'Invalid value given "not an address". Error: invalid rigo address.'],
 ];
 
 export const bytesToUint8ArrayInvalidData: [any, string][] = bytesToHexInvalidData;

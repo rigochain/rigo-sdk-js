@@ -4,7 +4,7 @@
     fromAscii,
     fromDecimal,
     fromUtf8,
-    fromWei,
+    fromFons,
     hexToAscii,
     hexToBytes,
     hexToNumber,
@@ -18,7 +18,7 @@
     toHex,
     toNumber,
     toUtf8,
-    toWei,
+    toFons,
     utf8ToHex,
     toChecksumAddress,
     bytesToUint8Array,
@@ -29,7 +29,7 @@ import {
     asciiToHexValidData,
     bytesToHexInvalidData,
     bytesToHexValidData,
-    fromWeiInvalidData,
+    fromFonsInvalidData,
     fromWeiValidData,
     hexToAsciiValidData,
     hexToBytesInvalidData,
@@ -43,7 +43,7 @@ import {
     numberToHexValidData,
     toHexValidData,
     toHexInvalidData,
-    toWeiInvalidData,
+    toFonsInvalidData,
     toWeiValidData,
     utf8ToHexInvalidData,
     utf8ToHexValidData,
@@ -319,30 +319,30 @@ describe('converters', () => {
         });
     });
 
-    describe('fromWei', () => {
+    describe('fromFons', () => {
         describe('valid cases', () => {
             it.each(fromWeiValidData)('%s', (input, output) => {
-                expect(fromWei(input[0], input[1])).toEqual(output);
+                expect(fromFons(input[0], input[1])).toEqual(output);
             });
         });
 
         describe('invalid cases', () => {
-            it.each(fromWeiInvalidData)('%s', (input, output) => {
-                expect(() => fromWei(input[0], input[1])).toThrow(output);
+            it.each(fromFonsInvalidData)('%s', (input, output) => {
+                expect(() => fromFons(input[0], input[1])).toThrow(output);
             });
         });
     });
 
-    describe('toWei', () => {
+    describe('fromFons', () => {
         describe('valid cases', () => {
             it.each(toWeiValidData)('%s', (input, output) => {
-                expect(toWei(output, input[1])).toEqual(input[0].toString());
+                expect(fromFons(output, input[1])).toEqual(input[0].toString());
             });
         });
 
         describe('invalid cases', () => {
-            it.each(toWeiInvalidData)('%s', (input, output) => {
-                expect(() => toWei(input[0], input[1])).toThrow(output);
+            it.each(toFonsInvalidData)('%s', (input, output) => {
+                expect(() => fromFons(input[0], input[1])).toThrow(output);
             });
         });
     });

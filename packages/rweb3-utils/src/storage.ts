@@ -1,5 +1,4 @@
 /*
-/!*
     Copyright 2023 All Rigo Chain Developers
 
     Licensed under the Apache License, Version 2.0 (the "License");
@@ -13,86 +12,97 @@
     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
     See the License for the specific language governing permissions and
     limitations under the License.
-*!/
+*/
 
 import { LocalStorage } from 'node-localstorage';
 
 class LocalSto {
-    #storage: Storage;
+    private storage: Storage;
 
     constructor() {
         switch (runtimeEnvironment()) {
             case 'browser':
-                this.#storage = window.localStorage;
+                this.storage = window.localStorage;
                 break;
             case 'nodejs':
-                this.#storage = new LocalStorage('./nodeLocalStorage');
+                this.storage = new LocalStorage('./nodeLocalStorage');
                 break;
+            default:
+                throw new Error('Unknown runtime environment');
         }
     }
+
     read(k: string): string | null {
-        return this.#storage.getItem(k);
+        return this.storage.getItem(k);
     }
 
     write(k: string, v: string): void {
-        this.#storage.setItem(k, v);
+        this.storage.setItem(k, v);
     }
 
-    static #obj: LocalSto;
+    private static obj: LocalSto;
+
     static Read(k: string): string | null {
-        if (!LocalSto.#obj) {
-            LocalSto.#obj = new LocalSto();
+        if (!LocalSto.obj) {
+            LocalSto.obj = new LocalSto();
         }
-        return LocalSto.#obj.read(k);
+        return LocalSto.obj.read(k);
     }
+
     static Write(k: string, v: string): void {
-        if (!LocalSto.#obj) {
-            LocalSto.#obj = new LocalSto();
+        if (!LocalSto.obj) {
+            LocalSto.obj = new LocalSto();
         }
-        return LocalSto.#obj.write(k, v);
+        return LocalSto.obj.write(k, v);
     }
 }
 
 class SessSto {
-    static #_data: { [key: string]: string };
-    #storage;
+    private static _data: { [key: string]: string };
+    private storage;
+
     constructor() {
-        if (!SessSto.#_data) {
-            SessSto.#_data = {};
+        if (!SessSto._data) {
+            SessSto._data = {};
         }
         switch (runtimeEnvironment()) {
             case 'browser':
-                this.#storage = window.sessionStorage;
+                this.storage = window.sessionStorage;
                 break;
             case 'nodejs':
-                this.#storage = {
-                    setItem: (k: string, v: string) => (SessSto.#_data[k] = v),
-                    getItem: (k: string) => SessSto.#_data[k],
-                    removeItem: (k: string) => delete SessSto.#_data[k],
+                this.storage = {
+                    setItem: (k: string, v: string) => (SessSto._data[k] = v),
+                    getItem: (k: string) => SessSto._data[k],
+                    removeItem: (k: string) => delete SessSto._data[k],
                 };
                 break;
+            default:
+                throw new Error('Unknown runtime environment');
         }
     }
+
     read(k: string): string | null {
-        return this.#storage.getItem(k);
+        return this.storage.getItem(k);
     }
 
     write(k: string, v: string): void {
-        this.#storage.setItem(k, v);
+        this.storage.setItem(k, v);
     }
 
-    static #obj: SessSto;
+    static obj: SessSto;
+
     static Read(k: string): string | null {
-        if (!SessSto.#obj) {
-            SessSto.#obj = new SessSto();
+        if (!SessSto.obj) {
+            SessSto.obj = new SessSto();
         }
-        return SessSto.#obj.read(k);
+        return SessSto.obj.read(k);
     }
+
     static Write(k: string, v: string): void {
-        if (!SessSto.#obj) {
-            SessSto.#obj = new SessSto();
+        if (!SessSto.obj) {
+            SessSto.obj = new SessSto();
         }
-        return SessSto.#obj.write(k, v);
+        return SessSto.obj.write(k, v);
     }
 }
 
@@ -123,4 +133,3 @@ function runtimeEnvironment() {
 }
 
 export { LocalSto, SessSto };
-*/

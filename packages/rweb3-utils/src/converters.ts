@@ -447,9 +447,6 @@ export const toBigInt = (value: unknown): bigint => {
  * ```ts
  * console.log(web3.utils.fromFons("1", "rigo"));
  * > 0.000000000000000001
- *
- * console.log(web3.utils.fromFons("1", "shannon"));
- * > 0.000000001
  * ```
  */
 export const fromFons = (number: Numbers, unit: RigoUnits): string => {
@@ -509,7 +506,6 @@ export const fromFons = (number: Numbers, unit: RigoUnits): string => {
  * > 1000000000000000 //(fons)
  * ```
  */
-// todo in 1.x unit defaults to 'rigo'
 export const toFons = (number: Numbers, unit: RigoUnits): string => {
     validator.validate(['number'], [number]);
 
@@ -551,12 +547,12 @@ export const toFons = (number: Numbers, unit: RigoUnits): string => {
 };
 
 /**
- * Will convert an upper or lowercase Ethereum address to a checksum address.
+ * Will convert an upper or lowercase Rigo address to a checksum address.
  * @param address - An address string
  * @returns    The checksum address
  * @example
  * ```ts
- * web3.utils.toChecksumAddress('0xc1912fee45d61c87cc5ea59dae31190fffff232d');
+ * rweb3.utils.toChecksumAddress('0xc1912fee45d61c87cc5ea59dae31190fffff232d');
  * > "0xc1912fEE45d61C87Cc5EA59DaE31190FFFFf232d"
  * ```
  */
@@ -569,11 +565,7 @@ export const toChecksumAddress = (address: Address): string => {
 
     const hash = bytesToHex(keccak256(utf8ToBytes(lowerCaseAddress)));
 
-    if (
-        isNullish(hash) ||
-        hash === '0xc5d2460186f7233c927e7db2dcc703c0e500b653ca82273b7bfad8045d85a470'
-    )
-        return ''; // // EIP-1052 if hash is equal to c5d2460186f7233c927e7db2dcc703c0e500b653ca82273b7bfad8045d85a470, keccak was given empty data
+    if (isNullish(hash)) return '';
 
     let checksumAddress = '0x';
 

@@ -10,7 +10,7 @@ import {
 } from 'rweb3-types';
 import { expectTypeOf, typecheck } from '@humeris/espresso-shot';
 import { isDataFormatValid, convertScalarValueValid } from '../fixtures/formatter';
-import { format, isDataFormat, convertScalarValue } from '../../src/formatter';
+import { format, isDataFormat, convertScalarValue } from "../../src";
 import { hexToBytes } from '../../src/converters';
 
 type TestTransactionInfoType = {
