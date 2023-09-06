@@ -87,12 +87,6 @@ export const isValidResponse = <Result = unknown, Error = unknown>(
 ): boolean =>
     Array.isArray(response) ? response.every(validateResponse) : validateResponse(response);
 
-export const isBatchResponse = <Result = unknown, Error = unknown>(
-    response: JsonRpcResponse<Result, Error>,
-): boolean => {
-    return Array.isArray(response);
-};
-
 // internal optional variable to increment and use for the jsonrpc `id`
 let requestIdSeed: number | undefined;
 

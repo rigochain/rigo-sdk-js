@@ -248,11 +248,11 @@ export const encodePackedInvalidData: [any, string][] = [
     [{ type: 'boolean', value: 1234 }, 'Invalid value given "1234". Error: not a valid boolean.'],
     [
         { type: 'address', value: 1234 },
-        'Invalid value given "1234". Error: invalid ethereum address',
+        'Invalid value given "1234". Error: invalid rigo chain address',
     ],
     [
         { type: 'address', value: '0x2' },
-        'Invalid value given "0x2". Error: invalid ethereum address',
+        'Invalid value given "0x2". Error: invalid rigo chain address',
     ],
     [{ type: 'uint612', value: 13 }, 'Invalid value given "13". Error: invalid size given.'],
     [

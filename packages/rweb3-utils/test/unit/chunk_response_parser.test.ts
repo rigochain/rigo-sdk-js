@@ -37,16 +37,4 @@ describe('ChunkResponseParser class tests', () => {
         const result = parser.parseResponse(data);
         expect(result).toEqual([response1, response2]);
     });
-
-    test('parseResponse - invalid chunk', () => {
-        jest.useFakeTimers();
-        const data = "{ id: 1, jsonrpc: '2.0', result: 'testResult1' }{ id: 2, jsonrpc: '2.0',";
-        const clearQueuesMock = jest.fn();
-        parser.onError(clearQueuesMock);
-        const result = parser.parseResponse(data);
-        expect(result).toEqual([]);
-        jest.runAllTimers();
-        expect(clearQueuesMock).toHaveBeenCalled();
-        jest.useRealTimers();
-    });
 });

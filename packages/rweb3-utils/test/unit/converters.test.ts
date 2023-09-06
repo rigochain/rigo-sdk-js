@@ -30,7 +30,7 @@ import {
     bytesToHexInvalidData,
     bytesToHexValidData,
     fromFonsInvalidData,
-    fromWeiValidData,
+    fromFonsValidData,
     hexToAsciiValidData,
     hexToBytesInvalidData,
     hexToBytesValidData,
@@ -44,7 +44,7 @@ import {
     toHexValidData,
     toHexInvalidData,
     toFonsInvalidData,
-    toWeiValidData,
+    toFonsValidData,
     utf8ToHexInvalidData,
     utf8ToHexValidData,
     toCheckSumValidData,
@@ -321,7 +321,7 @@ describe('converters', () => {
 
     describe('fromFons', () => {
         describe('valid cases', () => {
-            it.each(fromWeiValidData)('%s', (input, output) => {
+            it.each(fromFonsValidData)('%s', (input, output) => {
                 expect(fromFons(input[0], input[1])).toEqual(output);
             });
         });
@@ -333,16 +333,16 @@ describe('converters', () => {
         });
     });
 
-    describe('fromFons', () => {
+    describe('toFons', () => {
         describe('valid cases', () => {
-            it.each(toWeiValidData)('%s', (input, output) => {
-                expect(fromFons(output, input[1])).toEqual(input[0].toString());
+            it.each(toFonsValidData)('%s', (input, output) => {
+                expect(toFons(output, input[1])).toEqual(input[0].toString());
             });
         });
 
         describe('invalid cases', () => {
             it.each(toFonsInvalidData)('%s', (input, output) => {
-                expect(() => fromFons(input[0], input[1])).toThrow(output);
+                expect(() => toFons(input[0], input[1])).toThrow(output);
             });
         });
     });

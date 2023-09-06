@@ -242,8 +242,8 @@ const conversionBaseData: [[Numbers, RigoUnits], string][] = [
     [['1000000', 'mfons'], '1'],
     [['1000000000', 'gfons'], '1'],
     [['1000000000000000000', 'rigo'], '1'],
-    [['1000000000000000000000', 'kfons'], '1'],
-    [['1000000000000000000000000', 'mfons'], '1'],
+    [['1000000000000000000000', 'krigo'], '1'],
+    [['1000000000000000000000000', 'mrigo'], '1'],
     [['1000000000000000000000000000', 'grigo'], '1'],
     [['12345678', 'gfons'], '0.012345678'],
     [['76912345678', 'gfons'], '76.912345678'],
@@ -252,12 +252,12 @@ const conversionBaseData: [[Numbers, RigoUnits], string][] = [
     [['879123456788877661', 'gfons'], '879123456.788877661'],
 ];
 
-export const fromWeiValidData: [[Numbers, RigoUnits], string][] = [
+export const fromFonsValidData: [[Numbers, RigoUnits], string][] = [
     ...conversionBaseData,
     [['0xff', 'fons'], '255'],
 ];
 
-export const toWeiValidData: [[Numbers, RigoUnits], string][] = [
+export const toFonsValidData: [[Numbers, RigoUnits], string][] = [
     ...conversionBaseData,
     [['255', 'fons'], '0xFF'],
 ];
@@ -271,7 +271,7 @@ export const fromFonsInvalidData: [[any, any], string][] = [
     [[undefined, 'kfons'], 'Invalid value given "undefined". Error: can not parse as number data.'],
     [[{}, 'kfons'], 'Invalid value given "{}". Error: can not parse as number data'],
     [['data', 'kfons'], 'Invalid value given "data". Error: can not parse as number data.'],
-    [['1234', 'ufons'], 'Invalid value given "uwei". Error: invalid unit.'],
+    [['1234', 'ufons'], 'Invalid value given "ufons". Error: invalid unit.'],
 ];
 
 export const toFonsInvalidData: [[any, any], string][] = [
@@ -281,7 +281,7 @@ export const toFonsInvalidData: [[any, any], string][] = [
     [[undefined, 'kfons'], 'Web3 validator found 1 error[s]:\nvalue at "/0" is required'],
     [[{}, 'kfons'], 'value "[object Object]" at "/0" must pass "number" validation'],
     [['data', 'kfons'], 'value "data" at "/0" must pass "number" validation'],
-    [['1234', 'ufons'], 'Invalid value given "uwei". Error: invalid unit.'],
+    [['1234', 'ufons'], 'Invalid value given "ufons". Error: invalid unit.'],
 ];
 export const toCheckSumValidData: [string, string][] = [
     ['0x0089d53f703f7e0843953d48133f74ce247184c2', '0x0089d53F703f7E0843953D48133f74cE247184c2'],
@@ -289,7 +289,7 @@ export const toCheckSumValidData: [string, string][] = [
     ['0xa54D3c09E34aC96807c1CC397404bF2B98DC4eFb', '0xa54d3c09E34aC96807c1CC397404bF2B98DC4eFb'],
 ];
 export const toCheckSumInvalidData: [string, string][] = [
-    ['not an address', 'Invalid value given "not an address". Error: invalid rigo address.'],
+    ['not an address', 'Invalid value given "not an address". Error: invalid rigo chain address.'],
 ];
 
 export const bytesToUint8ArrayInvalidData: [any, string][] = bytesToHexInvalidData;

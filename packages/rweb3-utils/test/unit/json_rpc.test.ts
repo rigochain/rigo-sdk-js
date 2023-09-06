@@ -4,7 +4,6 @@ import {
     isResponseWithNotification,
     isSubscriptionResult,
     isValidResponse,
-    isBatchResponse,
     toPayload,
 } from '../../src/json_rpc';
 import {
@@ -54,14 +53,6 @@ describe('json rpc tests', () => {
         describe('valid cases', () => {
             it.each(isValidResponseValidTest)('isValidresponse valid test', (input, output) => {
                 const result = isValidResponse(input);
-                expect(result).toBe(output);
-            });
-        });
-    });
-    describe('isBatchResponseValid', () => {
-        describe('valid cases', () => {
-            it.each(isBatchResponseValidTest)('isValidresponse valid test', (input, output) => {
-                const result = isBatchResponse(input);
                 expect(result).toBe(output);
             });
         });
