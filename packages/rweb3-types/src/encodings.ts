@@ -1,3 +1,18 @@
+/*
+    Copyright 2023 All Rigo Chain Developers
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+        http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+*/
 import { ReadonlyDateWithNanoseconds } from './responses.js';
 
 /**
@@ -10,6 +25,7 @@ export function assertSet<T>(value: T): T {
         throw new Error('Value must not be undefined');
     }
 
+    // eslint-disable-next-line no-null/no-null
     if ((value as unknown) === null) {
         throw new Error('Value must not be null');
     }
@@ -113,6 +129,7 @@ export function assertNotEmpty<T>(value: T): T {
 
     if (typeof value === 'number' && value === 0) {
         throw new Error('must provide a non-zero value');
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } else if ((value as any as Lengther).length === 0) {
         throw new Error('must provide a non-empty value');
     }
@@ -120,7 +137,9 @@ export function assertNotEmpty<T>(value: T): T {
 }
 
 // may will run the transform if value is defined, otherwise returns undefined
+// eslint-disable-next-line no-null/no-null
 export function may<T, U>(transform: (val: T) => U, value: T | null | undefined): U | undefined {
+    // eslint-disable-next-line no-null/no-null
     return value === undefined || value === null ? undefined : transform(value);
 }
 
@@ -172,7 +191,9 @@ export function encodeBytes(bytes: Uint8Array): Uint8Array {
     return bytes.length ? Uint8Array.from([bytes.length, ...bytes]) : new Uint8Array();
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 declare const TextEncoder: any;
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 declare const TextDecoder: any;
 
 export function toUtf8(str: string): Uint8Array {

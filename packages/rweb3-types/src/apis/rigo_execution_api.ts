@@ -83,12 +83,14 @@ export type RigoExecutionAPI = {
     vmCall: (vmCall: string) => responses.VmCallResponse;
     // end not tendermint apis
 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     subscribe: (query: string) => any;
 };
 
 export interface JsonRpcSuccessResponse {
     readonly jsonrpc: '2.0';
     readonly id: JsonRpcId;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     readonly result: any;
 }
 

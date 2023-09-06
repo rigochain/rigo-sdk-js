@@ -1,5 +1,6 @@
 dist
 lib
-jest.config.js
 .eslintrc.js
+webpack.analyze.js
 webpack.config.js
+test

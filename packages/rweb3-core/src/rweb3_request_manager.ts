@@ -94,6 +94,7 @@ export class RWeb3RequestManager<API extends RWeb3APISpec = RigoExecutionAPI> {
         const payload = jsonRpc.toPayload(request);
 
         const response = await provider.request<Method, ResponseType>(
+            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
             // @ts-ignore
             payload as RWeb3APIPayload<API, Method>,
         );

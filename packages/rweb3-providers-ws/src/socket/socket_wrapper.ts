@@ -1,10 +1,25 @@
-import WebSocket from "isomorphic-ws";
+/*
+    Copyright 2023 All Rigo Chain Developers
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+        http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+*/
+import WebSocket from 'isomorphic-ws';
 
 function environmentIsNodeJs(): boolean {
     return (
-        typeof process !== "undefined" &&
-        typeof process.versions !== "undefined" &&
-        typeof process.versions.node !== "undefined"
+        typeof process !== 'undefined' &&
+        typeof process.versions !== 'undefined' &&
+        typeof process.versions.node !== 'undefined'
     );
 }
 
@@ -126,7 +141,7 @@ export class Socket_wrapper {
      */
     public disconnect(): void {
         if (!this.socket) {
-            throw new Error("Socket undefined. This must be called after connecting.");
+            throw new Error('Socket undefined. This must be called after connecting.');
         }
 
         this.clearTimeout();
@@ -146,7 +161,7 @@ export class Socket_wrapper {
                 this.socket.onmessage = () => 0;
                 this.socket = undefined;
                 if (this.closeHandler) {
-                    this.closeHandler({wasClean: false, code: 4001});
+                    this.closeHandler({ wasClean: false, code: 4001 });
                 }
                 break;
             case WebSocket.CLOSING:
@@ -160,17 +175,17 @@ export class Socket_wrapper {
     public async send(data: string): Promise<void> {
         return new Promise((resolve, reject) => {
             if (!this.socket) {
-                throw new Error("Socket undefined. This must be called after connecting.");
+                throw new Error('Socket undefined. This must be called after connecting.');
             }
 
             if (this.closed) {
-                throw new Error("Socket was closed, so no data can be sent anymore.");
+                throw new Error('Socket was closed, so no data can be sent anymore.');
             }
 
             // this exception should be thrown by send() automatically according to
             // https://developer.mozilla.org/de/docs/Web/API/WebSocket#send() but it does not work in browsers
             if (this.socket.readyState !== WebSocket.OPEN) {
-                throw new Error("Websocket is not open");
+                throw new Error('Websocket is not open');
             }
 
             if (environmentIsNodeJs()) {
@@ -193,7 +208,7 @@ export class Socket_wrapper {
     private clearTimeout(): void {
         if (!this.timeoutId) {
             throw new Error(
-                "Timeout ID not set. This should not happen and usually means connect() was not called.",
+                'Timeout ID not set. This should not happen and usually means connect() was not called.',
             );
         }
 

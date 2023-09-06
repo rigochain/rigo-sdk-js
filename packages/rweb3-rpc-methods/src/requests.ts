@@ -1,4 +1,18 @@
-/* eslint-disable @typescript-eslint/naming-convention */
+/*
+    Copyright 2023 All Rigo Chain Developers
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+        http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+*/
 
 /**
  * RPC methods as documented in https://docs.tendermint.com/master/rpc/
@@ -6,44 +20,44 @@
  * Enum raw value must match the spelling in the "shell" example call (snake_case)
  */
 export enum Method {
-  AbciInfo = "abci_info",
-  AbciQuery = "abci_query",
-  Block = "block",
-  /** Get block headers for minHeight <= height <= maxHeight. */
-  Blockchain = "blockchain",
-  BlockResults = "block_results",
-  BlockSearch = "block_search",
-  BroadcastTxAsync = "broadcast_tx_async",
-  BroadcastTxSync = "broadcast_tx_sync",
-  BroadcastTxCommit = "broadcast_tx_commit",
-  Commit = "commit",
-  Genesis = "genesis",
-  Health = "health",
-  NumUnconfirmedTxs = "num_unconfirmed_txs",
-  Status = "status",
-  Subscribe = "subscribe",
-  Tx = "tx",
-  TxSearch = "tx_search",
-  Validators = "validators",
-  Unsubscribe = "unsubscribe",
+    AbciInfo = 'abci_info',
+    AbciQuery = 'abci_query',
+    Block = 'block',
+    /** Get block headers for minHeight <= height <= maxHeight. */
+    Blockchain = 'blockchain',
+    BlockResults = 'block_results',
+    BlockSearch = 'block_search',
+    BroadcastTxAsync = 'broadcast_tx_async',
+    BroadcastTxSync = 'broadcast_tx_sync',
+    BroadcastTxCommit = 'broadcast_tx_commit',
+    Commit = 'commit',
+    Genesis = 'genesis',
+    Health = 'health',
+    NumUnconfirmedTxs = 'num_unconfirmed_txs',
+    Status = 'status',
+    Subscribe = 'subscribe',
+    Tx = 'tx',
+    TxSearch = 'tx_search',
+    Validators = 'validators',
+    Unsubscribe = 'unsubscribe',
 }
 
 export type Request =
-  | AbciInfoRequest
-  | AbciQueryRequest
-  | BlockRequest
-  | BlockSearchRequest
-  | BlockchainRequest
-  | BlockResultsRequest
-  | BroadcastTxRequest
-  | CommitRequest
-  | GenesisRequest
-  | HealthRequest
-  | NumUnconfirmedTxsRequest
-  | StatusRequest
-  | TxRequest
-  | TxSearchRequest
-  | ValidatorsRequest;
+    | AbciInfoRequest
+    | AbciQueryRequest
+    | BlockRequest
+    | BlockSearchRequest
+    | BlockchainRequest
+    | BlockResultsRequest
+    | BroadcastTxRequest
+    | CommitRequest
+    | GenesisRequest
+    | HealthRequest
+    | NumUnconfirmedTxsRequest
+    | StatusRequest
+    | TxRequest
+    | TxSearchRequest
+    | ValidatorsRequest;
 
 /**
  * Raw values must match the tendermint event name
@@ -51,160 +65,158 @@ export type Request =
  * @see https://godoc.org/github.com/tendermint/tendermint/types#pkg-constants
  */
 export enum SubscriptionEventType {
-  NewBlock = "NewBlock",
-  NewBlockHeader = "NewBlockHeader",
-  Tx = "Tx",
+    NewBlock = 'NewBlock',
+    NewBlockHeader = 'NewBlockHeader',
+    Tx = 'Tx',
 }
 
 export interface AbciInfoRequest {
-  readonly method: Method.AbciInfo;
+    readonly method: Method.AbciInfo;
 }
 
 export interface AbciQueryRequest {
-  readonly method: Method.AbciQuery;
-  readonly params: AbciQueryParams;
+    readonly method: Method.AbciQuery;
+    readonly params: AbciQueryParams;
 }
 
 export interface AbciQueryParams {
-  readonly path: string;
-  readonly data: Uint8Array;
-  readonly height?: number;
-  /**
-   * A flag that defines if proofs are included in the response or not.
-   *
-   * Internally this is mapped to the old inverse name `trusted` for Tendermint < 0.26.
-   * Starting with Tendermint 0.26, the default value changed from true to false.
-   */
-  readonly prove?: boolean;
+    readonly path: string;
+    readonly data: Uint8Array;
+    readonly height?: number;
+    /**
+     * A flag that defines if proofs are included in the response or not.
+     *
+     * Internally this is mapped to the old inverse name `trusted` for Tendermint < 0.26.
+     * Starting with Tendermint 0.26, the default value changed from true to false.
+     */
+    readonly prove?: boolean;
 }
 
 export interface BlockRequest {
-  readonly method: Method.Block;
-  readonly params: {
-    readonly height?: number;
-  };
+    readonly method: Method.Block;
+    readonly params: {
+        readonly height?: number;
+    };
 }
 
 export interface BlockchainRequest {
-  readonly method: Method.Blockchain;
-  readonly params: BlockchainRequestParams;
+    readonly method: Method.Blockchain;
+    readonly params: BlockchainRequestParams;
 }
 
 export interface BlockchainRequestParams {
-  readonly minHeight?: number;
-  readonly maxHeight?: number;
+    readonly minHeight?: number;
+    readonly maxHeight?: number;
 }
 
 export interface BlockResultsRequest {
-  readonly method: Method.BlockResults;
-  readonly params: {
-    readonly height?: number;
-  };
+    readonly method: Method.BlockResults;
+    readonly params: {
+        readonly height?: number;
+    };
 }
 
 export interface BlockSearchRequest {
-  readonly method: Method.BlockSearch;
-  readonly params: BlockSearchParams;
+    readonly method: Method.BlockSearch;
+    readonly params: BlockSearchParams;
 }
 
 export interface BlockSearchParams {
-  readonly query: string;
-  readonly page?: number;
-  readonly per_page?: number;
-  readonly order_by?: string;
+    readonly query: string;
+    readonly page?: number;
+    readonly per_page?: number;
+    readonly order_by?: string;
 }
 
 export interface BroadcastTxRequest {
-  readonly method: Method.BroadcastTxAsync | Method.BroadcastTxSync | Method.BroadcastTxCommit;
-  readonly params: BroadcastTxParams;
+    readonly method: Method.BroadcastTxAsync | Method.BroadcastTxSync | Method.BroadcastTxCommit;
+    readonly params: BroadcastTxParams;
 }
 
 export interface BroadcastTxParams {
-  readonly tx: Uint8Array;
+    readonly tx: Uint8Array;
 }
 
 export interface CommitRequest {
-  readonly method: Method.Commit;
-  readonly params: {
-    readonly height?: number;
-  };
+    readonly method: Method.Commit;
+    readonly params: {
+        readonly height?: number;
+    };
 }
 
 export interface GenesisRequest {
-  readonly method: Method.Genesis;
+    readonly method: Method.Genesis;
 }
 
 export interface HealthRequest {
-  readonly method: Method.Health;
+    readonly method: Method.Health;
 }
 
 export interface NumUnconfirmedTxsRequest {
-  readonly method: Method.NumUnconfirmedTxs;
+    readonly method: Method.NumUnconfirmedTxs;
 }
 
 export interface StatusRequest {
-  readonly method: Method.Status;
+    readonly method: Method.Status;
 }
 
 export interface SubscribeRequest {
-  readonly method: Method.Subscribe;
-  readonly query: {
-    readonly type: SubscriptionEventType;
-    readonly raw?: string;
-  };
+    readonly method: Method.Subscribe;
+    readonly query: {
+        readonly type: SubscriptionEventType;
+        readonly raw?: string;
+    };
 }
 
-
-
 export interface QueryTag {
-  readonly key: string;
-  readonly value: string;
+    readonly key: string;
+    readonly value: string;
 }
 
 export interface TxRequest {
-  readonly method: Method.Tx;
-  readonly params: TxParams;
+    readonly method: Method.Tx;
+    readonly params: TxParams;
 }
 
 export interface TxParams {
-  readonly hash: Uint8Array;
-  readonly prove?: boolean;
+    readonly hash: Uint8Array;
+    readonly prove?: boolean;
 }
 
 // TODO: clarify this type
 export interface TxSearchRequest {
-  readonly method: Method.TxSearch;
-  readonly params: TxSearchParams;
+    readonly method: Method.TxSearch;
+    readonly params: TxSearchParams;
 }
 
 export interface TxSearchParams {
-  readonly query: string;
-  readonly prove?: boolean;
-  readonly page?: number;
-  readonly per_page?: number;
-  readonly order_by?: string;
+    readonly query: string;
+    readonly prove?: boolean;
+    readonly page?: number;
+    readonly per_page?: number;
+    readonly order_by?: string;
 }
 
 export interface ValidatorsRequest {
-  readonly method: Method.Validators;
-  readonly params: ValidatorsParams;
+    readonly method: Method.Validators;
+    readonly params: ValidatorsParams;
 }
 
 export interface ValidatorsParams {
-  readonly height?: number;
-  readonly page?: number;
-  readonly per_page?: number;
+    readonly height?: number;
+    readonly page?: number;
+    readonly per_page?: number;
 }
 
 export interface BuildQueryComponents {
-  readonly tags?: readonly QueryTag[];
-  readonly raw?: string;
+    readonly tags?: readonly QueryTag[];
+    readonly raw?: string;
 }
 
 export function buildQuery(components: BuildQueryComponents): string {
-  const tags = components.tags ? components.tags : [];
-  const tagComponents = tags.map((tag) => `${tag.key}='${tag.value}'`);
-  const rawComponents = components.raw ? [components.raw] : [];
+    const tags = components.tags ? components.tags : [];
+    const tagComponents = tags.map((tag) => `${tag.key}='${tag.value}'`);
+    const rawComponents = components.raw ? [components.raw] : [];
 
-  return [...tagComponents, ...rawComponents].join(" AND ");
+    return [...tagComponents, ...rawComponents].join(' AND ');
 }

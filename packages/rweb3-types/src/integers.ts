@@ -1,4 +1,18 @@
-/* eslint-disable no-bitwise */
+/*
+    Copyright 2023 All Rigo Chain Developers
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+        http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+*/
 import BN from 'bn.js';
 
 const uint64MaxValue = new BN('18446744073709551615', 10, 'be');
@@ -13,14 +27,6 @@ interface Integer {
 interface WithByteConverters {
     readonly toBytesBigEndian: () => Uint8Array;
     readonly toBytesLittleEndian: () => Uint8Array;
-}
-
-interface IntegerStatic<T> {
-    readonly fromString: (str: string) => T;
-}
-
-interface FixedLengthIntegerStatic<T> {
-    readonly fromBytes: (bytes: ArrayLike<number>, endianess: 'be' | 'le') => T;
 }
 
 export class Uint32 implements Integer, WithByteConverters {

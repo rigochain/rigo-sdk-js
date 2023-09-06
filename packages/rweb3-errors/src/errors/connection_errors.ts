@@ -49,7 +49,10 @@ export class ConnectionError extends BaseRWeb3Error {
 }
 
 export class InvalidConnectionError extends ConnectionError {
-    public constructor(public host: string, event?: ConnectionEvent) {
+    public constructor(
+        public host: string,
+        event?: ConnectionEvent,
+    ) {
         super(`CONNECTION ERROR: Couldn't connect to node ${host}.`, event);
         this.code = ERR_CONN_INVALID;
     }

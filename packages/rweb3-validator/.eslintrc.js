@@ -1,7 +1,7 @@
 module.exports = {
     extends: ['../../.eslintrc.js', 'prettier'],
     parserOptions: {
-        project: './tsconfig.esm.json',
+        project: ['./tsconfig.esm.json', './test/tsconfig.json'],
         tsconfigRootDir: __dirname,
     },
     plugins: ['prettier'],

@@ -1,6 +1,21 @@
+/*
+    Copyright 2023 All Rigo Chain Developers
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+        http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+*/
 import { RWeb3 } from '../../../src';
 import { getTestAccountPrivateKey, getTestWsServer } from '../e2e_utils';
-import { privateKeyToAccount, PrvKey, RWeb3Account, TrxProtoBuilder } from 'rweb3-rigo-accounts';
+import { privateKeyToAccount, RWeb3Account, TrxProtoBuilder } from 'rweb3-rigo-accounts';
 import { AccountResponse, CheckTxResponse } from 'rweb3-types';
 
 describe('checkTx check ', () => {
@@ -11,13 +26,13 @@ describe('checkTx check ', () => {
     });
 
     it('should call rweb3 with testWebsocketRWeb3Instance.checkTx() method success return', async () => {
-        let secretKey = getTestAccountPrivateKey();
+        const secretKey = getTestAccountPrivateKey();
 
         const acct = privateKeyToAccount(secretKey) as RWeb3Account;
 
         console.log('acct', acct);
 
-        let accountResponse: AccountResponse = await testWebsocketRWeb3Instance.rigo.account(
+        const accountResponse: AccountResponse = await testWebsocketRWeb3Instance.rigo.account(
             acct.address,
         );
 
@@ -47,9 +62,8 @@ describe('checkTx check ', () => {
 
         console.log('nonce', tx.nonce);
 
-        let testCheckTxResponse: CheckTxResponse = await testWebsocketRWeb3Instance.rigo.checkTx(
-            tx,
-        );
+        const testCheckTxResponse: CheckTxResponse =
+            await testWebsocketRWeb3Instance.rigo.checkTx(tx);
 
         console.log(JSON.stringify(testCheckTxResponse));
 

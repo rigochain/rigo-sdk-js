@@ -1,3 +1,18 @@
+/*
+    Copyright 2023 All Rigo Chain Developers
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+        http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+*/
 import { RWeb3 } from '../../../src';
 import { getTestWsServer } from '../e2e_utils';
 import { BlockResponse } from 'rweb3-types';
@@ -10,7 +25,7 @@ describe('blockchain check ', () => {
     });
 
     it('should call rweb3 with testWebsocketRWeb3Instance.block method success return', async () => {
-        let testBlockResponse: BlockResponse = await testWebsocketRWeb3Instance.rigo.block();
+        const testBlockResponse: BlockResponse = await testWebsocketRWeb3Instance.rigo.block();
 
         console.log(JSON.stringify(testBlockResponse));
 
@@ -20,9 +35,8 @@ describe('blockchain check ', () => {
     });
 
     it('should call rweb3 with testWebsocketRWeb3Instance.block(10000) method success return', async () => {
-        let test100BlockResponse: BlockResponse = await testWebsocketRWeb3Instance.rigo.block(
-            10000,
-        );
+        const test100BlockResponse: BlockResponse =
+            await testWebsocketRWeb3Instance.rigo.block(10000);
 
         console.log(JSON.stringify(test100BlockResponse));
         expect(test100BlockResponse.block_id.hash).toBeDefined();

@@ -1,3 +1,18 @@
+/*
+    Copyright 2023 All Rigo Chain Developers
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+        http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+*/
 import { JsonRpcResponseWithResult } from './json_rpc_types.js';
 import {
     assertArray,
@@ -39,6 +54,7 @@ import assert from 'assert';
 
 export class ResponsesDecoder {
     public static decodeHealth(): responses.HealthResponse {
+        // eslint-disable-next-line no-null/no-null
         return null;
     }
 
@@ -265,6 +281,7 @@ function decodeHeader(data: RpcHeader): Header {
 
         // When there is no last block ID (i.e. this block's height is 1), we get an empty structure like this:
         // { hash: '', parts: { total: 0, hash: '' } }
+        // eslint-disable-next-line no-null/no-null
         last_block_id: data.last_block_id.hash ? decodeBlockId(data.last_block_id) : null,
 
         last_commit_hash: assertSet(data.last_commit_hash),
@@ -512,7 +529,8 @@ function decodeBlock(data: RpcBlock): Block {
         // { height: '0', round: 0, block_id: { hash: '', parts: [Object] }, signatures: [] }
         last_commit: data.last_commit.block_id.hash
             ? decodeCommit(assertObject(data.last_commit))
-            : null,
+            : // eslint-disable-next-line no-null/no-null
+              null,
         data: decodeBlockData(data.data),
         // Lift up .evidence.evidence to just .evidence
         // See https://github.com/tendermint/tendermint/issues/7697
@@ -891,6 +909,7 @@ type RpcSignature = {
 };
 // We lost track on how the evidence structure actually looks like.
 // This is any now and passed to the caller untouched.
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 type RpcEvidence = any;
 
 interface RpcCommit {

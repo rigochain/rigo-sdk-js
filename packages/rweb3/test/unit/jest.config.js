@@ -20,7 +20,7 @@ module.exports = {
     // testMatch: ['<rootDir>/test/unit/**/txSearch.(spec|test).(js|ts)'], // 단일 테스트
     // testMatch: ['<rootDir>/test/unit/**/tx.(spec|test).(js|ts)'], // 단일 테스트
     // testMatch: ['<rootDir>/test/unit/**/abciInfo.(spec|test).(js|ts)'], // 단일 테스트
-    testMatch: ['<rootDir>/test/unit/**/checkTx.(spec|test).(js|ts)'], // 단일 테스트
+    // testMatch: ['<rootDir>/test/unit/**/checkTx.(spec|test).(js|ts)'], // 단일 테스트
     // testMatch: ['<rootDir>/test/unit/**/numUnconfirmedTxs.(spec|test).(js|ts)'], // 단일 테스트
     // testMatch: ['<rootDir>/test/unit/**/delegatee.(spec|test).(js|ts)'], // 단일 테스트
     // testMatch: ['<rootDir>/test/unit/**/account.(spec|test).(js|ts)'], // 단일 테스트
