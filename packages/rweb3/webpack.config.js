@@ -17,9 +17,9 @@
 const { getWebPackConfig } = require('../../webpack.base.config');
 
 module.exports = getWebPackConfig(
-	__dirname,
-	'rweb3.min.js',
-	'rWeb3',
-	'src/rweb3.ts',
-	'tsconfig.ems.json',
+    __dirname,
+    'rweb3.min.js',
+    'rWeb3',
+    'src/rweb3.ts',
+    'tsconfig.json',
 );

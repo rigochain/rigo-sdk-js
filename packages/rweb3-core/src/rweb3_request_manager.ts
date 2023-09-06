@@ -65,7 +65,6 @@ export class RWeb3RequestManager<API extends RWeb3APISpec = RigoExecutionAPI> {
     public setProvider(provider?: string): void {
         // autodetect provider
         if (provider && typeof provider === 'string' && this.providers) {
-            console.log('setProvider', provider);
             // HTTP
             if (/^http(s)?:\/\//i.test(provider)) {
                 this._provider = new this.providers.HttpProvider(provider);
