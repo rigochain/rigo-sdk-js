@@ -5,6 +5,7 @@ import BN from "bn.js";
 import Account from "../account/account";
 import {fromNanoSecond, getNanoSecond} from "../utils/time";
 import {createHash} from "crypto";
+import {TrxPayloadProposalProto, TrxPayloadVotingProto} from "./trx_pb";
 
 function isSet(value: any): boolean {
   return value !== null && value !== undefined;
@@ -121,6 +122,57 @@ function BuildUndelegateTrx(obj: Trx): trxPb.TrxProto {
   }
 }
 
+function buildProposalTrx(obj: Trx): trxPb.TrxProto  {
+  const payload = obj.payload as TrxPayloadProposalProto
+  if( !isSet((payload))) {
+    throw Error("mandatory argument is missed")
+  }
+  const payloadBytes = trxPb.TrxPayloadProposalProto.encode({
+    message: payload.message,
+    startVotingHeight: payload.startVotingHeight,
+    votingBlocks: payload.votingBlocks,
+    optType: payload.optType,
+    options: payload.options
+  }).finish()
+
+  return {
+    version: isSet(obj.version) ? Number(obj.version) : 1,
+    time: isSet(obj.time) ? getNanoSecond(obj.time) : getNanoSecond(),
+    nonce: isSet(obj.nonce) ? Long.fromValue(obj.nonce) : Long.fromValue(1),
+    from: Bytes.fromHex(obj.from),
+    to: Bytes.fromHex(obj.to),
+    Amount: new Uint8Array(),
+    Gas: obj.gas === "0" ? new Uint8Array() : new Uint8Array(new BN(obj.gas).toArrayLike(Buffer)),
+    type: 4, // proposal type
+    Payload: payloadBytes,
+    sig: new Uint8Array(),
+  };
+}
+
+function buildVotingTrx(obj: Trx): trxPb.TrxProto {
+  const payload = obj.payload as TrxPayloadVotingProto;
+  if( !isSet((payload))) {
+    throw Error("mandatory argument is missed")
+  }
+  const payloadBytes = trxPb.TrxPayloadVotingProto.encode({
+    txHash: payload.txHash,
+    choice: payload.choice,
+  }).finish()
+
+  return {
+    version: isSet(obj.version) ? Number(obj.version) : 1,
+    time: isSet(obj.time) ? getNanoSecond(obj.time) : getNanoSecond(),
+    nonce: isSet(obj.nonce) ? Long.fromValue(obj.nonce) : Long.fromValue(1),
+    from: Bytes.fromHex(obj.from),
+    to: Bytes.fromHex(obj.to),
+    Amount: new Uint8Array(),
+    Gas: obj.gas === "0" ? new Uint8Array() : new Uint8Array(new BN(obj.gas).toArrayLike(Buffer)),
+    type: 5, // voting type
+    Payload: payloadBytes,
+    sig: new Uint8Array(),
+  };
+}
+
 function SignTrx(tx:trxPb.TrxProto, acct:Account): [Bytes, Bytes] {
   tx.sig = new Uint8Array()
 
@@ -150,5 +202,7 @@ export const TrxBuilder = {
   BuildUndelegateTrx,
   VerifyTrx,
   SignTrx,
+  buildProposalTrx,
+  buildVotingTrx,
 }
 
