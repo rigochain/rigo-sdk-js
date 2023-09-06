@@ -15,7 +15,7 @@
 */
 
 import { ValidInputTypes } from './types.js';
-import { isAddress, isBoolean, isRigoAddress } from './validation';
+import { isAddress, isBoolean } from './validation';
 import { isBooleanOrEmpty } from './validation';
 import { isBytes } from './validation';
 import { isHexStrict, isString } from './validation';
@@ -23,7 +23,6 @@ import { isNumber, isInt, isUInt, isIntOrEmpty } from './validation';
 
 const formats: { [key: string]: (data: unknown) => boolean } = {
     address: (data: unknown) => isAddress(data as ValidInputTypes),
-    rigoAddress: (data: unknown) => isRigoAddress(data as ValidInputTypes),
     bool: (data: unknown) => isBoolean(data as ValidInputTypes),
     boolOrEmpty: (data: unknown) => isBooleanOrEmpty(data as ValidInputTypes),
     bytes: (data: unknown) => isBytes(data as ValidInputTypes | Uint8Array | number[]),

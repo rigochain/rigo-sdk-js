@@ -74,11 +74,3 @@ export const isAddress = (value: ValidInputTypes, checkChecksum = true) => {
     }
     return checkChecksum ? checkAddressCheckSum(valueToCheck) : true;
 };
-
-export const isRigoAddress = (value: ValidInputTypes, checkChecksum = true) => {
-    console.log('isRigoAddress value : ', value);
-    console.log('isRigoAddress checkChecksum : ', checkChecksum);
-
-    // TODO : 여기 내용 확인해야됨.
-    return true;
-};
