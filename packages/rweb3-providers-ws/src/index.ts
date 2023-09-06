@@ -14,7 +14,7 @@
     limitations under the License.
 */
 
-import { ReconnectingSocket } from './socket/reconnecting_socket';
+import { ReconnectingSocket } from './socket/reconnecting_socket.js';
 
 import { Listener, Producer, Stream, Subscription } from 'xstream';
 import {
@@ -30,8 +30,8 @@ import {
     RWeb3APISpec,
     SubscriptionEvent,
 } from 'rweb3-types';
-import { ConnectionStatus } from './socket/queueing_streaming_socket';
-import { SocketWrapperMessageEvent } from './socket/socket_wrapper';
+import { ConnectionStatus } from './socket/queueing_streaming_socket.js';
+import { SocketWrapperMessageEvent } from './socket/socket_wrapper.js';
 import { isNullish } from 'rweb3-utils';
 
 class RpcEventProducer implements Producer<SubscriptionEvent> {

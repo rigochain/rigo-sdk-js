@@ -1,5 +1,5 @@
-import { assertString } from './encodings';
-import { Int53 } from './integers';
+import { assertString } from './encodings.js';
+import { Int53 } from './integers.js';
 
 /**
  * Takes an integer value from the Tendermint RPC API and

@@ -1,9 +1,9 @@
 import { Listener, Producer, Stream } from 'xstream';
 
-import { SocketWrapperMessageEvent } from './socket_wrapper';
-import { Streaming_socket } from './streaming_socket';
-import { ValueAndUpdates } from '../stream/valueandupdates';
-import { DefaultValueProducer } from '../stream/defaultvalueproducer';
+import { SocketWrapperMessageEvent } from './socket_wrapper.js';
+import { Streaming_socket } from './streaming_socket.js';
+import { ValueAndUpdates } from '../stream/valueandupdates.js';
+import { DefaultValueProducer } from '../stream/defaultvalueproducer.js';
 
 export enum ConnectionStatus {
     Unconnected,

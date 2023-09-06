@@ -1,21 +1,5 @@
 import { ReadonlyDate } from 'readonly-date';
-import { JsonRpcResponseWithResult } from './json_rpc_types';
-import {
-    assertArray,
-    assertBoolean,
-    assertNotEmpty,
-    assertNumber,
-    assertObject,
-    assertSet,
-    assertString,
-    dictionaryToStringMap,
-    may,
-} from './encodings';
-import { apiToSmallInt } from './inthelpers';
 import { HexString } from './primitives_types';
-import { fromRfc3339 } from './rfc3339';
-import assert from 'assert';
-import { SubscriptionEvent } from './subscription_event';
 
 /**
  * Represents a date object with additional nanoseconds precision.

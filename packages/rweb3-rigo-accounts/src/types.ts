@@ -16,7 +16,7 @@ along with web3.js.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 import { Web3BaseWalletAccount } from 'rweb3-types';
-import { PrvKey, PubKey, Transaction } from './tx/tx_types';
+import { PrvKey, PubKey, Transaction } from './tx/tx_types.js';
 
 export type SignTransactionResult = {
     rawTransaction: string;

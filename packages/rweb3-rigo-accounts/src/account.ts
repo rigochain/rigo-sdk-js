@@ -1,8 +1,8 @@
-import { RWeb3Account, SignTransactionResult } from './types';
-import { PrvKey, PubKey } from './tx/tx_types';
+import { RWeb3Account, SignTransactionResult } from './types.js';
+import { PrvKey, PubKey } from './tx/tx_types.js';
 import { HexString, TrxProto, BytesUint8Array } from 'rweb3-types';
 import { sha3Raw } from 'rweb3-utils';
-import { TrxProtoUtils } from './tx/trx_pb';
+import { TrxProtoUtils } from './tx/trx_pb.js';
 
 export const create = (): RWeb3Account => {
     const prvKey = new PrvKey();

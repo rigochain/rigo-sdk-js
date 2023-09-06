@@ -17,7 +17,7 @@
 /* eslint-disable max-classes-per-file */
 
 import { JsonRpcResponseWithError, JsonRpcId, JsonRpcError } from 'rweb3-types';
-import { BaseRWeb3Error } from '../rweb3_error_base';
+import { BaseRWeb3Error } from '../rweb3_error_base.js';
 import {
     ERR_RPC_INTERNAL_ERROR,
     ERR_RPC_INVALID_INPUT,

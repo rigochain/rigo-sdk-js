@@ -27,7 +27,7 @@ import {
     ERR_IV_LENGTH,
     ERR_PBKDF2_ITERATIONS,
 } from '../error_codes.js';
-import { BaseRWeb3Error } from '../rweb3_error_base';
+import { BaseRWeb3Error } from '../rweb3_error_base.js';
 
 export class PrivateKeyLengthError extends BaseRWeb3Error {
     public code = ERR_PRIVATE_KEY_LENGTH;

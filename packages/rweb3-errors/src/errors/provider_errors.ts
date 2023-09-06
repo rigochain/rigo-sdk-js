@@ -23,7 +23,7 @@ import {
     ERR_SUBSCRIPTION,
     ERR_WS_PROVIDER,
 } from '../error_codes.js';
-import { BaseRWeb3Error } from '../rweb3_error_base';
+import { BaseRWeb3Error } from '../rweb3_error_base.js';
 
 export class ProviderError extends BaseRWeb3Error {
     public code = ERR_PROVIDER;

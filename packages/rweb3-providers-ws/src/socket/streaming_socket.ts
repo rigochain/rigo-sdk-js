@@ -1,6 +1,6 @@
-import { Listener, Producer, Stream } from "xstream";
+import { Listener, Producer, Stream } from 'xstream';
 
-import { Socket_wrapper, SocketWrapperMessageEvent } from "./socket_wrapper";
+import { Socket_wrapper, SocketWrapperMessageEvent } from './socket_wrapper.js';
 
 /**
  * A WebSocket wrapper that exposes all events as a stream.
@@ -8,56 +8,56 @@ import { Socket_wrapper, SocketWrapperMessageEvent } from "./socket_wrapper";
  * This underlying socket will not be closed when the stream has no listeners
  */
 export class Streaming_socket {
-  public readonly connected: Promise<void>;
-  public readonly events: Stream<SocketWrapperMessageEvent>;
-  private eventProducerListener: Listener<SocketWrapperMessageEvent> | undefined;
-  private readonly socket: Socket_wrapper;
+    public readonly connected: Promise<void>;
+    public readonly events: Stream<SocketWrapperMessageEvent>;
+    private eventProducerListener: Listener<SocketWrapperMessageEvent> | undefined;
+    private readonly socket: Socket_wrapper;
 
-  public constructor(url: string, timeout = 10_000) {
-    this.socket = new Socket_wrapper(
-      url,
-      (event) => {
-        if (this.eventProducerListener) {
-          this.eventProducerListener.next(event);
-        }
-      },
-      (errorEvent) => {
-        if (this.eventProducerListener) {
-          this.eventProducerListener.error(errorEvent);
-        }
-      },
-      () => {
-        // socket opened
-      },
-      (closeEvent) => {
-        if (this.eventProducerListener) {
-          if (closeEvent.wasClean) {
-            this.eventProducerListener.complete();
-          } else {
-            this.eventProducerListener.error("Socket was closed unclean");
-          }
-        }
-      },
-      timeout,
-    );
-    this.connected = this.socket.connected;
+    public constructor(url: string, timeout = 10_000) {
+        this.socket = new Socket_wrapper(
+            url,
+            (event) => {
+                if (this.eventProducerListener) {
+                    this.eventProducerListener.next(event);
+                }
+            },
+            (errorEvent) => {
+                if (this.eventProducerListener) {
+                    this.eventProducerListener.error(errorEvent);
+                }
+            },
+            () => {
+                // socket opened
+            },
+            (closeEvent) => {
+                if (this.eventProducerListener) {
+                    if (closeEvent.wasClean) {
+                        this.eventProducerListener.complete();
+                    } else {
+                        this.eventProducerListener.error('Socket was closed unclean');
+                    }
+                }
+            },
+            timeout,
+        );
+        this.connected = this.socket.connected;
 
-    const eventProducer: Producer<any> = {
-      start: (listener) => (this.eventProducerListener = listener),
-      stop: () => (this.eventProducerListener = undefined),
-    };
-    this.events = Stream.create(eventProducer);
-  }
+        const eventProducer: Producer<any> = {
+            start: (listener) => (this.eventProducerListener = listener),
+            stop: () => (this.eventProducerListener = undefined),
+        };
+        this.events = Stream.create(eventProducer);
+    }
 
-  public connect(): void {
-    this.socket.connect();
-  }
+    public connect(): void {
+        this.socket.connect();
+    }
 
-  public disconnect(): void {
-    this.socket.disconnect();
-  }
+    public disconnect(): void {
+        this.socket.disconnect();
+    }
 
-  public async send(data: string): Promise<void> {
-    return this.socket.send(data);
-  }
+    public async send(data: string): Promise<void> {
+        return this.socket.send(data);
+    }
 }

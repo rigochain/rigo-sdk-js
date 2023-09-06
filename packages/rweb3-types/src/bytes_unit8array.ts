@@ -15,7 +15,6 @@
 */
 
 import * as cryptojs from 'crypto-js';
-import { webcrypto } from 'crypto';
 
 export class BytesUint8Array extends Uint8Array {
     static fromHex(hex: string): BytesUint8Array {
@@ -81,10 +80,6 @@ export class BytesUint8Array extends Uint8Array {
             }
         }
         return true;
-    }
-
-    static rand(n: number): BytesUint8Array {
-        return webcrypto.getRandomValues(new BytesUint8Array(n));
     }
 
     static b64ToBytes(base64: string): BytesUint8Array {

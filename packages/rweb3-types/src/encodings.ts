@@ -1,4 +1,4 @@
-import { ReadonlyDateWithNanoseconds, Version } from './responses';
+import { ReadonlyDateWithNanoseconds } from './responses.js';
 
 /**
  * A runtime checker that ensures a given value is set (i.e. not undefined or null)

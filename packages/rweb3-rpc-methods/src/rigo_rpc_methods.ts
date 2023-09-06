@@ -54,7 +54,7 @@ import {
 } from 'rweb3-types';
 
 import { Stream } from 'xstream';
-import { buildQuery, Method, SubscribeRequest, SubscriptionEventType } from './requests';
+import { buildQuery, Method, SubscribeRequest, SubscriptionEventType } from './requests.js';
 import { TrxProtoUtils } from 'rweb3-rigo-accounts';
 
 export async function health(requestManager: RWeb3RequestManager): Promise<HealthResponse> {

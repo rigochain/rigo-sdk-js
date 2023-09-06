@@ -26,7 +26,7 @@ import {
     ERR_EXISTING_PLUGIN_NAMESPACE,
     ERR_INVALID_METHOD_PARAMS,
 } from '../error_codes.js';
-import { BaseRWeb3Error } from '../rweb3_error_base';
+import { BaseRWeb3Error } from '../rweb3_error_base.js';
 
 export class InvalidNumberOfParamsError extends BaseRWeb3Error {
     public code = ERR_PARAM;

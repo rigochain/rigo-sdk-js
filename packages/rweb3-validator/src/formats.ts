@@ -15,11 +15,11 @@
 */
 
 import { ValidInputTypes } from './types.js';
-import { isAddress, isBoolean } from './validation';
-import { isBooleanOrEmpty } from './validation';
-import { isBytes } from './validation';
-import { isHexStrict, isString } from './validation';
-import { isNumber, isInt, isUInt, isIntOrEmpty } from './validation';
+import { isAddress } from './validation/address.js';
+import { isBooleanOrEmpty, isBoolean } from './validation/boolean.js';
+import { isBytes } from './validation/bytes.js';
+import { isHexStrict, isString } from './validation/string.js';
+import { isNumber, isInt, isUInt, isIntOrEmpty } from './validation/numbers.js';
 
 const formats: { [key: string]: (data: unknown) => boolean } = {
     address: (data: unknown) => isAddress(data as ValidInputTypes),

@@ -1,4 +1,4 @@
-import { JsonRpcResponseWithResult } from './json_rpc_types';
+import { JsonRpcResponseWithResult } from './json_rpc_types.js';
 import {
     assertArray,
     assertBoolean,
@@ -9,9 +9,9 @@ import {
     assertString,
     dictionaryToStringMap,
     may,
-} from './encodings';
-import { SubscriptionEvent } from './subscription_event';
-import * as responses from './responses';
+} from './encodings.js';
+import { SubscriptionEvent } from './subscription_event.js';
+import * as responses from './responses.js';
 import {
     Block,
     BlockId,
@@ -33,8 +33,8 @@ import {
     ValidatorUpdate,
     Version,
     VersionParams,
-} from './responses';
-import { apiToSmallInt } from './inthelpers';
+} from './responses.js';
+import { apiToSmallInt } from './inthelpers.js';
 import assert from 'assert';
 
 export class ResponsesDecoder {
@@ -661,9 +661,9 @@ function decodeAbciQuery(data: RpcAbciQueryResponse): responses.AbciQueryRespons
     };
 }
 
-import { HexString } from './primitives_types';
-import { EventAttribute, QueryProof, TxData } from './responses';
-import { fromRfc3339 } from './rfc3339';
+import { HexString } from './primitives_types.js';
+import { EventAttribute, QueryProof, TxData } from './responses.js';
+import { fromRfc3339 } from './rfc3339.js';
 
 interface RpcAbciInfoResponse {
     readonly version: string;

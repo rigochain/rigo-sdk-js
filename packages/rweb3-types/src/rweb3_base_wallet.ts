@@ -15,8 +15,8 @@
 */
 // TODO : Wallet 작업 필요함
 import { HexString } from './primitives_types.js';
-import { BytesUint8Array } from './bytes_unit8array';
-import { TrxProto } from './trx_proto';
+import { BytesUint8Array } from './bytes_unit8array.js';
+import { TrxProto } from './trx_proto.js';
 
 export type Cipher = 'aes-128-ctr' | 'aes-128-cbc' | 'aes-256-cbc';
 

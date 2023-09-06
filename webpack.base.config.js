@@ -50,10 +50,11 @@ function getWebPackConfig(packagePath, filename, library, entry, tsconf) {
             extensions: ['.ts', '.js'],
             fallback: {
                 stream: require.resolve('readable-stream'),
-                path: require.resolve("path-browserify"),
-                constants: require.resolve("constants-browserify"),
-                crypto: require.resolve("crypto-browserify"),
-                fs : false
+                path: require.resolve('path-browserify'),
+                constants: require.resolve('constants-browserify'),
+                crypto: require.resolve('crypto-browserify'),
+                fs: false,
+                assert: false,
             },
             extensionAlias: {
                 '.js': ['.js', '.ts'],
@@ -66,9 +67,6 @@ function getWebPackConfig(packagePath, filename, library, entry, tsconf) {
                     // "@ethereumjs/common/genesisStates" consists ~800KB static files which are no more needed
                     return /(.*\/genesisStates\/.*\.json)/.test(resource);
                 },
-            }),
-            new webpack.ProvidePlugin({
-                process: 'process/browser',
             }),
         ],
     };

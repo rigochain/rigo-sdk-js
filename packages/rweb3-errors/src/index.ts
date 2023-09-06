@@ -15,7 +15,7 @@
 */
 
 export * from './error_codes.js';
-export * from './rweb3_error_base';
+export * from './rweb3_error_base.js';
 export * from './errors/account_errors.js';
 export * from './errors/connection_errors.js';
 export * from './errors/generic_errors.js';

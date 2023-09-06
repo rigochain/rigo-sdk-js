@@ -14,16 +14,16 @@
     limitations under the License.
 */
 
-import * as trxPb from './trx_pb';
+import * as trxPb from './trx_pb.js';
 import Long from 'long';
 import { BytesUint8Array } from 'rweb3-types';
 import BN from 'bn.js';
 import { fromNanoSecond, getNanoSecond } from 'rweb3-utils';
 import { createHash } from 'crypto';
-import { TrxProtoUtils } from './trx_pb';
+import { TrxProtoUtils } from './trx_pb.js';
 import { HexString, TrxProto } from 'rweb3-types';
-import { Transaction, TransactionPayloadUnDelegating } from './tx_types';
-import { RWeb3Account } from '../types';
+import { Transaction, TransactionPayloadUnDelegating } from './tx_types.js';
+import { RWeb3Account } from '../types.js';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 function isSet(value: any): boolean {

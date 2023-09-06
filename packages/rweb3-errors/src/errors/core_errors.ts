@@ -16,7 +16,7 @@
 
 /* eslint-disable max-classes-per-file */
 
-import { BaseRWeb3Error } from '../rweb3_error_base';
+import { BaseRWeb3Error } from '../rweb3_error_base.js';
 import { ERR_CORE_HARDFORK_MISMATCH } from '../error_codes.js';
 
 export class ConfigHardforkMismatchError extends BaseRWeb3Error {
