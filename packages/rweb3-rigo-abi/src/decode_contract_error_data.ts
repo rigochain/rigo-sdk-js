@@ -1,5 +1,5 @@
-import { Eip838ExecutionError } from 'web3-errors';
-import { AbiErrorFragment } from 'web3-types';
+import { Eip838ExecutionError } from 'rweb3-errors';
+import { AbiErrorFragment } from 'rweb3-types';
 
 import { encodeErrorSignature } from './api/errors_api.js';
 import { decodeParameters } from './api/parameters_api.js';

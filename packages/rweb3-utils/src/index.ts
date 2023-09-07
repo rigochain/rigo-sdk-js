@@ -16,6 +16,7 @@
 
 export * from './validation.js';
 export * from './formatter.js';
+export * from './converters.js';
 export * from './hash.js';
 export * from './random.js';
 export * from './string_manipulation.js';

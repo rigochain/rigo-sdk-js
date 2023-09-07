@@ -1,6 +1,6 @@
-﻿import { sha3Raw } from 'web3-utils';
-import { AbiError } from 'web3-errors';
-import { AbiErrorFragment } from 'web3-types';
+﻿import { sha3Raw } from 'rweb3-utils';
+import { AbiError } from 'rweb3-errors';
+import { AbiErrorFragment } from 'rweb3-types';
 import { jsonInterfaceMethodToString, isAbiErrorFragment } from '../utils.js';
 
 /**

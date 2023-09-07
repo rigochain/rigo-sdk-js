@@ -1,23 +1,17 @@
-/*
-    Copyright 2023 All Rigo Chain Developers
-
-    Licensed under the Apache License, Version 2.0 (the "License");
-    you may not use this file except in compliance with the License.
-    You may obtain a copy of the License at
-
-        http://www.apache.org/licenses/LICENSE-2.0
-
-    Unless required by applicable law or agreed to in writing, software
-    distributed under the License is distributed on an "AS IS" BASIS,
-    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-    See the License for the specific language governing permissions and
-    limitations under the License.
-*/
 const base = require('../config/jest.config');
 
 module.exports = {
     ...base,
     testMatch: ['<rootDir>/test/unit/**/*.(spec|test).(js|ts)'],
+    // testMatch: ['<rootDir>/test/unit/**/constructor.(spec|test).(js|ts)'],
+    // testMatch: ['<rootDir>/test/unit/**/decodeContractErrorData.(spec|test).(js|ts)'],
+    // testMatch: ['<rootDir>/test/unit/**/types.(spec|test).(js|ts)'],
+    // testMatch: ['<rootDir>/test/unit/**/utils.(spec|test).(js|ts)'],
+    // testMatch: ['<rootDir>/test/unit/**/api/errors_api.(spec|test).(js|ts)'],
+    // testMatch: ['<rootDir>/test/unit/**/api/events_api.(spec|test).(js|ts)'],
+    // testMatch: ['<rootDir>/test/unit/**/api/functions_api.(spec|test).(js|ts)'],
+    // testMatch: ['<rootDir>/test/unit/**/api/logs_api.(spec|test).(js|ts)'],
+    // testMatch: ['<rootDir>/test/unit/**/api/parameters_api.(spec|test).(js|ts)'],
 
     coverageDirectory: '../../.coverage/unit',
     collectCoverageFrom: ['src/**'],
@@ -26,7 +20,7 @@ module.exports = {
         [
             'json',
             {
-                file: 'rweb3-rigo-coverage.json',
+                file: 'web3-eth-abi-unit-coverage.json',
             },
         ],
     ],

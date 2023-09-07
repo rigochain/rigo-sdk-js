@@ -18,6 +18,7 @@ export * from './error_codes.js';
 export * from './rweb3_error_base.js';
 export * from './errors/account_errors.js';
 export * from './errors/connection_errors.js';
+export * from './errors/contract_errors.js';
 export * from './errors/generic_errors.js';
 export * from './errors/provider_errors.js';
 export * from './errors/signature_errors.js';

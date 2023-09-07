@@ -14,7 +14,7 @@
     limitations under the License.
 */
 
-import { HexString } from './primitives_types.js';
+import { Bytes, HexString, Numbers } from './primitives_types.js';
 
 export type ValueTypes = 'address' | 'bool' | 'string' | 'int256' | 'uint256' | 'bytes' | 'bigint';
 // Hex encoded 32 bytes
@@ -37,3 +37,40 @@ export type Address = HexString;
 export type Topic = HexString32Bytes;
 
 export type TransactionHash = HexString;
+
+export interface TransactionReceiptBase<numberType, hashByteType, logsBloomByteType, logsType> {
+    readonly transactionHash: hashByteType;
+    readonly transactionIndex: numberType;
+    readonly blockHash: hashByteType;
+    readonly blockNumber: numberType;
+    readonly from: Address;
+    readonly to: Address;
+    readonly cumulativeGasUsed: numberType;
+    readonly gasUsed: numberType;
+    readonly effectiveGasPrice?: numberType;
+    readonly contractAddress?: Address;
+    readonly logs: logsType[];
+    readonly logsBloom: logsBloomByteType;
+    readonly root: hashByteType;
+    readonly status: numberType;
+    readonly type?: numberType;
+}
+
+export type TransactionReceipt = TransactionReceiptBase<Numbers, Bytes, Bytes, Log>;
+
+export interface Log extends LogBase<Numbers, Bytes> {
+    readonly id?: string;
+}
+
+export interface LogBase<NumberType, ByteType> {
+    readonly removed?: boolean;
+    readonly logIndex?: NumberType;
+    readonly transactionIndex?: NumberType;
+    readonly transactionHash?: ByteType;
+    readonly blockHash?: ByteType;
+    readonly blockNumber?: NumberType;
+    readonly address?: Address;
+    readonly data?: ByteType;
+    readonly topics?: ByteType[];
+    readonly id?: string;
+}

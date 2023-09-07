@@ -1,6 +1,6 @@
-﻿import { AbiError } from 'web3-errors';
+﻿import { AbiError } from 'rweb3-errors';
 import { ParamType, Result } from '@ethersproject/abi';
-import { HexString, AbiInput, DecodedParams } from 'web3-types';
+import { HexString, AbiInput, DecodedParams } from 'rweb3-types';
 import ethersAbiCoder from '../ethers_abi_coder.js';
 import { formatParam, isAbiFragment, mapTypes, modifyParams } from '../utils.js';
 

@@ -1,22 +1,11 @@
+'use strict';
+
+const base = require('../config/jest.config');
+
 module.exports = {
-	globals: {
-		'ts-jest': {
-			tsconfig: './test/tsconfig.json',
-		},
-	},
-	rootDir: '../..',
-	testMatch: ['<rootDir>/test/**/?(*.)+(spec|test).+(ts|tsx|js)'],
-	setupFilesAfterEnv: ['<rootDir>/test/config/setup.js'],
-	transform: {
-		'^.+\\.(ts|tsx)$': 'ts-jest',
-	},
-	moduleNameMapper: {
-		'^(\\.{1,2}/.*)\\.js$': '$1',
-	},
-	verbose: false,
-	collectCoverage: false,
-	coverageReporters: ['json'],
-	coverageDirectory: '.coverage',
+	...base,
+	setupFilesAfterEnv: ['<rootDir>/test/integration/setup.js'],
+	testMatch: ['<rootDir>/test/integration/**/*.(spec|test).(js|ts)'],
 	/**
 	 * restoreMocks [boolean]
 	 *
@@ -40,4 +29,5 @@ module.exports = {
 	 * This can be done programmatically using jest.resetModules().
 	 */
 	resetModules: true,
+	coverageDirectory: '.coverage/integration',
 };

@@ -1,6 +1,6 @@
-﻿import { AbiError } from 'web3-errors';
-import { sha3Raw } from 'web3-utils';
-import { AbiFunctionFragment } from 'web3-types';
+﻿import { AbiError } from 'rweb3-errors';
+import { sha3Raw } from 'rweb3-utils';
+import { AbiFunctionFragment } from 'rweb3-types';
 import { isAbiFunctionFragment, jsonInterfaceMethodToString } from '../utils.js';
 import { encodeParameters } from './parameters_api.js';
 

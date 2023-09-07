@@ -1,6 +1,6 @@
-﻿import { AbiError } from 'web3-errors';
+﻿import { AbiError } from 'rweb3-errors';
 import { AbiCoder, ParamType } from '@ethersproject/abi';
-import { isNullish, leftPad, rightPad, toHex } from 'web3-utils';
+import { isNullish, leftPad, rightPad, toHex } from 'rweb3-utils';
 import {
     AbiInput,
     AbiCoderStruct,
