@@ -128,7 +128,7 @@ export type AbiFallbackFragment = AbiBaseFragment & {
 export type AbiEventFragment = AbiBaseFragment & {
     readonly name: string;
     readonly type: string | 'event';
-    readonly inputs?: ReadonlyArray<AbiParameter>;
+    inputs?: ReadonlyArray<AbiParameter>;
     readonly anonymous?: boolean;
 };
 

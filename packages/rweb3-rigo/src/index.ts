@@ -17,4 +17,7 @@
 import { RWeb3Rigo } from './rweb3_rigo.js';
 export * from './rpc_method_wrappers.js';
 
+export * from './schemas.js';
+export * from './types.js';
+
 export default RWeb3Rigo;

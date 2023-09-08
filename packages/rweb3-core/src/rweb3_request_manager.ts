@@ -32,16 +32,17 @@ import {
     JsonRpcSuccessResponse,
     JsonRpcResponseWithResult,
     SubscriptionEvent,
+    SupportedProviders,
 } from 'rweb3-types';
 import * as responses from 'rweb3-types';
 import { InvalidResponseError, ResponseError, RpcError, rpcErrorsMap } from 'rweb3-errors';
 import { Stream } from 'xstream';
+import { Web3EventEmitter } from './web3_event_emitter';
 
-export let Web3RequestManagerEvent;
-(function (Web3RequestManagerEvent) {
-    Web3RequestManagerEvent['PROVIDER_CHANGED'] = 'PROVIDER_CHANGED';
-    Web3RequestManagerEvent['BEFORE_PROVIDER_CHANGE'] = 'BEFORE_PROVIDER_CHANGE';
-})(Web3RequestManagerEvent || (Web3RequestManagerEvent = {}));
+export enum Web3RequestManagerEvent {
+    PROVIDER_CHANGED = 'PROVIDER_CHANGED',
+    BEFORE_PROVIDER_CHANGE = 'BEFORE_PROVIDER_CHANGE',
+}
 
 const availableProviders = {
     HttpProvider: HttpProvider,
@@ -51,11 +52,16 @@ const availableProviders = {
 // Decoder is a generic that matches all methods of Responses
 export type Decoder<T extends responses.Response> = (res: JsonRpcSuccessResponse) => T;
 
-export class RWeb3RequestManager<API extends RWeb3APISpec = RigoExecutionAPI> {
+export class RWeb3RequestManager<
+    API extends RWeb3APISpec = RigoExecutionAPI,
+> extends Web3EventEmitter<{
+    [key in Web3RequestManagerEvent]: SupportedProviders<API> | undefined;
+}> {
     private _provider: HttpProvider | WebsocketProvider;
     private readonly useRpcCallSpecification?: boolean;
 
     public constructor(provider?: string, useRpcCallSpecification?: boolean) {
+        super();
         if (!isNullish(provider)) {
             this.setProvider(provider);
         }

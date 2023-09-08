@@ -16,6 +16,20 @@
 
 import * as responses from '../responses';
 import { JsonRpcId } from '../json_rpc_types';
+import {
+    Transaction1559UnsignedAPI,
+    Transaction2930UnsignedAPI,
+    TransactionLegacyUnsignedAPI,
+} from './eth_execution_api';
+import { Address } from '../rigo_types';
+
+// https://github.com/ethereum/execution-apis/blob/main/src/schemas/transaction.yaml#L144
+export type TransactionUnsignedAPI =
+    | Transaction1559UnsignedAPI
+    | Transaction2930UnsignedAPI
+    | TransactionLegacyUnsignedAPI;
+
+export type TransactionWithSenderAPI = TransactionUnsignedAPI & { from: Address };
 /* eslint-disable camelcase */
 export type RigoExecutionAPI = {
     // start tendermint apis
