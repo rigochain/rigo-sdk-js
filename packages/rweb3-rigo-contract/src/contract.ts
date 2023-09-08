@@ -1,6 +1,5 @@
 ﻿import {
     AbiErrorFragment,
-    AbiEventFragment,
     AbiFragment,
     AbiFunctionFragment,
     Address,
@@ -20,7 +19,7 @@
     RigoExecutionAPI,
     RWeb3ValidationErrorObject,
 } from 'rweb3-types';
-import { RWeb3Context, Web3SubscriptionManager } from 'rweb3-core';
+import { RWeb3Context } from 'rweb3-core';
 import {
     ContractAbiWithSignature,
     ContractEventOptions,
@@ -108,7 +107,6 @@ export class Contract<Abi extends ContractAbi> extends RWeb3Context<RigoExecutio
     public readonly options: ContractOptions;
     private _address?: Address;
 
-    // TODO : _functions Setting
     private _functions: Record<
         string,
         {
@@ -118,13 +116,11 @@ export class Contract<Abi extends ContractAbi> extends RWeb3Context<RigoExecutio
         }
     > = {};
 
-    // TODO : _methods Setting
     private _methods!: ContractMethodsInterface<Abi>;
 
     // Event 불가능
     // private _events!: ContractEventsInterface<Abi>;
 
-    // TODO : _jsonInterface Setting
     private _jsonInterface!: ContractAbiWithSignature;
 
     private _errorsInterface!: AbiErrorFragment[];
@@ -136,9 +132,6 @@ export class Contract<Abi extends ContractAbi> extends RWeb3Context<RigoExecutio
 
     public constructor(jsonInterface: Abi, addressOrOptionsOrContext?: Address | RWeb3Context) {
         super();
-
-        // TODO : Address Setting
-        // TODO : Provider Setting
 
         let provider;
         if (

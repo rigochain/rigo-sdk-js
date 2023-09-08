@@ -26,11 +26,21 @@ export default RWeb3;
  */
 
 export { RWeb3 };
+export { Contract } from 'rweb3-rigo-contract';
 
 /**
  * Export all packages grouped by name spaces
  */
+export * as core from 'rweb3-core';
+export * as errors from 'rweb3-errors';
 export * as rigo from './rigo.exports.js';
+export { HttpProvider } from 'rweb3-providers-http';
+export { WebsocketProvider } from 'rweb3-providers-ws';
+export * as providers from './providers.exports.js';
+export * as rpcMethods from 'rweb3-rpc-methods';
+export { RWeb3Validator } from 'rweb3-validator';
+export * as utils from 'rweb3-utils';
+export * as validator from 'rweb3-validator';
 
 /**
  * Export all types from `rweb3-types` without a namespace (in addition to being available at `types` namespace).
