@@ -16,7 +16,18 @@
 
 import { RWeb3Context } from 'rweb3-core';
 import * as rpcMethodsWrappers from './rpc_method_wrappers.js';
-import { TrxProto } from 'rweb3-types';
+import {
+    BlockNumberOrTag,
+    DataFormat,
+    DEFAULT_RETURN_FORMAT,
+    Transaction,
+    TransactionCall,
+    TransactionWithFromAndToLocalWalletIndex,
+    TransactionWithFromLocalWalletIndex,
+    TransactionWithToLocalWalletIndex,
+    TrxProto,
+} from 'rweb3-types';
+import { SendTransactionOptions } from './types';
 
 export class RWeb3Rigo extends RWeb3Context {
     public constructor() {
@@ -170,5 +181,20 @@ export class RWeb3Rigo extends RWeb3Context {
     subscribe(query: string) {
         console.log('subscribe query', query);
         return rpcMethodsWrappers.subscribe(this, query);
+    }
+
+    public async call(transaction: TransactionCall, blockNumber: BlockNumberOrTag) {
+        return rpcMethodsWrappers.call(this, transaction, blockNumber);
+    }
+
+    public sendTransaction(
+        transaction:
+            | Transaction
+            | TransactionWithFromLocalWalletIndex
+            | TransactionWithToLocalWalletIndex
+            | TransactionWithFromAndToLocalWalletIndex,
+        options?: SendTransactionOptions,
+    ) {
+        return rpcMethodsWrappers.sendTransaction(this, transaction, options);
     }
 }

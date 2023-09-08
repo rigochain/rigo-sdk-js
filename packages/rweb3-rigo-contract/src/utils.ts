@@ -186,3 +186,18 @@ export const getCreateAccessListParams = ({
 
     return txParams;
 };
+
+export const isContractInitOptions = (options: unknown): options is ContractInitOptions =>
+    typeof options === 'object' &&
+    !isNullish(options) &&
+    [
+        'input',
+        'data',
+        'from',
+        'gas',
+        'gasPrice',
+        'gasLimit',
+        'address',
+        'jsonInterface',
+        'syncWithContext',
+    ].some((key) => key in options);

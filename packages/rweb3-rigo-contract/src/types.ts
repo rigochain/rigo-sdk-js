@@ -34,6 +34,7 @@ import {
     ContractAbi,
     HexString32Bytes,
     Uint,
+    RigoExecutionAPI,
 } from 'rweb3-types';
 // eslint-disable-next-line import/no-cycle
 import { LogsSubscription } from './log_subscription.js';
@@ -272,27 +273,6 @@ export interface NonPayableMethodObject<Inputs = unknown[], Outputs = unknown[]>
     >;
 
     /**
-     * Returns the amount of gas consumed by executing the method locally without creating a new transaction on the blockchain.
-     * The returned amount can be used as a gas estimate for executing the transaction publicly. The actual gas used can be
-     * different when sending the transaction later, as the state of the smart contract can be different at that time.
-     *
-     * ```ts
-     * const gasAmount = await myContract.methods.myMethod(123).estimateGas({gas: 5000000});
-     * if(gasAmount == 5000000) {
-     *   console.log('Method ran out of gas');
-     * }
-     * ```
-     *
-     * @param options  - The options used for calling
-     * @param returnFormat - The data format you want the output in.
-     * @returns - The gas amount estimated.
-     */
-    estimateGas<ReturnFormat extends DataFormat = typeof DEFAULT_RETURN_FORMAT>(
-        options?: NonPayableCallOptions,
-        returnFormat?: ReturnFormat,
-    ): Promise<FormatType<Numbers, ReturnFormat>>;
-
-    /**
      * Encodes the ABI for this method. The resulting hex string is 32-bit function signature hash plus the passed parameters in Solidity tightly packed format.
      * This can be used to send a transaction, call a method, or pass it into another smart contract’s method as arguments.
      * Set the data field on `web3.eth.sendTransaction` options as the encodeABI() result and it is the same as calling the contract method with `contract.myMethod.send()`.
@@ -303,35 +283,6 @@ export interface NonPayableMethodObject<Inputs = unknown[], Outputs = unknown[]>
      * @returns - The encoded ABI byte code to send via a transaction or call.
      */
     encodeABI(): string;
-
-    /**
-     * This method generates an access list for a transaction. You must specify a `from` address and `gas` if it’s not specified in options.
-     *
-     * @param options - The options used for createAccessList.
-     * @param block - If you pass this parameter it will not use the default block set with contract.defaultBlock. Pre-defined block numbers as `earliest`, `latest`, `pending`, `safe` or `finalized can also be used. Useful for requesting data from or replaying transactions in past blocks.
-     * @returns The returned data of the createAccessList,  e.g. The generated access list for transaction.
-     *
-     * ```ts
-     *  const result = await MyContract.methods.myFunction().createAccessList();
-     *  console.log(result);
-     *
-     * > {
-     *  "accessList": [
-     *     {
-     *       "address": "0x15859bdf5aff2080a9968f6a410361e9598df62f",
-     *       "storageKeys": [
-     *         "0x0000000000000000000000000000000000000000000000000000000000000000"
-     *       ]
-     *     }
-     *   ],
-     *   "gasUsed": "0x7671"
-     * }
-     * ```
-     */
-    createAccessList(
-        tx?: NonPayableCallOptions,
-        block?: BlockNumberOrTag,
-    ): Promise<AccessListResult>;
 }
 
 export interface PayableMethodObject<Inputs = unknown[], Outputs = unknown[]> {
@@ -461,27 +412,6 @@ export interface PayableMethodObject<Inputs = unknown[], Outputs = unknown[]> {
     >;
 
     /**
-     * Returns the amount of gas consumed by executing the method locally without creating a new transaction on the blockchain.
-     * The returned amount can be used as a gas estimate for executing the transaction publicly. The actual gas used can be
-     * different when sending the transaction later, as the state of the smart contract can be different at that time.
-     *
-     * ```ts
-     * const gasAmount = await myContract.methods.myMethod(123).estimateGas({gas: 5000000});
-     * if(gasAmount == 5000000) {
-     *   console.log('Method ran out of gas');
-     * }
-     * ```
-     *
-     * @param options  - The options used for calling
-     * @param returnFormat - The data format you want the output in.
-     * @returns - The gas amount estimated.
-     */
-    estimateGas<ReturnFormat extends DataFormat = typeof DEFAULT_RETURN_FORMAT>(
-        options?: PayableCallOptions,
-        returnFormat?: ReturnFormat,
-    ): Promise<FormatType<Numbers, ReturnFormat>>;
-
-    /**
      * Encodes the ABI for this method. The resulting hex string is 32-bit function signature hash plus the passed parameters in Solidity tightly packed format.
      * This can be used to send a transaction, call a method, or pass it into another smart contract’s method as arguments.
      * Set the data field on `web3.eth.sendTransaction` options as the encodeABI() result and it is the same as calling the contract method with `contract.myMethod.send()`.
@@ -492,30 +422,4 @@ export interface PayableMethodObject<Inputs = unknown[], Outputs = unknown[]> {
      * @returns - The encoded ABI byte code to send via a transaction or call.
      */
     encodeABI(): HexString;
-
-    /**
-     * This method generates an access list for a transaction. You must specify a `from` address and `gas` if it’s not specified in options.
-     *
-     * @param options - The options used for createAccessList.
-     * @param block - If you pass this parameter it will not use the default block set with contract.defaultBlock. Pre-defined block numbers as `earliest`, `latest`, `pending`, `safe` or `finalized can also be used. Useful for requesting data from or replaying transactions in past blocks.
-     * @returns The returned data of the createAccessList,  e.g. The generated access list for transaction.
-     *
-     * ```ts
-     *  const result = await MyContract.methods.myFunction().createAccessList();
-     *  console.log(result);
-     *
-     * > {
-     *  "accessList": [
-     *     {
-     *       "address": "0x15859bdf5aff2080a9968f6a410361e9598df62f",
-     *       "storageKeys": [
-     *         "0x0000000000000000000000000000000000000000000000000000000000000000"
-     *       ]
-     *     }
-     *   ],
-     *   "gasUsed": "0x7671"
-     * }
-     *```
-     */
-    createAccessList(tx?: PayableCallOptions, block?: BlockNumberOrTag): Promise<AccessListResult>;
 }

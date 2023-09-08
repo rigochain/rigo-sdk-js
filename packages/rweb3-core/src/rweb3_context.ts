@@ -18,6 +18,8 @@ import { RWeb3Config } from './rweb3_config.js';
 import { RWeb3RequestManager } from './rweb3_request_manager.js';
 import { isNullish } from 'rweb3-validator';
 import { RWeb3APISpec, RigoExecutionAPI } from 'rweb3-types';
+import HttpProvider from 'rweb3-providers-http';
+import WebsocketProvider from 'rweb3-providers-ws';
 
 // eslint-disable-next-line no-use-before-define
 export type RWeb3ContextConstructor<T extends RWeb3Context, T2 extends unknown[]> = new (
@@ -30,10 +32,12 @@ export type RWeb3ContextObject<API extends RWeb3APISpec = RigoExecutionAPI> = {
 };
 
 export class RWeb3Context<API extends RWeb3APISpec = unknown> extends RWeb3Config {
+    public readonly providers = RWeb3RequestManager.providers;
     protected _requestManager: RWeb3RequestManager<API>;
     public get requestManager() {
         return this._requestManager;
     }
+
     public constructor(providerOrContext?: string) {
         super();
         // If "providerOrContext" is provided as "string" or an objects matching "SupportedProviders" interface
@@ -60,9 +64,18 @@ export class RWeb3Context<API extends RWeb3APISpec = unknown> extends RWeb3Confi
         return useContext;
     }
 
+    public set provider(provider: HttpProvider | WebsocketProvider | string | undefined) {
+        this.requestManager.setProvider(provider);
+    }
+
     public getContextObject(): RWeb3ContextObject<API> {
         return {
             requestManager: this.requestManager,
         };
+    }
+
+    public setProvider(provider?: HttpProvider | WebsocketProvider): boolean {
+        this.provider = provider;
+        return true;
     }
 }

@@ -16,6 +16,11 @@
 
 import { Numbers } from './primitives_types.js';
 
+// Make each attribute mutable by removing `readonly`
+export type Mutable<T> = {
+    -readonly [P in keyof T]: T[P];
+};
+
 export type ConnectionEvent = {
     code: number;
     reason: string;

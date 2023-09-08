@@ -68,7 +68,7 @@ export class RWeb3RequestManager<
         this.useRpcCallSpecification = useRpcCallSpecification;
     }
 
-    public setProvider(provider?: string): void {
+    public setProvider(provider?: HttpProvider | WebsocketProvider | string): void {
         // autodetect provider
         if (provider && typeof provider === 'string' && this.providers) {
             // HTTP
@@ -80,9 +80,19 @@ export class RWeb3RequestManager<
             if (/^ws(s)?:\/\//i.test(provider)) {
                 this._provider = new this.providers.WebsocketProvider(provider);
             }
+        } else {
+            this._provider = provider as HttpProvider | WebsocketProvider;
         }
     }
 
+    public static get providers() {
+        return availableProviders;
+    }
+
+    /**
+     * Will return all available providers
+     */
+    // eslint-disable-next-line class-methods-use-this
     public get providers() {
         return availableProviders;
     }

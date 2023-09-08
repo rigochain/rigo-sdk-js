@@ -14,11 +14,42 @@
     limitations under the License.
 */
 
-import { RigoExecutionAPI, SubscriptionEvent } from 'rweb3-types';
+import {
+    BlockNumberOrTag,
+    RigoExecutionAPI,
+    SubscriptionEvent,
+    Transaction,
+    TransactionCall,
+    TransactionWithFromAndToLocalWalletIndex,
+    TransactionWithFromLocalWalletIndex,
+    TransactionWithToLocalWalletIndex,
+} from 'rweb3-types';
 import { RWeb3Context } from 'rweb3-core';
 import { rigoRpcMethods } from 'rweb3-rpc-methods';
 import { TrxProto } from 'rweb3-types';
 import { Stream } from 'xstream';
+import { SendTransactionOptions } from './types';
+
+export function sendTransaction(
+    web3Context: RWeb3Context<RigoExecutionAPI>,
+    transaction:
+        | Transaction
+        | TransactionWithFromLocalWalletIndex
+        | TransactionWithToLocalWalletIndex
+        | TransactionWithFromAndToLocalWalletIndex,
+    options: SendTransactionOptions | undefined,
+) {
+    return Promise.resolve(undefined);
+}
+
+export function call(
+    web3Context: RWeb3Context<RigoExecutionAPI>,
+    transaction: TransactionCall,
+    blockNumber?: BlockNumberOrTag,
+) {
+    // TODO : 구현 해야됨
+    return Promise.resolve(undefined);
+}
 
 export async function health(web3Context: RWeb3Context<RigoExecutionAPI>) {
     return rigoRpcMethods.health(web3Context.requestManager);
