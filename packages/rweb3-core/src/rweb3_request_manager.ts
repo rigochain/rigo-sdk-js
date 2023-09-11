@@ -37,7 +37,7 @@ import {
 import * as responses from 'rweb3-types';
 import { InvalidResponseError, ResponseError, RpcError, rpcErrorsMap } from 'rweb3-errors';
 import { Stream } from 'xstream';
-import { Web3EventEmitter } from './web3_event_emitter';
+import { Web3EventEmitter } from './web3_event_emitter.js';
 
 export enum Web3RequestManagerEvent {
     PROVIDER_CHANGED = 'PROVIDER_CHANGED',

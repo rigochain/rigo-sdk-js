@@ -20,7 +20,6 @@ export * from './rweb3_request_manager.js';
 export * from './web3_event_emitter.js';
 
 export * from './utils.js';
-export * from './web3_event_emitter.js';
 export * from './web3_promi_event.js';
 export * from './web3_subscription_manager.js';
 export * from './web3_subscriptions.js';
