@@ -1,10 +1,14 @@
 ﻿import {
+    AbiConstructorFragment,
     AbiErrorFragment,
     AbiFragment,
     AbiFunctionFragment,
     Address,
     BlockNumberOrTag,
+    BroadcastTxSyncResponse,
+    Bytes,
     ContractAbi,
+    ContractConstructorArgs,
     ContractEvents,
     ContractMethod,
     ContractMethodInputParameters,
@@ -19,7 +23,7 @@
     RigoExecutionAPI,
     RWeb3ValidationErrorObject,
 } from 'rweb3-types';
-import { RWeb3Context } from 'rweb3-core';
+import { RWeb3Context, Web3PromiEvent } from 'rweb3-core';
 import {
     ContractAbiWithSignature,
     ContractEventOptions,
@@ -31,7 +35,7 @@ import {
 } from './types';
 import { LogsSubscription } from './log_subscription';
 import { isNullish, toChecksumAddress } from 'rweb3-utils';
-import { format } from 'web3-utils';
+import { format } from 'rweb3-utils';
 import {
     decodeContractErrorData,
     encodeEventSignature,
@@ -51,7 +55,8 @@ import {
 import { decodeMethodReturn, encodeEventABI, encodeMethodABI } from './encoding';
 import { ContractExecutionError, Web3ContractError } from 'rweb3-errors';
 import { getEthTxCallParams, getSendTxParams } from './utils';
-import { call, sendTransaction } from 'rweb3-rigo';
+import { call, sendDeploy } from 'rweb3-rigo';
+import { RWeb3Account } from 'rweb3-rigo-accounts';
 
 type ContractBoundMethod<
     Abi extends AbiFunctionFragment,
@@ -103,6 +108,7 @@ export type ContractOverloadedMethodOutputs<AbiArr extends ReadonlyArray<unknown
             : undefined
         : undefined
 >;
+
 export class Contract<Abi extends ContractAbi> extends RWeb3Context<RigoExecutionAPI> {
     public readonly options: ContractOptions;
     private _address?: Address;
@@ -157,12 +163,14 @@ export class Contract<Abi extends ContractAbi> extends RWeb3Context<RigoExecutio
             address,
             jsonInterface: this._jsonInterface,
         };
+
+        Object.defineProperty(this.options, 'jsonInterface', {
+            set: (value: ContractAbi) => this._parseAndSetJsonInterface(value),
+            get: () => this._jsonInterface,
+        });
     }
 
-    private _parseAndSetJsonInterface(
-        abis: ContractAbi,
-        returnFormat: DataFormat = DEFAULT_RETURN_FORMAT,
-    ) {
+    private _parseAndSetJsonInterface(abis: ContractAbi) {
         this._functions = {};
 
         this._methods = {} as ContractMethodsInterface<Abi>;
@@ -273,18 +281,27 @@ export class Contract<Abi extends ContractAbi> extends RWeb3Context<RigoExecutio
             const methods = {
                 arguments: abiParams,
 
-                // TODO Promise any
                 call: async (
-                    options?: PayableCallOptions | NonPayableCallOptions,
-                    block?: BlockNumberOrTag,
-                ): Promise<any> =>
-                    this._contractMethodCall(
-                        methodAbi,
-                        abiParams,
-                        internalErrorsAbis,
-                        options,
-                        block,
-                    ),
+                    jsonInterface: any,
+                    functionName: string,
+                    contractAddress: string,
+                    values: any[],
+                    rWeb3Account: RWeb3Account,
+                ): Promise<any> => {
+                    console.log('call');
+                    console.log(jsonInterface);
+                    console.log(functionName);
+                    console.log(contractAddress);
+                    console.log(values);
+                    console.log(rWeb3Account);
+                    return this._contractMethodCall(
+                        jsonInterface,
+                        functionName,
+                        contractAddress,
+                        values,
+                        rWeb3Account,
+                    );
+                },
 
                 // TODO Promise any
                 send: (options?: PayableTxOptions | NonPayableTxOptions): Promise<any> =>
@@ -307,28 +324,43 @@ export class Contract<Abi extends ContractAbi> extends RWeb3Context<RigoExecutio
     }
 
     private async _contractMethodCall<Options extends PayableCallOptions | NonPayableCallOptions>(
-        abi: AbiFunctionFragment,
-        params: unknown[],
-        errorsAbi: AbiErrorFragment[],
-        options?: Options,
-        block?: BlockNumberOrTag,
+        jsonInterface: any,
+        functionName: string,
+        contractAddress: string,
+        values: any[],
+        rWeb3Account: RWeb3Account,
     ) {
-        const tx = getEthTxCallParams({
-            abi,
-            params,
-            options,
-            contractOptions: {
-                ...this.options,
-                from: this.options.from ?? this.config.defaultAccount,
-            },
-        });
+        // const tx = getEthTxCallParams({
+        //     abi,
+        //     params,
+        //     options,
+        //     contractOptions: {
+        //         ...this.options,
+        //         from: this.options.from ?? this.config.defaultAccount,
+        //     },
+        // });
         try {
-            const result = await call(this, tx, block);
-            return decodeMethodReturn(abi, result);
+            // web3Context: RWeb3Context<RigoExecutionAPI>,
+            //   jsonInterface: any,
+            //   functionName: string,
+            //   contractAddress: string,
+            //   values: any[],
+            //   rWeb3Account: RWeb3Account,
+            const result = await call(
+                this,
+                jsonInterface,
+                functionName,
+                contractAddress,
+                values,
+                rWeb3Account,
+            );
+            return result;
+            // return decodeMethodReturn(abi, result.value.returnData);
         } catch (error: unknown) {
             if (error instanceof ContractExecutionError) {
                 // this will parse the error data by trying to decode the ABI error inputs according to EIP-838
-                decodeContractErrorData(errorsAbi, error.innerError);
+                decodeContractErrorData([], error.innerError);
+                // decodeContractErrorData(errorsAbi, error.innerError);
             }
             throw error;
         }
@@ -355,10 +387,13 @@ export class Contract<Abi extends ContractAbi> extends RWeb3Context<RigoExecutio
             options,
             contractOptions: modifiedContractOptions,
         });
-        const transactionToSend = sendTransaction(this, tx, {
-            // TODO Should make this configurable by the user
-            checkRevertBeforeSending: false,
-        });
+
+        const transactionToSend = Promise.resolve('');
+        //
+        // const transactionToSend = sendTransaction(this, tx, {
+        //     // TODO Should make this configurable by the user
+        //     checkRevertBeforeSending: false,
+        // });
 
         // eslint-disable-next-line no-void
 
@@ -396,5 +431,26 @@ export class Contract<Abi extends ContractAbi> extends RWeb3Context<RigoExecutio
 
     public get methods() {
         return this._methods;
+    }
+
+    public deploy(bytecode: string, args: any[], rWeb3Account: RWeb3Account) {
+        let abi = this._jsonInterface.find(
+            (j) => j.type === 'constructor',
+        ) as AbiConstructorFragment;
+
+        if (!abi) {
+            abi = {
+                type: 'constructor',
+                inputs: [],
+                stateMutability: '',
+            } as AbiConstructorFragment;
+        }
+
+        return {
+            send: (): Promise<BroadcastTxSyncResponse> => {
+                // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+                return sendDeploy(this, abi as AbiFunctionFragment, bytecode, args, rWeb3Account);
+            },
+        };
     }
 }

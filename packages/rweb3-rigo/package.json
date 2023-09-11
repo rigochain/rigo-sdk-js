@@ -53,6 +53,7 @@
     "rweb3-types": "0.0.33",
     "rweb3-core": "0.0.33",
     "rweb3-utils": "0.0.33",
-    "rweb3-rpc-methods": "0.0.33"
+    "rweb3-rpc-methods": "0.0.33",
+    "rweb3-rigo-abi": "0.0.33"
   }
 }

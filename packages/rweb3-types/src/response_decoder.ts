@@ -612,8 +612,8 @@ function decodeTxData(data: RpcTxData): TxData {
         log: data.log,
         data: data.data,
         events: data.events ? decodeEvents(data.events) : [],
-        gas_wanted: apiToSmallInt(data.gas_wanted ?? 0),
-        gas_used: apiToSmallInt(data.gas_used ?? 0),
+        gas_wanted: data.gas_wanted,
+        gas_used: data.gas_used,
     };
 }
 

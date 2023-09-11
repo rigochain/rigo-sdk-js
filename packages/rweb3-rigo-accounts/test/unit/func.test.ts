@@ -15,6 +15,7 @@
 */
 import { create, privateKeyToAccount } from '../../src';
 import { RWeb3Account } from '../../src/types';
+import { getTestProposalAccountPrivateKey } from './e2e_utils';
 
 describe('account.ts class test', () => {
     it('create func test && privateKeyToAccount Equal', () => {
@@ -26,5 +27,13 @@ describe('account.ts class test', () => {
 
         expect(account.address).toEqual(account2.address);
         expect(account.privateKey).toEqual(account2.privateKey);
+    });
+
+    it('getTestProposalAccountPrivateKey account test', () => {
+        const proposalAccount: RWeb3Account = privateKeyToAccount(
+            getTestProposalAccountPrivateKey(),
+        );
+
+        console.log('proposalAccount.address', proposalAccount.address);
     });
 });

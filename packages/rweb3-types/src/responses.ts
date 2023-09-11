@@ -433,9 +433,9 @@ export interface TxData {
     /** Information about the transaction */
     readonly info?: string;
     /** Gas limit specified for the transaction */
-    readonly gas_wanted?: number;
+    readonly gas_wanted?: string;
     /** Actual amount of gas used by the transaction */
-    readonly gas_used?: number;
+    readonly gas_used?: string;
 }
 
 /**

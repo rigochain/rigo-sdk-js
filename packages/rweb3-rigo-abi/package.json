@@ -49,6 +49,8 @@
     "@types/jest": "^28.1.6"
   },
   "dependencies": {
+    "@ethersproject/abi": "^5.7.0",
+    "@ethersproject/bignumber": "^5.7.0",
     "rweb3-types": "0.0.33",
     "rweb3-errors": "0.0.33",
     "rweb3-utils": "0.0.33",

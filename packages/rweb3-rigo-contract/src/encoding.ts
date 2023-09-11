@@ -15,7 +15,7 @@ You should have received a copy of the GNU Lesser General Public License
 along with web3.js.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-import { format, isNullish, keccak256 } from 'web3-utils';
+import { format, isNullish, keccak256 } from 'rweb3-utils';
 
 import {
     AbiConstructorFragment,
@@ -44,7 +44,7 @@ import {
 
 import { blockSchema, logSchema } from 'rweb3-rigo';
 
-import { Web3ContractError } from 'web3-errors';
+import { Web3ContractError } from 'rweb3-errors';
 
 // eslint-disable-next-line import/no-cycle
 import { ContractOptions, ContractAbiWithSignature, EventLog } from './types.js';

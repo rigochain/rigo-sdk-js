@@ -10,7 +10,7 @@ import {
     AbiEventFragment,
     AbiFunctionFragment,
     AbiConstructorFragment,
-} from 'web3-types';
+} from 'rweb3-types';
 import ethersAbiCoder from './ethers_abi_coder.js';
 
 export const isAbiFragment = (item: unknown): item is AbiFragment =>
