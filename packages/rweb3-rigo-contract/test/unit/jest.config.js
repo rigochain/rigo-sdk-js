@@ -17,10 +17,12 @@ const base = require('../config/jest.config');
 
 module.exports = {
     ...base,
-    // testMatch: ['<rootDir>/test/unit/**/*.(spec|test).(js|ts)'],
+    maxWorkers: 1, // Nonce 체크로 인해 병렬 처리
+    testTimeout: 10000,
+    testMatch: ['<rootDir>/test/unit/**/*.(spec|test).(js|ts)'],
     // testMatch: ['<rootDir>/test/unit/**/abi.(spec|test).(js|ts)'],
     // testMatch: ['<rootDir>/test/unit/**/deploy.(spec|test).(js|ts)'],
-    testMatch: ['<rootDir>/test/unit/**/balanceOf.(spec|test).(js|ts)'],
+    // testMatch: ['<rootDir>/test/unit/**/balanceOf.(spec|test).(js|ts)'],
     // testMatch: ['<rootDir>/test/unit/**/decimals.(spec|test).(js|ts)'],
 
     coverageDirectory: '../../.coverage/unit',

@@ -11,6 +11,8 @@ describe('deploy test', () => {
             '4b007901049a210f8e1ce8f4d4ab8e6e1efd1b10',
         ) as any;
 
+        erc20Contract.setProvider(new WebsocketProvider(getTestWsServer()));
+
         erc20Contract.methods
             .balanceOf('736A9F6FA280A88599DC7FCD24E42975DA89A5AE')
             .call()

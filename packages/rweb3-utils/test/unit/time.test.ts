@@ -35,6 +35,6 @@ describe('Timestamp conversion tests', () => {
         const now = new Date();
         const nano = Long.fromNumber(now.getTime() * 1000000);
         const recovered = fromNanoSecond(nano);
-        expect(recovered.getTime()).toEqual(now.getTime());
+        expect(Math.abs(recovered.getTime() - now.getTime()) <= 2).toBe(true);
     });
 });

@@ -9,11 +9,7 @@ describe('deploy test', () => {
         let erc20Contract = new Contract(erc20Json);
         erc20Contract.setProvider(new WebsocketProvider(getTestWsServer()));
 
-        console.log(erc20Contract);
-
         let rweb3account: RWeb3Account = privateKeyToAccount(getTestProposalAccountPrivateKey());
-
-        console.log(rweb3account);
 
         erc20Contract
             .deploy(

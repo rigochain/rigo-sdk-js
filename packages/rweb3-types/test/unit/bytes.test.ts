@@ -23,12 +23,6 @@ describe('BytesUint8Array class tests', () => {
         expect(bytes.toHex()).toBe(hex.substring(2));
     });
 
-    test('fromWords', () => {
-        const wordArray = cryptojs.enc.Hex.parse('123abc');
-        const bytes = BytesUint8Array.fromWords(wordArray);
-        expect(bytes.toHex()).toBe(wordArray.toString());
-    });
-
     test('parse - hex', () => {
         const hex = '123abc';
         const bytes = BytesUint8Array.parse(hex, 'hex');

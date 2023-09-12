@@ -14,7 +14,11 @@
     limitations under the License.
 */
 import { RWeb3 } from '../../../src';
-import { getTestAccountPrivateKey, getTestWsServer } from '../e2e_utils';
+import {
+    getTestAccountPrivateKey,
+    getTestProposalAccountPrivateKey,
+    getTestWsServer,
+} from '../e2e_utils';
 import { privateKeyToAccount, RWeb3Account, TrxProtoBuilder } from 'rweb3-rigo-accounts';
 import { AccountResponse, BroadcastTxSyncResponse } from 'rweb3-types';
 
@@ -26,7 +30,7 @@ describe('broadcastTxSync check ', () => {
     });
 
     it('should call rweb3 with testWebsocketRWeb3Instance.broadcastTxSync() method success return', async () => {
-        const secretKey = getTestAccountPrivateKey();
+        const secretKey = getTestProposalAccountPrivateKey();
 
         const acct = privateKeyToAccount(secretKey) as RWeb3Account;
 
