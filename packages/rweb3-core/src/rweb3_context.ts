@@ -74,7 +74,19 @@ export class RWeb3Context<API extends RWeb3APISpec = unknown> extends RWeb3Confi
         };
     }
 
-    public setProvider(provider?: HttpProvider | WebsocketProvider): boolean {
+    public setProvider(provider?: HttpProvider | WebsocketProvider | string): boolean {
+        if (typeof provider === 'string') {
+            // HTTP
+            if (/^http(s)?:\/\//i.test(provider)) {
+                this.provider = new HttpProvider(provider);
+            }
+
+            // WS
+            if (/^ws(s)?:\/\//i.test(provider)) {
+                this.provider = new WebsocketProvider(provider);
+            }
+        }
+        this.requestManager.setProvider(provider);
         this.provider = provider;
         return true;
     }

@@ -102,6 +102,7 @@ export class ReconnectingSocket {
         if (this.disconnected) {
             throw new Error('Cannot queue request: socket has disconnected');
         }
+
         this.socket.queueRequest(request);
     }
 }

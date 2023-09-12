@@ -152,8 +152,6 @@ export default class WebsocketProvider<API extends RWeb3APISpec = RigoExecutionA
     private readonly subscriptionStreams = new Map<string, Stream<SubscriptionEvent>>();
 
     public constructor(baseUrl: string, onError: (err: any) => void = defaultErrorHandler) {
-        console.log('run websocket provider');
-
         // accept host.name:port and assume ws protocol
         // make sure we don't end up with ...//websocket
         const path = baseUrl.endsWith('/') ? 'websocket' : '/websocket';
@@ -178,15 +176,6 @@ export default class WebsocketProvider<API extends RWeb3APISpec = RigoExecutionA
         Method extends RWeb3APIMethod<API>,
         ResponseType = RWeb3APIReturnType<API, Method>,
     >(payload: RWeb3APIPayload<API, Method>): Promise<JsonRpcResponseWithResult<ResponseType>> {
-        console.log('websocket connected', this.socket.connectionStatus.value);
-
-        // {
-        //     jsonrpc: '2.0',
-        //         id: '8fcd801c-cfc4-4f88-8f7d-f6e5d9200dde',
-        //     method: 'status',
-        //     params: {}
-        // }
-
         return this.execute(payload as JsonRpcRequest);
     }
 
@@ -195,6 +184,7 @@ export default class WebsocketProvider<API extends RWeb3APISpec = RigoExecutionA
         ResponseType = RWeb3APIReturnType<API, Method>,
     >(payload: RWeb3APIPayload<API, Method>): Promise<JsonRpcResponseWithResult<ResponseType>> {
         const pendingResponse = this.responseForRequestId(payload.id);
+
         this.socket.queueRequest(JSON.stringify(payload));
 
         const response = await pendingResponse;
@@ -213,9 +203,6 @@ export default class WebsocketProvider<API extends RWeb3APISpec = RigoExecutionA
         if (typeof query !== 'string') {
             throw new Error('request.params.query must be a string');
         }
-
-        console.log('listen', query);
-
         if (!this.subscriptionStreams.has(query)) {
             const producer = new RpcEventProducer(request, this.socket);
             const stream = Stream.create(producer);

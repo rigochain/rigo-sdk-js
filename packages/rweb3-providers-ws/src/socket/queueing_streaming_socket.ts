@@ -59,6 +59,7 @@ export class QueueingStreamingSocket {
         this.connectionStatus = new ValueAndUpdates(this.connectionStatusProducer);
 
         this.socket = new Streaming_socket(this.url, this.timeout);
+
         this.socket.events.subscribe({
             next: (event) => {
                 if (!this.eventProducerListener) throw new Error('No event producer listener set');
@@ -121,6 +122,7 @@ export class QueueingStreamingSocket {
         this.isProcessingQueue = true;
 
         let request: string | undefined;
+
         while ((request = this.queue.shift())) {
             try {
                 await this.socket.send(request);
@@ -132,5 +134,7 @@ export class QueueingStreamingSocket {
                 return;
             }
         }
+
+        this.isProcessingQueue = false;
     }
 }

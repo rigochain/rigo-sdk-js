@@ -119,8 +119,6 @@ export class RWeb3RequestManager<
             return response;
         }
 
-        console.error('response', response);
-
         throw new ResponseError(response);
     }
 
