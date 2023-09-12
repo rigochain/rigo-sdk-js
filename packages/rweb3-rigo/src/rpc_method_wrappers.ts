@@ -282,6 +282,20 @@ export async function tx(web3Context: RWeb3Context<RigoExecutionAPI>, hash: stri
     return rigoRpcMethods.tx(web3Context.requestManager, hash);
 }
 
+export async function contractAddrFromTx(
+    web3Context: RWeb3Context<RigoExecutionAPI>,
+    hash: string | Uint8Array,
+) {
+    let txResponse = await rigoRpcMethods.tx(web3Context.requestManager, hash);
+    if (!txResponse.tx_result || !txResponse.tx_result.data) {
+        throw Error('not found contract address');
+    }
+    const bytes = BytesUint8Array.b64ToBytes(txResponse.tx_result.data);
+    let bytesToHex = bytes.toHex();
+    if (!bytesToHex.startsWith('0x')) bytesToHex = '0x' + bytesToHex;
+    return bytesToHex.toLowerCase();
+}
+
 export async function abciInfo(web3Context: RWeb3Context<RigoExecutionAPI>) {
     return rigoRpcMethods.abciInfo(web3Context.requestManager);
 }
@@ -391,6 +405,24 @@ export function subscribe(
     web3Context: RWeb3Context<RigoExecutionAPI>,
     query: string,
 ): Stream<SubscriptionEvent> {
-    console.log('subscribe query 2 ', query);
     return rigoRpcMethods.subscribe(web3Context.requestManager, query);
+}
+
+export function subscribeNewBlock(
+    web3Context: RWeb3Context<RigoExecutionAPI>,
+): Stream<SubscriptionEvent> {
+    return rigoRpcMethods.subscribeNewBlock(web3Context.requestManager);
+}
+
+export function subscribeNewBlockHeader(
+    web3Context: RWeb3Context<RigoExecutionAPI>,
+): Stream<SubscriptionEvent> {
+    return rigoRpcMethods.subscribeNewBlockHeader(web3Context.requestManager);
+}
+
+export function subscribeTx(
+    web3Context: RWeb3Context<RigoExecutionAPI>,
+    query?: string,
+): Stream<SubscriptionEvent> {
+    return rigoRpcMethods.subscribeTx(web3Context.requestManager, query);
 }

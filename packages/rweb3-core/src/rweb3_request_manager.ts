@@ -243,8 +243,6 @@ export class RWeb3RequestManager<
         const { provider } = this;
 
         const payload = jsonRpc.toPayload(request);
-
-        console.log('subscribe', payload);
         return provider.listen(payload as JsonRpcRequest);
     }
 }

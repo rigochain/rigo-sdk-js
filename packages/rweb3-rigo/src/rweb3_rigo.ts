@@ -23,6 +23,7 @@ import {
     DataFormat,
     DEFAULT_RETURN_FORMAT,
     RigoExecutionAPI,
+    SubscriptionEvent,
     Transaction,
     TransactionCall,
     TransactionWithFromAndToLocalWalletIndex,
@@ -30,8 +31,9 @@ import {
     TransactionWithToLocalWalletIndex,
     TrxProto,
 } from 'rweb3-types';
-import { SendTransactionOptions } from './types';
-import { RWeb3Account } from 'rweb3-rigo-accounts';
+import { contractAddrFromTx } from './rpc_method_wrappers.js';
+import { Stream } from 'xstream';
+import { rigoRpcMethods } from 'rweb3-rpc-methods';
 
 export class RWeb3Rigo extends RWeb3Context {
     public constructor() {
@@ -110,6 +112,10 @@ export class RWeb3Rigo extends RWeb3Context {
         return rpcMethodsWrappers.tx(this, hash);
     }
 
+    contractAddrFromTx(hash: string | Uint8Array) {
+        return rpcMethodsWrappers.contractAddrFromTx(this, hash);
+    }
+
     abciInfo() {
         return rpcMethodsWrappers.abciInfo(this);
     }
@@ -185,6 +191,18 @@ export class RWeb3Rigo extends RWeb3Context {
     subscribe(query: string) {
         console.log('subscribe query', query);
         return rpcMethodsWrappers.subscribe(this, query);
+    }
+
+    subscribeNewBlock() {
+        return rpcMethodsWrappers.subscribeNewBlock(this);
+    }
+
+    subscribeNewBlockHeader() {
+        return rpcMethodsWrappers.subscribeNewBlockHeader(this);
+    }
+
+    subscribeTx(query?: string) {
+        return rpcMethodsWrappers.subscribeTx(this, query);
     }
 
     // public sendTransaction(

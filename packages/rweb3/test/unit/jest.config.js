@@ -5,7 +5,7 @@ module.exports = {
     testTimeout: 10000,
     // testMatch: ['<rootDir>/test/unit/**/*.(spec|test).(js|ts)'],
     // testMatch: ['<rootDir>/test/unit/**/setProvider.(spec|test).(js|ts)'], // 단일 테스트
-    testMatch: ['<rootDir>/test/unit/**/multipleRWeb3.(spec|test).(js|ts)'], // 단일 테스트
+    // testMatch: ['<rootDir>/test/unit/**/multipleRWeb3.(spec|test).(js|ts)'], // 단일 테스트
     // testMatch: ['<rootDir>/test/unit/**/status.(spec|test).(js|ts)'], // 단일 테스트
     // testMatch: ['<rootDir>/test/unit/**/blockchain.(spec|test).(js|ts)'], // 단일 테스트
     // testMatch: ['<rootDir>/test/unit/**/block.(spec|test).(js|ts)'], // 단일 테스트
@@ -17,6 +17,7 @@ module.exports = {
     // testMatch: ['<rootDir>/test/unit/**/genesisChunked.(spec|test).(js|ts)'], // 단일 테스트
     // testMatch: ['<rootDir>/test/unit/**/dumpConsensusState.(spec|test).(js|ts)'], // 단일 테스트
     // testMatch: ['<rootDir>/test/unit/**/consensusState.(spec|test).(js|ts)'], // 단일 테스트
+    // testMatch: ['<rootDir>/test/unit/**/contractAddrFromTx.(spec|test).(js|ts)'], // 단일 테스트
     // testMatch: ['<rootDir>/test/unit/**/consensusParams.(spec|test).(js|ts)'], // 단일 테스트
     // testMatch: ['<rootDir>/test/unit/**/unconfirmedTxs.(spec|test).(js|ts)'], // 단일 테스트
     // testMatch: ['<rootDir>/test/unit/**/txSearch.(spec|test).(js|ts)'], // 단일 테스트
@@ -35,6 +36,7 @@ module.exports = {
     // testMatch: ['<rootDir>/test/unit/**/broadcastRawTxAsync.(spec|test).(js|ts)'], // 단일 테스트
     // testMatch: ['<rootDir>/test/unit/**/broadcastRawTxCommit.(spec|test).(js|ts)'], // 단일 테스트
     // testMatch: ['<rootDir>/test/unit/**/subscribe.(spec|test).(js|ts)'], // 단일 테스트
+    testMatch: ['<rootDir>/test/unit/**/subscribeNewBlock.(spec|test).(js|ts)'], // 단일 테스트
 
     coverageDirectory: '../../.coverage/unit',
     collectCoverageFrom: ['src/**'],
