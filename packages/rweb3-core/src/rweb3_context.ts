@@ -54,7 +54,6 @@ export class RWeb3Context<API extends RWeb3APISpec = unknown> extends RWeb3Confi
         ContextRef: RWeb3ContextConstructor<T, T2>,
         ...args: [...T2]
     ) {
-        // TODO : 개선점 있어 보임 -> 정상적으로 requstManager 등록되어야 함
         const useContext = new ContextRef(
             ...([...args, this.getContextObject()] as unknown as [...T2, RWeb3ContextObject]),
         );
@@ -72,6 +71,10 @@ export class RWeb3Context<API extends RWeb3APISpec = unknown> extends RWeb3Confi
         return {
             requestManager: this.requestManager,
         };
+    }
+
+    public getProvider() {
+        return this.requestManager.providers;
     }
 
     public setProvider(provider?: HttpProvider | WebsocketProvider | string): boolean {

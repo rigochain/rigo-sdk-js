@@ -20,6 +20,10 @@ import RWeb3Rigo from 'rweb3-rigo';
 import { isNullish } from 'rweb3-validator';
 import { RWeb3RigoInterface } from './types';
 import { initAccountsForContext } from './accounts.js';
+import abi from './abi.js';
+import { Address, ContractAbi, ContractInitOptions } from 'rweb3-types';
+import { Contract } from 'rweb3-rigo-contract';
+import { InvalidMethodParamsError } from 'rweb3-errors';
 
 export class RWeb3 extends RWeb3Context {
     public static version = RWeb3PkgInfo.version;
@@ -43,11 +47,22 @@ export class RWeb3 extends RWeb3Context {
         // Have to use local alias to initiate contract context
         // eslint-disable-next-line @typescript-eslint/no-this-alias
         const self = this;
+
+        class ContractBuilder<Abi extends ContractAbi> extends Contract<Abi> {
+            constructor(jsonInterface: Abi, addressOrOptionsOrContext?: Address | RWeb3Context) {
+                super(jsonInterface, addressOrOptionsOrContext);
+                let providers = self.requestManager.provider;
+                super.settingsProvider(providers);
+            }
+        }
+
         const rigo = self.use(RWeb3Rigo);
         //
         // // Rigo Module
         this.rigo = Object.assign(rigo, {
             accounts,
+            Contract: ContractBuilder,
+            abi,
         });
     }
 }

@@ -46,3 +46,7 @@ export const getTestAccountAddress = (): string => {
 export const getTestAccountPrivateKey = (): string => {
     return secrets.TESTNET.ACCOUNT.privateKey;
 };
+
+export const getTestProposalAccountPrivateKey = (): string => {
+    return secrets.TESTNET.PROPOSAL_ACCOUNT.privateKey;
+};

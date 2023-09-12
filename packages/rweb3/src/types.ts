@@ -15,5 +15,28 @@
 */
 
 import Rigo from 'rweb3-rigo';
+import { Contract } from 'rweb3-rigo-contract';
 
-export type RWeb3RigoInterface = Rigo;
+import {
+    decodeLog,
+    decodeParameter,
+    decodeParameters,
+    encodeFunctionCall,
+    encodeFunctionSignature,
+    encodeParameter,
+    encodeParameters,
+} from 'rweb3-rigo-abi';
+
+export interface RWeb3RigoInterface extends Rigo {
+    Contract: typeof Contract;
+    abi: {
+        encodeEventSignature: typeof encodeFunctionSignature;
+        encodeFunctionCall: typeof encodeFunctionCall;
+        encodeFunctionSignature: typeof encodeFunctionSignature;
+        encodeParameter: typeof encodeParameter;
+        encodeParameters: typeof encodeParameters;
+        decodeParameter: typeof decodeParameter;
+        decodeParameters: typeof decodeParameters;
+        decodeLog: typeof decodeLog;
+    };
+}

@@ -20,7 +20,7 @@ import { BytesUint8Array } from 'rweb3-types';
 import BN from 'bn.js';
 import { fromNanoSecond, getNanoSecond } from 'rweb3-utils';
 import { createHash } from 'crypto';
-import { TrxProtoUtils } from './trx_pb.js';
+import { TrxPayloadProposalProto, TrxPayloadVotingProto, TrxProtoUtils } from './trx_pb.js';
 import { HexString, TrxProto } from 'rweb3-types';
 import { Transaction, TransactionPayloadUnDelegating } from './tx_types.js';
 import { RWeb3Account } from '../types.js';
@@ -34,7 +34,7 @@ interface TrxPayloadCreateContract {
     data: string;
 }
 
-function decodeTransaction(d: BytesUint8Array): Transaction {
+function decodeTransaction(d: BytesUint8Array): Transaction<Object> {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     let payload: any;
     const tx = trxPb.TrxProtoUtils.decode(d);
@@ -70,7 +70,7 @@ function decodeTransaction(d: BytesUint8Array): Transaction {
     };
 }
 
-function buildTransferTrxProto(transaction: Transaction): TrxProto {
+function buildTransferTrxProto(transaction: Transaction<Object>): TrxProto {
     return {
         version: isSet(transaction.version) ? Number(transaction.version) : 1,
         time: isSet(transaction.time) ? getNanoSecond(transaction.time) : getNanoSecond(),
@@ -95,7 +95,7 @@ function buildTransferTrxProto(transaction: Transaction): TrxProto {
     };
 }
 
-function buildDelegateTrxProto(transaction: Transaction): TrxProto {
+function buildDelegateTrxProto(transaction: Transaction<Object>): TrxProto {
     return {
         version: isSet(transaction.version) ? Number(transaction.version) : 1,
         time: isSet(transaction.time) ? getNanoSecond(transaction.time) : getNanoSecond(),
@@ -120,7 +120,9 @@ function buildDelegateTrxProto(transaction: Transaction): TrxProto {
     };
 }
 
-function buildUnDelegateTrxProto(transaction: Transaction): TrxProto {
+function buildUnDelegateTrxProto(
+    transaction: Transaction<TransactionPayloadUnDelegating>,
+): TrxProto {
     const payload = transaction.payload as TransactionPayloadUnDelegating;
     if (!isSet(payload) || !isSet(payload.txhash)) {
         throw Error('mandatory argument is missed');
@@ -153,7 +155,7 @@ function buildUnDelegateTrxProto(transaction: Transaction): TrxProto {
     };
 }
 
-function buildContractTrxProto(transaction: Transaction): TrxProto {
+function buildContractTrxProto(transaction: Transaction<TrxPayloadCreateContract>): TrxProto {
     const payload = transaction.payload as TrxPayloadCreateContract;
     if (!isSet(payload) || !isSet(payload.data)) {
         throw Error('mandatory argument is missed');
@@ -177,6 +179,69 @@ function buildContractTrxProto(transaction: Transaction): TrxProto {
                 ? new Uint8Array()
                 : new Uint8Array(new BN(transaction.gas).toArrayLike(Buffer)),
         type: 6, // contract type
+        Payload: payloadBytes,
+        sig: new Uint8Array(),
+    };
+}
+
+function buildProposalTrx(transaction: Transaction<TrxPayloadProposalProto>): TrxProto {
+    const payload = transaction.payload as TrxPayloadProposalProto;
+    if (!isSet(payload)) {
+        throw Error('mandatory argument is missed');
+    }
+    const payloadBytes = trxPb.TrxPayloadProposalProto.encode({
+        message: payload.message,
+        startVotingHeight: payload.startVotingHeight,
+        votingBlocks: payload.votingBlocks,
+        optType: payload.optType,
+        options: payload.options,
+    }).finish();
+
+    return {
+        version: isSet(transaction.version) ? Number(transaction.version) : 1,
+        time: isSet(transaction.time) ? getNanoSecond(transaction.time) : getNanoSecond(),
+        nonce:
+            isSet(transaction.nonce) && transaction.nonce
+                ? Long.fromValue(transaction.nonce)
+                : Long.fromValue(1),
+        from: BytesUint8Array.fromHex(transaction.from),
+        to: BytesUint8Array.fromHex(transaction.to),
+        Amount: new Uint8Array(),
+        Gas:
+            transaction.gas === '0'
+                ? new Uint8Array()
+                : new Uint8Array(new BN(transaction.gas).toArrayLike(Buffer)),
+        type: 4, // proposal type
+        Payload: payloadBytes,
+        sig: new Uint8Array(),
+    };
+}
+
+function buildVotingTrx(transaction: Transaction<TrxPayloadVotingProto>): TrxProto {
+    const payload = transaction.payload as TrxPayloadVotingProto;
+    if (!isSet(payload)) {
+        throw Error('mandatory argument is missed');
+    }
+    const payloadBytes = trxPb.TrxPayloadVotingProto.encode({
+        txHash: payload.txHash,
+        choice: payload.choice,
+    }).finish();
+
+    return {
+        version: isSet(transaction.version) ? Number(transaction.version) : 1,
+        time: isSet(transaction.time) ? getNanoSecond(transaction.time) : getNanoSecond(),
+        nonce:
+            isSet(transaction.nonce) && transaction.nonce
+                ? Long.fromValue(transaction.nonce)
+                : Long.fromValue(1),
+        from: BytesUint8Array.fromHex(transaction.from),
+        to: BytesUint8Array.fromHex(transaction.to),
+        Amount: new Uint8Array(),
+        Gas:
+            transaction.gas === '0'
+                ? new Uint8Array()
+                : new Uint8Array(new BN(transaction.gas).toArrayLike(Buffer)),
+        type: 5, // voting type
         Payload: payloadBytes,
         sig: new Uint8Array(),
     };

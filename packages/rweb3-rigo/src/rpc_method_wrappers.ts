@@ -103,17 +103,12 @@ export async function sendDeploy(
 
 export async function call(
     web3Context: RWeb3Context<RigoExecutionAPI>,
-    jsonInterface: any,
-    functionName: string,
     contractAddress: string,
-    values: any[],
-    rWeb3Account: RWeb3Account,
+    encodeFunctionSignature: string,
 ) {
-    const functionSignature = _getFunctionSignature(jsonInterface, contractAddress, functionName);
-    const encodeFunctionSignature = _getEncodeFunctionSignature(functionSignature, values);
     const vmCallResult = await vmCall(
         web3Context,
-        rWeb3Account.address,
+        contractAddress,
         contractAddress,
         0,
         encodeFunctionSignature,

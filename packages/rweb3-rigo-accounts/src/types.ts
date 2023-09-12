@@ -23,7 +23,7 @@ export type SignTransactionResult = {
 };
 
 export type SignTransactionFunction = (
-    transaction: Transaction | Record<string, unknown>,
+    transaction: Transaction<Object> | Record<string, unknown>,
 ) => SignTransactionResult;
 
 export interface RWeb3Account extends Web3BaseWalletAccount {

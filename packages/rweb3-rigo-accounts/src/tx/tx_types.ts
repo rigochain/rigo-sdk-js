@@ -17,7 +17,7 @@ import { BytesUint8Array } from 'rweb3-types';
 import { createHash, randomBytes } from 'crypto';
 import * as secp256k1 from 'secp256k1';
 
-export interface Transaction {
+export interface Transaction<T> {
     hash?: string;
     version?: number;
     time?: Date;
@@ -27,7 +27,7 @@ export interface Transaction {
     amount: string;
     gas: string;
     type?: number;
-    payload?: object | TransactionPayloadUnDelegating;
+    payload?: object | T;
     sig?: string;
 }
 
