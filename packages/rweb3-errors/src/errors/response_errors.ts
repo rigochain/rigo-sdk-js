@@ -20,7 +20,7 @@ import {
     JsonRpcPayload,
     JsonRpcResponse,
     JsonRpcResponseWithError,
-} from '@rigo/rweb3-types';
+} from '@rigochain/rweb3-types';
 import { BaseRWeb3Error } from '../rweb3_error_base.js';
 import { ERR_INVALID_RESPONSE, ERR_RESPONSE } from '../error_codes.js';
 

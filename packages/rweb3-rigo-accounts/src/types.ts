@@ -14,7 +14,7 @@
     limitations under the License.
 */
 
-import { Web3BaseWalletAccount } from '@rigo/rweb3-types';
+import { Web3BaseWalletAccount } from '@rigochain/rweb3-types';
 import { PrvKey, PubKey, Transaction } from './tx/tx_types.js';
 
 export type SignTransactionResult = {

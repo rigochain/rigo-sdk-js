@@ -14,7 +14,7 @@
     limitations under the License.
 */
 
-import { RWeb3ValidationErrorObject } from '@rigo/rweb3-types';
+import { RWeb3ValidationErrorObject } from '@rigochain/rweb3-types';
 import { toHex, utf8ToBytes } from 'ethereum-cryptography/utils.js';
 import { blake2b } from 'ethereum-cryptography/blake2b.js';
 import validator from 'is-my-json-valid';

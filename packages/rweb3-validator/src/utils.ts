@@ -14,7 +14,7 @@
     limitations under the License.
 */
 
-import { InvalidBytesError, InvalidNumberError } from '@rigo/rweb3-errors';
+import { InvalidBytesError, InvalidNumberError } from '@rigochain/rweb3-errors';
 import { VALID_RIGO_BASE_TYPES } from './constants.js';
 import {
     FullValidationSchema,

@@ -27,8 +27,8 @@ import {
     RWeb3APISpec,
     RigoExecutionAPI,
     RWeb3APIPayload,
-} from '@rigo/rweb3-types';
-import { ResponseError } from '@rigo/rweb3-errors';
+} from '@rigochain/rweb3-types';
+import { ResponseError } from '@rigochain/rweb3-errors';
 
 export default class HttpProvider<API extends RWeb3APISpec = RigoExecutionAPI> {
     private readonly clientUrl: string;

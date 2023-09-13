@@ -14,15 +14,15 @@
     limitations under the License.
 */
 
-import { FormatterError } from '@rigo/rweb3-errors';
-import { Bytes, DataFormat, FMT_BYTES, FMT_NUMBER, FormatType } from '@rigo/rweb3-types';
+import { FormatterError } from '@rigochain/rweb3-errors';
+import { Bytes, DataFormat, FMT_BYTES, FMT_NUMBER, FormatType } from '@rigochain/rweb3-types';
 import {
     isNullish,
     isObject,
     JsonSchema,
     utils,
     ValidationSchemaInput,
-} from '@rigo/rweb3-validator';
+} from '@rigochain/rweb3-validator';
 import { bytesToUint8Array, bytesToHex, numberToHex, toBigInt } from './converters.js';
 import { mergeDeep } from './objects.js';
 import { padLeft } from './string_manipulation.js';

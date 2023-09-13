@@ -13,7 +13,7 @@
     See the License for the specific language governing permissions and
     limitations under the License.
 */
-import { HexString, Numbers } from '@rigo/rweb3-types';
+import { HexString, Numbers } from '@rigochain/rweb3-types';
 
 export const padLeftData: [[Numbers, number, string], HexString][] = [
     [[0, 10, '0'], '0x0000000000'],

@@ -14,7 +14,7 @@
     limitations under the License.
 */
 
-import { AbiParameter } from '@rigo/rweb3-types';
+import { AbiParameter } from '@rigochain/rweb3-types';
 import { ValidationError } from 'is-my-json-valid';
 
 export type ValidInputTypes = Uint8Array | bigint | string | number | boolean;

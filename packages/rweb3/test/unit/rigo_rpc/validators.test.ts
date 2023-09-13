@@ -15,7 +15,7 @@
 */
 import { RWeb3 } from '../../../src';
 import { getTestWsServer } from '../e2e_utils';
-import { ValidatorsResponse } from '@rigo/rweb3-types';
+import { ValidatorsResponse } from '@rigochain/rweb3-types';
 
 describe('validators check ', () => {
     let testWebsocketRWeb3Instance: RWeb3;

@@ -13,7 +13,7 @@
     See the License for the specific language governing permissions and
     limitations under the License.
 */
-import { TypedObject, TypedObjectAbbreviated, Bytes } from '@rigo/rweb3-types';
+import { TypedObject, TypedObjectAbbreviated, Bytes } from '@rigochain/rweb3-types';
 import { hexToBytes } from '../../src/converters';
 
 export const sha3Data: [Bytes, string | undefined][] = [

@@ -14,8 +14,12 @@
     limitations under the License.
 */
 
-import { AbiEventFragment, HexString, Topic, DataFormat } from '@rigo/rweb3-types';
-import { RWeb3RequestManager, Web3Subscription, Web3SubscriptionManager } from '@rigo/rweb3-core';
+import { AbiEventFragment, HexString, Topic, DataFormat } from '@rigochain/rweb3-types';
+import {
+    RWeb3RequestManager,
+    Web3Subscription,
+    Web3SubscriptionManager,
+} from '@rigochain/rweb3-core';
 import { EventLog, ContractAbiWithSignature } from './types.js';
 
 export class LogsSubscription extends Web3Subscription<

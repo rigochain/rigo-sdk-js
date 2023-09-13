@@ -19,7 +19,7 @@ import {
     Bytes,
     MatchPrimitiveType,
     Numbers,
-} from '@rigo/rweb3-types';
+} from '@rigochain/rweb3-types';
 import { expectTypeOf, typecheck } from '@humeris/espresso-shot';
 
 describe('types', () => {

@@ -13,8 +13,8 @@
     See the License for the specific language governing permissions and
     limitations under the License.
 */
-import { Numbers } from '@rigo/rweb3-types';
-import { InvalidBlockError } from '@rigo/rweb3-errors';
+import { Numbers } from '@rigochain/rweb3-types';
+import { InvalidBlockError } from '@rigochain/rweb3-errors';
 
 export const compareBlockNumbersValidData: [[Numbers, Numbers], number][] = [
     [[1, 1], 0],

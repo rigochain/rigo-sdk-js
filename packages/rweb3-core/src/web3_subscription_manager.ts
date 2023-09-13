@@ -14,9 +14,9 @@
     limitations under the License.
 */
 
-import { DataFormat, DEFAULT_RETURN_FORMAT, RWeb3APISpec } from '@rigo/rweb3-types';
-import { ProviderError, SubscriptionError } from '@rigo/rweb3-errors';
-import { isNullish } from '@rigo/rweb3-utils';
+import { DataFormat, DEFAULT_RETURN_FORMAT, RWeb3APISpec } from '@rigochain/rweb3-types';
+import { ProviderError, SubscriptionError } from '@rigochain/rweb3-errors';
+import { isNullish } from '@rigochain/rweb3-utils';
 import { isSupportSubscriptions } from './utils.js';
 import { RWeb3RequestManager, Web3RequestManagerEvent } from './rweb3_request_manager.js';
 // eslint-disable-next-line import/no-cycle

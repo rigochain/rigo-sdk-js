@@ -23,7 +23,7 @@ import {
     encodeFunctionSignature,
     encodeParameter,
     encodeParameters,
-} from '@rigo/rweb3-rigo-abi';
+} from '@rigochain/rweb3-rigo-abi';
 
 /**
  * The object for `web3.abi`

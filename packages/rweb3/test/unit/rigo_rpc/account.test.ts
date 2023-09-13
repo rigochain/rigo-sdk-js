@@ -15,7 +15,7 @@
 */
 import { RWeb3 } from '../../../src';
 import { getTestAccountAddress, getTestWsServer } from '../e2e_utils';
-import { AccountResponse } from '@rigo/rweb3-types';
+import { AccountResponse } from '@rigochain/rweb3-types';
 
 describe('account check ', () => {
     let testWebsocketRWeb3Instance: RWeb3;

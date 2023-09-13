@@ -16,7 +16,7 @@
 
 /* eslint-disable max-classes-per-file */
 
-import { ConnectionEvent } from '@rigo/rweb3-types';
+import { ConnectionEvent } from '@rigochain/rweb3-types';
 import {
     ERR_CONN,
     ERR_CONN_INVALID,

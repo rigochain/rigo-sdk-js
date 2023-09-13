@@ -14,7 +14,7 @@
     limitations under the License.
 */
 
-import { AbiParameter } from '@rigo/rweb3-types';
+import { AbiParameter } from '@rigochain/rweb3-types';
 import { ShortValidationSchema } from '../types';
 
 export const isAbiParameterSchema = (

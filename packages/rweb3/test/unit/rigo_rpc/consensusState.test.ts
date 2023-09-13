@@ -15,7 +15,7 @@
 */
 import { RWeb3 } from '../../../src';
 import { getTestWsServer } from '../e2e_utils';
-import { ConsensusStateResponse } from '@rigo/rweb3-types';
+import { ConsensusStateResponse } from '@rigochain/rweb3-types';
 
 describe('consensusState check ', () => {
     let testWebsocketRWeb3Instance: RWeb3;

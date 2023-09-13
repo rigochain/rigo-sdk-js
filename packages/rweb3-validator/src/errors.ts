@@ -14,8 +14,8 @@
     limitations under the License.
 */
 
-import { BaseRWeb3Error, ERR_VALIDATION } from '@rigo/rweb3-errors';
-import { RWeb3ValidationErrorObject } from '@rigo/rweb3-types';
+import { BaseRWeb3Error, ERR_VALIDATION } from '@rigochain/rweb3-errors';
+import { RWeb3ValidationErrorObject } from '@rigochain/rweb3-types';
 
 import { isNullish } from './validation/object.js';
 

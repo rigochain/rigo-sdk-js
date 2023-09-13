@@ -34,8 +34,8 @@ import {
     PayableCallOptions,
     RigoExecutionAPI,
     RWeb3ValidationErrorObject,
-} from '@rigo/rweb3-types';
-import { RWeb3Context } from '@rigo/rweb3-core';
+} from '@rigochain/rweb3-types';
+import { RWeb3Context } from '@rigochain/rweb3-core';
 import {
     ContractAbiWithSignature,
     ContractEventOptions,
@@ -45,27 +45,27 @@ import {
     PayableMethodObject,
     PayableTxOptions,
 } from './types.js';
-import { format, isNullish, toChecksumAddress } from '@rigo/rweb3-utils';
+import { format, isNullish, toChecksumAddress } from '@rigochain/rweb3-utils';
 import {
     decodeContractErrorData,
     encodeFunctionSignature,
     isAbiErrorFragment,
     isAbiFunctionFragment,
     jsonInterfaceMethodToString,
-} from '@rigo/rweb3-rigo-abi';
+} from '@rigochain/rweb3-rigo-abi';
 import {
     RWeb3ValidatorError,
     utils as validatorUtils,
     ValidationSchemaInput,
     validator,
-} from '@rigo/rweb3-validator';
+} from '@rigochain/rweb3-validator';
 import { encodeMethodABI } from './encoding.js';
-import { ContractExecutionError, Web3ContractError } from '@rigo/rweb3-errors';
+import { ContractExecutionError, Web3ContractError } from '@rigochain/rweb3-errors';
 import { getEthTxCallParams, getSendTxParams } from './utils.js';
-import { call, sendDeploy } from '@rigo/rweb3-rigo';
-import { RWeb3Account } from '@rigo/rweb3-rigo-accounts';
-import HttpProvider from '@rigo/rweb3-providers-http';
-import WebsocketProvider from '@rigo/rweb3-providers-ws';
+import { call, sendDeploy } from '@rigochain/rweb3-rigo';
+import { RWeb3Account } from '@rigochain/rweb3-rigo-accounts';
+import HttpProvider from '@rigochain/rweb3-providers-http';
+import WebsocketProvider from '@rigochain/rweb3-providers-ws';
 import { LogsSubscription } from './log_subscription.js';
 
 type ContractBoundMethod<

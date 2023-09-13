@@ -13,9 +13,9 @@
     See the License for the specific language governing permissions and
     limitations under the License.
 */
-import { AbiError } from '@rigo/rweb3-errors';
+import { AbiError } from '@rigochain/rweb3-errors';
 import { ParamType, Result } from '@ethersproject/abi';
-import { HexString, AbiInput, DecodedParams } from '@rigo/rweb3-types';
+import { HexString, AbiInput, DecodedParams } from '@rigochain/rweb3-types';
 import ethersAbiCoder from '../ethers_abi_coder.js';
 import { formatParam, isAbiFragment, mapTypes, modifyParams } from '../utils.js';
 

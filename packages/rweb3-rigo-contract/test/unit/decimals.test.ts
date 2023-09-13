@@ -16,7 +16,7 @@
 import { Contract } from '../../src';
 import erc20Json from '../fixtures/erc20-abi.json';
 import { getTestWsServer } from './e2e_utils';
-import WebsocketProvider from '@rigo/rweb3-providers-ws';
+import WebsocketProvider from '@rigochain/rweb3-providers-ws';
 
 describe('deploy test', () => {
     it('decimals function', (done) => {

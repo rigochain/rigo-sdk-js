@@ -15,8 +15,8 @@
 */
 import { getDevWsServer } from '../e2e_utils';
 import WebsocketProvider from '../../../src/index';
-import { JsonRpcRequest } from '@rigo/rweb3-types';
-import { uuidV4 } from '@rigo/rweb3-utils';
+import { JsonRpcRequest } from '@rigochain/rweb3-types';
+import { uuidV4 } from '@rigochain/rweb3-utils';
 export function createJsonRpcRequest(method: string, params?: {}): JsonRpcRequest<any> {
     const paramsCopy = params ? { ...params } : {};
     return {

@@ -14,8 +14,8 @@
     limitations under the License.
 */
 
-import { Web3PromiEvent } from '@rigo/rweb3-core';
-import { SendTransactionEvents } from '@rigo/rweb3-rigo';
+import { Web3PromiEvent } from '@rigochain/rweb3-core';
+import { SendTransactionEvents } from '@rigochain/rweb3-rigo';
 import {
     BlockNumberOrTag,
     HexString,
@@ -30,7 +30,7 @@ import {
     ContractAbi,
     HexString32Bytes,
     Uint,
-} from '@rigo/rweb3-types';
+} from '@rigochain/rweb3-types';
 
 export type NonPayableTxOptions = NonPayableCallOptions;
 export type PayableTxOptions = PayableCallOptions;

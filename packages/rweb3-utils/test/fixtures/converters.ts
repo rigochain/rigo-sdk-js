@@ -13,7 +13,7 @@
     See the License for the specific language governing permissions and
     limitations under the License.
 */
-import { Address, Bytes, HexString, Numbers, ValueTypes } from '@rigo/rweb3-types';
+import { Address, Bytes, HexString, Numbers, ValueTypes } from '@rigochain/rweb3-types';
 import { RigoUnits, hexToBytes } from '../../src/converters';
 
 export const bytesToHexValidData: [Bytes, HexString][] = [

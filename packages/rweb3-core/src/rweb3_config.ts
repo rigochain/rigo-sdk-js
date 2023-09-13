@@ -14,7 +14,7 @@
     limitations under the License.
 */
 
-import { HexString } from '@rigo/rweb3-types';
+import { HexString } from '@rigochain/rweb3-types';
 
 export interface RWeb3ConfigOptions {
     handleRevert: boolean;

@@ -14,7 +14,7 @@
     limitations under the License.
 */
 
-import { isNullish } from '@rigo/rweb3-validator';
+import { isNullish } from '@rigochain/rweb3-validator';
 import {
     JsonRpcPayload,
     JsonRpcResponse,
@@ -25,8 +25,8 @@ import {
     JsonRpcNotification,
     JsonRpcRequest,
     JsonRpcSubscriptionResult,
-} from '@rigo/rweb3-types';
-import { rpcErrorsMap } from '@rigo/rweb3-errors';
+} from '@rigochain/rweb3-types';
+import { rpcErrorsMap } from '@rigochain/rweb3-errors';
 import { uuidV4 } from './uuid.js';
 
 // check if code is a valid rpc server error code

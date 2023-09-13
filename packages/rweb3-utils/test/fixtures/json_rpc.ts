@@ -13,7 +13,7 @@
     See the License for the specific language governing permissions and
     limitations under the License.
 */
-import { JsonRpcNotification, SubscriptionParams } from '@rigo/rweb3-types';
+import { JsonRpcNotification, SubscriptionParams } from '@rigochain/rweb3-types';
 
 const responseWithResult = { jsonrpc: '2.0', id: 1, result: '' };
 const responseWithError = { jsonrpc: '2.0', id: 1, error: { code: 1, message: 'string' } };

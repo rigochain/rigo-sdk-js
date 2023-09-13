@@ -13,7 +13,7 @@
     See the License for the specific language governing permissions and
     limitations under the License.
 */
-import { AbiInput } from '@rigo/rweb3-types';
+import { AbiInput } from '@rigochain/rweb3-types';
 import { decodeParameters, encodeParameters } from '../../../src/api/parameters_api';
 import {
     inValidDecodeParametersData,

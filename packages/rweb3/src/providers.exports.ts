@@ -13,5 +13,5 @@
     See the License for the specific language governing permissions and
     limitations under the License.
 */
-export * as http from '@rigo/rweb3-providers-http';
-export * as ws from '@rigo/rweb3-providers-ws';
+export * as http from '@rigochain/rweb3-providers-http';
+export * as ws from '@rigochain/rweb3-providers-ws';

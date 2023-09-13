@@ -14,7 +14,7 @@
     limitations under the License.
 */
 
-import { RWeb3RequestManager } from '@rigo/rweb3-core';
+import { RWeb3RequestManager } from '@rigochain/rweb3-core';
 import {
     BroadcastTxAsyncResponse,
     BroadcastTxCommitResponse,
@@ -23,8 +23,8 @@ import {
     ResponsesDecoder,
     SubscriptionEvent,
     TrxProto,
-} from '@rigo/rweb3-types';
-import { BytesUint8Array } from '@rigo/rweb3-types';
+} from '@rigochain/rweb3-types';
+import { BytesUint8Array } from '@rigochain/rweb3-types';
 
 import {
     BlockchainResponse,
@@ -51,11 +51,11 @@ import {
     StakesResponse,
     AccountResponse,
     HealthResponse,
-} from '@rigo/rweb3-types';
+} from '@rigochain/rweb3-types';
 
 import { Stream } from 'xstream';
 import { buildQuery, Method, SubscribeRequest, SubscriptionEventType } from './requests.js';
-import { TrxProtoUtils } from '@rigo/rweb3-rigo-accounts';
+import { TrxProtoUtils } from '@rigochain/rweb3-rigo-accounts';
 
 export async function health(requestManager: RWeb3RequestManager): Promise<HealthResponse> {
     await requestManager.send({

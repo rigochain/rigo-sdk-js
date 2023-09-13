@@ -1,5 +1,5 @@
 {
-  "name": "@rigo/rweb3-errors",
+  "name": "@rigochain/rweb3-errors",
   "version": "1.0.0-alpha.1",
   "main": "./lib/commonjs/index.js",
   "module": "./lib/esm/index.js",
@@ -50,6 +50,6 @@
     "@types/jest": "^28.1.6"
   },
   "dependencies": {
-    "@rigo/rweb3-types": "1.0.0-alpha.1"
+    "@rigochain/rweb3-types": "1.0.0-alpha.1"
   }
 }

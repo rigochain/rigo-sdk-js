@@ -29,10 +29,10 @@ import {
     RWeb3APIReturnType,
     RWeb3APISpec,
     SubscriptionEvent,
-} from '@rigo/rweb3-types';
+} from '@rigochain/rweb3-types';
 import { ConnectionStatus } from './socket/queueing_streaming_socket.js';
 import { SocketWrapperMessageEvent } from './socket/socket_wrapper.js';
-import { isNullish } from '@rigo/rweb3-utils';
+import { isNullish } from '@rigochain/rweb3-utils';
 
 class RpcEventProducer implements Producer<SubscriptionEvent> {
     private readonly request: JsonRpcRequest;

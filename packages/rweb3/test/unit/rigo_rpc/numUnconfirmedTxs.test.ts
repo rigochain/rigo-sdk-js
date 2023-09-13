@@ -15,7 +15,7 @@
 */
 import { RWeb3 } from '../../../src';
 import { getTestWsServer } from '../e2e_utils';
-import { NumUnconfirmedTxsResponse } from '@rigo/rweb3-types';
+import { NumUnconfirmedTxsResponse } from '@rigochain/rweb3-types';
 
 describe('numUnconfirmedTxs check ', () => {
     let testWebsocketRWeb3Instance: RWeb3;

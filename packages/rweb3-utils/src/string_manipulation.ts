@@ -14,9 +14,9 @@
     limitations under the License.
 */
 
-import { Numbers } from '@rigo/rweb3-types';
-import { NibbleWidthError } from '@rigo/rweb3-errors';
-import { isHexStrict, validator, utils as validatorUtils } from '@rigo/rweb3-validator';
+import { Numbers } from '@rigochain/rweb3-types';
+import { NibbleWidthError } from '@rigochain/rweb3-errors';
+import { isHexStrict, validator, utils as validatorUtils } from '@rigochain/rweb3-validator';
 import { numberToHex, toHex, toNumber } from './converters.js';
 
 /**

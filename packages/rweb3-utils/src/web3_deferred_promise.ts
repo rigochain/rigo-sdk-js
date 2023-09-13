@@ -14,8 +14,8 @@
     limitations under the License.
 */
 
-import { OperationTimeoutError } from '@rigo/rweb3-errors';
-import { RWeb3DeferredPromiseInterface } from '@rigo/rweb3-types';
+import { OperationTimeoutError } from '@rigochain/rweb3-errors';
+import { RWeb3DeferredPromiseInterface } from '@rigochain/rweb3-types';
 
 /**
  * The class is a simple implementation of a deferred promise with optional timeout functionality,

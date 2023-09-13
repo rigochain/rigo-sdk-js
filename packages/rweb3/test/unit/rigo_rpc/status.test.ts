@@ -15,7 +15,7 @@
 */
 import { RWeb3 } from '../../../src';
 import { getTestWsServer } from '../e2e_utils';
-import { StatusResponse } from '@rigo/rweb3-types';
+import { StatusResponse } from '@rigochain/rweb3-types';
 
 describe('status check ', () => {
     let testWebsocketRWeb3Instance: RWeb3;

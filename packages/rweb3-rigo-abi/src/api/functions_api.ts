@@ -13,9 +13,9 @@
     See the License for the specific language governing permissions and
     limitations under the License.
 */
-import { AbiError } from '@rigo/rweb3-errors';
-import { sha3Raw } from '@rigo/rweb3-utils';
-import { AbiFunctionFragment } from '@rigo/rweb3-types';
+import { AbiError } from '@rigochain/rweb3-errors';
+import { sha3Raw } from '@rigochain/rweb3-utils';
+import { AbiFunctionFragment } from '@rigochain/rweb3-types';
 import { isAbiFunctionFragment, jsonInterfaceMethodToString } from '../utils.js';
 import { encodeParameters } from './parameters_api.js';
 

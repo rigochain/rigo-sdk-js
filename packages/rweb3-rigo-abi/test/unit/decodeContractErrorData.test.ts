@@ -13,7 +13,7 @@
     See the License for the specific language governing permissions and
     limitations under the License.
 */
-import { Eip838ExecutionError } from '@rigo/rweb3-errors';
+import { Eip838ExecutionError } from '@rigochain/rweb3-errors';
 import { decodeContractErrorData } from '../../src/decode_contract_error_data';
 
 import { validDecodeContractErrorData, invalidDecodeContractErrorData } from '../fixtures/data';

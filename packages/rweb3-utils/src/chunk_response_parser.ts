@@ -14,8 +14,8 @@
     limitations under the License.
 */
 
-import { JsonRpcResponse } from '@rigo/rweb3-types';
-import { InvalidResponseError } from '@rigo/rweb3-errors';
+import { JsonRpcResponse } from '@rigochain/rweb3-types';
+import { InvalidResponseError } from '@rigochain/rweb3-errors';
 import { EventEmitter } from 'events';
 
 export class ChunkResponseParser {

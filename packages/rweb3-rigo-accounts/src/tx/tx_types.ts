@@ -13,7 +13,7 @@
     See the License for the specific language governing permissions and
     limitations under the License.
 */
-import { BytesUint8Array } from '@rigo/rweb3-types';
+import { BytesUint8Array } from '@rigochain/rweb3-types';
 import { createHash, randomBytes } from 'crypto';
 import * as secp256k1 from 'secp256k1';
 

@@ -16,7 +16,7 @@
 
 /* eslint-disable max-classes-per-file */
 
-import { JsonRpcError, TransactionReceipt, HexString } from '@rigo/rweb3-types';
+import { JsonRpcError, TransactionReceipt, HexString } from '@rigochain/rweb3-types';
 import {
     ERR_CONTRACT,
     ERR_CONTRACT_ABI_MISSING,

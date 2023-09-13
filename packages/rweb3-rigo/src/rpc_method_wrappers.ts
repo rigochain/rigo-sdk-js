@@ -20,12 +20,12 @@ import {
     BytesUint8Array,
     RigoExecutionAPI,
     SubscriptionEvent,
-} from '@rigo/rweb3-types';
-import { RWeb3Context } from '@rigo/rweb3-core';
-import { rigoRpcMethods } from '@rigo/rweb3-rpc-methods';
-import { TrxProto } from '@rigo/rweb3-types';
+} from '@rigochain/rweb3-types';
+import { RWeb3Context } from '@rigochain/rweb3-core';
+import { rigoRpcMethods } from '@rigochain/rweb3-rpc-methods';
+import { TrxProto } from '@rigochain/rweb3-types';
 import { Stream } from 'xstream';
-import { RWeb3Account, TrxProtoBuilder } from '@rigo/rweb3-rigo-accounts';
+import { RWeb3Account, TrxProtoBuilder } from '@rigochain/rweb3-rigo-accounts';
 
 export async function sendDeploy(
     web3Context: RWeb3Context<RigoExecutionAPI>,

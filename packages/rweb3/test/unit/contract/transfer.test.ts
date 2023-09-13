@@ -20,7 +20,7 @@ import {
     getTestWsServer,
 } from '../e2e_utils';
 import * as fs from 'fs';
-import { privateKeyToAccount, RWeb3Account, TrxProtoBuilder } from '@rigo/rweb3-rigo-accounts';
+import { privateKeyToAccount, RWeb3Account, TrxProtoBuilder } from '@rigochain/rweb3-rigo-accounts';
 
 describe('contract transfer check ', () => {
     let testWebsocketRWeb3Instance: RWeb3;

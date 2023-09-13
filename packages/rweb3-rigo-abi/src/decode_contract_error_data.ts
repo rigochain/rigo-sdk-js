@@ -13,8 +13,8 @@
     See the License for the specific language governing permissions and
     limitations under the License.
 */
-import { Eip838ExecutionError } from '@rigo/rweb3-errors';
-import { AbiErrorFragment } from '@rigo/rweb3-types';
+import { Eip838ExecutionError } from '@rigochain/rweb3-errors';
+import { AbiErrorFragment } from '@rigochain/rweb3-types';
 
 import { encodeErrorSignature } from './api/errors_api.js';
 import { decodeParameters } from './api/parameters_api.js';

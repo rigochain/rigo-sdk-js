@@ -16,7 +16,7 @@
 
 import { keccak256 } from 'ethereum-cryptography/keccak.js';
 import { bytesToUtf8, utf8ToBytes } from 'ethereum-cryptography/utils.js';
-import { Address, Bytes, HexString, Numbers, ValueTypes } from '@rigo/rweb3-types';
+import { Address, Bytes, HexString, Numbers, ValueTypes } from '@rigochain/rweb3-types';
 import {
     isAddress,
     isHex,
@@ -25,7 +25,7 @@ import {
     isInt,
     utils as validatorUtils,
     validator,
-} from '@rigo/rweb3-validator';
+} from '@rigochain/rweb3-validator';
 
 import {
     HexProcessingError,
@@ -33,7 +33,7 @@ import {
     InvalidBytesError,
     InvalidNumberError,
     InvalidUnitError,
-} from '@rigo/rweb3-errors';
+} from '@rigochain/rweb3-errors';
 
 const base = BigInt(10);
 const expo10 = (expo: number) => base ** BigInt(expo);
