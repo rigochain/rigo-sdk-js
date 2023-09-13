@@ -1,6 +1,5 @@
 {
   "name": "rigo-sdk-js",
-  "types": "lib/definitions/index.d.ts",
   "version": "1.0.0-alpha.1",
   "description": "Javascript SDK for RIGO",
   "private": true,
