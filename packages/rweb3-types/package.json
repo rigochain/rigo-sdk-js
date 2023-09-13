@@ -1,6 +1,6 @@
 {
   "name": "rweb3-types",
-  "version": "0.0.33",
+  "version": "1.0.0-alpha.1",
   "main": "./lib/commonjs/index.js",
   "module": "./lib/esm/index.js",
   "license": "Apache-2.0",

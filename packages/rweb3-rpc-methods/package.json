@@ -1,6 +1,6 @@
 {
   "name": "rweb3-rpc-methods",
-  "version": "0.0.33",
+  "version": "1.0.0-alpha.1",
   "main": "./lib/commonjs/index.js",
   "module": "./lib/esm/index.js",
   "license": "Apache-2.0",
@@ -54,10 +54,10 @@
   "dependencies": {
     "xstream": "^11.14.0",
 
-    "rweb3-core": "0.0.33",
-    "rweb3-utils": "0.0.33",
-    "rweb3-types": "0.0.33",
-    "rweb3-validator": "0.0.33",
-    "rweb3-rigo-accounts": "0.0.33"
+    "rweb3-core": "1.0.0-alpha.1",
+    "rweb3-utils": "1.0.0-alpha.1",
+    "rweb3-types": "1.0.0-alpha.1",
+    "rweb3-validator": "1.0.0-alpha.1",
+    "rweb3-rigo-accounts": "1.0.0-alpha.1"
   }
 }

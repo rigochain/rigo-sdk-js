@@ -1,6 +1,6 @@
 {
   "name": "rweb3-validator",
-  "version": "0.0.33",
+  "version": "1.0.0-alpha.1",
   "main": "./lib/commonjs/index.js",
   "module": "./lib/esm/index.js",
   "license": "Apache-2.0",
@@ -58,7 +58,7 @@
     "ethereum-cryptography": "2.1.2",
     "is-my-json-valid": "^2.20.6",
     "util": "^0.12.5",
-    "rweb3-types": "0.0.33",
-    "rweb3-errors": "0.0.33"
+    "rweb3-types": "1.0.0-alpha.1",
+    "rweb3-errors": "1.0.0-alpha.1"
   }
 }

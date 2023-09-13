@@ -1,6 +1,6 @@
 {
   "name": "rweb3-rigo-abi",
-  "version": "0.0.33",
+  "version": "1.0.0-alpha.1",
   "main": "./lib/commonjs/index.js",
   "module": "./lib/esm/index.js",
   "license": "Apache-2.0",
@@ -51,9 +51,9 @@
   "dependencies": {
     "@ethersproject/abi": "^5.7.0",
     "@ethersproject/bignumber": "^5.7.0",
-    "rweb3-types": "0.0.33",
-    "rweb3-errors": "0.0.33",
-    "rweb3-utils": "0.0.33",
-    "rweb3-rpc-methods": "0.0.33"
+    "rweb3-types": "1.0.0-alpha.1",
+    "rweb3-errors": "1.0.0-alpha.1",
+    "rweb3-utils": "1.0.0-alpha.1",
+    "rweb3-rpc-methods": "1.0.0-alpha.1"
   }
 }

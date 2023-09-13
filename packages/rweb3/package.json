@@ -1,6 +1,6 @@
 {
   "name": "rweb3",
-  "version": "0.0.33",
+  "version": "1.0.0-alpha.1",
   "main": "./lib/commonjs/index.js",
   "module": "./lib/esm/index.js",
   "license": "Apache-2.0",
@@ -58,10 +58,10 @@
   },
 
   "dependencies": {
-    "rweb3-rigo" : "0.0.33",
-    "rweb3-core" : "0.0.33",
-    "rweb3-providers-http" : "0.0.33",
-    "rweb3-validator" : "0.0.33",
-    "rweb3-rigo-contract" : "0.0.33"
+    "rweb3-rigo" : "1.0.0-alpha.1",
+    "rweb3-core" : "1.0.0-alpha.1",
+    "rweb3-providers-http" : "1.0.0-alpha.1",
+    "rweb3-validator" : "1.0.0-alpha.1",
+    "rweb3-rigo-contract" : "1.0.0-alpha.1"
   }
 }
