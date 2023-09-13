@@ -61,17 +61,7 @@ export const rigoUnitMap = {
 };
 
 export type RigoUnits = keyof typeof rigoUnitMap;
-/**
- * Convert a value from bytes to Uint8Array
- * @param data - Data to be converted
- * @returns - The Uint8Array representation of the input data
- *
- * @example
- * ```ts
- * console.log(web3.utils.bytesToUint8Array("0xab")));
- * > Uint8Array(1) [ 171 ]
- * ```
- */
+
 export const bytesToUint8Array = (data: Bytes): Uint8Array | never => {
     validator.validate(['bytes'], [data]);
 
@@ -95,31 +85,9 @@ export const bytesToUint8Array = (data: Bytes): Uint8Array | never => {
  */
 const { uint8ArrayToHexString } = validatorUtils;
 
-/**
- * Convert a byte array to a hex string
- * @param bytes - Byte array to be converted
- * @returns - The hex string representation of the input byte array
- *
- * @example
- * ```ts
- * console.log(web3.utils.bytesToHex(new Uint8Array([72, 12])));
- * > "0x480c"
- *
- */
 export const bytesToHex = (bytes: Bytes): HexString =>
     uint8ArrayToHexString(bytesToUint8Array(bytes));
 
-/**
- * Convert a hex string to a byte array
- * @param hex - Hex string to be converted
- * @returns - The byte array representation of the input hex string
- *
- * @example
- * ```ts
- * console.log(web3.utils.hexToBytes('0x74657374'));
- * > Uint8Array(4) [ 116, 101, 115, 116 ]
- * ```
- */
 export const hexToBytes = (bytes: HexString): Uint8Array => {
     if (typeof bytes === 'string' && bytes.slice(0, 2).toLowerCase() !== '0x') {
         return bytesToUint8Array(`0x${bytes}`);
@@ -183,30 +151,8 @@ export const numberToHex = (value: Numbers, hexstrict?: boolean): HexString => {
  */
 export const fromDecimal = numberToHex;
 
-/**
- * Converts value to it's decimal representation in string
- * @param value - Hex string to be converted
- * @returns - The decimal representation of the input value
- *
- * @example
- * ```ts
- * console.log(web3.utils.hexToNumberString('0xa'));
- * > "10"
- * ```
- */
 export const hexToNumberString = (data: HexString): string => hexToNumber(data).toString();
 
-/**
- * Should be called to get hex representation (prefixed by 0x) of utf8 string
- * @param str - Utf8 string to be converted
- * @returns - The hex representation of the input string
- *
- * @example
- * ```ts
- * console.log(utf8ToHex('web3.js'));
- * > "0x776562332e6a73"
- *
- */
 export const utf8ToHex = (str: string): HexString => {
     validator.validate(['string'], [str]);
 
@@ -219,27 +165,10 @@ export const utf8ToHex = (str: string): HexString => {
     return bytesToHex(new TextEncoder().encode(strWithoutNullCharacter));
 };
 
-/**
- * @alias utf8ToHex
- */
-
 export const fromUtf8 = utf8ToHex;
-/**
- * @alias utf8ToHex
- */
+
 export const stringToHex = utf8ToHex;
 
-/**
- * Should be called to get utf8 from it's hex representation
- * @param str - Hex string to be converted
- * @returns - Utf8 string
- *
- * @example
- * ```ts
- * console.log(web3.utils.hexToUtf8('0x48656c6c6f20576f726c64'));
- * > Hello World
- * ```
- */
 export const hexToUtf8 = (str: HexString): string => bytesToUtf8(hexToBytes(str));
 
 /**

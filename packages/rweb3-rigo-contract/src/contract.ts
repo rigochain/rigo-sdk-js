@@ -334,7 +334,6 @@ export class Contract<Abi extends ContractAbi> extends RWeb3Context<RigoExecutio
             },
         });
 
-        console.log('tx', tx);
         try {
             return await call(this, tx.to, tx.input ? tx.input.toString() : '0x', height);
         } catch (error: unknown) {
