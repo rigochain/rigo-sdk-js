@@ -24,7 +24,6 @@ import {
     JsonRpcBatchRequest,
     JsonRpcNotification,
     JsonRpcRequest,
-    JsonRpcBatchResponse,
     JsonRpcSubscriptionResult,
 } from 'rweb3-types';
 import { rpcErrorsMap } from 'rweb3-errors';

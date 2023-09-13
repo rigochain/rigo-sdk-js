@@ -14,11 +14,7 @@
     limitations under the License.
 */
 import { RWeb3 } from '../../../src';
-import {
-    getTestAccountPrivateKey,
-    getTestProposalAccountPrivateKey,
-    getTestWsServer,
-} from '../e2e_utils';
+import { getTestAccountPrivateKey, getTestWsServer } from '../e2e_utils';
 import { privateKeyToAccount, TrxProtoBuilder } from 'rweb3-rigo-accounts';
 import { AccountResponse, BroadcastTxAsyncResponse } from 'rweb3-types';
 

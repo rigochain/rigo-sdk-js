@@ -1,10 +1,24 @@
-﻿import {
+﻿/*
+    Copyright 2023 All Rigo Chain Developers
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+        http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+*/
+import {
     AbiConstructorFragment,
     AbiErrorFragment,
     AbiFragment,
     AbiFunctionFragment,
     Address,
-    BlockNumberOrTag,
     BroadcastTxSyncResponse,
     ContractAbi,
     ContractEvents,
@@ -120,15 +134,9 @@ export class Contract<Abi extends ContractAbi> extends RWeb3Context<RigoExecutio
 
     private _methods!: ContractMethodsInterface<Abi>;
 
-    // Event 불가능
-    // private _events!: ContractEventsInterface<Abi>;
-
     private _jsonInterface!: ContractAbiWithSignature;
 
     private _errorsInterface!: AbiErrorFragment[];
-
-    // TODO : context Setting
-    private context?: RWeb3Context;
 
     private readonly _overloadedMethodAbis: Map<string, AbiFunctionFragment[]>;
 
@@ -369,7 +377,6 @@ export class Contract<Abi extends ContractAbi> extends RWeb3Context<RigoExecutio
         // });
 
         // eslint-disable-next-line no-void
-
         // TODO ts-ignore 제거
         // @ts-ignore
         void transactionToSend.on('error', (error: unknown) => {

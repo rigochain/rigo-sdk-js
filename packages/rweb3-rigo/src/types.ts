@@ -1,18 +1,17 @@
 ﻿/*
-This file is part of web3.js.
+    Copyright 2023 All Rigo Chain Developers
 
-web3.js is free software: you can redistribute it and/or modify
-it under the terms of the GNU Lesser General Public License as published by
-the Free Software Foundation, either version 3 of the License, or
-(at your option) any later version.
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
 
-web3.js is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU Lesser General Public License for more details.
+        http://www.apache.org/licenses/LICENSE-2.0
 
-You should have received a copy of the GNU Lesser General Public License
-along with web3.js.  If not, see <http://www.gnu.org/licenses/>.
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
 */
 
 import { ContractExecutionError, InvalidResponseError } from 'rweb3-errors';
@@ -21,8 +20,6 @@ import {
     FormatType,
     DataFormat,
     Bytes,
-    ContractAbi,
-    HexString,
     Numbers,
     Transaction,
     TransactionReceipt,
@@ -34,8 +31,6 @@ export declare const ETH_DATA_FORMAT: {
     readonly number: FMT_NUMBER.HEX;
     readonly bytes: FMT_BYTES.HEX;
 };
-
-export type InternalTransaction = FormatType<Transaction, typeof ETH_DATA_FORMAT>;
 
 export type SendTransactionEvents<ReturnFormat extends DataFormat> = {
     sending: FormatType<Transaction, typeof ETH_DATA_FORMAT>;
@@ -49,41 +44,3 @@ export type SendTransactionEvents<ReturnFormat extends DataFormat> = {
     };
     error: InvalidResponseError | ContractExecutionError;
 };
-
-export type SendSignedTransactionEvents<ReturnFormat extends DataFormat> = {
-    sending: FormatType<Bytes, typeof ETH_DATA_FORMAT>;
-    sent: FormatType<Bytes, typeof ETH_DATA_FORMAT>;
-    transactionHash: FormatType<Bytes, ReturnFormat>;
-    receipt: FormatType<TransactionReceipt, ReturnFormat>;
-    confirmation: {
-        confirmations: FormatType<Numbers, ReturnFormat>;
-        receipt: FormatType<TransactionReceipt, ReturnFormat>;
-        latestBlockHash: FormatType<Bytes, ReturnFormat>;
-    };
-    error: InvalidResponseError | ContractExecutionError;
-};
-
-export interface SendTransactionOptions<ResolveType = TransactionReceipt> {
-    ignoreGasPricing?: boolean;
-    transactionResolver?: (receipt: TransactionReceipt) => ResolveType;
-    contractAbi?: ContractAbi;
-    checkRevertBeforeSending?: boolean;
-}
-
-export interface SendSignedTransactionOptions<ResolveType = TransactionReceipt> {
-    transactionResolver?: (receipt: TransactionReceipt) => ResolveType;
-    contractAbi?: ContractAbi;
-    checkRevertBeforeSending?: boolean;
-}
-
-export interface RevertReason {
-    reason: string;
-    signature?: HexString;
-    data?: HexString;
-}
-
-export interface RevertReasonWithCustomError extends RevertReason {
-    customErrorName: string;
-    customErrorDecodedSignature: string;
-    customErrorArguments: Record<string, unknown>;
-}

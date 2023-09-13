@@ -15,7 +15,6 @@
 */
 import { RWeb3, StatusResponse } from '../../../src';
 import { getTestWsServer } from '../e2e_utils';
-import { AbciInfoResponse } from 'rweb3-types';
 
 describe('setProvider check ', () => {
     let defaultRWeb3: RWeb3;

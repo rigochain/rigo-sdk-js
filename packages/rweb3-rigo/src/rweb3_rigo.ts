@@ -16,24 +16,7 @@
 
 import { RWeb3Context } from 'rweb3-core';
 import * as rpcMethodsWrappers from './rpc_method_wrappers.js';
-import {
-    AbiFunctionFragment,
-    BlockNumberOrTag,
-    BroadcastTxSyncResponse,
-    DataFormat,
-    DEFAULT_RETURN_FORMAT,
-    RigoExecutionAPI,
-    SubscriptionEvent,
-    Transaction,
-    TransactionCall,
-    TransactionWithFromAndToLocalWalletIndex,
-    TransactionWithFromLocalWalletIndex,
-    TransactionWithToLocalWalletIndex,
-    TrxProto,
-} from 'rweb3-types';
-import { contractAddrFromTx } from './rpc_method_wrappers.js';
-import { Stream } from 'xstream';
-import { rigoRpcMethods } from 'rweb3-rpc-methods';
+import { TrxProto } from 'rweb3-types';
 
 export class RWeb3Rigo extends RWeb3Context {
     public constructor() {

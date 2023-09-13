@@ -16,7 +16,6 @@
 
 import {
     AbiFunctionFragment,
-    BlockNumberOrTag,
     BroadcastTxSyncResponse,
     BytesUint8Array,
     RigoExecutionAPI,
@@ -27,42 +26,6 @@ import { rigoRpcMethods } from 'rweb3-rpc-methods';
 import { TrxProto } from 'rweb3-types';
 import { Stream } from 'xstream';
 import { RWeb3Account, TrxProtoBuilder } from 'rweb3-rigo-accounts';
-import { encodeFunctionSignature, encodeParameters } from 'rweb3-rigo-abi';
-
-//
-// public deploy(account: Account, bytecode: string, args: any[]) {
-//     let abi = this._jsonInterface.find((item: {type: any}) => item.type === 'constructor');
-//     if (!abi) {
-//         abi = {
-//             type: 'constructor',
-//             inputs: [],
-//             stateMutability: '',
-//         }
-//     }
-//
-//     let encodedArguments;
-//     let bytecodeWithArguments;
-//     if(args.length > 0) {
-//         encodedArguments = Web3EthAbi.encodeParameters(abi.inputs, args);
-//         bytecodeWithArguments = bytecode + encodedArguments.slice(2);
-//     } else {
-//         bytecodeWithArguments = bytecode;
-//     }
-//     const tx = TrxBuilder.buildContractTrx({
-//         from: account.address,
-//         to: '0000000000000000000000000000000000000000',
-//         nonce: account.nonce,
-//         gas: this.gas,
-//         amount: '0',
-//         payload: {data: bytecodeWithArguments},
-//     })
-//     const [sig] = TrxBuilder.SignTrx(tx, account);
-//     tx.sig = sig;
-//     const verification = TrxBuilder.VerifyTrx(tx, account);
-//     if (!verification) throw Error('sign transaction verification failed');
-//
-//     return this._rweb3.broadcastTrxSync(tx);
-// }
 
 export async function sendDeploy(
     web3Context: RWeb3Context<RigoExecutionAPI>,
@@ -82,7 +45,7 @@ export async function sendDeploy(
         bytecodeWithArguments = bytecode;
     }
 
-    let searchAccount = await account(web3Context, rWeb3Account.address);
+    const searchAccount = await account(web3Context, rWeb3Account.address);
 
     // 10000000000000000 = 0 16개 - 17개 자리
     const tx = TrxProtoBuilder.buildContractTrxProto({
@@ -120,54 +83,6 @@ export async function call(
         vmCallResult.value.returnData = bytes.toHex();
     }
     return vmCallResult;
-
-    // let searchAccount = await account(web3Context, rWeb3Account.address);
-    //
-    // const tx = TrxBuilder.buildContractTrx({
-    //     from: rWeb3Account.address,
-    //     to: contractAddress,
-    //     nonce: searchAccount.value.nonce,
-    //     gas: '10000000000000000',
-    //     amount: '0',
-    //     payload: { data: encodeFunctionSignature },
-    // });
-    // const [sig] = TrxProtoBuilder.signTrxProto(tx, rWeb3Account);
-    // tx.sig = sig;
-    // const verification = TrxProtoBuilder.verifyTrxProto(tx, rWeb3Account);
-    // if (!verification) throw Error('sign transaction verification failed');
-    //
-    // return broadcastTxSync(web3Context, tx);
-}
-
-function _getFunctionSignature(jsonInterface: any, contractAddress: string, functionName: string) {
-    if (contractAddress === '' || contractAddress === undefined) throw Error('no contract address');
-    if (functionName === '') throw Error('no function name');
-    const functionSignature = _findFunctionSignature(jsonInterface, functionName);
-    if (!functionSignature) throw Error('function name not found');
-    return functionSignature;
-}
-
-function _findFunctionSignature(jsonInterface: any, functionName: string) {
-    return jsonInterface.find((item: { type: any; name: string }) => {
-        return item.name === functionName && item.type === 'function';
-    });
-}
-
-function _getEncodeFunctionSignature(functionSignature: any, values: any[]) {
-    if (values !== undefined) {
-        if (functionSignature.inputs.length !== values.length)
-            throw Error('input parameters is different');
-    }
-    let encodeFunctionSignatureValue = encodeFunctionSignature(functionSignature);
-
-    const inputsTypeArray: any[] = [];
-    for (const input of functionSignature.inputs) {
-        inputsTypeArray.push(input);
-    }
-
-    encodeFunctionSignatureValue =
-        encodeFunctionSignatureValue + encodeParameters(inputsTypeArray, values).substring(2);
-    return encodeFunctionSignatureValue;
 }
 
 export async function health(web3Context: RWeb3Context<RigoExecutionAPI>) {
@@ -283,7 +198,7 @@ export async function contractAddrFromTx(
     web3Context: RWeb3Context<RigoExecutionAPI>,
     hash: string | Uint8Array,
 ) {
-    let txResponse = await rigoRpcMethods.tx(web3Context.requestManager, hash);
+    const txResponse = await rigoRpcMethods.tx(web3Context.requestManager, hash);
     if (!txResponse.tx_result || !txResponse.tx_result.data) {
         throw Error('not found contract address');
     }

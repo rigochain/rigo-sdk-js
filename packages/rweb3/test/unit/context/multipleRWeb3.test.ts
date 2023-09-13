@@ -14,12 +14,7 @@
     limitations under the License.
 */
 import { RWeb3, StatusResponse } from '../../../src';
-import { getDevWsServer, getTestServer, getTestWsServer } from '../e2e_utils';
-import { AbciInfoResponse } from 'rweb3-types';
-
-function sleep(ms: number) {
-    return new Promise((r) => setTimeout(r, ms));
-}
+import { getTestWsServer } from '../e2e_utils';
 
 describe('setProvider check ', () => {
     let rweb3_1: RWeb3;
