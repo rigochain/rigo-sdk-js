@@ -15,7 +15,7 @@ describe('deploy test', () => {
 
         erc20Contract.methods
             .balanceOf('736A9F6FA280A88599DC7FCD24E42975DA89A5AE')
-            .call()
+            .call('', 1)
             .then((balance: string) => {
                 console.log('balance', balance);
                 done();

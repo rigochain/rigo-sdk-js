@@ -30,8 +30,7 @@ import {
     NonPayableTxOptions,
     PayableMethodObject,
     PayableTxOptions,
-} from './types';
-import { LogsSubscription } from './log_subscription';
+} from './types.js';
 import { format, isNullish, toChecksumAddress } from 'rweb3-utils';
 import {
     decodeContractErrorData,
@@ -46,13 +45,14 @@ import {
     ValidationSchemaInput,
     validator,
 } from 'rweb3-validator';
-import { encodeMethodABI } from './encoding';
+import { encodeMethodABI } from './encoding.js';
 import { ContractExecutionError, Web3ContractError } from 'rweb3-errors';
-import { getEthTxCallParams, getSendTxParams } from './utils';
+import { getEthTxCallParams, getSendTxParams } from './utils.js';
 import { call, sendDeploy } from 'rweb3-rigo';
 import { RWeb3Account } from 'rweb3-rigo-accounts';
 import HttpProvider from 'rweb3-providers-http';
 import WebsocketProvider from 'rweb3-providers-ws';
+import { LogsSubscription } from './log_subscription.js';
 
 type ContractBoundMethod<
     Abi extends AbiFunctionFragment,
@@ -279,14 +279,14 @@ export class Contract<Abi extends ContractAbi> extends RWeb3Context<RigoExecutio
 
                 call: async (
                     options?: PayableCallOptions | NonPayableCallOptions,
-                    block?: BlockNumberOrTag,
+                    height?: number,
                 ) =>
                     this._contractMethodCall(
                         methodAbi,
                         abiParams,
                         internalErrorsAbis,
                         options,
-                        block,
+                        height,
                     ),
 
                 // TODO Promise any
@@ -314,7 +314,7 @@ export class Contract<Abi extends ContractAbi> extends RWeb3Context<RigoExecutio
         params: unknown[],
         errorsAbi: AbiErrorFragment[],
         options?: Options,
-        block?: BlockNumberOrTag,
+        height?: number,
     ) {
         const tx = getEthTxCallParams({
             abi,
@@ -328,7 +328,7 @@ export class Contract<Abi extends ContractAbi> extends RWeb3Context<RigoExecutio
 
         console.log('tx', tx);
         try {
-            return await call(this, tx.to, tx.input ? tx.input.toString() : '0x');
+            return await call(this, tx.to, tx.input ? tx.input.toString() : '0x', height);
         } catch (error: unknown) {
             if (error instanceof ContractExecutionError) {
                 // this will parse the error data by trying to decode the ABI error inputs according to EIP-838

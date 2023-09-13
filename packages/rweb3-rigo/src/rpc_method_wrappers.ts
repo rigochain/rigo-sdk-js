@@ -16,6 +16,7 @@
 
 import {
     AbiFunctionFragment,
+    BlockNumberOrTag,
     BroadcastTxSyncResponse,
     BytesUint8Array,
     RigoExecutionAPI,
@@ -105,12 +106,13 @@ export async function call(
     web3Context: RWeb3Context<RigoExecutionAPI>,
     contractAddress: string,
     encodeFunctionSignature: string,
+    height?: number,
 ) {
     const vmCallResult = await vmCall(
         web3Context,
         contractAddress,
         contractAddress,
-        0,
+        height ? height : 0,
         encodeFunctionSignature,
     );
     if (vmCallResult.value.returnData) {

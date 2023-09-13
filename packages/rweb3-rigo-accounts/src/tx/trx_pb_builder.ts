@@ -296,5 +296,7 @@ export const TrxProtoBuilder = {
     verifyTrxProto,
     signTrxProto,
     buildContractTrxProto,
+    buildProposalTrx,
+    buildVotingTrx,
     signedRawTrxProto,
 };

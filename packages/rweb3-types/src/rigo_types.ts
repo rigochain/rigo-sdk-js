@@ -89,7 +89,7 @@ export enum BlockTags {
 }
 export type BlockTag = `${BlockTags}`;
 
-export type BlockNumberOrTag = Numbers | BlockTag;
+export type BlockNumberOrTag = Numbers;
 
 export interface Proof {
     readonly address: HexString;
