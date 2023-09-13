@@ -16,7 +16,7 @@
 
 /* eslint-disable max-classes-per-file */
 
-import { RWeb3Error } from 'rweb3-types';
+import { RWeb3Error } from '@rigo/rweb3-types';
 
 export abstract class BaseRWeb3Error extends Error implements RWeb3Error {
     public readonly name: string;

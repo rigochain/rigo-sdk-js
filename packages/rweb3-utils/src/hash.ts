@@ -24,7 +24,7 @@ import {
     InvalidSizeError,
     InvalidStringError,
     InvalidUnsignedIntegerError,
-} from 'rweb3-errors';
+} from '@rigo/rweb3-errors';
 import {
     Bytes,
     EncodingTypes,
@@ -32,8 +32,8 @@ import {
     Sha3Input,
     TypedObject,
     TypedObjectAbbreviated,
-} from 'rweb3-types';
-import { isAddress, isNullish, isHexStrict } from 'rweb3-validator';
+} from '@rigo/rweb3-types';
+import { isAddress, isNullish, isHexStrict } from '@rigo/rweb3-validator';
 import {
     bytesToUint8Array,
     bytesToHex,

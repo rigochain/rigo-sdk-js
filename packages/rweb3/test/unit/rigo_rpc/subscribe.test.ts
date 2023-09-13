@@ -15,7 +15,7 @@
 */
 import { RWeb3 } from '../../../src';
 import { getTestWsServer } from '../e2e_utils';
-import { SubscriptionEvent } from 'rweb3-types';
+import { SubscriptionEvent } from '@rigo/rweb3-types';
 
 describe('subscribe check ', () => {
     const blockTime = 500;

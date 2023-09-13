@@ -15,8 +15,8 @@
 */
 import { RWeb3 } from '../../../src';
 import { getTestAccountPrivateKey, getTestWsServer } from '../e2e_utils';
-import { privateKeyToAccount, RWeb3Account, TrxProtoBuilder } from 'rweb3-rigo-accounts';
-import { AccountResponse, BroadcastTxSyncResponse } from 'rweb3-types';
+import { privateKeyToAccount, RWeb3Account, TrxProtoBuilder } from '@rigo/rweb3-rigo-accounts';
+import { AccountResponse, BroadcastTxSyncResponse } from '@rigo/rweb3-types';
 
 describe('broadcastTxSync check ', () => {
     let testWebsocketRWeb3Instance: RWeb3;

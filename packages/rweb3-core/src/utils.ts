@@ -22,7 +22,7 @@ import {
     SupportedProviders,
     RWeb3APISpec,
     Web3BaseProvider,
-} from 'rweb3-types';
+} from '@rigo/rweb3-types';
 
 export const isWeb3Provider = <API extends RWeb3APISpec>(
     provider: SupportedProviders<API>,

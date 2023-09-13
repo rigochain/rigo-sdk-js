@@ -14,7 +14,7 @@
     limitations under the License.
 */
 
-import { Web3ContractError } from 'rweb3-errors';
+import { Web3ContractError } from '@rigo/rweb3-errors';
 import {
     TransactionForAccessList,
     AbiFunctionFragment,
@@ -25,8 +25,8 @@ import {
     NonPayableCallOptions,
     PayableCallOptions,
     ContractInitOptions,
-} from 'rweb3-types';
-import { isNullish, mergeDeep, toHex } from 'rweb3-utils';
+} from '@rigo/rweb3-types';
+import { isNullish, mergeDeep, toHex } from '@rigo/rweb3-utils';
 import { encodeMethodABI } from './encoding.js';
 import { ContractOptions } from './types.js';
 

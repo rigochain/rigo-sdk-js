@@ -14,7 +14,7 @@
     limitations under the License.
 */
 
-import { AbiEventFragment } from 'rweb3-types';
+import { AbiEventFragment } from '@rigo/rweb3-types';
 
 export const ALL_EVENTS = 'ALLEVENTS';
 export const ALL_EVENTS_ABI = {

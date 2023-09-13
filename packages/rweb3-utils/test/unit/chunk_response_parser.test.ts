@@ -15,7 +15,7 @@
 */
 import { ChunkResponseParser } from '../../src/chunk_response_parser';
 import { EventEmitter } from 'events';
-import { JsonRpcResponse } from 'rweb3-types';
+import { JsonRpcResponse } from '@rigo/rweb3-types';
 
 describe('ChunkResponseParser class tests', () => {
     let parser: ChunkResponseParser;

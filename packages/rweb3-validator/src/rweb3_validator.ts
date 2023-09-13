@@ -14,7 +14,7 @@
     limitations under the License.
 */
 
-import { RWeb3ValidationErrorObject } from 'rweb3-types';
+import { RWeb3ValidationErrorObject } from '@rigo/rweb3-types';
 
 import { Validator } from './validator.js';
 import { rigoAbiToJsonSchema } from './utils.js';

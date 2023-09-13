@@ -16,10 +16,10 @@
 
 import { RWeb3Config } from './rweb3_config.js';
 import { RWeb3RequestManager } from './rweb3_request_manager.js';
-import { isNullish } from 'rweb3-validator';
-import { RWeb3APISpec, RigoExecutionAPI } from 'rweb3-types';
-import HttpProvider from 'rweb3-providers-http';
-import WebsocketProvider from 'rweb3-providers-ws';
+import { isNullish } from '@rigo/rweb3-validator';
+import { RWeb3APISpec, RigoExecutionAPI } from '@rigo/rweb3-types';
+import HttpProvider from '@rigo/rweb3-providers-http';
+import WebsocketProvider from '@rigo/rweb3-providers-ws';
 
 // eslint-disable-next-line no-use-before-define
 export type RWeb3ContextConstructor<T extends RWeb3Context, T2 extends unknown[]> = new (

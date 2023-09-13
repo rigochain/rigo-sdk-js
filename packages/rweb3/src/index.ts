@@ -26,26 +26,26 @@ export default RWeb3;
  */
 
 export { RWeb3 };
-export { Contract } from 'rweb3-rigo-contract';
+export { Contract } from '@rigo/rweb3-rigo-contract';
 
 /**
  * Export all packages grouped by name spaces
  */
-export * as core from 'rweb3-core';
-export * as errors from 'rweb3-errors';
+export * as core from '@rigo/rweb3-core';
+export * as errors from '@rigo/rweb3-errors';
 export * as rigo from './rigo.exports.js';
-export { HttpProvider } from 'rweb3-providers-http';
-export { WebsocketProvider } from 'rweb3-providers-ws';
+export { HttpProvider } from '@rigo/rweb3-providers-http';
+export { WebsocketProvider } from '@rigo/rweb3-providers-ws';
 export * as providers from './providers.exports.js';
-export * as rpcMethods from 'rweb3-rpc-methods';
-export { RWeb3Validator } from 'rweb3-validator';
-export * as utils from 'rweb3-utils';
-export * as validator from 'rweb3-validator';
+export * as rpcMethods from '@rigo/rweb3-rpc-methods';
+export { RWeb3Validator } from '@rigo/rweb3-validator';
+export * as utils from '@rigo/rweb3-utils';
+export * as validator from '@rigo/rweb3-validator';
 
 /**
  * Export all types from `rweb3-types` without a namespace (in addition to being available at `types` namespace).
  * To enable the user to write: `function something(): RWeb3Api` without the need for `types.RWeb3Api`.
  * And the same for `rweb3-errors`. Because this package contains error classes and constants.
  */
-export * from 'rweb3-errors';
-export * from 'rweb3-types';
+export * from '@rigo/rweb3-errors';
+export * from '@rigo/rweb3-types';

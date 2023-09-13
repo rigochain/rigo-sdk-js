@@ -14,7 +14,7 @@
     limitations under the License.
 */
 
-import { TypedArray } from 'rweb3-types';
+import { TypedArray } from '@rigo/rweb3-types';
 
 // Explicitly check for the
 // eslint-disable-next-line @typescript-eslint/ban-types

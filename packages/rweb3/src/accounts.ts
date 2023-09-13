@@ -21,7 +21,7 @@ import {
     prvKeyToAccount,
     sign,
     signTransaction,
-} from 'rweb3-rigo-accounts';
+} from '@rigo/rweb3-rigo-accounts';
 
 export const initAccountsForContext = () => {
     return {

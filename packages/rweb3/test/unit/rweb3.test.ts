@@ -14,7 +14,7 @@
     limitations under the License.
 */
 import { RWeb3 } from '../../src';
-import RWeb3Rigo from 'rweb3-rigo';
+import RWeb3Rigo from '@rigo/rweb3-rigo';
 
 describe('RWeb3 class', () => {
     it('should initialize RWeb3 instance correctly', () => {

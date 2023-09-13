@@ -26,9 +26,9 @@ import {
     HexString,
     RWeb3APIParams,
     RWeb3APISpec,
-} from 'rweb3-types';
-import { jsonRpc } from 'rweb3-utils';
-import { SubscriptionError } from 'rweb3-errors';
+} from '@rigo/rweb3-types';
+import { jsonRpc } from '@rigo/rweb3-utils';
+import { SubscriptionError } from '@rigo/rweb3-errors';
 
 import { Web3SubscriptionManager } from './web3_subscription_manager.js';
 import { Web3EventEmitter, Web3EventMap } from './web3_event_emitter.js';

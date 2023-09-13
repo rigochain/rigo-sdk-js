@@ -16,7 +16,7 @@
 import WebsocketProvider from '../../../src';
 import { getDevWsServer } from '../e2e_utils';
 import { createJsonRpcRequest } from './websocket_provider.test';
-import { SubscriptionEvent } from 'rweb3-types';
+import { SubscriptionEvent } from '@rigo/rweb3-types';
 
 describe('WebsocketClient', () => {
     const blockTime = 500;

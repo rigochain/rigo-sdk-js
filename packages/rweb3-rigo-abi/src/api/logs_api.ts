@@ -13,7 +13,7 @@
     See the License for the specific language governing permissions and
     limitations under the License.
 */
-import { HexString, AbiParameter, DecodedParams } from 'rweb3-types';
+import { HexString, AbiParameter, DecodedParams } from '@rigo/rweb3-types';
 import { decodeParameter, decodeParametersWith } from './parameters_api.js';
 
 const STATIC_TYPES = ['bool', 'string', 'int', 'uint', 'address', 'fixed', 'ufixed'];

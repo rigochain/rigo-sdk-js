@@ -13,9 +13,9 @@
     See the License for the specific language governing permissions and
     limitations under the License.
 */
-import { sha3Raw } from 'rweb3-utils';
-import { AbiError } from 'rweb3-errors';
-import { AbiEventFragment } from 'rweb3-types';
+import { sha3Raw } from '@rigo/rweb3-utils';
+import { AbiError } from '@rigo/rweb3-errors';
+import { AbiEventFragment } from '@rigo/rweb3-types';
 import { jsonInterfaceMethodToString, isAbiEventFragment } from '../utils.js';
 
 export const encodeEventSignature = (functionName: string | AbiEventFragment): string => {

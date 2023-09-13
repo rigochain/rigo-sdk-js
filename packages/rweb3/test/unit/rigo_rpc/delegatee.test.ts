@@ -15,7 +15,7 @@
 */
 import { RWeb3 } from '../../../src';
 import { getTestWsServer } from '../e2e_utils';
-import { DelegateeResponse } from 'rweb3-types';
+import { DelegateeResponse } from '@rigo/rweb3-types';
 
 describe('health check ', () => {
     let testWebsocketRWeb3Instance: RWeb3;

@@ -16,7 +16,7 @@
 
 /* eslint-disable max-classes-per-file */
 
-import { JsonRpcError, TransactionReceipt, HexString } from 'rweb3-types';
+import { JsonRpcError, TransactionReceipt, HexString } from '@rigo/rweb3-types';
 import {
     ERR_CONTRACT,
     ERR_CONTRACT_ABI_MISSING,
@@ -46,10 +46,7 @@ export class Web3ContractError extends BaseRWeb3Error {
 export class ResolverMethodMissingError extends BaseRWeb3Error {
     public code = ERR_CONTRACT_RESOLVER_MISSING;
 
-    public constructor(
-        public address: string,
-        public name: string,
-    ) {
+    public constructor(public address: string, public name: string) {
         super(`The resolver at ${address} does not implement requested method: "${name}".`);
     }
 

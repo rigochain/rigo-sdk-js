@@ -14,7 +14,7 @@
     limitations under the License.
 */
 
-import { ContractExecutionError, InvalidResponseError } from 'rweb3-errors';
+import { ContractExecutionError, InvalidResponseError } from '@rigo/rweb3-errors';
 
 import {
     FormatType,
@@ -25,7 +25,7 @@ import {
     TransactionReceipt,
     FMT_NUMBER,
     FMT_BYTES,
-} from 'rweb3-types';
+} from '@rigo/rweb3-types';
 
 export declare const ETH_DATA_FORMAT: {
     readonly number: FMT_NUMBER.HEX;

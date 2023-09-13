@@ -15,7 +15,7 @@
 */
 import { RWeb3 } from '../../../src';
 import { getTestWsServer } from '../e2e_utils';
-import { BlockResponse } from 'rweb3-types';
+import { BlockResponse } from '@rigo/rweb3-types';
 
 describe('blockByHash check ', () => {
     let testWebsocketRWeb3Instance: RWeb3;

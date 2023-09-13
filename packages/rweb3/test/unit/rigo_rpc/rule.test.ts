@@ -15,7 +15,7 @@
 */
 import { RWeb3 } from '../../../src';
 import { getTestWsServer } from '../e2e_utils';
-import { RuleResponse } from 'rweb3-types';
+import { RuleResponse } from '@rigo/rweb3-types';
 
 describe('rule check ', () => {
     let testWebsocketRWeb3Instance: RWeb3;

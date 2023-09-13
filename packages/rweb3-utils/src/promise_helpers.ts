@@ -14,7 +14,7 @@
     limitations under the License.
 */
 
-import { isNullish } from 'rweb3-validator';
+import { isNullish } from '@rigo/rweb3-validator';
 
 /**
  * An alternative to the node function `isPromise` that exists in `util/types` because it is not available on the browser.

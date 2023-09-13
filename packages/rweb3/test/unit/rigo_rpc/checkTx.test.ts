@@ -15,8 +15,8 @@
 */
 import { RWeb3 } from '../../../src';
 import { getTestAccountPrivateKey, getTestWsServer } from '../e2e_utils';
-import { privateKeyToAccount, RWeb3Account, TrxProtoBuilder } from 'rweb3-rigo-accounts';
-import { AccountResponse, CheckTxResponse } from 'rweb3-types';
+import { privateKeyToAccount, RWeb3Account, TrxProtoBuilder } from '@rigo/rweb3-rigo-accounts';
+import { AccountResponse, CheckTxResponse } from '@rigo/rweb3-types';
 
 describe('checkTx check ', () => {
     let testWebsocketRWeb3Instance: RWeb3;
@@ -62,8 +62,9 @@ describe('checkTx check ', () => {
 
         console.log('nonce', tx.nonce);
 
-        const testCheckTxResponse: CheckTxResponse =
-            await testWebsocketRWeb3Instance.rigo.checkTx(tx);
+        const testCheckTxResponse: CheckTxResponse = await testWebsocketRWeb3Instance.rigo.checkTx(
+            tx,
+        );
 
         console.log(JSON.stringify(testCheckTxResponse));
 

@@ -14,9 +14,9 @@
     limitations under the License.
 */
 
-import HttpProvider from 'rweb3-providers-http';
-import WebsocketProvider from 'rweb3-providers-ws';
-import { isNullish, jsonRpc, isResponseRpcError } from 'rweb3-utils';
+import HttpProvider from '@rigo/rweb3-providers-http';
+import WebsocketProvider from '@rigo/rweb3-providers-ws';
+import { isNullish, jsonRpc, isResponseRpcError } from '@rigo/rweb3-utils';
 import {
     RigoExecutionAPI,
     RWeb3APISpec,
@@ -33,9 +33,9 @@ import {
     JsonRpcResponseWithResult,
     SubscriptionEvent,
     SupportedProviders,
-} from 'rweb3-types';
-import * as responses from 'rweb3-types';
-import { InvalidResponseError, ResponseError, RpcError, rpcErrorsMap } from 'rweb3-errors';
+} from '@rigo/rweb3-types';
+import * as responses from '@rigo/rweb3-types';
+import { InvalidResponseError, ResponseError, RpcError, rpcErrorsMap } from '@rigo/rweb3-errors';
 import { Stream } from 'xstream';
 import { Web3EventEmitter } from './web3_event_emitter.js';
 

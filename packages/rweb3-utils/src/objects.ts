@@ -14,8 +14,8 @@
     limitations under the License.
 */
 
-import { TypedArray } from 'rweb3-types';
-import { isNullish } from 'rweb3-validator';
+import { TypedArray } from '@rigo/rweb3-types';
+import { isNullish } from '@rigo/rweb3-validator';
 
 const isIterable = (item: unknown): item is Record<string, unknown> =>
     typeof item === 'object' &&

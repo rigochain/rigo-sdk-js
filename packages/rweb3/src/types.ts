@@ -14,8 +14,8 @@
     limitations under the License.
 */
 
-import Rigo from 'rweb3-rigo';
-import { Contract } from 'rweb3-rigo-contract';
+import Rigo from '@rigo/rweb3-rigo';
+import { Contract } from '@rigo/rweb3-rigo-contract';
 
 import {
     decodeLog,
@@ -25,7 +25,7 @@ import {
     encodeFunctionSignature,
     encodeParameter,
     encodeParameters,
-} from 'rweb3-rigo-abi';
+} from '@rigo/rweb3-rigo-abi';
 
 export interface RWeb3RigoInterface extends Rigo {
     Contract: typeof Contract;

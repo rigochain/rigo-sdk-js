@@ -13,7 +13,7 @@
     See the License for the specific language governing permissions and
     limitations under the License.
 */
-import { FMT_NUMBER, FMT_BYTES } from 'rweb3-types';
+import { FMT_NUMBER, FMT_BYTES } from '@rigo/rweb3-types';
 import { hexToBytes } from '../../src/converters';
 
 export const isDataFormatValid: [any, boolean][] = [

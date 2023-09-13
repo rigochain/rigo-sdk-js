@@ -18,7 +18,7 @@
 import Long from 'long';
 import _m0 from 'protobufjs';
 
-import { TrxProto } from 'rweb3-types';
+import { TrxProto } from '@rigo/rweb3-types';
 
 export const protobufPackage = 'types';
 

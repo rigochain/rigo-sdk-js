@@ -16,12 +16,12 @@
 
 import * as trxPb from './trx_pb.js';
 import Long from 'long';
-import { BytesUint8Array } from 'rweb3-types';
+import { BytesUint8Array } from '@rigo/rweb3-types';
 import BN from 'bn.js';
-import { fromNanoSecond, getNanoSecond } from 'rweb3-utils';
+import { fromNanoSecond, getNanoSecond } from '@rigo/rweb3-utils';
 import { createHash } from 'crypto';
 import { TrxPayloadProposalProto, TrxPayloadVotingProto, TrxProtoUtils } from './trx_pb.js';
-import { HexString, TrxProto } from 'rweb3-types';
+import { HexString, TrxProto } from '@rigo/rweb3-types';
 import { Transaction, TransactionPayloadUnDelegating } from './tx_types.js';
 import { RWeb3Account } from '../types.js';
 

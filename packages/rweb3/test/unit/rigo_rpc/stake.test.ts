@@ -15,7 +15,7 @@
 */
 import { RWeb3 } from '../../../src';
 import { getTestWsServer } from '../e2e_utils';
-import { StakesResponse } from 'rweb3-types';
+import { StakesResponse } from '@rigo/rweb3-types';
 
 describe('stakes check ', () => {
     let testWebsocketRWeb3Instance: RWeb3;
@@ -25,8 +25,9 @@ describe('stakes check ', () => {
     });
     it('should call rweb3 with testWebsocketRWeb3Instance.stakes method success return', async () => {
         const testAccountAddress = '736a9f6fa280a88599dc7fcd24e42975da89a5ae';
-        const testStakeResponse: StakesResponse =
-            await testWebsocketRWeb3Instance.rigo.stakes(testAccountAddress);
+        const testStakeResponse: StakesResponse = await testWebsocketRWeb3Instance.rigo.stakes(
+            testAccountAddress,
+        );
 
         console.log(JSON.stringify(testStakeResponse));
     });

@@ -14,7 +14,7 @@
     limitations under the License.
 */
 
-export * from 'rweb3-rigo';
+export * from '@rigo/rweb3-rigo';
 
-export * as accounts from 'rweb3-rigo-accounts';
-export * as contract from 'rweb3-rigo-contract';
+export * as accounts from '@rigo/rweb3-rigo-accounts';
+export * as contract from '@rigo/rweb3-rigo-contract';

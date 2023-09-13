@@ -13,9 +13,9 @@
     See the License for the specific language governing permissions and
     limitations under the License.
 */
-import { AbiError } from 'rweb3-errors';
+import { AbiError } from '@rigo/rweb3-errors';
 import { AbiCoder, ParamType } from '@ethersproject/abi';
-import { isNullish, leftPad, rightPad, toHex } from 'rweb3-utils';
+import { isNullish, leftPad, rightPad, toHex } from '@rigo/rweb3-utils';
 import {
     AbiInput,
     AbiCoderStruct,
@@ -25,7 +25,7 @@ import {
     AbiEventFragment,
     AbiFunctionFragment,
     AbiConstructorFragment,
-} from 'rweb3-types';
+} from '@rigo/rweb3-types';
 import ethersAbiCoder from './ethers_abi_coder.js';
 
 export const isAbiFragment = (item: unknown): item is AbiFragment =>

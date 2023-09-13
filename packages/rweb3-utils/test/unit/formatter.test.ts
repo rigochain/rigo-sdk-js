@@ -22,7 +22,7 @@ import {
     FormatType,
     HexString,
     Numbers,
-} from 'rweb3-types';
+} from '@rigo/rweb3-types';
 import { expectTypeOf, typecheck } from '@humeris/espresso-shot';
 import { isDataFormatValid, convertScalarValueValid } from '../fixtures/formatter';
 import { format, isDataFormat, convertScalarValue } from '../../src';

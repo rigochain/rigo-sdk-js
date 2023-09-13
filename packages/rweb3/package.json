@@ -1,5 +1,5 @@
 {
-  "name": "rweb3",
+  "name": "@rigo/rweb3",
   "version": "1.0.0-alpha.1",
   "main": "./lib/commonjs/index.js",
   "module": "./lib/esm/index.js",
@@ -58,10 +58,10 @@
   },
 
   "dependencies": {
-    "rweb3-rigo" : "1.0.0-alpha.1",
-    "rweb3-core" : "1.0.0-alpha.1",
-    "rweb3-providers-http" : "1.0.0-alpha.1",
-    "rweb3-validator" : "1.0.0-alpha.1",
-    "rweb3-rigo-contract" : "1.0.0-alpha.1"
+    "@rigo/rweb3-rigo" : "1.0.0-alpha.1",
+    "@rigo/rweb3-core" : "1.0.0-alpha.1",
+    "@rigo/rweb3-providers-http" : "1.0.0-alpha.1",
+    "@rigo/rweb3-validator" : "1.0.0-alpha.1",
+    "@rigo/rweb3-rigo-contract" : "1.0.0-alpha.1"
   }
 }

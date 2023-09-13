@@ -15,7 +15,7 @@
 */
 import { RWeb3 } from '../../../src';
 import { getTestWsServer } from '../e2e_utils';
-import { BlockchainResponse } from 'rweb3-types';
+import { BlockchainResponse } from '@rigo/rweb3-types';
 
 describe('blockchain check ', () => {
     let testWebsocketRWeb3Instance: RWeb3;

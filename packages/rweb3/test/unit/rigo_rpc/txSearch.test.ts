@@ -15,7 +15,7 @@
 */
 import { RWeb3 } from '../../../src';
 import { getTestWsServer } from '../e2e_utils';
-import { TxSearchResponse } from 'rweb3-types';
+import { TxSearchResponse } from '@rigo/rweb3-types';
 
 describe('txSearch check ', () => {
     let testWebsocketRWeb3Instance: RWeb3;

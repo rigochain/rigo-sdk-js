@@ -14,7 +14,7 @@
     limitations under the License.
 */
 
-import { format, isNullish, keccak256 } from 'rweb3-utils';
+import { format, isNullish, keccak256 } from '@rigo/rweb3-utils';
 
 import {
     AbiConstructorFragment,
@@ -28,7 +28,7 @@ import {
     FMT_BYTES,
     DataFormat,
     DEFAULT_RETURN_FORMAT,
-} from 'rweb3-types';
+} from '@rigo/rweb3-types';
 
 import {
     decodeLog,
@@ -39,11 +39,11 @@ import {
     encodeParameters,
     isAbiConstructorFragment,
     jsonInterfaceMethodToString,
-} from 'rweb3-rigo-abi';
+} from '@rigo/rweb3-rigo-abi';
 
-import { blockSchema, logSchema } from 'rweb3-rigo';
+import { blockSchema, logSchema } from '@rigo/rweb3-rigo';
 
-import { Web3ContractError } from 'rweb3-errors';
+import { Web3ContractError } from '@rigo/rweb3-errors';
 
 import { ContractOptions, ContractAbiWithSignature, EventLog } from './types.js';
 

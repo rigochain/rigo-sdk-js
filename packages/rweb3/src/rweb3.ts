@@ -15,14 +15,14 @@
 */
 
 import { RWeb3PkgInfo } from './version.js';
-import { RWeb3Context } from 'rweb3-core';
-import RWeb3Rigo from 'rweb3-rigo';
-import { isNullish } from 'rweb3-validator';
+import { RWeb3Context } from '@rigo/rweb3-core';
+import RWeb3Rigo from '@rigo/rweb3-rigo';
+import { isNullish } from '@rigo/rweb3-validator';
 import { RWeb3RigoInterface } from './types';
 import { initAccountsForContext } from './accounts.js';
 import abi from './abi.js';
-import { Address, ContractAbi } from 'rweb3-types';
-import { Contract } from 'rweb3-rigo-contract';
+import { Address, ContractAbi } from '@rigo/rweb3-types';
+import { Contract } from '@rigo/rweb3-rigo-contract';
 
 export class RWeb3 extends RWeb3Context {
     public static version = RWeb3PkgInfo.version;

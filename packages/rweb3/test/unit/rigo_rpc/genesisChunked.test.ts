@@ -15,7 +15,7 @@
 */
 import { RWeb3 } from '../../../src';
 import { getTestWsServer } from '../e2e_utils';
-import { GenesisChunkedResponse } from 'rweb3-types';
+import { GenesisChunkedResponse } from '@rigo/rweb3-types';
 
 describe('genesisChunked check ', () => {
     let testWebsocketRWeb3Instance: RWeb3;

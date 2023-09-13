@@ -1,5 +1,5 @@
 {
-  "name": "rweb3-providers-ws",
+  "name": "@rigo/rweb3-providers-ws",
   "version": "1.0.0-alpha.1",
   "main": "./lib/commonjs/index.js",
   "module": "./lib/esm/index.js",
@@ -55,8 +55,8 @@
     "ws": "^7",
     "xstream": "^11.14.0",
 
-    "rweb3-utils": "1.0.0-alpha.1",
-    "rweb3-errors": "1.0.0-alpha.1",
-    "rweb3-types": "1.0.0-alpha.1"
+    "@rigo/rweb3-utils": "1.0.0-alpha.1",
+    "@rigo/rweb3-errors": "1.0.0-alpha.1",
+    "@rigo/rweb3-types": "1.0.0-alpha.1"
   }
 }

@@ -15,7 +15,7 @@
 */
 import { RWeb3 } from '../../../src';
 import { getTestAccountAddress, getTestWsServer } from '../e2e_utils';
-import { AccountResponse } from 'rweb3-types';
+import { AccountResponse } from '@rigo/rweb3-types';
 
 describe('account check ', () => {
     let testWebsocketRWeb3Instance: RWeb3;
@@ -26,8 +26,9 @@ describe('account check ', () => {
 
     it('should call rweb3 with testWebsocketRWeb3Instance.account method success return', async () => {
         const testAccountAddress = getTestAccountAddress();
-        const testAccountResponse: AccountResponse =
-            await testWebsocketRWeb3Instance.rigo.account(testAccountAddress);
+        const testAccountResponse: AccountResponse = await testWebsocketRWeb3Instance.rigo.account(
+            testAccountAddress,
+        );
 
         console.log(JSON.stringify(testAccountResponse));
 

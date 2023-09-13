@@ -15,7 +15,7 @@
 */
 import { RWeb3 } from '../../../src';
 import { getTestWsServer } from '../e2e_utils';
-import { BlockResponse } from 'rweb3-types';
+import { BlockResponse } from '@rigo/rweb3-types';
 
 describe('blockchain check ', () => {
     let testWebsocketRWeb3Instance: RWeb3;
@@ -35,8 +35,9 @@ describe('blockchain check ', () => {
     });
 
     it('should call rweb3 with testWebsocketRWeb3Instance.block(10000) method success return', async () => {
-        const test100BlockResponse: BlockResponse =
-            await testWebsocketRWeb3Instance.rigo.block(10000);
+        const test100BlockResponse: BlockResponse = await testWebsocketRWeb3Instance.rigo.block(
+            10000,
+        );
 
         console.log(JSON.stringify(test100BlockResponse));
         expect(test100BlockResponse.block_id.hash).toBeDefined();

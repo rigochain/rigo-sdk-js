@@ -20,7 +20,7 @@ import {
     isHex as isHexValidator,
     isHexStrict as isHexStrictValidator,
     isNullish as isNullishValidator,
-} from 'rweb3-validator';
+} from '@rigo/rweb3-validator';
 
 /**
  * @deprecated Will be removed in next release. Please use `web3-validator` package instead.
