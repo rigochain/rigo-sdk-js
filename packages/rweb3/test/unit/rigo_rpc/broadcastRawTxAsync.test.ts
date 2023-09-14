@@ -30,7 +30,7 @@ describe('broadcastTxAsync check ', () => {
 
         const rWeb3Account = privateKeyToAccount(secretKey);
 
-        const accountResponse: AccountResponse = await testWebsocketRWeb3Instance.rigo.account(
+        const accountResponse: AccountResponse = await testWebsocketRWeb3Instance.rigo.getAccount(
             rWeb3Account.address,
         );
 

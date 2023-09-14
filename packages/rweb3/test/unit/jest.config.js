@@ -16,7 +16,7 @@ module.exports = {
     // testMatch: ['<rootDir>/test/unit/**/commit.(spec|test).(js|ts)'], // 단일 테스트
     // testMatch: ['<rootDir>/test/unit/**/genesis.(spec|test).(js|ts)'], // 단일 테스트
     // testMatch: ['<rootDir>/test/unit/**/genesisChunked.(spec|test).(js|ts)'], // 단일 테스트
-    testMatch: ['<rootDir>/test/unit/**/dumpConsensusState.(spec|test).(js|ts)'], // 단일 테스트
+    // testMatch: ['<rootDir>/test/unit/**/dumpConsensusState.(spec|test).(js|ts)'], // 단일 테스트
     // testMatch: ['<rootDir>/test/unit/**/consensusState.(spec|test).(js|ts)'], // 단일 테스트
     // testMatch: ['<rootDir>/test/unit/**/contractAddrFromTx.(spec|test).(js|ts)'], // 단일 테스트
     // testMatch: ['<rootDir>/test/unit/**/consensusParams.(spec|test).(js|ts)'], // 단일 테스트
@@ -38,7 +38,7 @@ module.exports = {
     // testMatch: ['<rootDir>/test/unit/**/broadcastRawTxCommit.(spec|test).(js|ts)'], // 단일 테스트
     // testMatch: ['<rootDir>/test/unit/**/subscribe.(spec|test).(js|ts)'], // 단일 테스트
     // testMatch: ['<rootDir>/test/unit/**/subscribeNewBlock.(spec|test).(js|ts)'], // 단일 테스트
-    // testMatch: ['<rootDir>/test/unit/**/transfer.(spec|test).(js|ts)'], // 단일 테스트
+    testMatch: ['<rootDir>/test/unit/**/accounts.(spec|test).(js|ts)'], // 단일 테스트
 
     coverageDirectory: '../../.coverage/unit',
     collectCoverageFrom: ['src/**'],

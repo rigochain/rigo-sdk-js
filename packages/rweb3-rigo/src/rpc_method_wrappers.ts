@@ -45,7 +45,7 @@ export async function sendDeploy(
         bytecodeWithArguments = bytecode;
     }
 
-    const searchAccount = await account(web3Context, rWeb3Account.address);
+    const searchAccount = await getAccount(web3Context, rWeb3Account.address);
 
     // 10000000000000000 = 0 16개 - 17개 자리
     const tx = TrxProtoBuilder.buildContractTrxProto({
@@ -278,22 +278,9 @@ export async function rule(web3Context: RWeb3Context<RigoExecutionAPI>) {
     return rigoRpcMethods.rule(web3Context.requestManager);
 }
 
-export async function account(web3Context: RWeb3Context<RigoExecutionAPI>, addr: string) {
-    return rigoRpcMethods.account(web3Context.requestManager, addr);
+export async function getAccount(web3Context: RWeb3Context<RigoExecutionAPI>, addr: string) {
+    return rigoRpcMethods.getAccount(web3Context.requestManager, addr);
 }
-
-// export async function getTransactionCount(
-//   requestManager: Web3RequestManager,
-//   address: Address,
-//   blockNumber: BlockNumberOrTag,
-// ) {
-//     validator.validate(['address', 'blockNumberOrTag'], [address, blockNumber]);
-//
-//     return requestManager.send({
-//         method: 'eth_getTransactionCount',
-//         params: [address, blockNumber],
-//     });
-// }
 
 export async function proposals(web3Context: RWeb3Context<RigoExecutionAPI>, txHash: string) {
     return rigoRpcMethods.proposals(web3Context.requestManager, txHash);

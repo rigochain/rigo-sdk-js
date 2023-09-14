@@ -151,8 +151,8 @@ export class RWeb3Rigo extends RWeb3Context {
         return rpcMethodsWrappers.rule(this);
     }
 
-    account(addr: string) {
-        return rpcMethodsWrappers.account(this, addr);
+    getAccount(addr: string) {
+        return rpcMethodsWrappers.getAccount(this, addr);
     }
 
     proposals(txHash: string) {

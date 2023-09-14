@@ -32,7 +32,7 @@ describe('checkTx check ', () => {
 
         console.log('acct', acct);
 
-        const accountResponse: AccountResponse = await testWebsocketRWeb3Instance.rigo.account(
+        const accountResponse: AccountResponse = await testWebsocketRWeb3Instance.rigo.getAccount(
             acct.address,
         );
 

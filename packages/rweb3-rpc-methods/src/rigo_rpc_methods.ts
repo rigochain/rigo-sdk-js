@@ -506,7 +506,7 @@ export async function rule(requestManager: RWeb3RequestManager): Promise<RuleRes
     );
 }
 
-export async function account(
+export async function getAccount(
     requestManager: RWeb3RequestManager,
     addr: string,
 ): Promise<AccountResponse> {

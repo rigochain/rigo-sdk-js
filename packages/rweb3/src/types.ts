@@ -26,6 +26,8 @@ import {
     encodeParameter,
     encodeParameters,
 } from '@rigochain/rweb3-rigo-abi';
+import { RWeb3Account, SignTransactionResult } from '@rigochain/rweb3-rigo-accounts';
+import { HexString, TrxProto } from '@rigochain/rweb3-types';
 
 export interface RWeb3RigoInterface extends Rigo {
     Contract: typeof Contract;
@@ -38,5 +40,10 @@ export interface RWeb3RigoInterface extends Rigo {
         decodeParameter: typeof decodeParameter;
         decodeParameters: typeof decodeParameters;
         decodeLog: typeof decodeLog;
+    };
+    accounts: {
+        create: () => RWeb3Account;
+        privateKeyToAccount: (privateKey: Uint8Array | string) => RWeb3Account;
+        signTransaction: (trxProto: TrxProto, privateKey: HexString) => SignTransactionResult;
     };
 }

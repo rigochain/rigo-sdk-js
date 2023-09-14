@@ -51,7 +51,7 @@ describe('contract transfer check ', () => {
             .encodeABI();
 
         console.log(transferEncodeDate);
-        const nonce = (await testWebsocketRWeb3Instance.rigo.account(fromAccount.address)).value
+        const nonce = (await testWebsocketRWeb3Instance.rigo.getAccount(fromAccount.address)).value
             .nonce;
 
         const transferTrxProto = TrxProtoBuilder.buildContractTrxProto({

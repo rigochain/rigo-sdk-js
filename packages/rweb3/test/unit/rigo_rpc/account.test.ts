@@ -26,7 +26,7 @@ describe('account check ', () => {
 
     it('should call rweb3 with testWebsocketRWeb3Instance.account method success return', async () => {
         const testAccountAddress = getTestAccountAddress();
-        const testAccountResponse: AccountResponse = await testWebsocketRWeb3Instance.rigo.account(
+        const testAccountResponse: AccountResponse = await testWebsocketRWeb3Instance.rigo.getAccount(
             testAccountAddress,
         );
 
