@@ -66,11 +66,14 @@ export class BytesUint8Array extends Uint8Array {
     }
 
     toWords(): cryptojs.lib.WordArray {
-        const words: number[] = [];
+        const wordCount = Math.ceil(this.length / 4);
+        const words: number[] = new Array(wordCount).fill(0);
+
         for (let i = 0; i < this.length; i++) {
             words[i >>> 2] |= this[i] << (24 - (i % 4) * 8);
         }
-        return cryptojs.lib.WordArray.create(words);
+
+        return cryptojs.lib.WordArray.create(words, this.length);
     }
 
     isEqual(o: BytesUint8Array): boolean {
