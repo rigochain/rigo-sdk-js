@@ -35,18 +35,18 @@ The implementation of `rigo-sdk-js' is a library that can be used in the Javascr
 
 # Summary
 
-* [rweb3](1.%20rweb3/README.md)
-* [rweb3-core](2.%20rweb3-core/README.md)
-* [rweb3-provider](3.%20rweb3-provider/README.md)
-* [rweb3-rigo](4.%20rweb3-rigo/README.md)
-* [rweb3-rigo-accounts](5.%20rweb3-rigo-accounts/README.md)
-* [rweb3-utils](7.%20rweb3-utils/README.md)
-* [rweb3-types](6.%20rweb3-types/README.md)
+* [rweb3](1%20rweb3/README.md)
+* [rweb3-core](2%20rweb3-core/README.md)
+* [rweb3-provider](3%20rweb3-provider/README.md)
+* [rweb3-rigo](4%20rweb3-rigo/README.md)
+* [rweb3-rigo-accounts](5%20rweb3-rigo-accounts/README.md)
+* [rweb3-utils](7%20rweb3-utils/README.md)
+* [rweb3-types](6%20rweb3-types/README.md)
 
 ## Features
 
 
-### Rpc Method List  ([rweb3-rigo](4.%20rweb3-rigo/README.md))
+### Rpc Method List  ([rweb3-rigo](4%20rweb3-rigo/README.md))
 
 - **health**: Checks the operational health and readiness of the Rigo Chain, ensuring all components are functioning as expected.
 
@@ -127,23 +127,23 @@ The implementation of `rigo-sdk-js' is a library that can be used in the Javascr
 - **subscribeTx**: Allows users to get real-time updates on specific transactions or all network transactions. Exclusive for websocket provider users.
 
 
-### Node Provider ([rweb3-provider](3.%20rweb3-provider/README.md))
+### Node Provider ([rweb3-provider](3%20rweb3-provider/README.md))
 
 `rweb3-provider` is a module for establishing and managing connections to Rigo nodes, inspired by `web3.js`'s provider functionality.
 
 
-### Account management ([rweb3-rigo-accounts](5.%20rweb3-rigo-accounts/README.md))
+### Account management ([rweb3-rigo-accounts](5%20rweb3-rigo-accounts/README.md))
 
 `rweb3-rigo-accounts` is a module dedicated to handling Rigo account operations, such as creating, managing, and signing transactions, in the rweb3 ecosystem.
 
 
 
-### Utils ([rweb3-utils](7.%20rweb3-utils/README.md))
+### Utils ([rweb3-utils](7%20rweb3-utils/README.md))
 
 `rweb3-utils` is a utility module within the rweb3 ecosystem, offering a collection of helper functions and tools to streamline Rigo-related operations and developments.
 
 
-### Types ([rweb3-types](6.%20rweb3-types/README.md))
+### Types ([rweb3-types](6%20rweb3-types/README.md))
 
 `rweb3-types` is a module in the rweb3 ecosystem that defines and manages the data structures and types used across the Rigo development processes, ensuring consistency and compatibility.
 
