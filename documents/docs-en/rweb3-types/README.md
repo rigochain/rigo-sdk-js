@@ -1,4 +1,4 @@
-# rweb3-types
+# 6. rweb3-types
 
 Rigo Chain's `rweb3-type` module is a comprehensive collection of utility functions and types designed to facilitate smooth interactions with the blockchain. Whether you're dealing with assets, data encoding, or even handling errors, `rweb3-type` provides a wide array of tools tailored for developers.
 
