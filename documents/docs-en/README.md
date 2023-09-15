@@ -35,13 +35,13 @@ The implementation of `rigo-sdk-js' is a library that can be used in the Javascr
 
 # Summary
 
-* [rweb3](1%20rweb3/README.md)
-* [rweb3-core](2%20rweb3-core/README.md)
-* [rweb3-provider](3%20rweb3-provider/README.md)
-* [rweb3-rigo](4%20rweb3-rigo/README.md)
-* [rweb3-rigo-accounts](5%20rweb3-rigo-accounts/README.md)
-* [rweb3-utils](7%20rweb3-utils/README.md)
-* [rweb3-types](6%20rweb3-types/README.md)
+* [rweb3](rweb3/README.md)
+* [rweb3-core](rweb3-core/README.md)
+* [rweb3-provider](rweb3-provider/README.md)
+* [rweb3-rigo](rweb3-rigo/README.md)
+* [rweb3-rigo-accounts](rweb3-rigo-accounts/README.md)
+* [rweb3-utils](rweb3-utils/README.md)
+* [rweb3-types](rweb3-types/README.md)
 
 ## Features
 
