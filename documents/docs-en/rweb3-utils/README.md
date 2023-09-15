@@ -1,4 +1,4 @@
-# 7. rweb3-utils
+# rweb3-utils
 
 The `rweb3-utils` module of Rigo Chain presents an essential collection of utility functions tailored for optimal blockchain interactions. This suite of tools addresses a broad spectrum of needs, from parsing chunked responses to generating random values or even facilitating JSON RPC communications.
 

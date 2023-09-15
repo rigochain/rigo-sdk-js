@@ -1,4 +1,4 @@
-# 4. rweb3-rigo
+# rweb3-rigo
 
 
 ## Description

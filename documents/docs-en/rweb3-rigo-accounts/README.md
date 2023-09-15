@@ -1,4 +1,4 @@
-# 5. rweb3-rigo-accounts
+# rweb3-rigo-accounts
 
 ## Getting Started
 ```agsl
