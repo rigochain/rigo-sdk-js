@@ -1,52 +1,12 @@
-# Rigo SDK for JavaScript
+# rweb3-rigo
 
 
-## Getting Started
+## Description
+The RWeb3Rigo class extends from the RWeb3Context. It is the main class that interacts with the Rigo Chain, and provides various methods for different functionalities, like checking the health of the chain, getting info about blocks, transactions etc.
 
-```plantuml
+## Methods
+Below is a list of methods provided by the RWeb3Rigo class:
 
-import rweb3 from '@rigochain/rweb3';
-
-let rweb3 = new RWeb3("https://rpc1.testnet.rigochain.io");
-// let rweb3 = new RWeb3("wss://rpc1.testnet.rigochain.io") 
-
-rweb3.rigo.netInfo().then(function(result) {
-        console.log(result);
-    });
-
-setTimeout(async function() {
-    let response = await rweb3.rigo.netInfo();
-}, 1000);
-
-
-```
-Any application or service that utilizes blockchain is implemented by connecting to the blockchain network to request various information and receive/process responses.  
-RIGO Node includes an HTTP/JSONRPC-based server system to provide these functions,
-It can be utilized to develop various applications and services such as Wallet, Block Explorer, etc.  
-However, directly calling the RPCs provided by the RIGO nodes can be very cumbersome in some cases.
-This is the case when you want to submit a transaction to the blockchain network.    
-To submit a transaction, you must first create the transaction, encode it in the appropriate way (Protobuf v3), and send it as a JSONRPC request,
-This involves a process that must be matched correctly, deterministically and uniformly across all services/applications, including RIGO nodes.
-
-In this way, the set of modules or functions that all applications and services need to implement in common, including communication with RIGO nodes, can be defined in a library available in the JavaScript environment.
-The implementation of `rigo-sdk-js' is a library that can be used in the Javascript environment.
-
----
-
-# Summary
-
-* [rweb3](1.%20rweb3/README.md)
-* [rweb3-core](2.%20rweb3-core/README.md)
-* [rweb3-provider](3.%20rweb3-provider/README.md)
-* [rweb3-rigo](4.%20rweb3-rigo/README.md)
-* [rweb3-rigo-accounts](5.%20rweb3-rigo-accounts/README.md)
-* [rweb3-utils](7.%20rweb3-utils/README.md)
-* [rweb3-types](6.%20rweb3-types/README.md)
-
-## Features
-
-
-### Rpc Method List  ([rweb3-rigo](4.%20rweb3-rigo/README.md))
 
 - **health**: Checks the operational health and readiness of the Rigo Chain, ensuring all components are functioning as expected.
 
@@ -125,26 +85,3 @@ The implementation of `rigo-sdk-js' is a library that can be used in the Javascr
 - **subscribeNewBlockHeader**: Provides subscribers with instant updates on new block headers. Useful for light clients and those using websocket providers.
 
 - **subscribeTx**: Allows users to get real-time updates on specific transactions or all network transactions. Exclusive for websocket provider users.
-
-
-### Node Provider ([rweb3-provider](3.%20rweb3-provider/README.md))
-
-`rweb3-provider` is a module for establishing and managing connections to Rigo nodes, inspired by `web3.js`'s provider functionality.
-
-
-### Account management ([rweb3-rigo-accounts](5.%20rweb3-rigo-accounts/README.md))
-
-`rweb3-rigo-accounts` is a module dedicated to handling Rigo account operations, such as creating, managing, and signing transactions, in the rweb3 ecosystem.
-
-
-
-### Utils ([rweb3-utils](7.%20rweb3-utils/README.md))
-
-`rweb3-utils` is a utility module within the rweb3 ecosystem, offering a collection of helper functions and tools to streamline Rigo-related operations and developments.
-
-
-### Types ([rweb3-types](6.%20rweb3-types/README.md))
-
-`rweb3-types` is a module in the rweb3 ecosystem that defines and manages the data structures and types used across the Rigo development processes, ensuring consistency and compatibility.
-
-
