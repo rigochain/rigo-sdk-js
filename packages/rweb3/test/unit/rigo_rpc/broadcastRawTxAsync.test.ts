@@ -1,4 +1,5 @@
 /*
+/!*
     Copyright 2023 All Rigo Chain Developers
 
     Licensed under the Apache License, Version 2.0 (the "License");
@@ -12,7 +13,7 @@
     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
     See the License for the specific language governing permissions and
     limitations under the License.
-*/
+*!/
 import { RWeb3 } from '../../../src';
 import { getTestAccountPrivateKey, getTestWsServer } from '../e2e_utils';
 import { privateKeyToAccount, TrxProtoBuilder } from '@rigochain/rweb3-rigo-accounts';
@@ -58,3 +59,4 @@ describe('broadcastTxAsync check ', () => {
         console.log(JSON.stringify(broadcastTxAsyncResponse));
     });
 });
+*/

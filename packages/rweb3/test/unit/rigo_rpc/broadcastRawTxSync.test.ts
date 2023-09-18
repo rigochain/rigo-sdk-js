@@ -1,4 +1,5 @@
 /*
+/!*
     Copyright 2023 All Rigo Chain Developers
 
     Licensed under the Apache License, Version 2.0 (the "License");
@@ -12,14 +13,14 @@
     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
     See the License for the specific language governing permissions and
     limitations under the License.
-*/
+*!/
 import { RWeb3 } from '../../../src';
 import { getTestAccountPrivateKey, getTestWsServer } from '../e2e_utils';
 import { privateKeyToAccount, RWeb3Account, TrxProtoBuilder } from '@rigochain/rweb3-rigo-accounts';
 import { AccountResponse, BroadcastTxSyncResponse } from '@rigochain/rweb3-types';
 
 describe('broadcastTxSync check ', () => {
-    let testWebsocketRWeb3Instance: RWeb3;
+    let testWebsocketRWaeb3Instance: RWeb3;
 
     beforeAll(() => {
         testWebsocketRWeb3Instance = new RWeb3(getTestWsServer());
@@ -62,3 +63,4 @@ describe('broadcastTxSync check ', () => {
         console.log(JSON.stringify(broadcastTxSyncResponse));
     });
 });
+*/

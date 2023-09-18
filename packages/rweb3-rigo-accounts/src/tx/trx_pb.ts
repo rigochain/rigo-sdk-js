@@ -3,6 +3,7 @@ import Long from 'long';
 import _m0 from 'protobufjs/minimal';
 
 import { TrxProto } from '@rigochain/rweb3-types';
+import BN from 'bn.js';
 
 export const protobufPackage = 'types';
 
@@ -49,7 +50,24 @@ function createBaseTrxProto(): TrxProto {
     };
 }
 
+import { rlp } from 'ethereumjs-util';
+
 export const TrxProtoUtils = {
+    encodeTrxProto(trx: TrxProto): Buffer {
+        return rlp.encode([
+            trx.version,
+            new BN(trx.time.toString()),
+            trx.nonce.toNumber(),
+            trx.from,
+            trx.to,
+            trx.amount, // TODO 이억기 체크좀 : 대문자 소문자 로 바꿈
+            trx.gas.toNumber(),
+            trx.gasPrice, // TODO 이억기 체크좀 : 대문자 소문자 로 바꿈
+            trx.type,
+            trx.payload, // TODO 이억기 체크좀 : 대문자 소문자 로 바꿈
+            trx.sig,
+        ]);
+    },
     encode(message: TrxProto, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
         if (message.version !== 0) {
             writer.uint32(8).uint32(message.version);
