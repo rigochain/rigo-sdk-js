@@ -34,46 +34,47 @@ interface TrxPayloadCreateContract {
     data: string;
 }
 
-function decodeTransaction(d: BytesUint8Array): Transaction<Object> {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    let payload: any;
-    const tx = trxPb.TrxProtoUtils.decode(d);
-    switch (tx.type) {
-        case 1: // transfer
-        case 2: // staking
-            break;
-        case 3: // unstaking
-            const p: trxPb.TrxPayloadUnstakingProto = trxPb.TrxPayloadUnstakingProto.decode(
-                tx.Payload,
-            );
-            payload = {
-                txhash: new BytesUint8Array(p.txHash).toHex(),
-            };
-            break;
-    }
-
-    const sha256 = createHash('sha256');
-    const hash = sha256.update(d).digest();
-
-    return {
-        hash: hash.toString('hex'),
-        version: tx.version,
-        time: fromNanoSecond(tx.time),
-        nonce: tx.nonce.toNumber(),
-        from: new BytesUint8Array(tx.from).toHex(),
-        to: new BytesUint8Array(tx.to).toHex(),
-        amount: new BN(tx.Amount).toString(10),
-        gas: new BN(tx.Gas).toString(10),
-        type: tx.type,
-        payload: payload,
-        sig: new BytesUint8Array(tx.sig).toHex(),
-    };
-}
+//
+// function decodeTransaction(d: BytesUint8Array): Transaction<Object> {
+//     // eslint-disable-next-line @typescript-eslint/no-explicit-any
+//     let payload: any;
+//     const tx = trxPb.TrxProtoUtils.decode(d);
+//     switch (tx.type) {
+//         case 1: // transfer
+//         case 2: // staking
+//             break;
+//         case 3: // unstaking
+//             const p: trxPb.TrxPayloadUnstakingProto = trxPb.TrxPayloadUnstakingProto.decode(
+//                 tx.Payload,
+//             );
+//             payload = {
+//                 txhash: new BytesUint8Array(p.txHash).toHex(),
+//             };
+//             break;
+//     }
+//
+//     const sha256 = createHash('sha256');
+//     const hash = sha256.update(d).digest();
+//
+//     return {
+//         hash: hash.toString('hex'),
+//         version: tx.version,
+//         time: fromNanoSecond(tx.time),
+//         nonce: tx.nonce.toNumber(),
+//         from: new BytesUint8Array(tx.from).toHex(),
+//         to: new BytesUint8Array(tx.to).toHex(),
+//         amount: new BN(tx.Amount).toString(10),
+//         gas: new BN(tx.Gas).toString(10),
+//         type: tx.type,
+//         payload: payload,
+//         sig: new BytesUint8Array(tx.sig).toHex(),
+//     };
+// }
 
 function buildTransferTrxProto(transaction: Transaction<Object>): TrxProto {
     return {
-        version: isSet(transaction.version) ? Number(transaction.version) : 1,
-        time: isSet(transaction.time) ? getNanoSecond(transaction.time) : getNanoSecond(),
+        version: 1,
+        time: getNanoSecond(),
         nonce:
             isSet(transaction.nonce) && transaction.nonce
                 ? Long.fromValue(transaction.nonce)
@@ -81,16 +82,11 @@ function buildTransferTrxProto(transaction: Transaction<Object>): TrxProto {
         from: BytesUint8Array.fromHex(transaction.from),
         to: BytesUint8Array.fromHex(transaction.to),
         // proto3 default rule: If the field has default value, the filed should be omitted.
-        Amount:
-            transaction.amount === '0'
-                ? new Uint8Array()
-                : new Uint8Array(new BN(transaction.amount).toArrayLike(Buffer)),
-        Gas:
-            transaction.gas === '0'
-                ? new Uint8Array()
-                : new Uint8Array(new BN(transaction.gas).toArrayLike(Buffer)),
+        amount: new Uint8Array(new BN(transaction.amount).toArrayLike(Buffer)),
+        gas: Long.fromValue(transaction.gas),
+        gasPrice: new Uint8Array(new BN(transaction.gasPrice).toArrayLike(Buffer)),
         type: 1, // staking type
-        Payload: new Uint8Array(),
+        payload: new Uint8Array(),
         sig: new Uint8Array(),
     };
 }
@@ -106,16 +102,14 @@ function buildDelegateTrxProto(transaction: Transaction<Object>): TrxProto {
         from: BytesUint8Array.fromHex(transaction.from),
         to: BytesUint8Array.fromHex(transaction.to),
         // proto3 default rule: If the field has default value, the filed should be omitted.
-        Amount:
+        amount:
             transaction.amount === '0'
                 ? new Uint8Array()
                 : new Uint8Array(new BN(transaction.amount).toArrayLike(Buffer)),
-        Gas:
-            transaction.gas === '0'
-                ? new Uint8Array()
-                : new Uint8Array(new BN(transaction.gas).toArrayLike(Buffer)),
+        gas: Long.fromValue(transaction.gas),
+        gasPrice: new Uint8Array(new BN(transaction.gasPrice).toArrayLike(Buffer)),
         type: 2, // staking type
-        Payload: new Uint8Array(),
+        payload: new Uint8Array(),
         sig: new Uint8Array(),
     };
 }
@@ -141,16 +135,14 @@ function buildUnDelegateTrxProto(
                 : Long.fromValue(1),
         from: BytesUint8Array.fromHex(transaction.from),
         to: BytesUint8Array.fromHex(transaction.to),
-        Amount:
+        amount:
             transaction.amount === '0'
                 ? new Uint8Array()
                 : new Uint8Array(new BN(transaction.amount).toArrayLike(Buffer)),
-        Gas:
-            transaction.gas === '0'
-                ? new Uint8Array()
-                : new Uint8Array(new BN(transaction.gas).toArrayLike(Buffer)),
+        gas: Long.fromValue(transaction.gas),
+        gasPrice: new Uint8Array(new BN(transaction.gasPrice).toArrayLike(Buffer)),
         type: 3, // un-staking type
-        Payload: payloadBytes,
+        payload: payloadBytes,
         sig: new Uint8Array(),
     };
 }
@@ -173,13 +165,11 @@ function buildContractTrxProto(transaction: Transaction<TrxPayloadCreateContract
                 : Long.fromValue(1),
         from: BytesUint8Array.fromHex(transaction.from),
         to: BytesUint8Array.fromHex(transaction.to),
-        Amount: new Uint8Array(),
-        Gas:
-            transaction.gas === '0'
-                ? new Uint8Array()
-                : new Uint8Array(new BN(transaction.gas).toArrayLike(Buffer)),
+        amount: new Uint8Array(),
+        gas: Long.fromValue(transaction.gas),
+        gasPrice: new Uint8Array(new BN(transaction.gasPrice).toArrayLike(Buffer)),
         type: 6, // contract type
-        Payload: payloadBytes,
+        payload: payloadBytes,
         sig: new Uint8Array(),
     };
 }
@@ -206,13 +196,11 @@ function buildProposalTrx(transaction: Transaction<TrxPayloadProposalProto>): Tr
                 : Long.fromValue(1),
         from: BytesUint8Array.fromHex(transaction.from),
         to: BytesUint8Array.fromHex(transaction.to),
-        Amount: new Uint8Array(),
-        Gas:
-            transaction.gas === '0'
-                ? new Uint8Array()
-                : new Uint8Array(new BN(transaction.gas).toArrayLike(Buffer)),
+        amount: new Uint8Array(),
+        gas: Long.fromValue(transaction.gas),
+        gasPrice: new Uint8Array(new BN(transaction.gasPrice).toArrayLike(Buffer)),
         type: 4, // proposal type
-        Payload: payloadBytes,
+        payload: payloadBytes,
         sig: new Uint8Array(),
     };
 }
@@ -236,13 +224,11 @@ function buildVotingTrx(transaction: Transaction<TrxPayloadVotingProto>): TrxPro
                 : Long.fromValue(1),
         from: BytesUint8Array.fromHex(transaction.from),
         to: BytesUint8Array.fromHex(transaction.to),
-        Amount: new Uint8Array(),
-        Gas:
-            transaction.gas === '0'
-                ? new Uint8Array()
-                : new Uint8Array(new BN(transaction.gas).toArrayLike(Buffer)),
+        amount: new Uint8Array(),
+        gas: Long.fromValue(transaction.gas),
+        gasPrice: new Uint8Array(new BN(transaction.gasPrice).toArrayLike(Buffer)),
         type: 5, // voting type
-        Payload: payloadBytes,
+        payload: payloadBytes,
         sig: new Uint8Array(),
     };
 }
@@ -289,7 +275,7 @@ function verifyTrxProto(trxProto: TrxProto, account: RWeb3Account): boolean {
 }
 
 export const TrxProtoBuilder = {
-    decodeTransaction,
+    // decodeTransaction,
     buildTransferTrxProto,
     buildDelegateTrxProto,
     buildUnDelegateTrxProto,

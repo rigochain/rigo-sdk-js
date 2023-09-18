@@ -1,27 +1,12 @@
 /* eslint-disable */
-import Long from "long";
-import _m0 from "protobufjs/minimal";
+import Long from 'long';
+import _m0 from 'protobufjs/minimal';
 
 import { TrxProto } from '@rigochain/rweb3-types';
 
-export const protobufPackage = "types";
+export const protobufPackage = 'types';
 
-export interface TrxProto {
-    version: number;
-    time: Long;
-    nonce: Long;
-    from: Uint8Array;
-    to: Uint8Array;
-    amount: Uint8Array;
-    gas: Long;
-    gasPrice: Uint8Array;
-    type: number;
-    payload: Uint8Array;
-    sig: Uint8Array;
-}
-
-export interface TrxPayloadStakingProto {
-}
+export interface TrxPayloadStakingProto {}
 
 export interface TrxPayloadUnstakingProto {
     txHash: Uint8Array;
@@ -60,7 +45,7 @@ function createBaseTrxProto(): TrxProto {
         gasPrice: new Uint8Array(0),
         type: 0,
         payload: new Uint8Array(0),
-        sig: new Uint8Array(0)
+        sig: new Uint8Array(0),
     };
 }
 
@@ -250,17 +235,26 @@ export const TrxProtoUtils = {
     },
 
     create<I extends Exact<DeepPartial<TrxProto>, I>>(base?: I): TrxProto {
-        return TrxProto.fromPartial(base ?? ({} as any));
+        return TrxProtoUtils.fromPartial(base ?? ({} as any));
     },
     fromPartial<I extends Exact<DeepPartial<TrxProto>, I>>(object: I): TrxProto {
         const message = createBaseTrxProto();
         message.version = object.version ?? 0;
-        message.time = (object.time !== undefined && object.time !== null) ? Long.fromValue(object.time) : Long.ZERO;
-        message.nonce = (object.nonce !== undefined && object.nonce !== null) ? Long.fromValue(object.nonce) : Long.UZERO;
+        message.time =
+            object.time !== undefined && object.time !== null
+                ? Long.fromValue(object.time)
+                : Long.ZERO;
+        message.nonce =
+            object.nonce !== undefined && object.nonce !== null
+                ? Long.fromValue(object.nonce)
+                : Long.UZERO;
         message.from = object.from ?? new Uint8Array(0);
         message.to = object.to ?? new Uint8Array(0);
         message.amount = object.amount ?? new Uint8Array(0);
-        message.gas = (object.gas !== undefined && object.gas !== null) ? Long.fromValue(object.gas) : Long.UZERO;
+        message.gas =
+            object.gas !== undefined && object.gas !== null
+                ? Long.fromValue(object.gas)
+                : Long.UZERO;
         message.gasPrice = object.gasPrice ?? new Uint8Array(0);
         message.type = object.type ?? 0;
         message.payload = object.payload ?? new Uint8Array(0);
@@ -303,10 +297,14 @@ export const TrxPayloadStakingProto = {
         return obj;
     },
 
-    create<I extends Exact<DeepPartial<TrxPayloadStakingProto>, I>>(base?: I): TrxPayloadStakingProto {
+    create<I extends Exact<DeepPartial<TrxPayloadStakingProto>, I>>(
+        base?: I,
+    ): TrxPayloadStakingProto {
         return TrxPayloadStakingProto.fromPartial(base ?? ({} as any));
     },
-    fromPartial<I extends Exact<DeepPartial<TrxPayloadStakingProto>, I>>(_: I): TrxPayloadStakingProto {
+    fromPartial<I extends Exact<DeepPartial<TrxPayloadStakingProto>, I>>(
+        _: I,
+    ): TrxPayloadStakingProto {
         const message = createBaseTrxPayloadStakingProto();
         return message;
     },
@@ -317,7 +315,10 @@ function createBaseTrxPayloadUnstakingProto(): TrxPayloadUnstakingProto {
 }
 
 export const TrxPayloadUnstakingProto = {
-    encode(message: TrxPayloadUnstakingProto, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    encode(
+        message: TrxPayloadUnstakingProto,
+        writer: _m0.Writer = _m0.Writer.create(),
+    ): _m0.Writer {
         if (message.txHash.length !== 0) {
             writer.uint32(10).bytes(message.txHash);
         }
@@ -348,7 +349,9 @@ export const TrxPayloadUnstakingProto = {
     },
 
     fromJSON(object: any): TrxPayloadUnstakingProto {
-        return { txHash: isSet(object.txHash) ? bytesFromBase64(object.txHash) : new Uint8Array(0) };
+        return {
+            txHash: isSet(object.txHash) ? bytesFromBase64(object.txHash) : new Uint8Array(0),
+        };
     },
 
     toJSON(message: TrxPayloadUnstakingProto): unknown {
@@ -359,10 +362,14 @@ export const TrxPayloadUnstakingProto = {
         return obj;
     },
 
-    create<I extends Exact<DeepPartial<TrxPayloadUnstakingProto>, I>>(base?: I): TrxPayloadUnstakingProto {
+    create<I extends Exact<DeepPartial<TrxPayloadUnstakingProto>, I>>(
+        base?: I,
+    ): TrxPayloadUnstakingProto {
         return TrxPayloadUnstakingProto.fromPartial(base ?? ({} as any));
     },
-    fromPartial<I extends Exact<DeepPartial<TrxPayloadUnstakingProto>, I>>(object: I): TrxPayloadUnstakingProto {
+    fromPartial<I extends Exact<DeepPartial<TrxPayloadUnstakingProto>, I>>(
+        object: I,
+    ): TrxPayloadUnstakingProto {
         const message = createBaseTrxPayloadUnstakingProto();
         message.txHash = object.txHash ?? new Uint8Array(0);
         return message;
@@ -374,7 +381,10 @@ function createBaseTrxPayloadExecContractProto(): TrxPayloadExecContractProto {
 }
 
 export const TrxPayloadExecContractProto = {
-    encode(message: TrxPayloadExecContractProto, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    encode(
+        message: TrxPayloadExecContractProto,
+        writer: _m0.Writer = _m0.Writer.create(),
+    ): _m0.Writer {
         if (message.Code.length !== 0) {
             writer.uint32(10).bytes(message.Code);
         }
@@ -416,10 +426,14 @@ export const TrxPayloadExecContractProto = {
         return obj;
     },
 
-    create<I extends Exact<DeepPartial<TrxPayloadExecContractProto>, I>>(base?: I): TrxPayloadExecContractProto {
+    create<I extends Exact<DeepPartial<TrxPayloadExecContractProto>, I>>(
+        base?: I,
+    ): TrxPayloadExecContractProto {
         return TrxPayloadExecContractProto.fromPartial(base ?? ({} as any));
     },
-    fromPartial<I extends Exact<DeepPartial<TrxPayloadExecContractProto>, I>>(object: I): TrxPayloadExecContractProto {
+    fromPartial<I extends Exact<DeepPartial<TrxPayloadExecContractProto>, I>>(
+        object: I,
+    ): TrxPayloadExecContractProto {
         const message = createBaseTrxPayloadExecContractProto();
         message.Code = object.Code ?? new Uint8Array(0);
         return message;
@@ -427,12 +441,18 @@ export const TrxPayloadExecContractProto = {
 };
 
 function createBaseTrxPayloadProposalProto(): TrxPayloadProposalProto {
-    return { message: "", startVotingHeight: Long.ZERO, votingBlocks: Long.ZERO, optType: 0, options: [] };
+    return {
+        message: '',
+        startVotingHeight: Long.ZERO,
+        votingBlocks: Long.ZERO,
+        optType: 0,
+        options: [],
+    };
 }
 
 export const TrxPayloadProposalProto = {
     encode(message: TrxPayloadProposalProto, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-        if (message.message !== "") {
+        if (message.message !== '') {
             writer.uint32(10).string(message.message);
         }
         if (!message.startVotingHeight.isZero()) {
@@ -503,17 +523,23 @@ export const TrxPayloadProposalProto = {
 
     fromJSON(object: any): TrxPayloadProposalProto {
         return {
-            message: isSet(object.message) ? String(object.message) : "",
-            startVotingHeight: isSet(object.startVotingHeight) ? Long.fromValue(object.startVotingHeight) : Long.ZERO,
-            votingBlocks: isSet(object.votingBlocks) ? Long.fromValue(object.votingBlocks) : Long.ZERO,
+            message: isSet(object.message) ? String(object.message) : '',
+            startVotingHeight: isSet(object.startVotingHeight)
+                ? Long.fromValue(object.startVotingHeight)
+                : Long.ZERO,
+            votingBlocks: isSet(object.votingBlocks)
+                ? Long.fromValue(object.votingBlocks)
+                : Long.ZERO,
             optType: isSet(object.optType) ? Number(object.optType) : 0,
-            options: Array.isArray(object?.options) ? object.options.map((e: any) => bytesFromBase64(e)) : [],
+            options: Array.isArray(object?.options)
+                ? object.options.map((e: any) => bytesFromBase64(e))
+                : [],
         };
     },
 
     toJSON(message: TrxPayloadProposalProto): unknown {
         const obj: any = {};
-        if (message.message !== "") {
+        if (message.message !== '') {
             obj.message = message.message;
         }
         if (!message.startVotingHeight.isZero()) {
@@ -531,18 +557,24 @@ export const TrxPayloadProposalProto = {
         return obj;
     },
 
-    create<I extends Exact<DeepPartial<TrxPayloadProposalProto>, I>>(base?: I): TrxPayloadProposalProto {
+    create<I extends Exact<DeepPartial<TrxPayloadProposalProto>, I>>(
+        base?: I,
+    ): TrxPayloadProposalProto {
         return TrxPayloadProposalProto.fromPartial(base ?? ({} as any));
     },
-    fromPartial<I extends Exact<DeepPartial<TrxPayloadProposalProto>, I>>(object: I): TrxPayloadProposalProto {
+    fromPartial<I extends Exact<DeepPartial<TrxPayloadProposalProto>, I>>(
+        object: I,
+    ): TrxPayloadProposalProto {
         const message = createBaseTrxPayloadProposalProto();
-        message.message = object.message ?? "";
-        message.startVotingHeight = (object.startVotingHeight !== undefined && object.startVotingHeight !== null)
-            ? Long.fromValue(object.startVotingHeight)
-            : Long.ZERO;
-        message.votingBlocks = (object.votingBlocks !== undefined && object.votingBlocks !== null)
-            ? Long.fromValue(object.votingBlocks)
-            : Long.ZERO;
+        message.message = object.message ?? '';
+        message.startVotingHeight =
+            object.startVotingHeight !== undefined && object.startVotingHeight !== null
+                ? Long.fromValue(object.startVotingHeight)
+                : Long.ZERO;
+        message.votingBlocks =
+            object.votingBlocks !== undefined && object.votingBlocks !== null
+                ? Long.fromValue(object.votingBlocks)
+                : Long.ZERO;
         message.optType = object.optType ?? 0;
         message.options = object.options?.map((e) => e) || [];
         return message;
@@ -612,10 +644,14 @@ export const TrxPayloadVotingProto = {
         return obj;
     },
 
-    create<I extends Exact<DeepPartial<TrxPayloadVotingProto>, I>>(base?: I): TrxPayloadVotingProto {
+    create<I extends Exact<DeepPartial<TrxPayloadVotingProto>, I>>(
+        base?: I,
+    ): TrxPayloadVotingProto {
         return TrxPayloadVotingProto.fromPartial(base ?? ({} as any));
     },
-    fromPartial<I extends Exact<DeepPartial<TrxPayloadVotingProto>, I>>(object: I): TrxPayloadVotingProto {
+    fromPartial<I extends Exact<DeepPartial<TrxPayloadVotingProto>, I>>(
+        object: I,
+    ): TrxPayloadVotingProto {
         const message = createBaseTrxPayloadVotingProto();
         message.txHash = object.txHash ?? new Uint8Array(0);
         message.choice = object.choice ?? 0;
@@ -670,10 +706,14 @@ export const TrxPayloadContractProto = {
         return obj;
     },
 
-    create<I extends Exact<DeepPartial<TrxPayloadContractProto>, I>>(base?: I): TrxPayloadContractProto {
+    create<I extends Exact<DeepPartial<TrxPayloadContractProto>, I>>(
+        base?: I,
+    ): TrxPayloadContractProto {
         return TrxPayloadContractProto.fromPartial(base ?? ({} as any));
     },
-    fromPartial<I extends Exact<DeepPartial<TrxPayloadContractProto>, I>>(object: I): TrxPayloadContractProto {
+    fromPartial<I extends Exact<DeepPartial<TrxPayloadContractProto>, I>>(
+        object: I,
+    ): TrxPayloadContractProto {
         const message = createBaseTrxPayloadContractProto();
         message.data = object.data ?? new Uint8Array(0);
         return message;
@@ -684,24 +724,24 @@ declare const self: any | undefined;
 declare const window: any | undefined;
 declare const global: any | undefined;
 const tsProtoGlobalThis: any = (() => {
-    if (typeof globalThis !== "undefined") {
+    if (typeof globalThis !== 'undefined') {
         return globalThis;
     }
-    if (typeof self !== "undefined") {
+    if (typeof self !== 'undefined') {
         return self;
     }
-    if (typeof window !== "undefined") {
+    if (typeof window !== 'undefined') {
         return window;
     }
-    if (typeof global !== "undefined") {
+    if (typeof global !== 'undefined') {
         return global;
     }
-    throw "Unable to locate global object";
+    throw 'Unable to locate global object';
 })();
 
 function bytesFromBase64(b64: string): Uint8Array {
     if (tsProtoGlobalThis.Buffer) {
-        return Uint8Array.from(tsProtoGlobalThis.Buffer.from(b64, "base64"));
+        return Uint8Array.from(tsProtoGlobalThis.Buffer.from(b64, 'base64'));
     } else {
         const bin = tsProtoGlobalThis.atob(b64);
         const arr = new Uint8Array(bin.length);
@@ -714,27 +754,36 @@ function bytesFromBase64(b64: string): Uint8Array {
 
 function base64FromBytes(arr: Uint8Array): string {
     if (tsProtoGlobalThis.Buffer) {
-        return tsProtoGlobalThis.Buffer.from(arr).toString("base64");
+        return tsProtoGlobalThis.Buffer.from(arr).toString('base64');
     } else {
         const bin: string[] = [];
         arr.forEach((byte) => {
             bin.push(String.fromCharCode(byte));
         });
-        return tsProtoGlobalThis.btoa(bin.join(""));
+        return tsProtoGlobalThis.btoa(bin.join(''));
     }
 }
 
 type Builtin = Date | Function | Uint8Array | string | number | boolean | undefined;
 
-export type DeepPartial<T> = T extends Builtin ? T
-    : T extends Long ? string | number | Long : T extends Array<infer U> ? Array<DeepPartial<U>>
-        : T extends ReadonlyArray<infer U> ? ReadonlyArray<DeepPartial<U>>
-            : T extends {} ? { [K in keyof T]?: DeepPartial<T[K]> }
-                : Partial<T>;
+export type DeepPartial<T> = T extends Builtin
+    ? T
+    : T extends Long
+    ? string | number | Long
+    : T extends Array<infer U>
+    ? Array<DeepPartial<U>>
+    : T extends ReadonlyArray<infer U>
+    ? ReadonlyArray<DeepPartial<U>>
+    : T extends {}
+    ? { [K in keyof T]?: DeepPartial<T[K]> }
+    : Partial<T>;
 
 type KeysOfUnion<T> = T extends T ? keyof T : never;
-export type Exact<P, I extends P> = P extends Builtin ? P
-    : P & { [K in keyof P]: Exact<P[K], I[K]> } & { [K in Exclude<keyof I, KeysOfUnion<P>>]: never };
+export type Exact<P, I extends P> = P extends Builtin
+    ? P
+    : P & { [K in keyof P]: Exact<P[K], I[K]> } & {
+          [K in Exclude<keyof I, KeysOfUnion<P>>]: never;
+      };
 
 if (_m0.util.Long !== Long) {
     _m0.util.Long = Long as any;

@@ -12,10 +12,11 @@ function createBaseTrxProto() {
         nonce: long_1.default.UZERO,
         from: new Uint8Array(0),
         to: new Uint8Array(0),
-        Amount: new Uint8Array(0),
-        Gas: new Uint8Array(0),
+        amount: new Uint8Array(0),
+        gas: long_1.default.UZERO,
+        gasPrice: new Uint8Array(0),
         type: 0,
-        Payload: new Uint8Array(0),
+        payload: new Uint8Array(0),
         sig: new Uint8Array(0),
     };
 }
@@ -37,20 +38,23 @@ exports.TrxProto = {
         if (message.to.length !== 0) {
             writer.uint32(42).bytes(message.to);
         }
-        if (message.Amount.length !== 0) {
-            writer.uint32(50).bytes(message.Amount);
+        if (message.amount.length !== 0) {
+            writer.uint32(50).bytes(message.amount);
         }
-        if (message.Gas.length !== 0) {
-            writer.uint32(58).bytes(message.Gas);
+        if (!message.gas.isZero()) {
+            writer.uint32(56).uint64(message.gas);
+        }
+        if (message.gasPrice.length !== 0) {
+            writer.uint32(66).bytes(message.gasPrice);
         }
         if (message.type !== 0) {
-            writer.uint32(64).int32(message.type);
+            writer.uint32(72).int32(message.type);
         }
-        if (message.Payload.length !== 0) {
-            writer.uint32(74).bytes(message.Payload);
+        if (message.payload.length !== 0) {
+            writer.uint32(82).bytes(message.payload);
         }
         if (message.sig.length !== 0) {
-            writer.uint32(82).bytes(message.sig);
+            writer.uint32(90).bytes(message.sig);
         }
         return writer;
     },
@@ -95,28 +99,34 @@ exports.TrxProto = {
                     if (tag !== 50) {
                         break;
                     }
-                    message.Amount = reader.bytes();
+                    message.amount = reader.bytes();
                     continue;
                 case 7:
-                    if (tag !== 58) {
+                    if (tag !== 56) {
                         break;
                     }
-                    message.Gas = reader.bytes();
+                    message.gas = reader.uint64();
                     continue;
                 case 8:
-                    if (tag !== 64) {
+                    if (tag !== 66) {
+                        break;
+                    }
+                    message.gasPrice = reader.bytes();
+                    continue;
+                case 9:
+                    if (tag !== 72) {
                         break;
                     }
                     message.type = reader.int32();
                     continue;
-                case 9:
-                    if (tag !== 74) {
-                        break;
-                    }
-                    message.Payload = reader.bytes();
-                    continue;
                 case 10:
                     if (tag !== 82) {
+                        break;
+                    }
+                    message.payload = reader.bytes();
+                    continue;
+                case 11:
+                    if (tag !== 90) {
                         break;
                     }
                     message.sig = reader.bytes();
@@ -136,10 +146,11 @@ exports.TrxProto = {
             nonce: isSet(object.nonce) ? long_1.default.fromValue(object.nonce) : long_1.default.UZERO,
             from: isSet(object.from) ? bytesFromBase64(object.from) : new Uint8Array(0),
             to: isSet(object.to) ? bytesFromBase64(object.to) : new Uint8Array(0),
-            Amount: isSet(object.Amount) ? bytesFromBase64(object.Amount) : new Uint8Array(0),
-            Gas: isSet(object.Gas) ? bytesFromBase64(object.Gas) : new Uint8Array(0),
+            amount: isSet(object.amount) ? bytesFromBase64(object.amount) : new Uint8Array(0),
+            gas: isSet(object.gas) ? long_1.default.fromValue(object.gas) : long_1.default.UZERO,
+            gasPrice: isSet(object.gasPrice) ? bytesFromBase64(object.gasPrice) : new Uint8Array(0),
             type: isSet(object.type) ? Number(object.type) : 0,
-            Payload: isSet(object.Payload) ? bytesFromBase64(object.Payload) : new Uint8Array(0),
+            payload: isSet(object.payload) ? bytesFromBase64(object.payload) : new Uint8Array(0),
             sig: isSet(object.sig) ? bytesFromBase64(object.sig) : new Uint8Array(0),
         };
     },
@@ -160,17 +171,20 @@ exports.TrxProto = {
         if (message.to.length !== 0) {
             obj.to = base64FromBytes(message.to);
         }
-        if (message.Amount.length !== 0) {
-            obj.Amount = base64FromBytes(message.Amount);
+        if (message.amount.length !== 0) {
+            obj.amount = base64FromBytes(message.amount);
         }
-        if (message.Gas.length !== 0) {
-            obj.Gas = base64FromBytes(message.Gas);
+        if (!message.gas.isZero()) {
+            obj.gas = (message.gas || long_1.default.UZERO).toString();
+        }
+        if (message.gasPrice.length !== 0) {
+            obj.gasPrice = base64FromBytes(message.gasPrice);
         }
         if (message.type !== 0) {
             obj.type = Math.round(message.type);
         }
-        if (message.Payload.length !== 0) {
-            obj.Payload = base64FromBytes(message.Payload);
+        if (message.payload.length !== 0) {
+            obj.payload = base64FromBytes(message.payload);
         }
         if (message.sig.length !== 0) {
             obj.sig = base64FromBytes(message.sig);
@@ -188,10 +202,11 @@ exports.TrxProto = {
         message.nonce = (object.nonce !== undefined && object.nonce !== null) ? long_1.default.fromValue(object.nonce) : long_1.default.UZERO;
         message.from = (_b = object.from) !== null && _b !== void 0 ? _b : new Uint8Array(0);
         message.to = (_c = object.to) !== null && _c !== void 0 ? _c : new Uint8Array(0);
-        message.Amount = (_d = object.Amount) !== null && _d !== void 0 ? _d : new Uint8Array(0);
-        message.Gas = (_e = object.Gas) !== null && _e !== void 0 ? _e : new Uint8Array(0);
+        message.amount = (_d = object.amount) !== null && _d !== void 0 ? _d : new Uint8Array(0);
+        message.gas = (object.gas !== undefined && object.gas !== null) ? long_1.default.fromValue(object.gas) : long_1.default.UZERO;
+        message.gasPrice = (_e = object.gasPrice) !== null && _e !== void 0 ? _e : new Uint8Array(0);
         message.type = (_f = object.type) !== null && _f !== void 0 ? _f : 0;
-        message.Payload = (_g = object.Payload) !== null && _g !== void 0 ? _g : new Uint8Array(0);
+        message.payload = (_g = object.payload) !== null && _g !== void 0 ? _g : new Uint8Array(0);
         message.sig = (_h = object.sig) !== null && _h !== void 0 ? _h : new Uint8Array(0);
         return message;
     },
