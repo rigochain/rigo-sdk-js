@@ -21,9 +21,10 @@ export interface TrxProto {
     nonce: Long;
     from: Uint8Array;
     to: Uint8Array;
-    Amount: Uint8Array;
-    Gas: Uint8Array;
+    amount: Uint8Array;
+    gas: Long;
+    gasPrice: Uint8Array;
     type: number;
-    Payload: Uint8Array;
+    payload: Uint8Array;
     sig: Uint8Array;
 }
