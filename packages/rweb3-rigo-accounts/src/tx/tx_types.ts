@@ -25,7 +25,8 @@ export interface Transaction<T> {
     from: string;
     to: string;
     amount: string;
-    gas: string;
+    gas: number;
+    gasPrice: string;
     type?: number;
     payload?: object | T;
     sig?: string;
