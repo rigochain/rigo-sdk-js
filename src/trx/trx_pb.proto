@@ -25,11 +25,12 @@ message TrxProto {
   uint64 nonce = 3;
   bytes from = 4;
   bytes to = 5;
-  bytes _amount = 6;
-  bytes _gas = 7;
-  int32 type = 8;
-  bytes _payload = 9;
-  bytes sig = 10;
+  bytes amount = 6;
+  uint64 gas = 7;
+  bytes gasPrice = 8;
+  int32 type = 9;
+  bytes payload = 10;
+  bytes sig = 11;
 }
 
 message TrxPayloadStakingProto {}
