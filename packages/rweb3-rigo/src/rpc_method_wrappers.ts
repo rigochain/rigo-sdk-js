@@ -33,6 +33,7 @@ export async function sendDeploy(
     bytecode: string,
     args: any[],
     rWeb3Account: RWeb3Account,
+    chainId: string,
 ): Promise<BroadcastTxSyncResponse> {
     let encodedArguments;
     let bytecodeWithArguments;
@@ -53,14 +54,14 @@ export async function sendDeploy(
         from: rWeb3Account.address,
         to: '0000000000000000000000000000000000000000',
         nonce: searchAccount.value.nonce,
-        gas: 10000000000000000,
-        gasPrice: '0',
+        gas: 100000,
+        gasPrice: '10000000000',
         amount: '0',
         payload: { data: bytecodeWithArguments },
     });
-    const [sig] = TrxProtoBuilder.signTrxProto(tx, rWeb3Account);
+    const [sig] = TrxProtoBuilder.signTrxProto(tx, rWeb3Account, chainId);
     tx.sig = sig;
-    const verification = TrxProtoBuilder.verifyTrxProto(tx, rWeb3Account);
+    const verification = TrxProtoBuilder.verifyTrxProto(tx, rWeb3Account, chainId);
     console.log('verification', verification);
     if (!verification) throw Error('sign transaction verification failed');
 

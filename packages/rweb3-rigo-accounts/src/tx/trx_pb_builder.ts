@@ -236,14 +236,12 @@ function buildVotingTrx(transaction: Transaction<TrxPayloadVotingProto>): TrxPro
 function signTrxProto(
     trxProto: TrxProto,
     account: RWeb3Account,
+    chainId: string,
 ): [BytesUint8Array, BytesUint8Array] {
     trxProto.sig = new Uint8Array();
 
-    // TODO 이억기 체크 : 여기 encode 에서 encodeTrxProto 로 변경했습니다.
-
     const encodedData = TrxProtoUtils.encodeTrxProto(trxProto);
 
-    const chainId = 'localnet0';
     const prefix = `\x19RIGO(${chainId}) Signed Message:\n${encodedData.length}`;
 
     const prefixedData = Buffer.concat([Buffer.from(prefix), encodedData]);
@@ -270,13 +268,15 @@ function signedRawTrxProto(trxProto: TrxProto, account: RWeb3Account): HexString
     return Buffer.from(signedTxByte).toString('base64');
 }
 
-function verifyTrxProto(trxProto: TrxProto, account: RWeb3Account): boolean {
+function verifyTrxProto(trxProto: TrxProto, account: RWeb3Account, chainId: string): boolean {
     const oriSig = trxProto.sig;
     trxProto.sig = new Uint8Array();
 
-    const buf = TrxProtoUtils.encode(trxProto);
-    const tbz = buf.finish();
-    const ret = account.pubKey.verify(oriSig, tbz);
+    const encodedData = TrxProtoUtils.encodeTrxProto(trxProto);
+    const prefix = `\x19RIGO(${chainId}) Signed Message:\n${encodedData.length}`;
+
+    const prefixedData = Buffer.concat([Buffer.from(prefix), encodedData]);
+    const ret = account.pubKey.verify(oriSig, prefixedData);
     trxProto.sig = oriSig;
     return ret;
 }

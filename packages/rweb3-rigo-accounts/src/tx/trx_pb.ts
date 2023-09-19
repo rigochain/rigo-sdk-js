@@ -60,11 +60,11 @@ export const TrxProtoUtils = {
             trx.nonce.toNumber(),
             trx.from,
             trx.to,
-            trx.amount, // TODO 이억기 체크좀 : 대문자 소문자 로 바꿈
+            trx.amount,
             trx.gas.toNumber(),
-            trx.gasPrice, // TODO 이억기 체크좀 : 대문자 소문자 로 바꿈
+            trx.gasPrice,
             trx.type,
-            trx.payload, // TODO 이억기 체크좀 : 대문자 소문자 로 바꿈
+            trx.payload,
             trx.sig,
         ]);
     },
