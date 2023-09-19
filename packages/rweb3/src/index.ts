@@ -41,6 +41,7 @@ export * as rpcMethods from '@rigochain/rweb3-rpc-methods';
 export { RWeb3Validator } from '@rigochain/rweb3-validator';
 export * as utils from '@rigochain/rweb3-utils';
 export * as validator from '@rigochain/rweb3-validator';
+export { TrxProtoBuilder } from '@rigochain/rweb3-rigo-accounts';
 
 /**
  * Export all types from `rweb3-types` without a namespace (in addition to being available at `types` namespace).
