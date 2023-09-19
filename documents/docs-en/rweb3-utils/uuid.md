@@ -21,7 +21,7 @@ A version 4 UUID of the form `xxxxxxxx-xxxx-4xxx-xxxx-xxxxxxxxxxxx`
 ### Example
 
 ```ts
-console.log(web3.utils.uuidV4());
+console.log(rweb3.utils.uuidV4());
 > "1b9d6bcd-bbfd-4b2d-9b5d-ab8dfbbd4bed"
 ```
 

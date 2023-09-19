@@ -24,10 +24,10 @@ Output: string | undefined
 Example: 
 
 ```ts
-    console.log(web3.utils.sha3('web3.js'));
+    console.log(rweb3.utils.sha3('rweb3.js'));
     > 0x63667efb1961039c9bb0d6ea7a5abdd223a3aca7daa5044ad894226e1f83919a
 
-    console.log(web3.utils.sha3(''));
+    console.log(rweb3.utils.sha3(''));
     > undefined
 ```
 
@@ -39,9 +39,9 @@ Output: string
 Example: 
 
 ```ts
-    console.log(web3.utils.sha3Raw('web3.js'));
+    console.log(rweb3.utils.sha3Raw('rweb3.js'));
     > 0x63667efb1961039c9bb0d6ea7a5abdd223a3aca7daa5044ad894226e1f83919a
-    console.log(web3.utils.sha3Raw(''));
+    console.log(rweb3.utils.sha3Raw(''));
     > 0xc5d2460186f7233c927e7db2dcc703c0e500b653ca82273b7bfad8045d85a470
 ```
       
@@ -52,11 +52,11 @@ Output: string
 
 Example:
 ```ts
-    console.log(web3.utils.keccak256Wrapper('web3.js'));
+    console.log(rweb3.utils.keccak256Wrapper('rweb3.js'));
     > 0x63667efb1961039c9bb0d6ea7a5abdd223a3aca7daa5044ad894226e1f83919a
-    console.log(web3.utils.keccak256Wrapper(1));
+    console.log(rweb3.utils.keccak256Wrapper(1));
     > 0xc89efdaa54c0f20c7adf612882df0950f5a951637e0307cdcb4c672f298b8bc6
-    console.log(web3.utils.keccak256Wrapper(0xaf12fd));
+    console.log(rweb3.utils.keccak256Wrapper(0xaf12fd));
     > 0x358640fd4719fa923525d74ab5ae80a594301aba5543e3492b052bf4598b794c
 ```
 
@@ -94,7 +94,7 @@ Output: string | undefined`
 Example: 
 ```ts
     console.log([{ type: 'string', value: '31323334' }]);
-    console.log(web3.utils.soliditySha3({ type: "string", value: "31323334" }));
+    console.log(rweb3.utils.soliditySha3({ type: "string", value: "31323334" }));
     > 0xf15f8da2ad27e486d632dc37d24912f634398918d6f9913a0a0ff84e388be62b
 ```
 
@@ -105,7 +105,7 @@ Output: string
 
 Example: 
 ```ts
-    console.log(web3.utils.soliditySha3Raw({ type: "string", value: "helloworld" }))
+    console.log(rweb3.utils.soliditySha3Raw({ type: "string", value: "helloworld" }))
     > 0xfa26db7ca85ead399216e7c6316bc50ed24393c3122b582735e7f3b0f91b93f0
 ```
 
