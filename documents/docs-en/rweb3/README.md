@@ -36,7 +36,6 @@ RWeb3 is initialized with a provider url, without which a warning is logged in t
 
 * [rigo_rpc_methods](./rigo_rpc_methods.md)
 * [trx_pb.md](./trx_pb.md)
-* [types.md](./types.md)
 
 ### Properties
 
@@ -52,5 +51,3 @@ The `rigo` property in the `RWeb3` class exposes following properties - `account
 - `accounts` It initializes accounts for context.
 - `Contract` It is a constructor to initiate contract context.
 - `abi` It provides the application binary interface for the smart contracts.
-
-This workaround has been used to circumvent the aforementioned ESLint rule.

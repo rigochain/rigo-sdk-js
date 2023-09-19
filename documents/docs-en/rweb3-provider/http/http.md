@@ -70,7 +70,3 @@ The `HttpProvider` class and `HttpProviderOptions` type are exported at the modu
 ```javascript
 export { HttpProvider, HttpProviderOptions };
 ```
-
-### Additional Notes
-
-The code responsible for making the `fetch` request is wrapped with the ESLint disabling function comments due to the nature of unsafe arguments that the fetch API may contain.

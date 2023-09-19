@@ -1,9 +1,5 @@
 # rweb3 trx pb
 
-## Using ESLint
-
-ESLint is disabled for this project.
-
 ## Protobuf Package
 
 The current protobuf package is under the name "types".

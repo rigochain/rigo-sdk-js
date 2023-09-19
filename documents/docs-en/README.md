@@ -44,7 +44,7 @@ The implementation of `rigo-sdk-js' is a library that can be used in the Javascr
 ## Features
 
 
-### Rpc Method List  ([rweb3-rigo](rweb3-rigo/README.md))
+### Rpc Method List  ([rigo_rpc_methods](rweb3/README.md))
 
 - **health**: Checks the operational health and readiness of the Rigo Chain, ensuring all components are functioning as expected.
 
