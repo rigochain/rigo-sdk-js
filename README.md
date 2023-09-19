@@ -66,13 +66,11 @@ npm i rigo-sdk-js
 
 ---
 
-### API-Document
+### Documentation / API-Document 
 
-You can find documents at https://rigochain.github.io/rigo-sdk-js
+You can find documents at english https://rigolabs.gitbook.io/rigo-sdk-js/docs-en
 
----
-
-### Documentation
+You can find documents at koran https://rigolabs.gitbook.io/rigo-sdk-js/docs-kr
 
 ## License
 ```
