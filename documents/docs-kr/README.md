@@ -35,16 +35,16 @@ RIGO 노드를 포함한 모든 서비스/응용 프로그램에서 올바르게
 
 # 요약
 
-* [rweb3](rweb3/README_kr.md)
-* [rweb3-provider](rweb3-provider/README_kr.md)
-* [rweb3-rigo](rweb3-rigo/README_kr.md)
-* [rweb3-rigo-accounts](rweb3-rigo-accounts/README_kr.md)
-* [rweb3-utils](rweb3-utils/README_kr.md)
+* [rweb3](rweb3/README.md)
+* [rweb3-provider](rweb3-provider/README.md)
+* [rweb3-rigo](rweb3-rigo/README.md)
+* [rweb3-rigo-accounts](rweb3-rigo-accounts/README.md)
+* [rweb3-utils](rweb3-utils/README.md)
 
 ## 특징
 
 
-### Rpc Method List [rigo_rpc_methods](rweb3/rigo_rpc_methods_kr.md)
+### Rpc Method List [rigo_rpc_methods](rweb3/rigo_rpc_methods.md)
 
 정해진 높이나 식별자를 가진 특정 블록에 대한 정보를 가져옵니다.
 

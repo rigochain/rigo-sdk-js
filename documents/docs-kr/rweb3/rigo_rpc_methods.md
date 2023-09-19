@@ -1,4 +1,4 @@
-# rweb3 rpc 메소드
+# rweb3 rpc methods
 
 
 ## 개요

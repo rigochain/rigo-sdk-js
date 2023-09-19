@@ -34,15 +34,15 @@ RWeb3은 제공자 url로 초기화 되고, 없으면 콘솔에 경고가 기록
 
 # 요약
 
-* [rigo_rpc_methods](./rigo_rpc_methods_kr.md)
-* [trx_pb_kr.md](./trx_pb_kr.md)
+* [rigo_rpc_methods](./rigo_rpc_methods.md)
+* [trx_pb_kr.md](./trx_pb.md)
 
 ### 속성들
 
 - `version` 현재 패키지의 버전입니다.
 - `rigo` `RWeb3RigoInterface`의 인스턴스입니다.
 
-- `utils` `@rigochain/rweb3-utils`의 인스턴스입니다.  [utils_kr.md](../rweb3-utils/README_kr.md)
+- `utils` `@rigochain/rweb3-utils`의 인스턴스입니다.  [utils_kr.md](../rweb3-utils/README.md)
 
 ### RWeb3RigoInterface
 

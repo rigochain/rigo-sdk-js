@@ -1,4 +1,4 @@
-# rweb3-utils 변환기
+# rweb3-utils converter
 
 ## 목차
 - [RigoUnitMap](#RigoUnitMap)
@@ -21,15 +21,6 @@
 - [FromFons](#FromFons)
 - [ToFons](#ToFons)
 - [ToChecksumAddress](#ToChecksumAddress)
-
----
-
-### 라이센스
-저작권 2023 모든 Rigo 체인 개발자에게 있습니다.
-
-Apache 라이센스, 버전 2.0(이하 "라이선스")에 따라 라이센스를 준수하는 경우에만 본 파일을 사용할 수 있습니다. 라이선스의 사본은 http://www.apache.org/licenses/LICENSE-2.0에서 얻을 수 있습니다.
-
-법률에 의해 필요하거나 서면으로 합의하는 경우를 제외하고, 라이선스에 따라 배포되는 소프트웨어는 "있는 그대로"의 기준으로 제공되며, 명시적 혹은 묵시적으로 어떠한 보증이나 조건도 부여되지 않습니다. 라이선스에 따른 권한 그리고 제한 사항에 대한 자세한 내용은 라이선스를 참조하십시오.
 
 ---
 

@@ -1,6 +1,5 @@
-# rweb3-utils chunk response parser
+# rweb3-utils uuid
 
-Note: Please preserve all copyright and licensing notes as per the provided code. 
 
 ---
 

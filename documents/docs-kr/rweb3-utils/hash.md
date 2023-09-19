@@ -1,4 +1,4 @@
-# rweb3-utils 해시
+# rweb3-utils hash
 
 ## 목차
 1. [함수들](#functions)

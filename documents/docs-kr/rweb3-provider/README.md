@@ -17,5 +17,5 @@
 
 # 요약
 
-* [rweb3-providers-http](./http/http_kr.md)
-* [rweb3-providers-ws](./websocket/ws_kr.md)
+* [rweb3-providers-http](./http/http.md)
+* [rweb3-providers-ws](./websocket/ws.md)

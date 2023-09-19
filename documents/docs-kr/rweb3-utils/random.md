@@ -1,4 +1,4 @@
-# rweb3-utils 무작위
+# rweb3-utils random
 
 ## randomBytes 함수
 
