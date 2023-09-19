@@ -23,15 +23,18 @@ import { initAccountsForContext } from './accounts.js';
 import abi from './abi.js';
 import { Address, ContractAbi } from '@rigochain/rweb3-types';
 import { Contract } from '@rigochain/rweb3-rigo-contract';
+import * as utils from '@rigochain/rweb3-utils';
 
 export class RWeb3 extends RWeb3Context {
     public static version = RWeb3PkgInfo.version;
+    public static utils = utils;
+
     public static modules = {
         RWeb3Rigo,
     };
+    public utils: typeof utils;
 
     public rigo: RWeb3RigoInterface;
-
     public constructor(provider?: string) {
         super(provider);
 
@@ -54,6 +57,8 @@ export class RWeb3 extends RWeb3Context {
                 super.settingsProvider(providers);
             }
         }
+
+        this.utils = utils;
 
         const rigo = self.use(RWeb3Rigo);
         //

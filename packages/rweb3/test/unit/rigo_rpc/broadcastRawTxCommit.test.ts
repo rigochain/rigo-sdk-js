@@ -1,5 +1,4 @@
 /*
-/!*
     Copyright 2023 All Rigo Chain Developers
 
     Licensed under the Apache License, Version 2.0 (the "License");
@@ -13,7 +12,7 @@
     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
     See the License for the specific language governing permissions and
     limitations under the License.
-*!/
+*/
 import { RWeb3 } from '../../../src';
 import { getTestAccountPrivateKey, getTestWsServer } from '../e2e_utils';
 import { privateKeyToAccount, RWeb3Account, TrxProtoBuilder } from '@rigochain/rweb3-rigo-accounts';
@@ -29,31 +28,31 @@ describe('broadcastTxCommit check ', () => {
     it('should call rweb3 with testWebsocketRWeb3Instance.broadcastTxCommit() method success return', async () => {
         const secretKey = getTestAccountPrivateKey();
 
-        const acct = privateKeyToAccount(secretKey) as RWeb3Account;
+        const rweb3Account = privateKeyToAccount(secretKey) as RWeb3Account;
 
         const accountResponse: AccountResponse = await testWebsocketRWeb3Instance.rigo.getAccount(
-            acct.address,
+            rweb3Account.address,
         );
 
-        acct.balance = accountResponse.value.balance;
+        rweb3Account.balance = accountResponse.value.balance;
+        rweb3Account.nonce = accountResponse.value.nonce;
 
         //
         // build a tx.
         const tx = TrxProtoBuilder.buildTransferTrxProto({
-            from: acct.address,
+            from: rweb3Account.address,
             nonce: accountResponse.value.nonce,
             to: '6fff13a50450039c943c9987fa43cef0d7421904',
             amount: '1000000000000000',
-            gas: '1000000000000000',
+            gas: 100000,
+            gasPrice: '10000000000',
         });
 
-        // signedTx the tx.
-        const signedTx = TrxProtoBuilder.signedRawTrxProto(tx, acct);
+        const { rawTransaction, transactionHash } = rweb3Account.signTransaction(tx);
 
         const broadcastTxCommitResponse: BroadcastTxCommitResponse =
-            await testWebsocketRWeb3Instance.rigo.broadcastRawTxCommit(signedTx);
+            await testWebsocketRWeb3Instance.rigo.broadcastRawTxCommit(rawTransaction);
 
         console.log(JSON.stringify(broadcastTxCommitResponse));
     });
 });
-*/

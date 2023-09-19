@@ -255,18 +255,20 @@ function signTrxProto(
     ];
 }
 
-// function signedRawTrxProto(trxProto: TrxProto, account: RWeb3Account): HexString {
-//     trxProto.sig = new Uint8Array();
-//
-//     const buf = TrxProtoUtils.encode(trxProto);
-//     const txbz = buf.finish();
-//
-//     trxProto.sig = account.sign(new BytesUint8Array(txbz));
-//
-//     const signedTxByte = new BytesUint8Array(TrxProtoUtils.encode(trxProto).finish());
-//
-//     return Buffer.from(signedTxByte).toString('base64');
-// }
+function signedRawTrxProto(trxProto: TrxProto, account: RWeb3Account): HexString {
+    const encodedData = TrxProtoUtils.encodeTrxProto(trxProto);
+
+    const chainId = 'localnet0';
+    const prefix = `\x19RIGO(${chainId}) Signed Message:\n${encodedData.length}`;
+
+    const prefixedData = Buffer.concat([Buffer.from(prefix), encodedData]);
+
+    trxProto.sig = account.sign(new Uint8Array(prefixedData));
+
+    const signedTxByte = new BytesUint8Array(TrxProtoUtils.encode(trxProto).finish());
+
+    return Buffer.from(signedTxByte).toString('base64');
+}
 
 function verifyTrxProto(trxProto: TrxProto, account: RWeb3Account): boolean {
     const oriSig = trxProto.sig;
@@ -289,5 +291,5 @@ export const TrxProtoBuilder = {
     buildContractTrxProto,
     buildProposalTrx,
     buildVotingTrx,
-    // signedRawTrxProto,
+    signedRawTrxProto,
 };

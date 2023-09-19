@@ -1,5 +1,4 @@
 /*
-/!*
     Copyright 2023 All Rigo Chain Developers
 
     Licensed under the Apache License, Version 2.0 (the "License");
@@ -13,14 +12,14 @@
     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
     See the License for the specific language governing permissions and
     limitations under the License.
-*!/
-import { RWeb3 } from '../../../src';
+*/
+import { BroadcastTxCommitResponse, RWeb3 } from '../../../src';
 import { getTestAccountPrivateKey, getTestWsServer } from '../e2e_utils';
 import { privateKeyToAccount, RWeb3Account, TrxProtoBuilder } from '@rigochain/rweb3-rigo-accounts';
 import { AccountResponse, BroadcastTxSyncResponse } from '@rigochain/rweb3-types';
 
 describe('broadcastTxSync check ', () => {
-    let testWebsocketRWaeb3Instance: RWeb3;
+    let testWebsocketRWeb3Instance: RWeb3;
 
     beforeAll(() => {
         testWebsocketRWeb3Instance = new RWeb3(getTestWsServer());
@@ -29,38 +28,31 @@ describe('broadcastTxSync check ', () => {
     it('should call rweb3 with testWebsocketRWeb3Instance.broadcastTxSync() method success return', async () => {
         const secretKey = getTestAccountPrivateKey();
 
-        const acct = privateKeyToAccount(secretKey) as RWeb3Account;
+        const rweb3Account = privateKeyToAccount(secretKey) as RWeb3Account;
 
         const accountResponse: AccountResponse = await testWebsocketRWeb3Instance.rigo.getAccount(
-            acct.address,
+            rweb3Account.address,
         );
 
-        acct.balance = accountResponse.value.balance;
-        acct.nonce = accountResponse.value.nonce;
-
-        console.log('address acct.balance', acct.balance);
-        console.log('address acct.nonce', acct.nonce);
+        rweb3Account.balance = accountResponse.value.balance;
+        rweb3Account.nonce = accountResponse.value.nonce;
 
         //
         // build a tx.
         const tx = TrxProtoBuilder.buildTransferTrxProto({
-            from: acct.address,
+            from: rweb3Account.address,
             nonce: accountResponse.value.nonce,
             to: '6fff13a50450039c943c9987fa43cef0d7421904',
             amount: '1000000000000000',
-            gas: '1000000000000000',
+            gas: 100000,
+            gasPrice: '10000000000',
         });
 
-        // signed the tx.
-        const signedTx = TrxProtoBuilder.signedRawTrxProto(tx, acct);
-        console.log('signedTx', signedTx);
+        const { rawTransaction, transactionHash } = rweb3Account.signTransaction(tx);
 
-        console.log('nonce', tx.nonce);
+        const broadcastTxCommitResponse: BroadcastTxCommitResponse =
+            await testWebsocketRWeb3Instance.rigo.broadcastRawTxCommit(rawTransaction);
 
-        const broadcastTxSyncResponse: BroadcastTxSyncResponse =
-            await testWebsocketRWeb3Instance.rigo.broadcastRawTxSync(signedTx);
-
-        console.log(JSON.stringify(broadcastTxSyncResponse));
+        console.log(JSON.stringify(broadcastTxCommitResponse));
     });
 });
-*/

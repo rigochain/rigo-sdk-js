@@ -1,6 +1,6 @@
 {
   "name": "@rigochain/rweb3-utils",
-  "version": "1.0.0-alpha.2",
+  "version": "1.0.0-alpha.3",
   "main": "./lib/commonjs/index.js",
   "module": "./lib/esm/index.js",
   "license": "Apache-2.0",
@@ -62,9 +62,9 @@
     "node-localstorage": "^3.0.5",
     "path-browserify": "^1.0.1",
     "protobufjs": "7.2.5",
-    "@rigochain/rweb3-errors": "1.0.0-alpha.2",
-    "@rigochain/rweb3-types": "1.0.0-alpha.2",
-    "@rigochain/rweb3-validator": "1.0.0-alpha.2",
+    "@rigochain/rweb3-errors": "1.0.0-alpha.3",
+    "@rigochain/rweb3-types": "1.0.0-alpha.3",
+    "@rigochain/rweb3-validator": "1.0.0-alpha.3",
     "ts-proto": "^1.137.0"
   }
 }

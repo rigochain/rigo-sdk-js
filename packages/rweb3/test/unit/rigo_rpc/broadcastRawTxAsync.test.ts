@@ -1,5 +1,4 @@
 /*
-/!*
     Copyright 2023 All Rigo Chain Developers
 
     Licensed under the Apache License, Version 2.0 (the "License");
@@ -13,10 +12,10 @@
     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
     See the License for the specific language governing permissions and
     limitations under the License.
-*!/
+*/
 import { RWeb3 } from '../../../src';
 import { getTestAccountPrivateKey, getTestWsServer } from '../e2e_utils';
-import { privateKeyToAccount, TrxProtoBuilder } from '@rigochain/rweb3-rigo-accounts';
+import { privateKeyToAccount, RWeb3Account, TrxProtoBuilder } from '@rigochain/rweb3-rigo-accounts';
 import { AccountResponse, BroadcastTxAsyncResponse } from '@rigochain/rweb3-types';
 
 describe('broadcastTxAsync check ', () => {
@@ -29,34 +28,31 @@ describe('broadcastTxAsync check ', () => {
     it('should call rweb3 with testWebsocketRWeb3Instance.broadcastTxAsync() method success return', async () => {
         const secretKey = getTestAccountPrivateKey();
 
-        const rWeb3Account = privateKeyToAccount(secretKey);
+        const rweb3Account = privateKeyToAccount(secretKey) as RWeb3Account;
 
         const accountResponse: AccountResponse = await testWebsocketRWeb3Instance.rigo.getAccount(
-            rWeb3Account.address,
+            rweb3Account.address,
         );
 
-        rWeb3Account.balance = accountResponse.value.balance;
-
-        console.log('address acct.balance', rWeb3Account.balance);
-        console.log('address acct.nonce', rWeb3Account.nonce);
+        rweb3Account.balance = accountResponse.value.balance;
+        rweb3Account.nonce = accountResponse.value.nonce;
 
         //
         // build a tx.
         const tx = TrxProtoBuilder.buildTransferTrxProto({
-            from: rWeb3Account.address,
+            from: rweb3Account.address,
             nonce: accountResponse.value.nonce,
             to: '6fff13a50450039c943c9987fa43cef0d7421904',
             amount: '1000000000000000',
-            gas: '1000000000000000',
+            gas: 100000,
+            gasPrice: '10000000000',
         });
 
-        // signed the tx.
-        const signedTx = TrxProtoBuilder.signedRawTrxProto(tx, rWeb3Account);
+        const { rawTransaction, transactionHash } = rweb3Account.signTransaction(tx);
 
         const broadcastTxAsyncResponse: BroadcastTxAsyncResponse =
-            await testWebsocketRWeb3Instance.rigo.broadcastRawTxAsync(signedTx);
+            await testWebsocketRWeb3Instance.rigo.broadcastRawTxAsync(rawTransaction);
 
         console.log(JSON.stringify(broadcastTxAsyncResponse));
     });
 });
-*/

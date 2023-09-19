@@ -57,12 +57,14 @@ export const signTransaction = (
     // To make it compatible with rest of the API, have to keep it async
     // eslint-disable-next-line @typescript-eslint/require-await
 ): SignTransactionResult => {
-    trxProto.sig = new Uint8Array();
+    const encodedData = TrxProtoUtils.encodeTrxProto(trxProto);
 
-    const buf = TrxProtoUtils.encode(trxProto);
-    const tbz = buf.finish();
+    const chainId = 'localnet0';
+    const prefix = `\x19RIGO(${chainId}) Signed Message:\n${encodedData.length}`;
 
-    trxProto.sig = sign(new BytesUint8Array(tbz), privateKey);
+    const prefixedData = Buffer.concat([Buffer.from(prefix), encodedData]);
+
+    trxProto.sig = sign(new BytesUint8Array(prefixedData), privateKey);
 
     const signedTxByte = new BytesUint8Array(TrxProtoUtils.encode(trxProto).finish());
 
