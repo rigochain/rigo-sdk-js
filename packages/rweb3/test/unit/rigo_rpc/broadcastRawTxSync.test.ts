@@ -48,7 +48,7 @@ describe('broadcastTxSync check ', () => {
             gasPrice: '10000000000',
         });
 
-        const { rawTransaction, transactionHash } = rweb3Account.signTransaction(tx);
+        const { rawTransaction, transactionHash } = rweb3Account.signTransaction(tx, 'testnet0');
 
         const broadcastTxCommitResponse: BroadcastTxCommitResponse =
             await testWebsocketRWeb3Instance.rigo.broadcastRawTxCommit(rawTransaction);

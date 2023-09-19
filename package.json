@@ -1,6 +1,6 @@
 {
   "name": "rigo-sdk-js",
-  "version": "1.0.0-alpha.3",
+  "version": "1.0.1",
   "description": "Javascript SDK for RIGO",
   "private": true,
   "keywords": [
@@ -27,8 +27,8 @@
     ]
   },
   "engines": {
-    "node": ">=19.5.0",
-    "npm": ">=9.3.0"
+    "node": ">=16.19.0",
+    "npm": ">=8.19.0"
   },
   "scripts": {
     "bootstrap": "lerna bootstrap",

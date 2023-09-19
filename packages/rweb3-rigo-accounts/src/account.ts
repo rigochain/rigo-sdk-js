@@ -42,7 +42,8 @@ export const prvKeyToAccount = (prvKey: PrvKey): RWeb3Account => {
         pubKey: pubKey,
         privateKey: prvKey.export().toHex(),
         sign: (msg: Uint8Array) => sign(msg, prvKey.export().toHex()),
-        signTransaction: (trxProto: TrxProto) => signTransaction(trxProto, prvKey.export().toHex()),
+        signTransaction: (trxProto: TrxProto, chainId) =>
+            signTransaction(trxProto, prvKey.export().toHex(), chainId),
     };
 };
 
@@ -54,12 +55,12 @@ export const sign = (msg: Uint8Array, privateKey: HexString | ArrayBufferLike): 
 export const signTransaction = (
     trxProto: TrxProto,
     privateKey: HexString,
+    chainId: string,
     // To make it compatible with rest of the API, have to keep it async
     // eslint-disable-next-line @typescript-eslint/require-await
 ): SignTransactionResult => {
     const encodedData = TrxProtoUtils.encodeTrxProto(trxProto);
 
-    const chainId = 'localnet0';
     const prefix = `\x19RIGO(${chainId}) Signed Message:\n${encodedData.length}`;
 
     const prefixedData = Buffer.concat([Buffer.from(prefix), encodedData]);

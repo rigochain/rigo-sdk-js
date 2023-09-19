@@ -82,7 +82,10 @@ export interface Web3BaseWalletAccount {
 
     sign(msg: Uint8Array): BytesUint8Array;
 
-    signTransaction(trxProto: TrxProto): {
+    signTransaction(
+        trxProto: TrxProto,
+        chainId: string,
+    ): {
         rawTransaction: string;
         transactionHash: string;
     };

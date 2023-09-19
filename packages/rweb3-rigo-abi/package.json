@@ -1,6 +1,6 @@
 {
   "name": "@rigochain/rweb3-rigo-abi",
-  "version": "1.0.0-alpha.3",
+  "version": "1.0.3",
   "main": "./lib/commonjs/index.js",
   "module": "./lib/esm/index.js",
   "license": "Apache-2.0",
@@ -17,8 +17,8 @@
     "url": "https://github.com/rigochain"
   },
   "engines": {
-    "node": ">=19.5.0",
-    "npm": ">=9.3.0"
+    "node": ">=16.19.0",
+    "npm": ">=8.19.0"
   },
   "scripts": {
     "clean": "rimraf dist && rimraf lib",
@@ -51,9 +51,9 @@
   "dependencies": {
     "@ethersproject/abi": "^5.7.0",
     "@ethersproject/bignumber": "^5.7.0",
-    "@rigochain/rweb3-types": "1.0.0-alpha.3",
-    "@rigochain/rweb3-errors": "1.0.0-alpha.3",
-    "@rigochain/rweb3-utils": "1.0.0-alpha.3",
-    "@rigochain/rweb3-rpc-methods": "1.0.0-alpha.3"
+    "@rigochain/rweb3-types": "1.0.3",
+    "@rigochain/rweb3-errors": "1.0.3",
+    "@rigochain/rweb3-utils": "1.0.3",
+    "@rigochain/rweb3-rpc-methods": "1.0.3"
   }
 }

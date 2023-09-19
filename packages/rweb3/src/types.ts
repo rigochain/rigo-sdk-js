@@ -44,6 +44,10 @@ export interface RWeb3RigoInterface extends Rigo {
     accounts: {
         create: () => RWeb3Account;
         privateKeyToAccount: (privateKey: Uint8Array | string) => RWeb3Account;
-        signTransaction: (trxProto: TrxProto, privateKey: HexString) => SignTransactionResult;
+        signTransaction: (
+            trxProto: TrxProto,
+            privateKey: HexString,
+            chainId: string,
+        ) => SignTransactionResult;
     };
 }

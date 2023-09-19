@@ -1,6 +1,6 @@
 {
   "name": "@rigochain/rweb3-validator",
-  "version": "1.0.0-alpha.3",
+  "version": "1.0.3",
   "main": "./lib/commonjs/index.js",
   "module": "./lib/esm/index.js",
   "license": "Apache-2.0",
@@ -17,8 +17,8 @@
     "url": "https://github.com/rigochain"
   },
   "engines": {
-    "node": ">=19.5.0",
-    "npm": ">=9.3.0"
+    "node": ">=16.19.0",
+    "npm": ">=8.19.0"
   },
   "scripts": {
     "clean": "rimraf dist && rimraf lib",
@@ -58,7 +58,7 @@
     "ethereum-cryptography": "2.1.2",
     "is-my-json-valid": "^2.20.6",
     "util": "^0.12.5",
-    "@rigochain/rweb3-types": "1.0.0-alpha.3",
-    "@rigochain/rweb3-errors": "1.0.0-alpha.3"
+    "@rigochain/rweb3-types": "1.0.3",
+    "@rigochain/rweb3-errors": "1.0.3"
   }
 }
