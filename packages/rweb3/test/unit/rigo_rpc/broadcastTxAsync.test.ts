@@ -22,7 +22,7 @@ describe('broadcastTxAsync check ', () => {
     let testWebsocketRWeb3Instance: RWeb3;
 
     beforeAll(() => {
-        testWebsocketRWeb3Instance = new RWeb3(getDevWsServer());
+        testWebsocketRWeb3Instance = new RWeb3(getTestWsServer());
     });
 
     // async function rlpTest() {
@@ -52,7 +52,6 @@ describe('broadcastTxAsync check ', () => {
     // }
 
     it('should call rweb3 with testWebsocketRWeb3Instance.broadcastTxAsync() method success return', async () => {
-        // TODO 이억기 : 여기 신규 계정 PK 셋팅
         const secretKey = getTestProposalAccountPrivateKey();
 
         const acct = privateKeyToAccount(secretKey) as RWeb3Account;
@@ -77,8 +76,10 @@ describe('broadcastTxAsync check ', () => {
             gasPrice: '10000000000',
         });
 
+        const chainId = 'testnet0';
+
         // sign the tx.
-        const [sig, signedTx] = TrxProtoBuilder.signTrxProto(tx, acct);
+        const [sig, signedTx] = TrxProtoBuilder.signTrxProto(tx, acct, chainId);
         tx.sig = sig;
 
         console.log('signedTx', signedTx);
