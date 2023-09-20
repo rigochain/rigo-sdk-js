@@ -412,7 +412,7 @@ export class Contract<Abi extends ContractAbi> extends RWeb3Context<RigoExecutio
         return this._methods;
     }
 
-    public deploy(bytecode: string, args: any[], rWeb3Account: RWeb3Account, chainId: string) {
+    public deploy(bytecode: string, args: any[], rWeb3Account: RWeb3Account, chainId: string, gas: number) {
         let abi = this._jsonInterface.find(
             (j) => j.type === 'constructor',
         ) as AbiConstructorFragment;
@@ -428,7 +428,7 @@ export class Contract<Abi extends ContractAbi> extends RWeb3Context<RigoExecutio
         return {
             send: (): Promise<BroadcastTxSyncResponse> => {
                 // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-                return sendDeploy(this, abi as AbiFunctionFragment, bytecode, args, rWeb3Account, chainId);
+                return sendDeploy(this, abi as AbiFunctionFragment, bytecode, args, rWeb3Account, chainId, gas);
             },
         };
     }
