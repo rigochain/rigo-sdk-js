@@ -8,7 +8,7 @@ export default class Contract {
     private _rweb3: RWeb3;
     private _jsonInterface;
     public _contractAddress;
-    public gas = '1000000000000000';
+    public gas = 1000000;
 
     constructor(rweb3: RWeb3, jsonInterface?: any, contractAddress?: string) {
         this._rweb3 = rweb3;
@@ -68,6 +68,7 @@ export default class Contract {
             to: '0000000000000000000000000000000000000000',
             nonce: account.nonce,
             gas: this.gas,
+            gasPrice: '250000000000',
             amount: '0',
             payload: {data: bytecodeWithArguments},
         })
@@ -87,6 +88,7 @@ export default class Contract {
             to: this._contractAddress,
             nonce: account.nonce,
             gas: this.gas,
+            gasPrice: '250000000000',
             amount: '0',
             payload: {data: encodeFunctionSignature},
         })

@@ -22,7 +22,8 @@ interface Trx {
   from: string;
   to: string;
   amount: string;
-  gas: string;
+  gas: number;
+  gasPrice: string;
   type?: number;
   payload?: object|TrxPayloadUndelegating;
   sig?: string;
@@ -62,7 +63,8 @@ function DecodeTrx(d: Bytes): Trx {
     from: new Bytes(tx.from).toHex(),
     to: new Bytes(tx.to).toHex(),
     amount: new BN(tx.Amount).toString(10),
-    gas: new BN(tx.Gas).toString(10),
+    gas: tx.gas.toNumber(),
+    gasPrice: new BN(tx.GasPrice).toString(10),
     type: tx.type,
     payload: payload,
     sig: new Bytes(tx.sig).toHex()
@@ -78,7 +80,8 @@ function BuildTransferTrx(obj: Trx): trxPb.TrxProto {
     to: Bytes.fromHex(obj.to),
     // proto3 default rule: If the field has default value, the filed should be omitted.
     Amount: obj.amount === "0" ? new Uint8Array() : new Uint8Array(new BN(obj.amount).toArrayLike(Buffer)),
-    Gas: obj.gas === "0" ? new Uint8Array() : new Uint8Array(new BN(obj.gas).toArrayLike(Buffer)),
+    gas: isSet(obj.gas) ? Long.fromValue(obj.gas) : Long.fromValue(10000),
+    GasPrice: obj.gasPrice === "0" ? new Uint8Array() : new Uint8Array(new BN(obj.gasPrice).toArrayLike(Buffer)),
     type: 1, // staking type
     Payload: new Uint8Array(),
     sig: new Uint8Array(),
@@ -94,7 +97,8 @@ function BuildDelegateTrx(obj: Trx): trxPb.TrxProto {
     to: Bytes.fromHex(obj.to),
     // proto3 default rule: If the field has default value, the filed should be omitted.
     Amount: obj.amount === "0" ? new Uint8Array() : new Uint8Array(new BN(obj.amount).toArrayLike(Buffer)),
-    Gas: obj.gas === "0" ? new Uint8Array() : new Uint8Array(new BN(obj.gas).toArrayLike(Buffer)),
+    gas: isSet(obj.gas) ? Long.fromValue(obj.gas) : Long.fromValue(10000),
+    GasPrice: obj.gasPrice === "0" ? new Uint8Array() : new Uint8Array(new BN(obj.gasPrice).toArrayLike(Buffer)),
     type: 2, // staking type
     Payload: new Uint8Array(),
     sig: new Uint8Array(),
@@ -118,7 +122,8 @@ function BuildUndelegateTrx(obj: Trx): trxPb.TrxProto {
     from: Bytes.fromHex(obj.from),
     to: Bytes.fromHex(obj.to),
     Amount: obj.amount === "0" ? new Uint8Array() : new Uint8Array(new BN(obj.amount).toArrayLike(Buffer)),
-    Gas: obj.gas === "0" ? new Uint8Array() : new Uint8Array(new BN(obj.gas).toArrayLike(Buffer)),
+    gas: isSet(obj.gas) ? Long.fromValue(obj.gas) : Long.fromValue(10000),
+    GasPrice: obj.gasPrice === "0" ? new Uint8Array() : new Uint8Array(new BN(obj.gasPrice).toArrayLike(Buffer)),
     type: 3, // un-staking type
     Payload: payloadBytes,
     sig: new Uint8Array(),
@@ -131,7 +136,7 @@ function buildContractTrx(obj: Trx): trxPb.TrxProto  {
     throw Error("mandatory argument is missed")
   }
   const payloadBytes = trxPb.TrxPayloadContractProto.encode({
-    data: Bytes.fromHex(payload.data)
+    Data: Bytes.fromHex(payload.data)
   }).finish()
 
   return {
@@ -141,7 +146,8 @@ function buildContractTrx(obj: Trx): trxPb.TrxProto  {
     from: Bytes.fromHex(obj.from),
     to: Bytes.fromHex(obj.to),
     Amount: new Uint8Array(),
-    Gas: obj.gas === "0" ? new Uint8Array() : new Uint8Array(new BN(obj.gas).toArrayLike(Buffer)),
+    gas: isSet(obj.gas) ? Long.fromValue(obj.gas) : Long.fromValue(10000),
+    GasPrice: obj.gasPrice === "0" ? new Uint8Array() : new Uint8Array(new BN(obj.gasPrice).toArrayLike(Buffer)),
     type: 6, // contract type
     Payload: payloadBytes,
     sig: new Uint8Array(),

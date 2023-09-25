@@ -1,6 +1,6 @@
 syntax = "proto3";
 package types;
-option go_package = "github.com/kysee/rigo/ctrlers/types";
+option go_package = "github.com/rigochain/rigo-go/ctrlers/types";
 
 message TrxProto {
   uint32 version = 1;
@@ -9,20 +9,26 @@ message TrxProto {
   bytes from = 4;
   bytes to = 5;
   bytes _amount = 6;
-  bytes _gas = 7;
-  int32 type = 8;
-  bytes _payload = 9;
-  bytes sig = 10;
+  uint64 gas = 7;
+  bytes _gasPrice = 8;
+  int32 type = 9;
+  bytes _payload = 10;
+  bytes sig = 11;
 }
+
+message TrxPayloadAssetTransferProto {}
 
 message TrxPayloadStakingProto {}
 
 message TrxPayloadUnstakingProto {
   bytes tx_hash = 1;
 }
+message TrxPayloadWithdrawProto {
+  bytes _reqAmt = 1;
+}
 
-message TrxPayloadExecContractProto {
-  bytes _code = 1;
+message TrxPayloadContractProto {
+  bytes _data = 1;
 }
 
 message TrxPayloadProposalProto {
@@ -38,6 +44,8 @@ message TrxPayloadVotingProto {
   int32 choice = 2;
 }
 
-message TrxPayloadContractProto {
-  bytes data = 1;
+
+message TrxPayloadSetDocProto {
+  string name = 1;
+  string url = 2;
 }

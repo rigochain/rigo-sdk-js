@@ -11,10 +11,14 @@ export interface TrxProto {
   from: Uint8Array;
   to: Uint8Array;
   Amount: Uint8Array;
-  Gas: Uint8Array;
+  gas: Long;
+  GasPrice: Uint8Array;
   type: number;
   Payload: Uint8Array;
   sig: Uint8Array;
+}
+
+export interface TrxPayloadAssetTransferProto {
 }
 
 export interface TrxPayloadStakingProto {
@@ -24,8 +28,12 @@ export interface TrxPayloadUnstakingProto {
   txHash: Uint8Array;
 }
 
-export interface TrxPayloadExecContractProto {
-  Code: Uint8Array;
+export interface TrxPayloadWithdrawProto {
+  ReqAmt: Uint8Array;
+}
+
+export interface TrxPayloadContractProto {
+  Data: Uint8Array;
 }
 
 export interface TrxPayloadProposalProto {
@@ -41,8 +49,9 @@ export interface TrxPayloadVotingProto {
   choice: number;
 }
 
-export interface TrxPayloadContractProto {
-  data: Uint8Array;
+export interface TrxPayloadSetDocProto {
+  name: string;
+  url: string;
 }
 
 function createBaseTrxProto(): TrxProto {
@@ -53,7 +62,8 @@ function createBaseTrxProto(): TrxProto {
     from: new Uint8Array(),
     to: new Uint8Array(),
     Amount: new Uint8Array(),
-    Gas: new Uint8Array(),
+    gas: Long.UZERO,
+    GasPrice: new Uint8Array(),
     type: 0,
     Payload: new Uint8Array(),
     sig: new Uint8Array(),
@@ -80,17 +90,20 @@ export const TrxProto = {
     if (message.Amount.length !== 0) {
       writer.uint32(50).bytes(message.Amount);
     }
-    if (message.Gas.length !== 0) {
-      writer.uint32(58).bytes(message.Gas);
+    if (!message.gas.isZero()) {
+      writer.uint32(56).uint64(message.gas);
+    }
+    if (message.GasPrice.length !== 0) {
+      writer.uint32(66).bytes(message.GasPrice);
     }
     if (message.type !== 0) {
-      writer.uint32(64).int32(message.type);
+      writer.uint32(72).int32(message.type);
     }
     if (message.Payload.length !== 0) {
-      writer.uint32(74).bytes(message.Payload);
+      writer.uint32(82).bytes(message.Payload);
     }
     if (message.sig.length !== 0) {
-      writer.uint32(82).bytes(message.sig);
+      writer.uint32(90).bytes(message.sig);
     }
     return writer;
   },
@@ -121,15 +134,18 @@ export const TrxProto = {
           message.Amount = reader.bytes();
           break;
         case 7:
-          message.Gas = reader.bytes();
+          message.gas = reader.uint64() as Long;
           break;
         case 8:
-          message.type = reader.int32();
+          message.GasPrice = reader.bytes();
           break;
         case 9:
-          message.Payload = reader.bytes();
+          message.type = reader.int32();
           break;
         case 10:
+          message.Payload = reader.bytes();
+          break;
+        case 11:
           message.sig = reader.bytes();
           break;
         default:
@@ -148,7 +164,8 @@ export const TrxProto = {
       from: isSet(object.from) ? bytesFromBase64(object.from) : new Uint8Array(),
       to: isSet(object.to) ? bytesFromBase64(object.to) : new Uint8Array(),
       Amount: isSet(object.Amount) ? bytesFromBase64(object.Amount) : new Uint8Array(),
-      Gas: isSet(object.Gas) ? bytesFromBase64(object.Gas) : new Uint8Array(),
+      gas: isSet(object.gas) ? Long.fromValue(object.gas) : Long.UZERO,
+      GasPrice: isSet(object.GasPrice) ? bytesFromBase64(object.GasPrice) : new Uint8Array(),
       type: isSet(object.type) ? Number(object.type) : 0,
       Payload: isSet(object.Payload) ? bytesFromBase64(object.Payload) : new Uint8Array(),
       sig: isSet(object.sig) ? bytesFromBase64(object.sig) : new Uint8Array(),
@@ -165,8 +182,9 @@ export const TrxProto = {
     message.to !== undefined && (obj.to = base64FromBytes(message.to !== undefined ? message.to : new Uint8Array()));
     message.Amount !== undefined &&
       (obj.Amount = base64FromBytes(message.Amount !== undefined ? message.Amount : new Uint8Array()));
-    message.Gas !== undefined &&
-      (obj.Gas = base64FromBytes(message.Gas !== undefined ? message.Gas : new Uint8Array()));
+    message.gas !== undefined && (obj.gas = (message.gas || Long.UZERO).toString());
+    message.GasPrice !== undefined &&
+      (obj.GasPrice = base64FromBytes(message.GasPrice !== undefined ? message.GasPrice : new Uint8Array()));
     message.type !== undefined && (obj.type = Math.round(message.type));
     message.Payload !== undefined &&
       (obj.Payload = base64FromBytes(message.Payload !== undefined ? message.Payload : new Uint8Array()));
@@ -183,10 +201,50 @@ export const TrxProto = {
     message.from = object.from ?? new Uint8Array();
     message.to = object.to ?? new Uint8Array();
     message.Amount = object.Amount ?? new Uint8Array();
-    message.Gas = object.Gas ?? new Uint8Array();
+    message.gas = (object.gas !== undefined && object.gas !== null) ? Long.fromValue(object.gas) : Long.UZERO;
+    message.GasPrice = object.GasPrice ?? new Uint8Array();
     message.type = object.type ?? 0;
     message.Payload = object.Payload ?? new Uint8Array();
     message.sig = object.sig ?? new Uint8Array();
+    return message;
+  },
+};
+
+function createBaseTrxPayloadAssetTransferProto(): TrxPayloadAssetTransferProto {
+  return {};
+}
+
+export const TrxPayloadAssetTransferProto = {
+  encode(_: TrxPayloadAssetTransferProto, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): TrxPayloadAssetTransferProto {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseTrxPayloadAssetTransferProto();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(_: any): TrxPayloadAssetTransferProto {
+    return {};
+  },
+
+  toJSON(_: TrxPayloadAssetTransferProto): unknown {
+    const obj: any = {};
+    return obj;
+  },
+
+  fromPartial<I extends Exact<DeepPartial<TrxPayloadAssetTransferProto>, I>>(_: I): TrxPayloadAssetTransferProto {
+    const message = createBaseTrxPayloadAssetTransferProto();
     return message;
   },
 };
@@ -278,27 +336,27 @@ export const TrxPayloadUnstakingProto = {
   },
 };
 
-function createBaseTrxPayloadExecContractProto(): TrxPayloadExecContractProto {
-  return { Code: new Uint8Array() };
+function createBaseTrxPayloadWithdrawProto(): TrxPayloadWithdrawProto {
+  return { ReqAmt: new Uint8Array() };
 }
 
-export const TrxPayloadExecContractProto = {
-  encode(message: TrxPayloadExecContractProto, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (message.Code.length !== 0) {
-      writer.uint32(10).bytes(message.Code);
+export const TrxPayloadWithdrawProto = {
+  encode(message: TrxPayloadWithdrawProto, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    if (message.ReqAmt.length !== 0) {
+      writer.uint32(10).bytes(message.ReqAmt);
     }
     return writer;
   },
 
-  decode(input: _m0.Reader | Uint8Array, length?: number): TrxPayloadExecContractProto {
+  decode(input: _m0.Reader | Uint8Array, length?: number): TrxPayloadWithdrawProto {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = createBaseTrxPayloadExecContractProto();
+    const message = createBaseTrxPayloadWithdrawProto();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
-          message.Code = reader.bytes();
+          message.ReqAmt = reader.bytes();
           break;
         default:
           reader.skipType(tag & 7);
@@ -308,20 +366,68 @@ export const TrxPayloadExecContractProto = {
     return message;
   },
 
-  fromJSON(object: any): TrxPayloadExecContractProto {
-    return { Code: isSet(object.Code) ? bytesFromBase64(object.Code) : new Uint8Array() };
+  fromJSON(object: any): TrxPayloadWithdrawProto {
+    return { ReqAmt: isSet(object.ReqAmt) ? bytesFromBase64(object.ReqAmt) : new Uint8Array() };
   },
 
-  toJSON(message: TrxPayloadExecContractProto): unknown {
+  toJSON(message: TrxPayloadWithdrawProto): unknown {
     const obj: any = {};
-    message.Code !== undefined &&
-      (obj.Code = base64FromBytes(message.Code !== undefined ? message.Code : new Uint8Array()));
+    message.ReqAmt !== undefined &&
+      (obj.ReqAmt = base64FromBytes(message.ReqAmt !== undefined ? message.ReqAmt : new Uint8Array()));
     return obj;
   },
 
-  fromPartial<I extends Exact<DeepPartial<TrxPayloadExecContractProto>, I>>(object: I): TrxPayloadExecContractProto {
-    const message = createBaseTrxPayloadExecContractProto();
-    message.Code = object.Code ?? new Uint8Array();
+  fromPartial<I extends Exact<DeepPartial<TrxPayloadWithdrawProto>, I>>(object: I): TrxPayloadWithdrawProto {
+    const message = createBaseTrxPayloadWithdrawProto();
+    message.ReqAmt = object.ReqAmt ?? new Uint8Array();
+    return message;
+  },
+};
+
+function createBaseTrxPayloadContractProto(): TrxPayloadContractProto {
+  return { Data: new Uint8Array() };
+}
+
+export const TrxPayloadContractProto = {
+  encode(message: TrxPayloadContractProto, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    if (message.Data.length !== 0) {
+      writer.uint32(10).bytes(message.Data);
+    }
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): TrxPayloadContractProto {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseTrxPayloadContractProto();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.Data = reader.bytes();
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): TrxPayloadContractProto {
+    return { Data: isSet(object.Data) ? bytesFromBase64(object.Data) : new Uint8Array() };
+  },
+
+  toJSON(message: TrxPayloadContractProto): unknown {
+    const obj: any = {};
+    message.Data !== undefined &&
+      (obj.Data = base64FromBytes(message.Data !== undefined ? message.Data : new Uint8Array()));
+    return obj;
+  },
+
+  fromPartial<I extends Exact<DeepPartial<TrxPayloadContractProto>, I>>(object: I): TrxPayloadContractProto {
+    const message = createBaseTrxPayloadContractProto();
+    message.Data = object.Data ?? new Uint8Array();
     return message;
   },
 };
@@ -479,27 +585,33 @@ export const TrxPayloadVotingProto = {
   },
 };
 
-function createBaseTrxPayloadContractProto(): TrxPayloadContractProto {
-  return { data: new Uint8Array() };
+function createBaseTrxPayloadSetDocProto(): TrxPayloadSetDocProto {
+  return { name: "", url: "" };
 }
 
-export const TrxPayloadContractProto = {
-  encode(message: TrxPayloadContractProto, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (message.data.length !== 0) {
-      writer.uint32(10).bytes(message.data);
+export const TrxPayloadSetDocProto = {
+  encode(message: TrxPayloadSetDocProto, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    if (message.name !== "") {
+      writer.uint32(10).string(message.name);
+    }
+    if (message.url !== "") {
+      writer.uint32(18).string(message.url);
     }
     return writer;
   },
 
-  decode(input: _m0.Reader | Uint8Array, length?: number): TrxPayloadContractProto {
+  decode(input: _m0.Reader | Uint8Array, length?: number): TrxPayloadSetDocProto {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = createBaseTrxPayloadContractProto();
+    const message = createBaseTrxPayloadSetDocProto();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
-          message.data = reader.bytes();
+          message.name = reader.string();
+          break;
+        case 2:
+          message.url = reader.string();
           break;
         default:
           reader.skipType(tag & 7);
@@ -509,20 +621,21 @@ export const TrxPayloadContractProto = {
     return message;
   },
 
-  fromJSON(object: any): TrxPayloadContractProto {
-    return { data: isSet(object.data) ? bytesFromBase64(object.data) : new Uint8Array() };
+  fromJSON(object: any): TrxPayloadSetDocProto {
+    return { name: isSet(object.name) ? String(object.name) : "", url: isSet(object.url) ? String(object.url) : "" };
   },
 
-  toJSON(message: TrxPayloadContractProto): unknown {
+  toJSON(message: TrxPayloadSetDocProto): unknown {
     const obj: any = {};
-    message.data !== undefined &&
-      (obj.data = base64FromBytes(message.data !== undefined ? message.data : new Uint8Array()));
+    message.name !== undefined && (obj.name = message.name);
+    message.url !== undefined && (obj.url = message.url);
     return obj;
   },
 
-  fromPartial<I extends Exact<DeepPartial<TrxPayloadContractProto>, I>>(object: I): TrxPayloadContractProto {
-    const message = createBaseTrxPayloadContractProto();
-    message.data = object.data ?? new Uint8Array();
+  fromPartial<I extends Exact<DeepPartial<TrxPayloadSetDocProto>, I>>(object: I): TrxPayloadSetDocProto {
+    const message = createBaseTrxPayloadSetDocProto();
+    message.name = object.name ?? "";
+    message.url = object.url ?? "";
     return message;
   },
 };
