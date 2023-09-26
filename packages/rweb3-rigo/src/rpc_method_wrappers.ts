@@ -20,12 +20,15 @@ import {
     BytesUint8Array,
     RigoExecutionAPI,
     SubscriptionEvent,
+    AbiInput,
 } from '@rigochain/rweb3-types';
 import { RWeb3Context } from '@rigochain/rweb3-core';
 import { rigoRpcMethods } from '@rigochain/rweb3-rpc-methods';
 import { TrxProto } from '@rigochain/rweb3-types';
 import { Stream } from 'xstream';
 import { RWeb3Account, TrxProtoBuilder } from '@rigochain/rweb3-rigo-accounts';
+import * as trxPb from '@rigochain/rweb3-rigo-accounts/lib/commonjs/tx/trx_pb';
+import { encodeParameters } from "@rigochain/rweb3-rigo-abi";
 
 export async function sendDeploy(
     web3Context: RWeb3Context<RigoExecutionAPI>,
@@ -40,17 +43,14 @@ export async function sendDeploy(
     let bytecodeWithArguments;
 
     if (args.length > 0) {
-        // encodedArguments = encodeParameters(abi.inputs, args);
-        encodedArguments = '';
+        encodedArguments = encodeParameters(abi.inputs as AbiInput[], args);
         bytecodeWithArguments = bytecode + encodedArguments.slice(2);
     } else {
         bytecodeWithArguments = bytecode;
     }
-
     const searchAccount = await getAccount(web3Context, rWeb3Account.address);
     const ruleObject = await rule(web3Context);
 
-    // TODO : 여기 확인해야됨
     // 10000000000000000 = 0 16개 - 17개 자리
     const tx = TrxProtoBuilder.buildContractTrxProto({
         from: rWeb3Account.address,
@@ -61,12 +61,7 @@ export async function sendDeploy(
         amount: '0',
         payload: { data: bytecodeWithArguments },
     });
-    const [sig] = TrxProtoBuilder.signTrxProto(tx, rWeb3Account, chainId);
-    tx.sig = sig;
-    const verification = TrxProtoBuilder.verifyTrxProto(tx, rWeb3Account, chainId);
-    console.log('verification', verification);
-    if (!verification) throw Error('sign transaction verification failed');
-
+    TrxProtoBuilder.signContractTrxProto(tx, rWeb3Account, chainId, bytecodeWithArguments);
     return broadcastTxSync(web3Context, tx);
 }
 

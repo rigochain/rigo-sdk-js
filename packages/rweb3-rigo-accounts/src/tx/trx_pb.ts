@@ -2,7 +2,7 @@
 import Long from 'long';
 import _m0 from 'protobufjs';
 
-import { TrxProto } from '@rigochain/rweb3-types';
+import {BytesUint8Array, TrxProto} from '@rigochain/rweb3-types';
 import BN from 'bn.js';
 
 export const protobufPackage = 'types';
@@ -64,7 +64,22 @@ export const TrxProtoUtils = {
             trx.gas.toNumber(),
             trx.gasPrice,
             trx.type,
-            trx.payload,
+            rlp.encode(trx.payload),
+            trx.sig,
+        ]);
+    },
+    encodeContractTrxProto(trx: TrxProto, bytecodeWithArguments: string): Buffer {
+        return rlp.encode([
+            trx.version,
+            new BN(trx.time.toString()),
+            trx.nonce.toNumber(),
+            trx.from,
+            trx.to,
+            trx.amount,
+            trx.gas.toNumber(),
+            trx.gasPrice,
+            trx.type,
+            rlp.encode(BytesUint8Array.fromHex(bytecodeWithArguments)),
             trx.sig,
         ]);
     },

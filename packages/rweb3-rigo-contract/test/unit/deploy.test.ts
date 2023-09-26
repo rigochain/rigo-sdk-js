@@ -15,7 +15,8 @@
 */
 import { Contract } from '../../src';
 //import erc20Json from '../fixtures/erc20-abi.json';
-import tokenJson from '../fixtures/Token.json';
+//import tokenJson from '../fixtures/Token.json';
+import tokenJson from '../fixtures/erc20-contract.json';
 import { getTestProposalAccountPrivateKey, getTestWsServer } from './e2e_utils';
 import WebsocketProvider from '@rigochain/rweb3-providers-ws';
 import { privateKeyToAccount, RWeb3Account } from '@rigochain/rweb3-rigo-accounts';
@@ -28,13 +29,7 @@ describe('deploy test', () => {
         const rweb3account: RWeb3Account = privateKeyToAccount(getTestProposalAccountPrivateKey());
 
         erc20Contract
-            .deploy(
-                tokenJson.bytecode,
-                ["RigoToken", "RGT", "1000"],
-                rweb3account,
-                'testnet0',
-                1000000,
-            )
+            .deploy(tokenJson.bytecode, ['RigoToken', 'RGT'], rweb3account, 'testnet0', 10000000)
             .send()
             .then((res) => {
                 console.log(res);

@@ -253,6 +253,27 @@ function signTrxProto(
     ];
 }
 
+function signContractTrxProto(
+    trxProto: TrxProto,
+    account: RWeb3Account,
+    chainId: string,
+    bytecodeWithArguments: string,
+): [BytesUint8Array, BytesUint8Array] {
+    trxProto.sig = new Uint8Array();
+
+    const encodedData = TrxProtoUtils.encodeContractTrxProto(trxProto, bytecodeWithArguments);
+
+    const prefix = `\x19RIGO(${chainId}) Signed Message:\n${encodedData.length}`;
+
+    const prefixedData = Buffer.concat([Buffer.from(prefix), encodedData]);
+
+    trxProto.sig = account.sign(new Uint8Array(prefixedData));
+    return [
+        new BytesUint8Array(trxProto.sig),
+        new BytesUint8Array(TrxProtoUtils.encode(trxProto).finish()),
+    ];
+}
+
 function signedRawTrxProto(trxProto: TrxProto, account: RWeb3Account): HexString {
     const encodedData = TrxProtoUtils.encodeTrxProto(trxProto);
 
@@ -292,4 +313,5 @@ export const TrxProtoBuilder = {
     buildProposalTrx,
     buildVotingTrx,
     signedRawTrxProto,
+    signContractTrxProto,
 };
