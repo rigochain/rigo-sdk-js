@@ -64,7 +64,7 @@ export const TrxProtoUtils = {
             trx.gas.toNumber(),
             trx.gasPrice,
             trx.type,
-            rlp.encode(trx.payload),
+            trx.payload,
             trx.sig,
         ]);
     },

@@ -1,6 +1,6 @@
 {
   "name": "@rigochain/rweb3-rpc-methods",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "main": "./lib/commonjs/index.js",
   "module": "./lib/esm/index.js",
   "license": "Apache-2.0",
@@ -54,10 +54,10 @@
   "dependencies": {
     "xstream": "^11.14.0",
 
-    "@rigochain/rweb3-core": "1.0.5",
-    "@rigochain/rweb3-utils": "1.0.5",
-    "@rigochain/rweb3-types": "1.0.5",
-    "@rigochain/rweb3-validator": "1.0.5",
-    "@rigochain/rweb3-rigo-accounts": "1.0.5"
+    "@rigochain/rweb3-core": "1.0.6",
+    "@rigochain/rweb3-utils": "1.0.6",
+    "@rigochain/rweb3-types": "1.0.6",
+    "@rigochain/rweb3-validator": "1.0.6",
+    "@rigochain/rweb3-rigo-accounts": "1.0.6"
   }
 }
