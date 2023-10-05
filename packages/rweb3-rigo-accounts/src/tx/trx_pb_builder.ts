@@ -98,7 +98,7 @@ function buildDelegateTrxProto(transaction: Transaction<Object>): TrxProto {
         nonce:
             isSet(transaction.nonce) && transaction.nonce
                 ? Long.fromValue(transaction.nonce)
-                : Long.fromValue(1),
+                : Long.fromValue(0),
         from: BytesUint8Array.fromHex(transaction.from),
         to: BytesUint8Array.fromHex(transaction.to),
         // proto3 default rule: If the field has default value, the filed should be omitted.
@@ -132,7 +132,7 @@ function buildUnDelegateTrxProto(
         nonce:
             isSet(transaction.nonce) && transaction.nonce
                 ? Long.fromValue(transaction.nonce)
-                : Long.fromValue(1),
+                : Long.fromValue(0),
         from: BytesUint8Array.fromHex(transaction.from),
         to: BytesUint8Array.fromHex(transaction.to),
         amount:
@@ -162,7 +162,7 @@ function buildContractTrxProto(transaction: Transaction<TrxPayloadCreateContract
         nonce:
             isSet(transaction.nonce) && transaction.nonce
                 ? Long.fromValue(transaction.nonce)
-                : Long.fromValue(1),
+                : Long.fromValue(0),
         from: BytesUint8Array.fromHex(transaction.from),
         to: BytesUint8Array.fromHex(transaction.to),
         amount: new Uint8Array(),
@@ -193,7 +193,7 @@ function buildProposalTrx(transaction: Transaction<TrxPayloadProposalProto>): Tr
         nonce:
             isSet(transaction.nonce) && transaction.nonce
                 ? Long.fromValue(transaction.nonce)
-                : Long.fromValue(1),
+                : Long.fromValue(0),
         from: BytesUint8Array.fromHex(transaction.from),
         to: BytesUint8Array.fromHex(transaction.to),
         amount: new Uint8Array(),
@@ -221,7 +221,7 @@ function buildVotingTrx(transaction: Transaction<TrxPayloadVotingProto>): TrxPro
         nonce:
             isSet(transaction.nonce) && transaction.nonce
                 ? Long.fromValue(transaction.nonce)
-                : Long.fromValue(1),
+                : Long.fromValue(0),
         from: BytesUint8Array.fromHex(transaction.from),
         to: BytesUint8Array.fromHex(transaction.to),
         amount: new Uint8Array(),
