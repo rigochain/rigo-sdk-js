@@ -1,6 +1,6 @@
 {
   "name": "@rigochain/rweb3-providers-http",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "main": "./lib/commonjs/index.js",
   "module": "./lib/esm/index.js",
   "license": "Apache-2.0",
@@ -51,7 +51,7 @@
   },
   "dependencies": {
     "cross-fetch": "^3.1.5",
-    "@rigochain/rweb3-errors": "1.0.7",
-    "@rigochain/rweb3-types": "1.0.7"
+    "@rigochain/rweb3-errors": "1.0.8",
+    "@rigochain/rweb3-types": "1.0.8"
   }
 }

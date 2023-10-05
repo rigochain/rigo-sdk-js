@@ -21,7 +21,7 @@ module.exports = {
     // testMatch: ['<rootDir>/test/unit/**/contractAddrFromTx.(spec|test).(js|ts)'], // 단일 테스트
     // testMatch: ['<rootDir>/test/unit/**/consensusParams.(spec|test).(js|ts)'], // 단일 테스트
     // testMatch: ['<rootDir>/test/unit/**/unconfirmedTxs.(spec|test).(js|ts)'], // 단일 테스트
-    // testMatch: ['<rootDir>/test/unit/**/txSearch.(spec|test).(js|ts)'], // 단일 테스트
+     testMatch: ['<rootDir>/test/unit/**/txSearch.(spec|test).(js|ts)'], // 단일 테스트
     // testMatch: ['<rootDir>/test/unit/**/tx.(spec|test).(js|ts)'], // 단일 테스트
     // testMatch: ['<rootDir>/test/unit/**/abciInfo.(spec|test).(js|ts)'], // 단일 테스트
     // testMatch: ['<rootDir>/test/unit/**/checkTx.(spec|test).(js|ts)'], // 단일 테스트
@@ -33,9 +33,9 @@ module.exports = {
     //testMatch: ['<rootDir>/test/unit/**/broadcastTxSync.(spec|test).(js|ts)'], // 단일 테스트
     //testMatch: ['<rootDir>/test/unit/**/broadcastTxAsync.(spec|test).(js|ts)'], // 단일 테스트
     //testMatch: ['<rootDir>/test/unit/**/broadcastTxCommit.(spec|test).(js|ts)'], // 단일 테스트
-     testMatch: ['<rootDir>/test/unit/**/broadcastRawTxSync.(spec|test).(js|ts)'], // 단일 테스트
-     testMatch: ['<rootDir>/test/unit/**/broadcastRawTxAsync.(spec|test).(js|ts)'], // 단일 테스트
-     testMatch: ['<rootDir>/test/unit/**/broadcastRawTxCommit.(spec|test).(js|ts)'], // 단일 테스트
+    //  testMatch: ['<rootDir>/test/unit/**/broadcastRawTxSync.(spec|test).(js|ts)'], // 단일 테스트
+    //  testMatch: ['<rootDir>/test/unit/**/broadcastRawTxAsync.(spec|test).(js|ts)'], // 단일 테스트
+    //  testMatch: ['<rootDir>/test/unit/**/broadcastRawTxCommit.(spec|test).(js|ts)'], // 단일 테스트
     // testMatch: ['<rootDir>/test/unit/**/subscribe.(spec|test).(js|ts)'], // 단일 테스트
     // testMatch: ['<rootDir>/test/unit/**/subscribeNewBlock.(spec|test).(js|ts)'], // 단일 테스트
     // testMatch: ['<rootDir>/test/unit/**/transfer.(spec|test).(js|ts)'], // 단일 테스트
