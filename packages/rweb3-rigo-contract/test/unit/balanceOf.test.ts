@@ -26,10 +26,12 @@ describe('deploy test', () => {
         ) as any;
 
         erc20Contract.setProvider(new WebsocketProvider(getTestWsServer()));
-
+        const fromObject = {
+            from: '20838EBC355D287F71830FE60DD717BA14301AE0',
+        };
         erc20Contract.methods
             .balanceOf('736A9F6FA280A88599DC7FCD24E42975DA89A5AE')
-            .call('', 1)
+            .call(fromObject, 1)
             .then((balance: string) => {
                 console.log('balance', balance);
                 done();

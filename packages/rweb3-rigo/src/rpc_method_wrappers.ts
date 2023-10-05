@@ -69,11 +69,12 @@ export async function call(
     web3Context: RWeb3Context<RigoExecutionAPI>,
     contractAddress: string,
     encodeFunctionSignature: string,
+    from: string,
     height?: number,
 ) {
     const vmCallResult = await vmCall(
         web3Context,
-        contractAddress,
+        from,
         contractAddress,
         height ? height : 0,
         encodeFunctionSignature,

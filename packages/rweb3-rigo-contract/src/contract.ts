@@ -334,8 +334,12 @@ export class Contract<Abi extends ContractAbi> extends RWeb3Context<RigoExecutio
             },
         });
 
+        // If the from address is not set, enter the from address as the to address
+        if (!tx.from) {
+            tx.from = tx.to;
+        }
         try {
-            return await call(this, tx.to, tx.input ? tx.input.toString() : '0x', height);
+            return await call(this, tx.to, tx.input ? tx.input.toString() : '0x', tx.from, height);
         } catch (error: unknown) {
             if (error instanceof ContractExecutionError) {
                 // this will parse the error data by trying to decode the ABI error inputs according to EIP-838
