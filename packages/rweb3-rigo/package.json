@@ -1,6 +1,6 @@
 {
   "name": "@rigochain/rweb3-rigo",
-  "version": "1.0.8",
+  "version": "1.0.10",
   "main": "./lib/commonjs/index.js",
   "module": "./lib/esm/index.js",
   "license": "Apache-2.0",
@@ -50,10 +50,10 @@
     "@types/jest": "^28.1.6"
   },
   "dependencies": {
-    "@rigochain/rweb3-types": "1.0.8",
-    "@rigochain/rweb3-core": "1.0.8",
-    "@rigochain/rweb3-utils": "1.0.8",
-    "@rigochain/rweb3-rpc-methods": "1.0.8",
-    "@rigochain/rweb3-rigo-abi": "1.0.8"
+    "@rigochain/rweb3-types": "1.0.10",
+    "@rigochain/rweb3-core": "1.0.10",
+    "@rigochain/rweb3-utils": "1.0.10",
+    "@rigochain/rweb3-rpc-methods": "1.0.10",
+    "@rigochain/rweb3-rigo-abi": "1.0.10"
   }
 }

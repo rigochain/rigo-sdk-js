@@ -165,7 +165,10 @@ function buildContractTrxProto(transaction: Transaction<TrxPayloadCreateContract
                 : Long.fromValue(0),
         from: BytesUint8Array.fromHex(transaction.from),
         to: BytesUint8Array.fromHex(transaction.to),
-        amount: new Uint8Array(),
+        amount:
+            transaction.amount === '0'
+                ? new Uint8Array()
+                : new Uint8Array(new BN(transaction.amount).toArrayLike(Buffer)),
         gas: Long.fromValue(transaction.gas),
         gasPrice: new Uint8Array(new BN(transaction.gasPrice).toArrayLike(Buffer)),
         type: 6, // contract type
