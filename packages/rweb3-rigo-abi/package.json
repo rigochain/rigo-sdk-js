@@ -1,6 +1,6 @@
 {
   "name": "@rigochain/rweb3-rigo-abi",
-  "version": "1.0.10",
+  "version": "1.0.11",
   "main": "./lib/commonjs/index.js",
   "module": "./lib/esm/index.js",
   "license": "Apache-2.0",
@@ -51,9 +51,9 @@
   "dependencies": {
     "@ethersproject/abi": "^5.7.0",
     "@ethersproject/bignumber": "^5.7.0",
-    "@rigochain/rweb3-types": "1.0.10",
-    "@rigochain/rweb3-errors": "1.0.10",
-    "@rigochain/rweb3-utils": "1.0.10",
-    "@rigochain/rweb3-rpc-methods": "1.0.10"
+    "@rigochain/rweb3-types": "1.0.11",
+    "@rigochain/rweb3-errors": "1.0.11",
+    "@rigochain/rweb3-utils": "1.0.11",
+    "@rigochain/rweb3-rpc-methods": "1.0.11"
   }
 }

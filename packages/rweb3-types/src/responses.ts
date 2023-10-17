@@ -997,6 +997,8 @@ export interface AccountResponse {
         address: HexString;
         nonce: number;
         balance: string;
+        name?: string;
+        docURL?: string;
     };
 }
 

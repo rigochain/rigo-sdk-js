@@ -326,6 +326,8 @@ function decodeAccount(data: RpcAccountResponse): responses.AccountResponse {
             address: assertNotEmpty(data.value.address),
             nonce: apiToSmallInt(assertNotEmpty(data.value.nonce)),
             balance: assertNotEmpty(data.value.balance),
+            name: data.value.name ? data.value.name : undefined,
+            docURL: data.value.docURL ? data.value.docURL : undefined,
         },
     };
 }
@@ -1033,6 +1035,8 @@ interface RpcAccountResponse {
         address: string;
         nonce: string;
         balance: string;
+        name?: string;
+        docURL?: string;
     };
 }
 
