@@ -61,7 +61,7 @@ export async function sendDeploy(
         amount: '0',
         payload: { data: bytecodeWithArguments },
     });
-    TrxProtoBuilder.signContractTrxProto(tx, rWeb3Account, chainId, bytecodeWithArguments);
+    TrxProtoBuilder.signTrxProto(tx, rWeb3Account, chainId);
     return broadcastTxSync(web3Context, tx);
 }
 

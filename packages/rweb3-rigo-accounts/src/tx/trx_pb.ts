@@ -1,26 +1,35 @@
 /* eslint-disable */
-import Long from 'long';
-import _m0 from 'protobufjs';
-
-import {BytesUint8Array, TrxProto} from '@rigochain/rweb3-types';
+import Long from "long";
+import _m0 from "protobufjs/minimal";
+import { rlp } from 'ethereumjs-util';
 import BN from 'bn.js';
+import {BytesUint8Array, TrxProto} from '@rigochain/rweb3-types';
 
-export const protobufPackage = 'types';
+export const protobufPackage = "types";
 
-export interface TrxPayloadStakingProto {}
+export interface TrxPayloadAssetTransferProto {
+}
+
+export interface TrxPayloadStakingProto {
+}
 
 export interface TrxPayloadUnstakingProto {
     txHash: Uint8Array;
 }
 
-export interface TrxPayloadExecContractProto {
-    Code: Uint8Array;
+export interface TrxPayloadWithdrawProto {
+    ReqAmt: Uint8Array;
+}
+
+export interface TrxPayloadContractProto {
+    Data: Uint8Array;
 }
 
 export interface TrxPayloadProposalProto {
     message: string;
     startVotingHeight: Long;
     votingBlocks: Long;
+    applyingHeight: Long;
     optType: number;
     options: Uint8Array[];
 }
@@ -30,8 +39,9 @@ export interface TrxPayloadVotingProto {
     choice: number;
 }
 
-export interface TrxPayloadContractProto {
-    data: Uint8Array;
+export interface TrxPayloadSetDocProto {
+    name: string;
+    url: string;
 }
 
 function createBaseTrxProto(): TrxProto {
@@ -41,48 +51,16 @@ function createBaseTrxProto(): TrxProto {
         nonce: Long.UZERO,
         from: new Uint8Array(0),
         to: new Uint8Array(0),
-        amount: new Uint8Array(0),
+        Amount: new Uint8Array(0),
         gas: Long.UZERO,
-        gasPrice: new Uint8Array(0),
+        GasPrice: new Uint8Array(0),
         type: 0,
-        payload: new Uint8Array(0),
+        Payload: new Uint8Array(0),
         sig: new Uint8Array(0),
     };
 }
 
-import { rlp } from 'ethereumjs-util';
-
 export const TrxProtoUtils = {
-    encodeTrxProto(trx: TrxProto): Buffer {
-        return rlp.encode([
-            trx.version,
-            new BN(trx.time.toString()),
-            trx.nonce.toNumber(),
-            trx.from,
-            trx.to,
-            trx.amount,
-            trx.gas.toNumber(),
-            trx.gasPrice,
-            trx.type,
-            trx.payload,
-            trx.sig,
-        ]);
-    },
-    encodeContractTrxProto(trx: TrxProto, bytecodeWithArguments: string): Buffer {
-        return rlp.encode([
-            trx.version,
-            new BN(trx.time.toString()),
-            trx.nonce.toNumber(),
-            trx.from,
-            trx.to,
-            trx.amount,
-            trx.gas.toNumber(),
-            trx.gasPrice,
-            trx.type,
-            rlp.encode(BytesUint8Array.fromHex(bytecodeWithArguments)),
-            trx.sig,
-        ]);
-    },
     encode(message: TrxProto, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
         if (message.version !== 0) {
             writer.uint32(8).uint32(message.version);
@@ -99,20 +77,20 @@ export const TrxProtoUtils = {
         if (message.to.length !== 0) {
             writer.uint32(42).bytes(message.to);
         }
-        if (message.amount.length !== 0) {
-            writer.uint32(50).bytes(message.amount);
+        if (message.Amount.length !== 0) {
+            writer.uint32(50).bytes(message.Amount);
         }
         if (!message.gas.isZero()) {
             writer.uint32(56).uint64(message.gas);
         }
-        if (message.gasPrice.length !== 0) {
-            writer.uint32(66).bytes(message.gasPrice);
+        if (message.GasPrice.length !== 0) {
+            writer.uint32(66).bytes(message.GasPrice);
         }
         if (message.type !== 0) {
             writer.uint32(72).int32(message.type);
         }
-        if (message.payload.length !== 0) {
-            writer.uint32(82).bytes(message.payload);
+        if (message.Payload.length !== 0) {
+            writer.uint32(82).bytes(message.Payload);
         }
         if (message.sig.length !== 0) {
             writer.uint32(90).bytes(message.sig);
@@ -167,7 +145,7 @@ export const TrxProtoUtils = {
                         break;
                     }
 
-                    message.amount = reader.bytes();
+                    message.Amount = reader.bytes();
                     continue;
                 case 7:
                     if (tag !== 56) {
@@ -181,7 +159,7 @@ export const TrxProtoUtils = {
                         break;
                     }
 
-                    message.gasPrice = reader.bytes();
+                    message.GasPrice = reader.bytes();
                     continue;
                 case 9:
                     if (tag !== 72) {
@@ -195,7 +173,7 @@ export const TrxProtoUtils = {
                         break;
                     }
 
-                    message.payload = reader.bytes();
+                    message.Payload = reader.bytes();
                     continue;
                 case 11:
                     if (tag !== 90) {
@@ -220,11 +198,11 @@ export const TrxProtoUtils = {
             nonce: isSet(object.nonce) ? Long.fromValue(object.nonce) : Long.UZERO,
             from: isSet(object.from) ? bytesFromBase64(object.from) : new Uint8Array(0),
             to: isSet(object.to) ? bytesFromBase64(object.to) : new Uint8Array(0),
-            amount: isSet(object.amount) ? bytesFromBase64(object.amount) : new Uint8Array(0),
+            Amount: isSet(object.Amount) ? bytesFromBase64(object.Amount) : new Uint8Array(0),
             gas: isSet(object.gas) ? Long.fromValue(object.gas) : Long.UZERO,
-            gasPrice: isSet(object.gasPrice) ? bytesFromBase64(object.gasPrice) : new Uint8Array(0),
+            GasPrice: isSet(object.GasPrice) ? bytesFromBase64(object.GasPrice) : new Uint8Array(0),
             type: isSet(object.type) ? Number(object.type) : 0,
-            payload: isSet(object.payload) ? bytesFromBase64(object.payload) : new Uint8Array(0),
+            Payload: isSet(object.Payload) ? bytesFromBase64(object.Payload) : new Uint8Array(0),
             sig: isSet(object.sig) ? bytesFromBase64(object.sig) : new Uint8Array(0),
         };
     },
@@ -246,20 +224,20 @@ export const TrxProtoUtils = {
         if (message.to.length !== 0) {
             obj.to = base64FromBytes(message.to);
         }
-        if (message.amount.length !== 0) {
-            obj.amount = base64FromBytes(message.amount);
+        if (message.Amount.length !== 0) {
+            obj.Amount = base64FromBytes(message.Amount);
         }
         if (!message.gas.isZero()) {
             obj.gas = (message.gas || Long.UZERO).toString();
         }
-        if (message.gasPrice.length !== 0) {
-            obj.gasPrice = base64FromBytes(message.gasPrice);
+        if (message.GasPrice.length !== 0) {
+            obj.GasPrice = base64FromBytes(message.GasPrice);
         }
         if (message.type !== 0) {
             obj.type = Math.round(message.type);
         }
-        if (message.payload.length !== 0) {
-            obj.payload = base64FromBytes(message.payload);
+        if (message.Payload.length !== 0) {
+            obj.Payload = base64FromBytes(message.Payload);
         }
         if (message.sig.length !== 0) {
             obj.sig = base64FromBytes(message.sig);
@@ -273,25 +251,59 @@ export const TrxProtoUtils = {
     fromPartial<I extends Exact<DeepPartial<TrxProto>, I>>(object: I): TrxProto {
         const message = createBaseTrxProto();
         message.version = object.version ?? 0;
-        message.time =
-            object.time !== undefined && object.time !== null
-                ? Long.fromValue(object.time)
-                : Long.ZERO;
-        message.nonce =
-            object.nonce !== undefined && object.nonce !== null
-                ? Long.fromValue(object.nonce)
-                : Long.UZERO;
+        message.time = (object.time !== undefined && object.time !== null) ? Long.fromValue(object.time) : Long.ZERO;
+        message.nonce = (object.nonce !== undefined && object.nonce !== null) ? Long.fromValue(object.nonce) : Long.UZERO;
         message.from = object.from ?? new Uint8Array(0);
         message.to = object.to ?? new Uint8Array(0);
-        message.amount = object.amount ?? new Uint8Array(0);
-        message.gas =
-            object.gas !== undefined && object.gas !== null
-                ? Long.fromValue(object.gas)
-                : Long.UZERO;
-        message.gasPrice = object.gasPrice ?? new Uint8Array(0);
+        message.Amount = object.Amount ?? new Uint8Array(0);
+        message.gas = (object.gas !== undefined && object.gas !== null) ? Long.fromValue(object.gas) : Long.UZERO;
+        message.GasPrice = object.GasPrice ?? new Uint8Array(0);
         message.type = object.type ?? 0;
-        message.payload = object.payload ?? new Uint8Array(0);
+        message.Payload = object.Payload ?? new Uint8Array(0);
         message.sig = object.sig ?? new Uint8Array(0);
+        return message;
+    },
+};
+
+function createBaseTrxPayloadAssetTransferProto(): TrxPayloadAssetTransferProto {
+    return {};
+}
+
+export const TrxPayloadAssetTransferProto = {
+    encode(_: TrxPayloadAssetTransferProto, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+        return writer;
+    },
+
+    decode(input: _m0.Reader | Uint8Array, length?: number): TrxPayloadAssetTransferProto {
+        const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
+        let end = length === undefined ? reader.len : reader.pos + length;
+        const message = createBaseTrxPayloadAssetTransferProto();
+        while (reader.pos < end) {
+            const tag = reader.uint32();
+            switch (tag >>> 3) {
+            }
+            if ((tag & 7) === 4 || tag === 0) {
+                break;
+            }
+            reader.skipType(tag & 7);
+        }
+        return message;
+    },
+
+    fromJSON(_: any): TrxPayloadAssetTransferProto {
+        return {};
+    },
+
+    toJSON(_: TrxPayloadAssetTransferProto): unknown {
+        const obj: any = {};
+        return obj;
+    },
+
+    create<I extends Exact<DeepPartial<TrxPayloadAssetTransferProto>, I>>(base?: I): TrxPayloadAssetTransferProto {
+        return TrxPayloadAssetTransferProto.fromPartial(base ?? ({} as any));
+    },
+    fromPartial<I extends Exact<DeepPartial<TrxPayloadAssetTransferProto>, I>>(_: I): TrxPayloadAssetTransferProto {
+        const message = createBaseTrxPayloadAssetTransferProto();
         return message;
     },
 };
@@ -330,14 +342,10 @@ export const TrxPayloadStakingProto = {
         return obj;
     },
 
-    create<I extends Exact<DeepPartial<TrxPayloadStakingProto>, I>>(
-        base?: I,
-    ): TrxPayloadStakingProto {
+    create<I extends Exact<DeepPartial<TrxPayloadStakingProto>, I>>(base?: I): TrxPayloadStakingProto {
         return TrxPayloadStakingProto.fromPartial(base ?? ({} as any));
     },
-    fromPartial<I extends Exact<DeepPartial<TrxPayloadStakingProto>, I>>(
-        _: I,
-    ): TrxPayloadStakingProto {
+    fromPartial<I extends Exact<DeepPartial<TrxPayloadStakingProto>, I>>(_: I): TrxPayloadStakingProto {
         const message = createBaseTrxPayloadStakingProto();
         return message;
     },
@@ -348,10 +356,7 @@ function createBaseTrxPayloadUnstakingProto(): TrxPayloadUnstakingProto {
 }
 
 export const TrxPayloadUnstakingProto = {
-    encode(
-        message: TrxPayloadUnstakingProto,
-        writer: _m0.Writer = _m0.Writer.create(),
-    ): _m0.Writer {
+    encode(message: TrxPayloadUnstakingProto, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
         if (message.txHash.length !== 0) {
             writer.uint32(10).bytes(message.txHash);
         }
@@ -382,9 +387,7 @@ export const TrxPayloadUnstakingProto = {
     },
 
     fromJSON(object: any): TrxPayloadUnstakingProto {
-        return {
-            txHash: isSet(object.txHash) ? bytesFromBase64(object.txHash) : new Uint8Array(0),
-        };
+        return { txHash: isSet(object.txHash) ? bytesFromBase64(object.txHash) : new Uint8Array(0) };
     },
 
     toJSON(message: TrxPayloadUnstakingProto): unknown {
@@ -395,39 +398,32 @@ export const TrxPayloadUnstakingProto = {
         return obj;
     },
 
-    create<I extends Exact<DeepPartial<TrxPayloadUnstakingProto>, I>>(
-        base?: I,
-    ): TrxPayloadUnstakingProto {
+    create<I extends Exact<DeepPartial<TrxPayloadUnstakingProto>, I>>(base?: I): TrxPayloadUnstakingProto {
         return TrxPayloadUnstakingProto.fromPartial(base ?? ({} as any));
     },
-    fromPartial<I extends Exact<DeepPartial<TrxPayloadUnstakingProto>, I>>(
-        object: I,
-    ): TrxPayloadUnstakingProto {
+    fromPartial<I extends Exact<DeepPartial<TrxPayloadUnstakingProto>, I>>(object: I): TrxPayloadUnstakingProto {
         const message = createBaseTrxPayloadUnstakingProto();
         message.txHash = object.txHash ?? new Uint8Array(0);
         return message;
     },
 };
 
-function createBaseTrxPayloadExecContractProto(): TrxPayloadExecContractProto {
-    return { Code: new Uint8Array(0) };
+function createBaseTrxPayloadWithdrawProto(): TrxPayloadWithdrawProto {
+    return { ReqAmt: new Uint8Array(0) };
 }
 
-export const TrxPayloadExecContractProto = {
-    encode(
-        message: TrxPayloadExecContractProto,
-        writer: _m0.Writer = _m0.Writer.create(),
-    ): _m0.Writer {
-        if (message.Code.length !== 0) {
-            writer.uint32(10).bytes(message.Code);
+export const TrxPayloadWithdrawProto = {
+    encode(message: TrxPayloadWithdrawProto, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+        if (message.ReqAmt.length !== 0) {
+            writer.uint32(10).bytes(message.ReqAmt);
         }
         return writer;
     },
 
-    decode(input: _m0.Reader | Uint8Array, length?: number): TrxPayloadExecContractProto {
+    decode(input: _m0.Reader | Uint8Array, length?: number): TrxPayloadWithdrawProto {
         const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
         let end = length === undefined ? reader.len : reader.pos + length;
-        const message = createBaseTrxPayloadExecContractProto();
+        const message = createBaseTrxPayloadWithdrawProto();
         while (reader.pos < end) {
             const tag = reader.uint32();
             switch (tag >>> 3) {
@@ -436,7 +432,7 @@ export const TrxPayloadExecContractProto = {
                         break;
                     }
 
-                    message.Code = reader.bytes();
+                    message.ReqAmt = reader.bytes();
                     continue;
             }
             if ((tag & 7) === 4 || tag === 0) {
@@ -447,37 +443,91 @@ export const TrxPayloadExecContractProto = {
         return message;
     },
 
-    fromJSON(object: any): TrxPayloadExecContractProto {
-        return { Code: isSet(object.Code) ? bytesFromBase64(object.Code) : new Uint8Array(0) };
+    fromJSON(object: any): TrxPayloadWithdrawProto {
+        return { ReqAmt: isSet(object.ReqAmt) ? bytesFromBase64(object.ReqAmt) : new Uint8Array(0) };
     },
 
-    toJSON(message: TrxPayloadExecContractProto): unknown {
+    toJSON(message: TrxPayloadWithdrawProto): unknown {
         const obj: any = {};
-        if (message.Code.length !== 0) {
-            obj.Code = base64FromBytes(message.Code);
+        if (message.ReqAmt.length !== 0) {
+            obj.ReqAmt = base64FromBytes(message.ReqAmt);
         }
         return obj;
     },
 
-    create<I extends Exact<DeepPartial<TrxPayloadExecContractProto>, I>>(
-        base?: I,
-    ): TrxPayloadExecContractProto {
-        return TrxPayloadExecContractProto.fromPartial(base ?? ({} as any));
+    create<I extends Exact<DeepPartial<TrxPayloadWithdrawProto>, I>>(base?: I): TrxPayloadWithdrawProto {
+        return TrxPayloadWithdrawProto.fromPartial(base ?? ({} as any));
     },
-    fromPartial<I extends Exact<DeepPartial<TrxPayloadExecContractProto>, I>>(
-        object: I,
-    ): TrxPayloadExecContractProto {
-        const message = createBaseTrxPayloadExecContractProto();
-        message.Code = object.Code ?? new Uint8Array(0);
+    fromPartial<I extends Exact<DeepPartial<TrxPayloadWithdrawProto>, I>>(object: I): TrxPayloadWithdrawProto {
+        const message = createBaseTrxPayloadWithdrawProto();
+        message.ReqAmt = object.ReqAmt ?? new Uint8Array(0);
+        return message;
+    },
+};
+
+function createBaseTrxPayloadContractProto(): TrxPayloadContractProto {
+    return { Data: new Uint8Array(0) };
+}
+
+export const TrxPayloadContractProto = {
+    encode(message: TrxPayloadContractProto, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+        if (message.Data.length !== 0) {
+            writer.uint32(10).bytes(message.Data);
+        }
+        return writer;
+    },
+
+    decode(input: _m0.Reader | Uint8Array, length?: number): TrxPayloadContractProto {
+        const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
+        let end = length === undefined ? reader.len : reader.pos + length;
+        const message = createBaseTrxPayloadContractProto();
+        while (reader.pos < end) {
+            const tag = reader.uint32();
+            switch (tag >>> 3) {
+                case 1:
+                    if (tag !== 10) {
+                        break;
+                    }
+
+                    message.Data = reader.bytes();
+                    continue;
+            }
+            if ((tag & 7) === 4 || tag === 0) {
+                break;
+            }
+            reader.skipType(tag & 7);
+        }
+        return message;
+    },
+
+    fromJSON(object: any): TrxPayloadContractProto {
+        return { Data: isSet(object.Data) ? bytesFromBase64(object.Data) : new Uint8Array(0) };
+    },
+
+    toJSON(message: TrxPayloadContractProto): unknown {
+        const obj: any = {};
+        if (message.Data.length !== 0) {
+            obj.Data = base64FromBytes(message.Data);
+        }
+        return obj;
+    },
+
+    create<I extends Exact<DeepPartial<TrxPayloadContractProto>, I>>(base?: I): TrxPayloadContractProto {
+        return TrxPayloadContractProto.fromPartial(base ?? ({} as any));
+    },
+    fromPartial<I extends Exact<DeepPartial<TrxPayloadContractProto>, I>>(object: I): TrxPayloadContractProto {
+        const message = createBaseTrxPayloadContractProto();
+        message.Data = object.Data ?? new Uint8Array(0);
         return message;
     },
 };
 
 function createBaseTrxPayloadProposalProto(): TrxPayloadProposalProto {
     return {
-        message: '',
+        message: "",
         startVotingHeight: Long.ZERO,
         votingBlocks: Long.ZERO,
+        applyingHeight: Long.ZERO,
         optType: 0,
         options: [],
     };
@@ -485,7 +535,7 @@ function createBaseTrxPayloadProposalProto(): TrxPayloadProposalProto {
 
 export const TrxPayloadProposalProto = {
     encode(message: TrxPayloadProposalProto, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-        if (message.message !== '') {
+        if (message.message !== "") {
             writer.uint32(10).string(message.message);
         }
         if (!message.startVotingHeight.isZero()) {
@@ -494,11 +544,14 @@ export const TrxPayloadProposalProto = {
         if (!message.votingBlocks.isZero()) {
             writer.uint32(24).int64(message.votingBlocks);
         }
+        if (!message.applyingHeight.isZero()) {
+            writer.uint32(32).int64(message.applyingHeight);
+        }
         if (message.optType !== 0) {
-            writer.uint32(32).int32(message.optType);
+            writer.uint32(40).int32(message.optType);
         }
         for (const v of message.options) {
-            writer.uint32(42).bytes(v!);
+            writer.uint32(50).bytes(v!);
         }
         return writer;
     },
@@ -536,10 +589,17 @@ export const TrxPayloadProposalProto = {
                         break;
                     }
 
-                    message.optType = reader.int32();
+                    message.applyingHeight = reader.int64() as Long;
                     continue;
                 case 5:
-                    if (tag !== 42) {
+                    if (tag !== 40) {
+                        break;
+                    }
+
+                    message.optType = reader.int32();
+                    continue;
+                case 6:
+                    if (tag !== 50) {
                         break;
                     }
 
@@ -556,23 +616,18 @@ export const TrxPayloadProposalProto = {
 
     fromJSON(object: any): TrxPayloadProposalProto {
         return {
-            message: isSet(object.message) ? String(object.message) : '',
-            startVotingHeight: isSet(object.startVotingHeight)
-                ? Long.fromValue(object.startVotingHeight)
-                : Long.ZERO,
-            votingBlocks: isSet(object.votingBlocks)
-                ? Long.fromValue(object.votingBlocks)
-                : Long.ZERO,
+            message: isSet(object.message) ? String(object.message) : "",
+            startVotingHeight: isSet(object.startVotingHeight) ? Long.fromValue(object.startVotingHeight) : Long.ZERO,
+            votingBlocks: isSet(object.votingBlocks) ? Long.fromValue(object.votingBlocks) : Long.ZERO,
+            applyingHeight: isSet(object.applyingHeight) ? Long.fromValue(object.applyingHeight) : Long.ZERO,
             optType: isSet(object.optType) ? Number(object.optType) : 0,
-            options: Array.isArray(object?.options)
-                ? object.options.map((e: any) => bytesFromBase64(e))
-                : [],
+            options: Array.isArray(object?.options) ? object.options.map((e: any) => bytesFromBase64(e)) : [],
         };
     },
 
     toJSON(message: TrxPayloadProposalProto): unknown {
         const obj: any = {};
-        if (message.message !== '') {
+        if (message.message !== "") {
             obj.message = message.message;
         }
         if (!message.startVotingHeight.isZero()) {
@@ -580,6 +635,9 @@ export const TrxPayloadProposalProto = {
         }
         if (!message.votingBlocks.isZero()) {
             obj.votingBlocks = (message.votingBlocks || Long.ZERO).toString();
+        }
+        if (!message.applyingHeight.isZero()) {
+            obj.applyingHeight = (message.applyingHeight || Long.ZERO).toString();
         }
         if (message.optType !== 0) {
             obj.optType = Math.round(message.optType);
@@ -590,24 +648,21 @@ export const TrxPayloadProposalProto = {
         return obj;
     },
 
-    create<I extends Exact<DeepPartial<TrxPayloadProposalProto>, I>>(
-        base?: I,
-    ): TrxPayloadProposalProto {
+    create<I extends Exact<DeepPartial<TrxPayloadProposalProto>, I>>(base?: I): TrxPayloadProposalProto {
         return TrxPayloadProposalProto.fromPartial(base ?? ({} as any));
     },
-    fromPartial<I extends Exact<DeepPartial<TrxPayloadProposalProto>, I>>(
-        object: I,
-    ): TrxPayloadProposalProto {
+    fromPartial<I extends Exact<DeepPartial<TrxPayloadProposalProto>, I>>(object: I): TrxPayloadProposalProto {
         const message = createBaseTrxPayloadProposalProto();
-        message.message = object.message ?? '';
-        message.startVotingHeight =
-            object.startVotingHeight !== undefined && object.startVotingHeight !== null
-                ? Long.fromValue(object.startVotingHeight)
-                : Long.ZERO;
-        message.votingBlocks =
-            object.votingBlocks !== undefined && object.votingBlocks !== null
-                ? Long.fromValue(object.votingBlocks)
-                : Long.ZERO;
+        message.message = object.message ?? "";
+        message.startVotingHeight = (object.startVotingHeight !== undefined && object.startVotingHeight !== null)
+            ? Long.fromValue(object.startVotingHeight)
+            : Long.ZERO;
+        message.votingBlocks = (object.votingBlocks !== undefined && object.votingBlocks !== null)
+            ? Long.fromValue(object.votingBlocks)
+            : Long.ZERO;
+        message.applyingHeight = (object.applyingHeight !== undefined && object.applyingHeight !== null)
+            ? Long.fromValue(object.applyingHeight)
+            : Long.ZERO;
         message.optType = object.optType ?? 0;
         message.options = object.options?.map((e) => e) || [];
         return message;
@@ -677,14 +732,10 @@ export const TrxPayloadVotingProto = {
         return obj;
     },
 
-    create<I extends Exact<DeepPartial<TrxPayloadVotingProto>, I>>(
-        base?: I,
-    ): TrxPayloadVotingProto {
+    create<I extends Exact<DeepPartial<TrxPayloadVotingProto>, I>>(base?: I): TrxPayloadVotingProto {
         return TrxPayloadVotingProto.fromPartial(base ?? ({} as any));
     },
-    fromPartial<I extends Exact<DeepPartial<TrxPayloadVotingProto>, I>>(
-        object: I,
-    ): TrxPayloadVotingProto {
+    fromPartial<I extends Exact<DeepPartial<TrxPayloadVotingProto>, I>>(object: I): TrxPayloadVotingProto {
         const message = createBaseTrxPayloadVotingProto();
         message.txHash = object.txHash ?? new Uint8Array(0);
         message.choice = object.choice ?? 0;
@@ -692,22 +743,25 @@ export const TrxPayloadVotingProto = {
     },
 };
 
-function createBaseTrxPayloadContractProto(): TrxPayloadContractProto {
-    return { data: new Uint8Array(0) };
+function createBaseTrxPayloadSetDocProto(): TrxPayloadSetDocProto {
+    return { name: "", url: "" };
 }
 
-export const TrxPayloadContractProto = {
-    encode(message: TrxPayloadContractProto, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-        if (message.data.length !== 0) {
-            writer.uint32(10).bytes(message.data);
+export const TrxPayloadSetDocProto = {
+    encode(message: TrxPayloadSetDocProto, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+        if (message.name !== "") {
+            writer.uint32(10).string(message.name);
+        }
+        if (message.url !== "") {
+            writer.uint32(18).string(message.url);
         }
         return writer;
     },
 
-    decode(input: _m0.Reader | Uint8Array, length?: number): TrxPayloadContractProto {
+    decode(input: _m0.Reader | Uint8Array, length?: number): TrxPayloadSetDocProto {
         const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
         let end = length === undefined ? reader.len : reader.pos + length;
-        const message = createBaseTrxPayloadContractProto();
+        const message = createBaseTrxPayloadSetDocProto();
         while (reader.pos < end) {
             const tag = reader.uint32();
             switch (tag >>> 3) {
@@ -716,7 +770,14 @@ export const TrxPayloadContractProto = {
                         break;
                     }
 
-                    message.data = reader.bytes();
+                    message.name = reader.string();
+                    continue;
+                case 2:
+                    if (tag !== 18) {
+                        break;
+                    }
+
+                    message.url = reader.string();
                     continue;
             }
             if ((tag & 7) === 4 || tag === 0) {
@@ -727,28 +788,28 @@ export const TrxPayloadContractProto = {
         return message;
     },
 
-    fromJSON(object: any): TrxPayloadContractProto {
-        return { data: isSet(object.data) ? bytesFromBase64(object.data) : new Uint8Array(0) };
+    fromJSON(object: any): TrxPayloadSetDocProto {
+        return { name: isSet(object.name) ? String(object.name) : "", url: isSet(object.url) ? String(object.url) : "" };
     },
 
-    toJSON(message: TrxPayloadContractProto): unknown {
+    toJSON(message: TrxPayloadSetDocProto): unknown {
         const obj: any = {};
-        if (message.data.length !== 0) {
-            obj.data = base64FromBytes(message.data);
+        if (message.name !== "") {
+            obj.name = message.name;
+        }
+        if (message.url !== "") {
+            obj.url = message.url;
         }
         return obj;
     },
 
-    create<I extends Exact<DeepPartial<TrxPayloadContractProto>, I>>(
-        base?: I,
-    ): TrxPayloadContractProto {
-        return TrxPayloadContractProto.fromPartial(base ?? ({} as any));
+    create<I extends Exact<DeepPartial<TrxPayloadSetDocProto>, I>>(base?: I): TrxPayloadSetDocProto {
+        return TrxPayloadSetDocProto.fromPartial(base ?? ({} as any));
     },
-    fromPartial<I extends Exact<DeepPartial<TrxPayloadContractProto>, I>>(
-        object: I,
-    ): TrxPayloadContractProto {
-        const message = createBaseTrxPayloadContractProto();
-        message.data = object.data ?? new Uint8Array(0);
+    fromPartial<I extends Exact<DeepPartial<TrxPayloadSetDocProto>, I>>(object: I): TrxPayloadSetDocProto {
+        const message = createBaseTrxPayloadSetDocProto();
+        message.name = object.name ?? "";
+        message.url = object.url ?? "";
         return message;
     },
 };
@@ -757,24 +818,24 @@ declare const self: any | undefined;
 declare const window: any | undefined;
 declare const global: any | undefined;
 const tsProtoGlobalThis: any = (() => {
-    if (typeof globalThis !== 'undefined') {
+    if (typeof globalThis !== "undefined") {
         return globalThis;
     }
-    if (typeof self !== 'undefined') {
+    if (typeof self !== "undefined") {
         return self;
     }
-    if (typeof window !== 'undefined') {
+    if (typeof window !== "undefined") {
         return window;
     }
-    if (typeof global !== 'undefined') {
+    if (typeof global !== "undefined") {
         return global;
     }
-    throw 'Unable to locate global object';
+    throw "Unable to locate global object";
 })();
 
 function bytesFromBase64(b64: string): Uint8Array {
     if (tsProtoGlobalThis.Buffer) {
-        return Uint8Array.from(tsProtoGlobalThis.Buffer.from(b64, 'base64'));
+        return Uint8Array.from(tsProtoGlobalThis.Buffer.from(b64, "base64"));
     } else {
         const bin = tsProtoGlobalThis.atob(b64);
         const arr = new Uint8Array(bin.length);
@@ -787,36 +848,27 @@ function bytesFromBase64(b64: string): Uint8Array {
 
 function base64FromBytes(arr: Uint8Array): string {
     if (tsProtoGlobalThis.Buffer) {
-        return tsProtoGlobalThis.Buffer.from(arr).toString('base64');
+        return tsProtoGlobalThis.Buffer.from(arr).toString("base64");
     } else {
         const bin: string[] = [];
         arr.forEach((byte) => {
             bin.push(String.fromCharCode(byte));
         });
-        return tsProtoGlobalThis.btoa(bin.join(''));
+        return tsProtoGlobalThis.btoa(bin.join(""));
     }
 }
 
 type Builtin = Date | Function | Uint8Array | string | number | boolean | undefined;
 
-export type DeepPartial<T> = T extends Builtin
-    ? T
-    : T extends Long
-    ? string | number | Long
-    : T extends Array<infer U>
-    ? Array<DeepPartial<U>>
-    : T extends ReadonlyArray<infer U>
-    ? ReadonlyArray<DeepPartial<U>>
-    : T extends {}
-    ? { [K in keyof T]?: DeepPartial<T[K]> }
-    : Partial<T>;
+export type DeepPartial<T> = T extends Builtin ? T
+    : T extends Long ? string | number | Long : T extends Array<infer U> ? Array<DeepPartial<U>>
+        : T extends ReadonlyArray<infer U> ? ReadonlyArray<DeepPartial<U>>
+            : T extends {} ? { [K in keyof T]?: DeepPartial<T[K]> }
+                : Partial<T>;
 
 type KeysOfUnion<T> = T extends T ? keyof T : never;
-export type Exact<P, I extends P> = P extends Builtin
-    ? P
-    : P & { [K in keyof P]: Exact<P[K], I[K]> } & {
-          [K in Exclude<keyof I, KeysOfUnion<P>>]: never;
-      };
+export type Exact<P, I extends P> = P extends Builtin ? P
+    : P & { [K in keyof P]: Exact<P[K], I[K]> } & { [K in Exclude<keyof I, KeysOfUnion<P>>]: never };
 
 if (_m0.util.Long !== Long) {
     _m0.util.Long = Long as any;

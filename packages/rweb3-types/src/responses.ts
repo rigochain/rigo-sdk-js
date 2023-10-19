@@ -979,12 +979,16 @@ export interface RuleResponse {
         lazyRewardBlocks: number; // Number of blocks before the rewards are distributed (latency)
         lazyApplyingBlocks: number; // Number of blocks before changes are applied (latency)
         gasPrice: string; // Price of the transaction fee (gas price)
-        minTrxFee: string; // Minimum transaction fee required
+        minTrxGas: string; // Minimum transaction fee required
+        maxTrxGas: string; // Maximum transaction fee required
+        maxBlockGas: string; // Maximum block gas
         minVotingPeriodBlocks: number; // Minimum number of blocks for a voting period
         maxVotingPeriodBlocks: number; // Maximum number of blocks for a voting period
         minSelfStakeRatio: number; // Minimum ratio of stake that a validator must self-bond
         maxUpdatableStakeRatio: number; // Maximum ratio by which the stake can be updated frequently
         slashRatio: number; // Ratio of tokens to be slashed when a validator engages in malicious behavior
+        signedBlocksWindow: string;
+        minSignedBlocks: string;
     };
 }
 

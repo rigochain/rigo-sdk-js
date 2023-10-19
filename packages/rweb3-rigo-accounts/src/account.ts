@@ -18,6 +18,7 @@ import { PrvKey, PubKey } from './tx/tx_types.js';
 import { HexString, TrxProto, BytesUint8Array } from '@rigochain/rweb3-types';
 import { sha3Raw } from '@rigochain/rweb3-utils';
 import { TrxProtoUtils } from './tx/trx_pb.js';
+import {RlpUtils} from "./tx/trx_rlp";
 
 export const create = (): RWeb3Account => {
     const prvKey = new PrvKey();
@@ -59,7 +60,7 @@ export const signTransaction = (
     // To make it compatible with rest of the API, have to keep it async
     // eslint-disable-next-line @typescript-eslint/require-await
 ): SignTransactionResult => {
-    const encodedData = TrxProtoUtils.encodeTrxProto(trxProto);
+    const encodedData = RlpUtils.encodeTrxProto(trxProto);
 
     const prefix = `\x19RIGO(${chainId}) Signed Message:\n${encodedData.length}`;
 
