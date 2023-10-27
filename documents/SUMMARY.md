@@ -18,6 +18,7 @@
     * [rweb3 rpc methods](docs-en/rweb3/rigo\_rpc\_methods.md)
     * [rweb3 trx pb](docs-en/rweb3/trx\_pb.md)
 * [docs-kr](docs-kr/README.md)
+  * [Getting Started](docs-kr/START.md)
   * [rweb3](docs-kr/rweb3/README.md)
     * [rweb3 rpc methods](docs-kr/rweb3/rigo\_rpc\_methods.md)
     * [rweb3 trx pb](docs-kr/rweb3/trx\_pb.md)

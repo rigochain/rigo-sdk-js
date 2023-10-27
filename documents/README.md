@@ -8,10 +8,3 @@
 
 - [English Documentation](docs-en/README.md)
 - [한글 문서](docs-kr/README.md)
-
-## Installation
-
-You can install @rigochain/rweb3 via npm. To install the package, run the following command:
-
-```shell
-npm install @rigochain/rweb3
