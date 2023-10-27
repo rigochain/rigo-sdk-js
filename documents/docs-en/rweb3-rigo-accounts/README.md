@@ -54,7 +54,7 @@ const account: RWeb3Account = prvKeyToAccount(prvKey);
 This utility function converts a `PrvKey` object to a complete `RWeb3Account` object with a public key and address, among other properties.
 
 
-### `signTransaction(trxProto, privateKey)`
+### `signTransaction(trxProto, privateKey, chainId)`
 
 ```agsl
 
@@ -74,7 +74,7 @@ const tx = TrxProtoBuilder.buildTransferTrxProto({
 });
 
 // sign the tx.
-const { rawTransaction, transactionHash } = signTransaction(tx, "private key hex string");
+const { rawTransaction, transactionHash } = signTransaction(tx, "private key hex string", "chain id");
 
 ```
 This function signs a transaction. The transaction is initially a `TrxProto` object, and the private key is either a hex string or an `ArrayBufferLike`.

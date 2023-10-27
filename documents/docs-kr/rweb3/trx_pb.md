@@ -13,6 +13,8 @@
 5. TrxPayloadProposalProto - 메시지, startVotingHeight, votingBlocks, optType, options 등 여러 필드를 포함합니다.
 6. TrxPayloadVotingProto - txHash 및 choice 필드를 포함합니다.
 7. TrxPayloadContractProto - data라는 하나의 필드를 포함합니다.
+8. TrxPayloadSetDocProto - name, url 필드를 포함합니다.
+9. TrxPayloadWithdrawProto - ReqAmt 필드를 포함합니다.
 
 ## Protobuf 메시지 인코딩 및 디코딩
 

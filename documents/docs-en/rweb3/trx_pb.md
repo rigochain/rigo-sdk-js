@@ -13,6 +13,8 @@ The current protobuf package is under the name "types".
 5. TrxPayloadProposalProto - Contains several fields - message, startVotingHeight, votingBlocks, optType, options.
 6. TrxPayloadVotingProto - Contains the fields txHash and choice.
 7. TrxPayloadContractProto - Contains one field - data.
+8. TrxPayloadSetDocProto - Contains several fields - name, url.
+9. TrxPayloadWithdrawProto - Contains one field - ReqAmt.
 
 ## Protobuf Messages Encoding and Decoding
 

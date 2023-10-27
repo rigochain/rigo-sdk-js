@@ -50,7 +50,7 @@ const account: RWeb3Account = prvKeyToAccount(prvKey);
 ```
 이 유틸리티 함수는 `PrvKey` 객체를 공개 키 및 주소 등 여러 속성이 있는 완전한 `RWeb3Account` 객체로 변환합니다.
 
-### `signTransaction(trxProto, privateKey)`
+### `signTransaction(trxProto, privateKey, chainId)`
 
 ```agsl
 import {
@@ -69,7 +69,7 @@ const tx = TrxProtoBuilder.buildTransferTrxProto({
 });
 
 // 트랜잭션에 서명합니다.
-const { rawTransaction, transactionHash } = signTransaction(tx, "private key hex string");
+const { rawTransaction, transactionHash } = signTransaction(tx, "private key hex string", "chain id");
 
 ```
 이 함수는 트랜잭션에 서명합니다. 트랜잭션은 초기에는 `TrxProto` 객체이며, 개인 키는 16진수 문자열 또는 `ArrayBufferLike`입니다.

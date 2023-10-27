@@ -23,8 +23,8 @@ import {
     TrxPayloadUnstakingProto,
     TrxPayloadVotingProto,
     TrxPayloadWithdrawProto,
-} from './trx_pb';
-import * as trxPb from './trx_pb';
+} from './trx_pb.js';
+import * as trxPb from './trx_pb.js';
 
 export const RlpUtils = {
     encodeTrxProto(trx: TrxProto): Buffer {

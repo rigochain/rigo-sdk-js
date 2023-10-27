@@ -518,3 +518,22 @@ export interface BroadcastTxSyncResponse extends TxData {
 24. `broadcastTxCommit`: 거래를 브로드캐스트하고 거래가 커밋되길 기다립니다.
 예시:
 ```js
+const broadcastTxCommitResponse: BroadcastTxCommitResponse = await rweb3.rigo.broadcastTxCommit("TrxProto");
+```
+
+응답 유형:
+```typescript
+/**
+ * 트랜잭션을 브로드캐스트하고 커밋될 때까지 대기한 후의 응답을 나타냅니다.
+ */
+export interface BroadcastTxCommitResponse {
+    /** 트랜잭션을 포함한 블록의 높이 */
+    readonly height: number;
+    /** 브로드캐스트된 트랜잭션의 해시 */
+    readonly hash: HexString;
+    /** 체크 트랜잭션의 결과 */
+    readonly check_tx: TxData;
+    /** 배송 트랜잭션의 결과 */
+    readonly deliver_tx?: TxData;
+}
+```

@@ -18,7 +18,7 @@ import { PrvKey, PubKey } from './tx/tx_types.js';
 import { HexString, TrxProto, BytesUint8Array } from '@rigochain/rweb3-types';
 import { sha3Raw } from '@rigochain/rweb3-utils';
 import { TrxProtoUtils } from './tx/trx_pb.js';
-import {RlpUtils} from "./tx/trx_rlp";
+import { RlpUtils } from './tx/trx_rlp.js';
 
 export const create = (): RWeb3Account => {
     const prvKey = new PrvKey();

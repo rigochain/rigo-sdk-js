@@ -1,9 +1,7 @@
 /* eslint-disable */
 import Long from "long";
-import _m0 from "protobufjs/minimal";
-import { rlp } from 'ethereumjs-util';
-import BN from 'bn.js';
-import {BytesUint8Array, TrxProto} from '@rigochain/rweb3-types';
+import _m0 from "protobufjs/minimal.js";
+import { TrxProto } from '@rigochain/rweb3-types';
 
 export const protobufPackage = "types";
 

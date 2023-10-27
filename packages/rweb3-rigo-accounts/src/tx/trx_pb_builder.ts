@@ -30,7 +30,7 @@ import {
 import { HexString, TrxProto } from '@rigochain/rweb3-types';
 import { Transaction, TransactionPayloadUnDelegating } from './tx_types.js';
 import { RWeb3Account } from '../types.js';
-import { RlpUtils } from './trx_rlp';
+import { RlpUtils } from './trx_rlp.js';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 function isSet(value: any): boolean {
