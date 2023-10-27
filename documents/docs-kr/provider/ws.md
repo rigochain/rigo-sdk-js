@@ -76,6 +76,59 @@ console.log(result);
 }
 ```
 
+### Subscribe
+웹소켓을 이용하여 `RIGO 노드`의 이벤트를 구독할 수 있습니다. 아래는 `NewBlockHeader` 이벤트를 구독하는 예시입니다.
+
+```Typescript
+import { WebsocketProvider, JsonRpcRequest, SubscriptionEvent } from '@rigochain/rweb3';
+const provider = new WebsocketProvider('wss://rpc1.testnet.rigochain.io');
+const json: JsonRpcRequest<any> = {
+    jsonrpc: '2.0',
+    id: '',
+    method: 'subscribe',
+    params: { query: "tm.event='NewBlockHeader'"},
+}
+provider.listen(json).subscribe({
+    error: (err) => {
+        console.log(err);
+    },
+    complete: () => {
+        console.log('subscription should not complete');
+    },
+    next: (event: SubscriptionEvent) => {
+        console.log(event);
+    }
+})
+```
+`NewBlockHeader` 이벤트 구독의 결과는 아래와 같습니다.
+```shell
+{
+  query: "tm.event='NewBlockHeader'",
+  data: {
+    type: 'tendermint/event/NewBlockHeader',
+    value: {
+      header: [Object],
+      num_txs: '0',
+      result_begin_block: [Object],
+      result_end_block: [Object]
+    }
+  },
+  events: {
+    'reward.issued': [ '33295281579000000' ],
+    'tm.event': [ 'NewBlockHeader' ]
+  }
+}
+```
+구독할 이벤트 요청 값인 query의 종류는 다음과 같습니다.
+- tm.event = 'NewBlockHeader'
+- tm.event = 'NewBlock'
+- tm.event = 'Tx'
+
+또한 Tx 이벤트와 함께 `tx.type`을 지정할 수 있습니다. `tx.type`의 예시는 아래와 같습니다.
+
+- tm.event = 'Tx' AND tx.hash = `transaction hash`
+- tm.event = 'Tx' AND tx.type = 'transfer' AND tx.sender = `sender address`
+
 
 ### RpcEventProducer 클래스
 
