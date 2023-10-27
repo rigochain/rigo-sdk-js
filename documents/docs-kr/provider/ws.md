@@ -1,22 +1,81 @@
 # WebsocketProvider
 
-## 시작하기
-```Typscript
-import { WebsocketProvider } from '@rigochain/rweb3-types';
-const provider = new WebsocketProvider('ws://localhost:8546');
+### 개요
+**WebsocketProvider**은 큐와 스트림을 관리하고, 요청과 응답을 조정하며, 웹소켓을 통한 에러 이벤트를 처리하는데 사용됩니다. 주요 동작으로는 요청 보내기, 연결 설정, 리스너 생성, 메시지 유효성 검사 및 파싱 등이 이 클래스에서 구현되어 있습니다.
 
+### 시작하기
+```Typescript
+import { WebsocketProvider } from '@rigochain/rweb3';
+const provider = new WebsocketProvider('wss://rpc1.testnet.rigochain.io');
+```
+위 코드를 통해 `RIGO 노드`의 웹소켓을 연결할 수 있습니다.
 
-let rweb3 = new RWeb3(provider);
-
+### JsonRpcRequest
+`RIGO 노드`에 연결된 웹소켓을 통해 `JSON RPC 메소드`를 호출할 수 있습니다.
+아래 예제는 `RPC 메소드`의 `status`를 호출한 예시입니다.
+```Typescript
+//request 메소드를 사용하여 호출
+import { WebsocketProvider, JsonRpcRequest } from '@rigochain/rweb3';
+const provider = new WebsocketProvider('wss://rpc1.testnet.rigochain.io');
+const json: JsonRpcRequest<any> = {
+    jsonrpc: '2.0',
+    id: '',
+    method: 'status',
+    params: {},
+}
+const result = await provider.request(json);
+console.log(result);
+```
 또는
-
-let rweb3 = new RWeb3();
-rweb3.setProvider(provider);
+```Typescript
+//execute 메소드를 사용하여 호출
+import { WebsocketProvider, JsonRpcRequest } from '@rigochain/rweb3';
+const provider = new WebsocketProvider('wss://rpc1.testnet.rigochain.io');
+const json: JsonRpcRequest<any> = {
+    jsonrpc: '2.0',
+    id: '',
+    method: 'status',
+    params: {},
+}
+const result = await provider.execute(json);
+console.log(result);
+```
+위 코드의 결과는 동일하고, 아래와 같습니다.
+```shell
+{
+  jsonrpc: '2.0',
+  id: '',
+  result: {
+    node_info: {
+      protocol_version: [Object],
+      id: '7ba9e3621084c4997c788c0b69290c4d55ba6eb5',
+      listen_addr: 'tcp://0.0.0.0:26656',
+      network: 'testnet0',
+      version: '0.34.24',
+      channels: '40202122233038606100',
+      moniker: 'ip-10-40-10-91',
+      other: [Object]
+    },
+    sync_info: {
+      latest_block_hash: '8BF045FD391E17EB8DED4E0FB840A50826B8EAA6D7AA0F25A0C6CFCD6754692E',
+      latest_app_hash: '92C3F4F2DD2EFA13A93DE42CC2CD0C758FB3E8A3E93A20567F1CE73959BDD2BE',
+      latest_block_height: '242552',
+      latest_block_time: '2023-10-27T07:06:03.048565232Z',
+      earliest_block_hash: '8DAECF4CB13892442ABE50BCD8B5F7249B3B5E38D824198EF7792EC4BC8A8FE2',
+      earliest_app_hash: '394D26CA253D1453A8485F19C0845F7752B78F8804A1CD37968A8089A72B6117',
+      earliest_block_height: '1',
+      earliest_block_time: '2023-10-23T00:55:13.604720042Z',
+      catching_up: false
+    },
+    validator_info: {
+      address: 'DE24F5F2642A0DAEFDC994C99F2067DE11FFFBF2',
+      pub_key: [Object],
+      voting_power: '0'
+    }
+  }
+}
 ```
 
-## 설명
-
-**WebsocketProvider**은 `@rigochain/rweb3-types` 패키지의 클래스로, 큐와 스트림을 관리하고, 요청과 응답을 조정하며, 웹소켓을 통한 에러 이벤트를 처리하는데 사용됩니다. 주요 동작으로는 요청 보내기, 연결 설정, 리스너 생성, 메시지 유효성 검사 및 파싱 등이 이 클래스에서 구현되어 있습니다.
 
 ### RpcEventProducer 클래스
 

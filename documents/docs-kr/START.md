@@ -29,11 +29,11 @@ npm install @rigochain/rweb3@X.X.X
 
 먼저 작업 디렉토리에 예제 코드를 작성할 파일을 생성합니다.
 ```shell
-$ touch rigo.js
+$ touch rigo.ts
 ```
 생성된 rigo.js에 아래의 코드를 작성합니다.
 ```javascript
-const Rweb3 = require('@rigochain/rweb3');
+import { RWeb3 } from '@rigochain/rweb3';
 const rweb3 = new Rweb3('https://rpc1.testnet.rigochain.io');
 
 async function getAbciInfo() {
