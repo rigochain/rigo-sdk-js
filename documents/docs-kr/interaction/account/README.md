@@ -7,71 +7,64 @@
 ## 사용법
 
 ### `create()`
+`create` 함수는 임의의 RIGO 계정을 생성합니다. 생성이 완료되면 `RWeb3Account` 객체를 반환합니다.
+```typescript
+import { RWeb3 } from '@rigochain/rweb3';
+import { RWeb3Account } from '@rigochain/rweb3-rigo-accounts';
 
-```agsl
-import { create, RWeb3Account } from '@rigochain/rweb3-rigo-accounts';
-
-// 랜덤 계정 생성 
-const account: RWeb3Account = create();
+// create address
+const account: RWeb3Account = rweb3.rigo.accounts.create();
 ```
-
-이 함수는 새 RWeb3 계정을 생성합니다. 이는 새 개인 키와 해당 공개 키 및 주소를 생성하는 것을 포함합니다.
-
-`RWeb3Account` 객체를 반환합니다.
-
 ### `privateKeyToAccount(privateKey)`
+`privateKeyToAccount` 함수는 입력된 `private key` 로부터 `RWeb3Account` 객체를 반환합니다.
+```typescript
+import { RWeb3 } from '@rigochain/rweb3';
+import { RWeb3Account } from '@rigochain/rweb3-rigo-accounts';
 
-```agsl
-import { create, privateKeyToAccount, RWeb3Account } from '@rigochain/rweb3-rigo-accounts';
-
-const account: RWeb3Account = privateKeyToAccount(account.privateKey);
+// import private key
+const privateKey: string = 'your private key';
+const account: RWeb3Account = privateKeyToAccount(privateKey);
+```
+반환된 `RWeb3Account` 객체는 아래와 같습니다.
+```shell
+{
+    address: string,
+    privateKey: string,
+    prvKey: PrvKey,
+    pubKey: PubKey,
+    sign: [Function: sign],
+    signTransaction: [Function: signTransaction]
+}
 ```
 
-이 함수는 개인 키(16진수 문자열 또는 `ArrayBufferLike` 객체)를 가져와 해당 공개 키 및 주소가 있는 완전한 `RWeb3Account` 객체를 반환합니다.
+### `signTransaction(trxProto, chainId)`
+`signTransaction` 함수는 트랜잭션에 서명합니다. 서명하기 위해서는 트랜잭션을 제출할 RIGO 블록체인의 `CHAIN ID`가 필요합니다.
+아래는 `RWeb3Account` 객체를 활용해서 RIGO 전송을 구현한 `signTransaction` 예시입니다.
+```typescript
+import { RWeb3, TrxProtoBuilder, TrxProto } from '@rigochain/rweb3';
+import { RWeb3Account } from '@rigochain/rweb3-rigo-accounts';
 
-### `privateKeyToPrvKey(privateKey)`
+// import private key
+const privateKey: string = 'your private key';
+const account: RWeb3Account = privateKeyToAccount(privateKey);
 
-```agsl
-import { create, privateKeyToAccount, RWeb3Account } from '@rigochain/rweb3-rigo-accounts';
+// get accountInfo
+const accountInfo = await rweb3.rigo.getAccount(account.address);
 
-const prvKey: PrvKey = privateKeyToPrvKey(account.privateKey);
-```
-
-이 함수는 개인 키를 가져와서 `PrvKey` 형식으로 반환합니다. 16진수 문자열 또는 `ArrayBufferLike` 객체를 받습니다.
-
-### `prvKeyToAccount(prvKey)`
-
-```agsl
-import { RWeb3Account, privateKeyToPrvKey, prvKeyToAccount, PrvKey } from '@rigochain/rweb3-rigo-accounts';
-
-const prvKey: PrvKey = privateKeyToPrvKey(account.privateKey);
-const account: RWeb3Account = prvKeyToAccount(prvKey);
-
-```
-이 유틸리티 함수는 `PrvKey` 객체를 공개 키 및 주소 등 여러 속성이 있는 완전한 `RWeb3Account` 객체로 변환합니다.
-
-### `signTransaction(trxProto, privateKey, chainId)`
-
-```agsl
-import {
-  signTransaction,
-  TrxProtoBuilder,
-} from "@rigochain/rweb3-rigo-accounts";
-
-// 트랜잭션을 만듭니다.
-const tx = TrxProtoBuilder.buildTransferTrxProto({
-  from: "from",
-  nonce: 1,
-  to: "6fff13a50450039c943c9987fa43cef0d7421904",
-  amount: "1000000000000000",
-  gas: 100000,
-  gasPrice: "10000000000",
+// create transaction
+const trxProto: TrxProto = TrxProtoBuilder.buildTransferTrxProto({
+    from: account.value.address,
+    nonce: account.value.nonce,
+    to: 'to address',
+    amount: '100',
+    gas: 1000000,
+    gasPrice: '250000000000',
 });
 
-// 트랜잭션에 서명합니다.
-const { rawTransaction, transactionHash } = signTransaction(tx, "private key hex string", "chain id");
+// sign transaction
+const { rawTransaction } = account.signTransaction(tx, 'testnet0');
 
+// broadcast raw transaction
+const result = await rweb3.rigo.broadcastRawTxCommit(rawTransaction);
+console.log(result);
 ```
-이 함수는 트랜잭션에 서명합니다. 트랜잭션은 초기에는 `TrxProto` 객체이며, 개인 키는 16진수 문자열 또는 `ArrayBufferLike`입니다.
-
-이것은 원시 Base64 인코딩된 트랜잭션과 트랜잭션 해시를 포함하는 `SignTransactionResult`를 반환합니다. 이 함수는 API의 나머지 부분과 호환되도록 비동기이지만, 실제로는 비동기 작업을 수행하지 않습니다.
