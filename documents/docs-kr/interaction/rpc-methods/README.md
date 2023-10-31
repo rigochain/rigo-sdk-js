@@ -1,9 +1,7 @@
 # rweb3 rpc methods
 
-
 ## 개요
 이 문서는 Rigo Chain 소프트웨어 시스템의 다양한 메소드의 동작에 대한 정보를 제공합니다. 각 기능은 `RWeb3RequestManager` 인스턴스인 `requestManager`가 필요합니다.
-
 다음 섹션에서는 사용 가능한 함수, 필요한 매개변수 및 예상 반환 유형을 나열합니다.
 
 ## 기능 리스트
