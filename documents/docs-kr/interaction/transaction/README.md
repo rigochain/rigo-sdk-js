@@ -312,4 +312,29 @@ const { rawTransaction } = account.signTransaction(tx, 'testnet0');
 const result = await rweb3.rigo.broadcastRawTxCommit(rawTransaction);
 ```
 
-
+## 결과
+`RIGO` 네트워크의 제출이 정상적으로 수행되면 아래의 결과 값이 리턴됩니다.
+```shell
+{
+  height: 280652,
+  hash: '96289E5CA50E28AAB181E9D2E13367B82C06DAF9F34DB013EE2A1F4AAA77CFB2',
+  check_tx: {
+    code: 0,
+    codespace: '',
+    log: '',
+    data: null,
+    events: [],
+    gas_wanted: '1000000',
+    gas_used: '1000000'
+  },
+  deliver_tx: {
+    code: 0,
+    codespace: '',
+    log: '',
+    data: null,
+    events: [ [Object] ],
+    gas_wanted: '1000000',
+    gas_used: '1000000'
+  }
+}
+```
