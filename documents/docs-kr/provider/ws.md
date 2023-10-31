@@ -1,16 +1,16 @@
 # WebsocketProvider
 
-### 개요
+## 개요
 **WebsocketProvider**은 큐와 스트림을 관리하고, 요청과 응답을 조정하며, 웹소켓을 통한 에러 이벤트를 처리하는데 사용됩니다. 주요 동작으로는 요청 보내기, 연결 설정, 리스너 생성, 메시지 유효성 검사 및 파싱 등이 이 클래스에서 구현되어 있습니다.
 
-### 시작하기
+## 시작하기
 ```Typescript
 import { WebsocketProvider } from '@rigochain/rweb3';
 const provider = new WebsocketProvider('wss://rpc1.testnet.rigochain.io');
 ```
 위 코드를 통해 `RIGO 노드`의 웹소켓을 연결할 수 있습니다.
 
-### JsonRpcRequest
+## JsonRpcRequest
 `RIGO 노드`에 연결된 웹소켓을 통해 `JSON RPC 메소드`를 호출할 수 있습니다.
 아래 예제는 `RPC 메소드`의 `status`를 호출한 예시입니다.
 ```Typescript
@@ -76,7 +76,7 @@ console.log(result);
 }
 ```
 
-### Subscribe
+## Subscribe
 웹소켓을 이용하여 `RIGO 노드`의 이벤트를 구독할 수 있습니다. 아래는 `NewBlockHeader` 이벤트를 구독하는 예시입니다.
 
 ```Typescript
@@ -129,12 +129,9 @@ provider.listen(json).subscribe({
 - tm.event = 'Tx' AND tx.hash = `transaction hash`
 - tm.event = 'Tx' AND tx.type = 'transfer' AND tx.sender = `sender address`
 
-
-### RpcEventProducer 클래스
-
+## 클래스
+RpcEventProducer 클래스:
 **RpcEventProducer**는 WebsocketProvider의 하위 클래스로, `SubscriptionEvent`를 생성하는 특정 역할을 가지고 있습니다.
-
-메서드:
 
 - `start(listener: Listener<SubscriptionEvent>)`: 프로듀서를 시작하며, 이미 프로듀서가 실행 중인 경우 오류를 발생시킵니다. 또한 소켓에 요청을 큐에 넣습니다.
 
@@ -144,9 +141,8 @@ provider.listen(json).subscribe({
 
 - `closeSubscriptions()`: 모든 구독을 해지하고 구독 배열을 지웁니다.
 
-### WebsocketProvider 클래스
-
-메서드:
+WebsocketProvider 클래스:
+**WebsocketProvider** 인스턴스는 `ReconnectingSocket` 연결을 관리하고 `subscriptionStreams`의 맵을 포함하며, 연결 상태, 요청 처리, 에러 처리를 제어하는 API를 제공합니다.
 
 - `constructor(baseUrl: string, onError: (err: any) => void)`: 제공된 소켓 URL로 연결을 설정합니다.
 
@@ -162,7 +158,6 @@ provider.listen(json).subscribe({
 
 - `getClientUrl()`: 웹소켓이 연결된 클라이언트의 URL을 반환합니다.
 
-구조적으로, **WebsocketProvider** 인스턴스는 `ReconnectingSocket` 연결을 관리하고 `subscriptionStreams`의 맵을 포함하며, 연결 상태, 요청 처리, 에러 처리를 제어하는 API를 제공합니다.
 
 ## 유틸리티 함수
 
