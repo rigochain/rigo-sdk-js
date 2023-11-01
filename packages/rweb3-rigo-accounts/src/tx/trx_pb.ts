@@ -1,10 +1,8 @@
 /* eslint-disable */
 import Long from "long";
-import _m0 from "protobufjs/minimal.js";
+import _m0 from "protobufjs/minimal";
 import { TrxProto } from '@rigochain/rweb3-types';
-
 export const protobufPackage = "types";
-
 export interface TrxPayloadAssetTransferProto {
 }
 
@@ -191,7 +189,7 @@ export const TrxProtoUtils = {
 
     fromJSON(object: any): TrxProto {
         return {
-            version: isSet(object.version) ? Number(object.version) : 0,
+            version: isSet(object.version) ? globalThis.Number(object.version) : 0,
             time: isSet(object.time) ? Long.fromValue(object.time) : Long.ZERO,
             nonce: isSet(object.nonce) ? Long.fromValue(object.nonce) : Long.UZERO,
             from: isSet(object.from) ? bytesFromBase64(object.from) : new Uint8Array(0),
@@ -199,7 +197,7 @@ export const TrxProtoUtils = {
             Amount: isSet(object.Amount) ? bytesFromBase64(object.Amount) : new Uint8Array(0),
             gas: isSet(object.gas) ? Long.fromValue(object.gas) : Long.UZERO,
             GasPrice: isSet(object.GasPrice) ? bytesFromBase64(object.GasPrice) : new Uint8Array(0),
-            type: isSet(object.type) ? Number(object.type) : 0,
+            type: isSet(object.type) ? globalThis.Number(object.type) : 0,
             Payload: isSet(object.Payload) ? bytesFromBase64(object.Payload) : new Uint8Array(0),
             sig: isSet(object.sig) ? bytesFromBase64(object.sig) : new Uint8Array(0),
         };
@@ -543,13 +541,13 @@ export const TrxPayloadProposalProto = {
             writer.uint32(24).int64(message.votingBlocks);
         }
         if (!message.applyingHeight.isZero()) {
-            writer.uint32(32).int64(message.applyingHeight);
+            writer.uint32(48).int64(message.applyingHeight);
         }
         if (message.optType !== 0) {
-            writer.uint32(40).int32(message.optType);
+            writer.uint32(32).int32(message.optType);
         }
         for (const v of message.options) {
-            writer.uint32(50).bytes(v!);
+            writer.uint32(42).bytes(v!);
         }
         return writer;
     },
@@ -582,22 +580,22 @@ export const TrxPayloadProposalProto = {
 
                     message.votingBlocks = reader.int64() as Long;
                     continue;
-                case 4:
-                    if (tag !== 32) {
+                case 6:
+                    if (tag !== 48) {
                         break;
                     }
 
                     message.applyingHeight = reader.int64() as Long;
                     continue;
-                case 5:
-                    if (tag !== 40) {
+                case 4:
+                    if (tag !== 32) {
                         break;
                     }
 
                     message.optType = reader.int32();
                     continue;
-                case 6:
-                    if (tag !== 50) {
+                case 5:
+                    if (tag !== 42) {
                         break;
                     }
 
@@ -614,12 +612,12 @@ export const TrxPayloadProposalProto = {
 
     fromJSON(object: any): TrxPayloadProposalProto {
         return {
-            message: isSet(object.message) ? String(object.message) : "",
+            message: isSet(object.message) ? globalThis.String(object.message) : "",
             startVotingHeight: isSet(object.startVotingHeight) ? Long.fromValue(object.startVotingHeight) : Long.ZERO,
             votingBlocks: isSet(object.votingBlocks) ? Long.fromValue(object.votingBlocks) : Long.ZERO,
             applyingHeight: isSet(object.applyingHeight) ? Long.fromValue(object.applyingHeight) : Long.ZERO,
-            optType: isSet(object.optType) ? Number(object.optType) : 0,
-            options: Array.isArray(object?.options) ? object.options.map((e: any) => bytesFromBase64(e)) : [],
+            optType: isSet(object.optType) ? globalThis.Number(object.optType) : 0,
+            options: globalThis.Array.isArray(object?.options) ? object.options.map((e: any) => bytesFromBase64(e)) : [],
         };
     },
 
@@ -715,7 +713,7 @@ export const TrxPayloadVotingProto = {
     fromJSON(object: any): TrxPayloadVotingProto {
         return {
             txHash: isSet(object.txHash) ? bytesFromBase64(object.txHash) : new Uint8Array(0),
-            choice: isSet(object.choice) ? Number(object.choice) : 0,
+            choice: isSet(object.choice) ? globalThis.Number(object.choice) : 0,
         };
     },
 
@@ -787,7 +785,10 @@ export const TrxPayloadSetDocProto = {
     },
 
     fromJSON(object: any): TrxPayloadSetDocProto {
-        return { name: isSet(object.name) ? String(object.name) : "", url: isSet(object.url) ? String(object.url) : "" };
+        return {
+            name: isSet(object.name) ? globalThis.String(object.name) : "",
+            url: isSet(object.url) ? globalThis.String(object.url) : "",
+        };
     },
 
     toJSON(message: TrxPayloadSetDocProto): unknown {
@@ -812,30 +813,11 @@ export const TrxPayloadSetDocProto = {
     },
 };
 
-declare const self: any | undefined;
-declare const window: any | undefined;
-declare const global: any | undefined;
-const tsProtoGlobalThis: any = (() => {
-    if (typeof globalThis !== "undefined") {
-        return globalThis;
-    }
-    if (typeof self !== "undefined") {
-        return self;
-    }
-    if (typeof window !== "undefined") {
-        return window;
-    }
-    if (typeof global !== "undefined") {
-        return global;
-    }
-    throw "Unable to locate global object";
-})();
-
 function bytesFromBase64(b64: string): Uint8Array {
-    if (tsProtoGlobalThis.Buffer) {
-        return Uint8Array.from(tsProtoGlobalThis.Buffer.from(b64, "base64"));
+    if (globalThis.Buffer) {
+        return Uint8Array.from(globalThis.Buffer.from(b64, "base64"));
     } else {
-        const bin = tsProtoGlobalThis.atob(b64);
+        const bin = globalThis.atob(b64);
         const arr = new Uint8Array(bin.length);
         for (let i = 0; i < bin.length; ++i) {
             arr[i] = bin.charCodeAt(i);
@@ -845,21 +827,21 @@ function bytesFromBase64(b64: string): Uint8Array {
 }
 
 function base64FromBytes(arr: Uint8Array): string {
-    if (tsProtoGlobalThis.Buffer) {
-        return tsProtoGlobalThis.Buffer.from(arr).toString("base64");
+    if (globalThis.Buffer) {
+        return globalThis.Buffer.from(arr).toString("base64");
     } else {
         const bin: string[] = [];
         arr.forEach((byte) => {
-            bin.push(String.fromCharCode(byte));
+            bin.push(globalThis.String.fromCharCode(byte));
         });
-        return tsProtoGlobalThis.btoa(bin.join(""));
+        return globalThis.btoa(bin.join(""));
     }
 }
 
 type Builtin = Date | Function | Uint8Array | string | number | boolean | undefined;
 
 export type DeepPartial<T> = T extends Builtin ? T
-    : T extends Long ? string | number | Long : T extends Array<infer U> ? Array<DeepPartial<U>>
+    : T extends Long ? string | number | Long : T extends globalThis.Array<infer U> ? globalThis.Array<DeepPartial<U>>
         : T extends ReadonlyArray<infer U> ? ReadonlyArray<DeepPartial<U>>
             : T extends {} ? { [K in keyof T]?: DeepPartial<T[K]> }
                 : Partial<T>;
