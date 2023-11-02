@@ -29,7 +29,7 @@ npm install @rigochain/rweb3@X.X.X
 
 먼저 작업 디렉토리에 예제 코드를 작성할 파일을 생성합니다.
 ```shell
-$ touch rigo.ts
+$ touch rigo.js
 ```
 생성된 rigo.js에 아래의 코드를 작성합니다.
 ```javascript
