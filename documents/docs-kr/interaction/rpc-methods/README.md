@@ -762,8 +762,7 @@ try {
 }
 ```
 
-###
-`numUnconfirmedTxs`
+### `numUnconfirmedTxs`
 `RIGO` 블록체인에서 컨펌되지 않은 트랜잭션의 수를 확인할 수 있는 num_unconfirmed_txs 메소드를 호출합니다.
 - 요청
 ```typescript
@@ -948,5 +947,137 @@ try {
     gas_wanted: '1000000',
     gas_used: '1000000'
   }
+}
+```
+
+### `delegatee`
+`RIGO` 블록체인의 위임 정보를 조회할 수 있는 delegatee 메소드를 호출합니다.
+- 요청
+```typescript
+import { RWeb3 } from '@rigochain/rweb3';
+
+const rweb3 = new RWeb3('https://rpc1.testnet.rigochain.io');
+try {
+    const result: DelegateeResponse = await rweb3.rigo.delegatee('636d6b4b823c324675b75986cd749dbc14b3e0a8')
+    console.log(result);
+} catch (e) {
+    console.log(e);
+}
+```
+
+- 응답
+```shell
+{
+  key: '636D6B4B823C324675B75986CD749DBC14B3E0A8',
+  value: {
+    address: '636D6B4B823C324675B75986CD749DBC14B3E0A8',
+    pubKey: '03EC1DCFD15C06F220B491407E1049B1AC3FE241838C0DD4ECF285AB3BA400F371',
+    selfPower: '7000000',
+    totalPower: '7000010',
+    slashedPower: '0',
+    stakes: [ [Object], [Object] ],
+    NotSignedHeights: { blockHeights: null }
+  },
+  height: 563101
+}
+```
+
+### `rule`
+`RIGO` 블록체인의 거버넌스 규칙을 조회할 수 있는 rule 메소드를 호출합니다.
+- 요청
+```typescript
+import { RWeb3 } from '@rigochain/rweb3';
+
+const rweb3 = new RWeb3('https://rpc1.testnet.rigochain.io');
+try {
+    const result: RuleResponse = await rweb3.rigo.rule();
+    console.log(result);
+} catch (e) {
+    console.log(e);
+}
+```
+- 응답
+```shell
+{
+  value: {
+    version: '1',
+    maxValidatorCnt: '21',
+    minValidatorStake: '7000000000000000000000000',
+    rewardPerPower: '1585489599',
+    lazyRewardBlocks: '2592000',
+    lazyApplyingBlocks: '259200',
+    gasPrice: '250000000000',
+    minTrxGas: '4000',
+    maxTrxGas: '25000000',
+    maxBlockGas: '18446744073709551615',
+    minVotingPeriodBlocks: '259200',
+    maxVotingPeriodBlocks: '2592000',
+    minSelfStakeRatio: '50',
+    maxUpdatableStakeRatio: '30',
+    slashRatio: '50',
+    signedBlocksWindow: '10000',
+    minSignedBlocks: '500'
+  },
+  height: 563202
+}
+```
+
+### `getAccount`
+계정에 대한 정보를 조회할 수 있는 account 메소드를 호출합니다.
+- 요청
+```typescript
+import { RWeb3 } from '@rigochain/rweb3';
+
+const rweb3 = new RWeb3('https://rpc1.testnet.rigochain.io');
+try {
+    const result: AccountResponse = await rweb3.rigo.getAccount('fef705700f04ccb3c722d12ba8217fc0b50529ac')
+    console.log(result);
+} catch (e) {
+    console.log(e);
+}
+```
+- 응답
+```shell
+{
+  key: 'FEF705700F04CCB3C722D12BA8217FC0B50529AC',
+  value: {
+    address: 'FEF705700F04CCB3C722D12BA8217FC0B50529AC',
+    nonce: 8,
+    balance: '4998083843250000000000',
+    name: undefined,
+    docURL: undefined
+  }
+}
+```
+
+### `stakes`
+트랜잭션을 `RIGO` 블록체인 네트워크에 제출하고 커밋이 완료될 때까지 대기하는 broadcast_tx_commit 메소드를 호출합니다.
+- 요청
+```typescript
+import { RWeb3 } from '@rigochain/rweb3';
+
+const rweb3 = new RWeb3('https://rpc1.testnet.rigochain.io');
+try {
+    const result: StakesResponse = await rweb3.rigo.stakes('636d6b4b823c324675b75986cd749dbc14b3e0a8')
+    console.log(result);
+} catch (e) {
+    console.log(e);
+}
+```
+- 응답
+```shell
+{
+  key: '636D6B4B823C324675B75986CD749DBC14B3E0A8',
+  value: [
+    {
+      owner: '636D6B4B823C324675B75986CD749DBC14B3E0A8',
+      to: '636D6B4B823C324675B75986CD749DBC14B3E0A8',
+      txhash: 'F72491CCA7DD47867654A39EC30C76704543D19BEBA8F793AC15E40EC0D4DF1D',
+      startHeight: '5361',
+      refundHeight: '0',
+      power: '7000000'
+    }
+  ],
+  height: 563416
 }
 ```
