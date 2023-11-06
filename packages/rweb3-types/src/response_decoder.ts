@@ -328,6 +328,7 @@ function decodeAccount(data: RpcAccountResponse): responses.AccountResponse {
             balance: assertNotEmpty(data.value.balance),
             name: data.value.name ? data.value.name : undefined,
             docURL: data.value.docURL ? data.value.docURL : undefined,
+            code: data.value.code ? data.value.code : undefined,
         },
     };
 }
@@ -1037,6 +1038,7 @@ interface RpcAccountResponse {
         balance: string;
         name?: string;
         docURL?: string;
+        code?: string;
     };
 }
 

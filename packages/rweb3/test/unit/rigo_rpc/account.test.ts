@@ -26,9 +26,8 @@ describe('account check ', () => {
 
     it('should call rweb3 with testWebsocketRWeb3Instance.account method success return', async () => {
         const testAccountAddress = getTestAccountAddress();
-        const testAccountResponse: AccountResponse = await testWebsocketRWeb3Instance.rigo.getAccount(
-            testAccountAddress,
-        );
+        const testAccountResponse: AccountResponse =
+            await testWebsocketRWeb3Instance.rigo.getAccount(testAccountAddress);
 
         console.log(JSON.stringify(testAccountResponse));
 
@@ -38,5 +37,11 @@ describe('account check ', () => {
         );
         expect(testAccountResponse.value.nonce).toBeDefined();
         expect(testAccountResponse.value.balance).toBeDefined();
+
+        const testContractAddress = '0xde5fde64d239707a7caece5d71691d14f9113166';
+        const testContractAccountResponse: AccountResponse =
+            await testWebsocketRWeb3Instance.rigo.getAccount(testContractAddress);
+
+        console.log(testContractAccountResponse);
     });
 });

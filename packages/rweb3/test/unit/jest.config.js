@@ -27,7 +27,7 @@ module.exports = {
     // testMatch: ['<rootDir>/test/unit/**/checkTx.(spec|test).(js|ts)'], // 단일 테스트
     // testMatch: ['<rootDir>/test/unit/**/numUnconfirmedTxs.(spec|test).(js|ts)'], // 단일 테스트
     // testMatch: ['<rootDir>/test/unit/**/delegatee.(spec|test).(js|ts)'], // 단일 테스트
-    // testMatch: ['<rootDir>/test/unit/**/account.(spec|test).(js|ts)'], // 단일 테스트
+    testMatch: ['<rootDir>/test/unit/**/account.(spec|test).(js|ts)'], // 단일 테스트
     // testMatch: ['<rootDir>/test/unit/**/rule.(spec|test).(js|ts)'], // 단일 테스트
     // testMatch: ['<rootDir>/test/unit/**/stake.(spec|test).(js|ts)'], // 단일 테스트
     //testMatch: ['<rootDir>/test/unit/**/broadcastTxSync.(spec|test).(js|ts)'], // 단일 테스트
@@ -44,7 +44,7 @@ module.exports = {
     // testMatch: ['<rootDir>/test/unit/**/transfer.(spec|test).(js|ts)'], // 단일 테스트
     // testMatch: ['<rootDir>/test/unit/**/staking.(spec|test).(js|ts)'], // 단일 테스트
     // testMatch: ['<rootDir>/test/unit/**/unstaking.(spec|test).(js|ts)'], // 단일 테스트
-     testMatch: ['<rootDir>/test/unit/**/builder.(spec|test).(js|ts)'], // 단일 테스트
+    //  testMatch: ['<rootDir>/test/unit/**/builder.(spec|test).(js|ts)'], // 단일 테스트
 
     coverageDirectory: '../../.coverage/unit',
     collectCoverageFrom: ['src/**'],

@@ -1003,6 +1003,7 @@ export interface AccountResponse {
         balance: string;
         name?: string;
         docURL?: string;
+        code?: string;
     };
 }
 

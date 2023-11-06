@@ -1,6 +1,6 @@
 {
   "name": "@rigochain/rweb3-providers-ws",
-  "version": "1.0.13",
+  "version": "1.0.17",
   "main": "./lib/commonjs/index.js",
   "module": "./lib/esm/index.js",
   "license": "Apache-2.0",
@@ -55,8 +55,8 @@
     "ws": "^7",
     "xstream": "^11.14.0",
 
-    "@rigochain/rweb3-utils": "1.0.13",
-    "@rigochain/rweb3-errors": "1.0.13",
-    "@rigochain/rweb3-types": "1.0.13"
+    "@rigochain/rweb3-utils": "1.0.17",
+    "@rigochain/rweb3-errors": "1.0.17",
+    "@rigochain/rweb3-types": "1.0.17"
   }
 }
