@@ -25,7 +25,7 @@ describe('blockchain check ', () => {
     });
 
     it('should call rweb3 with testWebsocketRWeb3Instance.block method success return', async () => {
-        const testBlockResponse: BlockResponse = await testWebsocketRWeb3Instance.rigo.block();
+        const testBlockResponse: BlockResponse = await testWebsocketRWeb3Instance.rigo.block(1);
 
         console.log(JSON.stringify(testBlockResponse));
 

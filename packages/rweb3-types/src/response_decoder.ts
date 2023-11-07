@@ -533,7 +533,15 @@ function decodeBlock(data: RpcBlock): Block {
         last_commit: data.last_commit.block_id.hash
             ? decodeCommit(assertObject(data.last_commit))
             : // eslint-disable-next-line no-null/no-null
-              null,
+              {
+                  block_id: {
+                      hash: '',
+                      parts: { hash: '', total: 0 },
+                  },
+                  height: 0,
+                  round: 0,
+                  signatures: [],
+              },
         data: decodeBlockData(data.data),
         // Lift up .evidence.evidence to just .evidence
         // See https://github.com/tendermint/tendermint/issues/7697
