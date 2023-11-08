@@ -1,6 +1,6 @@
 {
   "name": "rigo-sdk-js",
-  "version": "1.0.18",
+  "version": "1.0.19",
   "description": "Javascript SDK for RIGO",
   "private": true,
   "keywords": [

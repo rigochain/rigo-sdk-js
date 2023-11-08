@@ -1,1 +1,1 @@
-/* eslint-disable header/header */ export const RWeb3PkgInfo = { version: '1.0.18' };
+/* eslint-disable header/header */ export const RWeb3PkgInfo = { version: '1.0.19' };

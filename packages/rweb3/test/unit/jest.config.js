@@ -9,7 +9,7 @@ module.exports = {
     // testMatch: ['<rootDir>/test/unit/**/multipleRWeb3.(spec|test).(js|ts)'], // 단일 테스트
     // testMatch: ['<rootDir>/test/unit/**/status.(spec|test).(js|ts)'], // 단일 테스트
     // testMatch: ['<rootDir>/test/unit/**/blockchain.(spec|test).(js|ts)'], // 단일 테스트
-    testMatch: ['<rootDir>/test/unit/**/block.(spec|test).(js|ts)'], // 단일 테스트
+    // testMatch: ['<rootDir>/test/unit/**/block.(spec|test).(js|ts)'], // 단일 테스트
     // testMatch: ['<rootDir>/test/unit/**/blockByHash.(spec|test).(js|ts)'], // 단일 테스트
     // testMatch: ['<rootDir>/test/unit/**/blockResults.(spec|test).(js|ts)'], // 단일 테스트
     // testMatch: ['<rootDir>/test/unit/**/validators.(spec|test).(js|ts)'], // 단일 테스트
@@ -18,7 +18,7 @@ module.exports = {
     // testMatch: ['<rootDir>/test/unit/**/genesisChunked.(spec|test).(js|ts)'], // 단일 테스트
     // testMatch: ['<rootDir>/test/unit/**/dumpConsensusState.(spec|test).(js|ts)'], // 단일 테스트
     // testMatch: ['<rootDir>/test/unit/**/consensusState.(spec|test).(js|ts)'], // 단일 테스트
-    // testMatch: ['<rootDir>/test/unit/**/contractAddrFromTx.(spec|test).(js|ts)'], // 단일 테스트
+    testMatch: ['<rootDir>/test/unit/**/contractAddrFromTx.(spec|test).(js|ts)'], // 단일 테스트
     // testMatch: ['<rootDir>/test/unit/**/consensusParams.(spec|test).(js|ts)'], // 단일 테스트
     // testMatch: ['<rootDir>/test/unit/**/unconfirmedTxs.(spec|test).(js|ts)'], // 단일 테스트
     // testMatch: ['<rootDir>/test/unit/**/txSearch.(spec|test).(js|ts)'], // 단일 테스트

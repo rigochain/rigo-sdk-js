@@ -28,7 +28,8 @@ import { TrxProto } from '@rigochain/rweb3-types';
 import { Stream } from 'xstream';
 import { RWeb3Account, TrxProtoBuilder } from '@rigochain/rweb3-rigo-accounts';
 import * as trxPb from '@rigochain/rweb3-rigo-accounts/lib/commonjs/tx/trx_pb';
-import { encodeParameters } from "@rigochain/rweb3-rigo-abi";
+import { encodeParameters } from '@rigochain/rweb3-rigo-abi';
+import { atob } from 'buffer';
 
 export async function sendDeploy(
     web3Context: RWeb3Context<RigoExecutionAPI>,
@@ -200,13 +201,21 @@ export async function contractAddrFromTx(
     hash: string | Uint8Array,
 ) {
     const txResponse = await rigoRpcMethods.tx(web3Context.requestManager, hash);
-    if (!txResponse.tx_result || !txResponse.tx_result.data) {
+    if (!txResponse.result || !txResponse.result.events || txResponse.result.events.length <= 0) {
         throw Error('not found contract address');
     }
-    const bytes = BytesUint8Array.b64ToBytes(txResponse.tx_result.data);
-    let bytesToHex = bytes.toHex();
-    if (!bytesToHex.startsWith('0x')) bytesToHex = '0x' + bytesToHex;
-    return bytesToHex.toLowerCase();
+
+    let contractAddress = '';
+    for (const event of txResponse.result.events) {
+        if (event.type !== 'evm') continue;
+        for (const attribute of event.attributes) {
+            if (atob(attribute.key) !== 'contractAddress') continue;
+            contractAddress = atob(attribute.value);
+        }
+    }
+
+    if (!contractAddress.startsWith('0x')) contractAddress = '0x' + contractAddress;
+    return contractAddress.toLowerCase();
 }
 
 export async function abciInfo(web3Context: RWeb3Context<RigoExecutionAPI>) {

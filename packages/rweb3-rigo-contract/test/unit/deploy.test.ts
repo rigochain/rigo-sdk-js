@@ -14,8 +14,6 @@
     limitations under the License.
 */
 import { Contract } from '../../src';
-//import erc20Json from '../fixtures/erc20-abi.json';
-//import tokenJson from '../fixtures/Token.json';
 import tokenJson from '../fixtures/erc20-contract.json';
 import { getTestProposalAccountPrivateKey, getTestWsServer } from './e2e_utils';
 import WebsocketProvider from '@rigochain/rweb3-providers-ws';

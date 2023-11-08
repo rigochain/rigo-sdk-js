@@ -14,20 +14,22 @@
     limitations under the License.
 */
 import { RWeb3 } from '../../../src';
-import { getTestWsServer } from '../e2e_utils';
+import { getTestAccountPrivateKey, getTestWsServer } from '../e2e_utils';
+import tokenJson from '../../fixtures/erc20-contract.json';
+import { Contract } from '@rigochain/rweb3-rigo-contract';
 
 describe('contractAddrFromTx check ', () => {
-    let testWebsocketRWeb3Instance: RWeb3;
+    let rweb3: RWeb3;
 
     beforeAll(() => {
-        testWebsocketRWeb3Instance = new RWeb3(getTestWsServer());
+        rweb3 = new RWeb3(getTestWsServer());
     });
 
-    it('should call rweb3 with testWebsocketRWeb3Instance.contractAddrFromTx method success return', async () => {
-        const contractAddr = await testWebsocketRWeb3Instance.rigo.contractAddrFromTx(
-            '84b366c007e62513913d5a2d642e2792363188db899012139700ba0e6fd0728f',
+    it('Check return value of contractAddrFromTx call', async () => {
+        const contractAddr: string = await rweb3.rigo.contractAddrFromTx(
+            'A29CE7BEEE8B09E3C59A85BBC9CF90E3F066ADAF485FACBBFB3C538FF32A7098',
         );
 
-        expect(contractAddr).toBe('0x4b007901049a210f8e1ce8f4d4ab8e6e1efd1b10');
+        expect(contractAddr).toBe('0xa0ee488fe69273b40985c52ac5a6e91034eb61cd');
     });
 });
