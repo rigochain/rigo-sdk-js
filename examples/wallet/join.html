@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>RIGO Wallet</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width,initial-scale=1">
+        <link href="https://fonts.googleapis.com/css?family=Arial&display=swap" rel="stylesheet" />
+        <link href="../css/main.css" rel="stylesheet" />
+        <script type='text/javascript' src='../../dist/rigo.js'></script>
+        <script type='text/javascript'>
+            const activeAddr = LocalSto.Read('default');
+            if(activeAddr) {
+                window.location.href = 'login.html';
+            }
+        </script>
+    </head>
+    <body style='margin-top:20%;'>
+        <div class='center'>
+            <p class='text_title1'>RIGO Wallet Sign-Up</p>
+            <br>
+            <input id='pwd1' type='password' class='inputboxred' style='width:70%' placeholder='Your password'>
+            <br><br>       
+            <input id='pwd2' type='password' class='inputboxred' style='width:70%' placeholder='Your password again'>
+            <br>
+            <p id='errmsg' style='color:orangered;'></p>
+            <p id='join_btn' class='menu_btn hover3' >Join</p>
+        </div>
+
+        <script type='text/javascript'>
+            join_btn.onclick = (evt) => {
+                // account 생성
+                let _pwd = pwd1.value;
+                let acct = Account.New('Account-0', _pwd)
+                LocalSto.Write(acct.address, acct.marshal())
+                LocalSto.Write('default', acct.address)
+                SessSto.Write('secret', _pwd);
+                location.href = 'wallet.html';
+            };
+        </script>
+    </body>
+</html>

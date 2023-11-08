@@ -1,0 +1,715 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>RIGO Wallet</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css"/>
+    <link href="../css/main.css" rel="stylesheet" />
+    <link href="../css/toast.css" rel="stylesheet" />
+    <link href="../css/tooltip.css" rel="stylesheet" />
+    <script type='text/javascript' src='../../dist/rigo.js'></script>
+    <script type='module'>
+        import * as _util from '../js/utils.js';
+        window.acnUtil = _util;
+    </script>
+    <script type='text/javascript'>
+        let url = LocalSto.Read('url')
+        if(!url) {
+            url = 'http://localhost:26657'
+            LocalSto.Write('url', url)
+        }
+        const rweb3 = new RWeb3(url)
+
+
+        //
+        // for create button
+        function showCreateLayout(v) {
+            div_account_section.style.display = (v?'none':'');
+            div_create_section.style.display = (v?'':'none');
+            input_acct_name.value = '';
+            input_acct_name.focus();
+        }
+        function doCreate() {
+            const name = input_acct_name.value;
+            if(!name) {
+                showAlert('Input account name');
+                return;
+            }
+            try {
+                const acct = CreateAccount(name);
+                appendAccount(acct);
+                showCreateLayout(false);
+                showAlert('New account is created.');
+            }
+            catch(err) {
+                console.error(err);
+                showAlert(err);
+            }
+        }
+        // 
+        // show import button
+        function showImportLayout(v) {
+            div_account_section.style.display = (v?'none':'');
+            div_import_section.style.display = (v?'':'none');
+            ta_walkey.value = '';
+            input_pwd.value = '';
+        }
+        function doImport() {
+            const walkey = ta_walkey.value;
+            const pwd = input_pwd.value;
+
+            if(!walkey) {
+                showAlert('A wallet key json data is need.');
+                return;
+            }
+            if(!pwd) {
+                showAlert('The passowrd is need.');
+                return;
+            }
+
+            try {
+                const acct = ImportAccount(walkey, pwd);
+                appendAccount(acct);
+                showImportLayout(false);
+                showAlert(`The account(${acct.address}) is imported.`);
+            }
+            catch(err) {
+                console.error(err);
+                showAlert(err);
+            }
+        }
+        //
+        // show export button
+        function showExportLayout(v) {
+            div_account_section.style.display = (v?'none':'');
+            div_export_section.style.display = (v?'':'none');
+        }
+
+        function showStakesLayout(v) {
+            div_account_section.style.display = (v?'none':'');
+            div_stakes_section.style.display = (v?'':'none');
+        }
+
+        //
+        // show account section
+        function appendAccount(acct) {
+            const opt = document.createElement('option');
+            opt.innerHTML = acct.name;
+            opt.value = acct.address;
+
+            if(activeAddrStr === acct.address) {
+                opt.selected = 'selected';
+                rweb3.syncAccount(acct)
+                    .then( () => {
+                        displayAccount(acct);
+                        // console.log("sync", acct.name);
+                    })
+                    .catch(err => {
+                        console.error(err);
+                        showAlert(err);
+                    });
+            }
+            sel_acct_name.append(opt);
+        }
+        function displayAccount(acct) {
+            acct_addr.innerHTML = acct.address;
+            acct_balance.innerHTML = acnUtil.fmtNum(acct.balance.toString(10));
+
+        }
+        function handlRetTxUI(retTx) {
+            console.log('result of Tx:', retTx);
+            let errmark = "";
+            if(retTx.tx_result.code != 0) {
+                errmark = `<span class="text_hex_small" style="color:orangered;">
+                    Fail(${retTx.tx_result.code})
+                    </span> `;
+            }
+            let txitem = `<div class="flex_area" style="margin:8px 0;">
+                <div class="text_box" style="display:flex; flex:0.6;">
+                    <div>
+                        <div class="text_hex_small" title="${retTx.hash}"
+                        style="cursor:pointer;"
+                        onclick="ShowTx('${retTx.hash}')">
+                            ${errmark}${acnUtil.shortString(retTx.hash, 20, 0)}
+                        </div>
+                        <div class="text_label" style="display:block;">
+                            ${retTx.height} @ ${retTx.tx.time.toString()}
+                        </div>
+                    </div>
+                </div>
+                <div class="text_box" style="margin-left:4px;height:100%;">
+                    <div class="text_label" style="text-align: right;">from</div>
+                    <div class="text_label" style="text-align: right;">to</div>
+                </div>
+                <div class="text_box" style="display:flex; flex:0.4; margin-left:4px;">
+                    <div>
+                        <div class="text_hex_small" title="${retTx.tx.from}">
+                            ${acnUtil.shortString(retTx.tx.from)}
+                        </div>
+                        <div class="text_hex_small" title="${retTx.tx.to}">
+                            ${acnUtil.shortString(retTx.tx.to)}
+                        </div>
+                    </div>
+                </div>
+                <div class="text_box" style="margin-left:4px;">
+                    <div class="text_amount_small" id="trans_amt">${acnUtil.fmtNum(retTx.tx.amount)}</div>
+                    <div class="text_amount_small" id="trans_gas">${acnUtil.fmtNum(retTx.tx.gas)}</div>
+                </div>
+            </div>`;
+
+            div_txs.innerHTML = txitem + div_txs.innerHTML;
+
+        }
+
+        //
+        // show alert message
+        function showAlert(m) {
+            p_alert_msg.innerHTML = '<pre>' + m + '</pre>';
+            div_alert_back.style.display = 'flex';
+        }
+        function hideAlert() {
+            p_alert_msg.innerHTML = 'no message';
+            div_alert_back.style.display = 'none';
+        }
+    </script>
+</head>
+
+<body>
+<div class="top_div">
+    <!--
+        Node info
+    -->
+
+    <div class="section_area">
+        <div class="text_title_underline">RIGO RPC Node</div>
+        <div class="flex_area">
+            <input id='node_url' class='account_item_value' style='border:0px' type='text' placeholder='Input RPC node url'>
+            <button id='btn_set_url' class="menu_btn" style='width:200px;'>Set</button>
+        </div>
+    </div>
+
+        <!--
+
+            Account section
+
+        -->
+    <div id='div_account_section' class="section_area">
+        <div class="text_title_underline">Account</div>
+
+        <!-- Menus-->
+        <div class="flex_area">
+            <button id='btn_create' class="menu_btn">Create</button>
+            <button id='btn_import' class="menu_btn">Import</button>
+            <button id='btn_export' class="menu_btn">Export</button>
+        </div>
+
+
+        <script type='text/javascript'>
+            btn_set_url.onclick = () => {
+                LocalSto.Write('url', node_url.value)
+                rweb3.setUrl(node_url.value)
+            }
+            btn_create.onclick = () => {
+                showCreateLayout(true);
+            }
+            btn_import.onclick = () => {
+                showImportLayout(true);
+            };
+            btn_export.onclick = () => {
+                const acct = Account.Unmarshal(LocalSto.Read(activeAddrStr));
+                console.log(acct);
+                div_export_acct.textContent = acct.export('').toHex()
+                showExportLayout(true);
+            };
+        </script>
+
+        <!-- account info -->
+        <div class="info_block">
+            <div class="account_item">
+                <div class="account_item_title">Name</div>
+                <select id='sel_acct_name'></select>
+            </div>
+            <div class="account_item">
+                <i id='btn_copy_addr' class="far fa-copy btn_icon"></i>
+                <div class="account_item_title" style="display:inline;">Address</div>
+                <div id='acct_addr' class="account_item_value">Unknown</div>
+            </div>
+            <div class="account_item">
+                <div class="account_item_title">Balance</div>
+                <div id='acct_balance' class="account_item_value">0</div>
+            </div>
+
+
+            <script>
+                sel_acct_name.onchange = () => {
+                    const addr = sel_acct_name.options[sel_acct_name.selectedIndex].value;
+                    const acct = Account.Unmarshal(LocalSto.Read(addr));
+                    rweb3.syncAccount(acct)
+                    .then( () => {
+                        LocalSto.Write('default', acct.address)
+                        activeAddrStr = acct.address;
+                        activeAcct = acct;
+                        displayAccount(acct);
+                    })
+                    .catch(err => {
+                        console.error(err);
+                        showAlert(err);
+                    });
+
+                    recver_addr.value = '';
+                    send_amt.value = '';
+                }
+                btn_copy_addr.onclick = () => {
+                    const t = document.createElement('input');
+                    document.body.appendChild(t);
+                    t.value = acct_addr.innerHTML;
+                    t.select();
+                    document.execCommand('copy');
+                    document.body.removeChild(t);
+
+                    showToast('Copied address');
+                }
+            </script>
+
+        </div>
+
+        <!-- transfer info -->
+
+        <div id='div_transfer' class="info_block" style="margin-top:16px;">
+            <div class="account_item">
+                <div class="account_item_title">Receiver</div>
+                <input id='recver_addr' class="inputboxred account_item_value"
+                       style='text-align: right;'>
+            </div>
+            <div class="account_item">
+                <div class="account_item_title">Amount</div>
+                <input id='send_amt' class="inputboxred account_item_value"
+                       style='text-align: right;'>
+            </div>
+            <div class="flex_area">
+                <button id='btn_proposal' class="menu_btn" style="width:200px;height:40px;float:right;">Propose</button>
+                <button id='btn_voting' class="menu_btn" style="width:200px;height:40px;float:right;">Vote</button>
+                <button id='btn_unstaking' class="menu_btn" style="width:200px;height:40px;float:right;">Unstaking</button>
+                <button id='btn_staking' class="menu_btn" style="width:200px;height:40px;float:right;">Staking</button>
+                <button id='btn_transfer' class="menu_btn" style="width:200px;height:40px;float:right;">Transfer</button>
+            </div>
+            <script>
+                recver_addr.onkeypress = (evt) => {
+                    const ASCIICode = (evt.which) ? evt.which : evt.keyCode
+                    if(ASCIICode == 48 /*'0'*/ &&
+                        recver_addr.value === '0' /*pervious input value*/) {
+                        recver_addr.value = ''
+                        return false
+                    }
+                    return acnUtil.isHexChar(ASCIICode, recver_addr.value.length);
+                }
+                send_amt.onkeypress = (evt) => {
+                    var ASCIICode = (evt.which) ? evt.which : evt.keyCode
+                    if(ASCIICode == 48 /*'0'*/ &&
+                        send_amt.value === '') {
+                        return false
+                    }
+                    return acnUtil.isNumChar(ASCIICode);
+                }
+                send_amt.oninput = () => {
+                    send_amt.value = acnUtil.fmtNum( acnUtil.pureNum(send_amt.value) );
+                }
+                btn_transfer.onclick = () => {
+                    TransferAsset(recver_addr.value, send_amt.value);
+                }
+                btn_staking.onclick = () => {
+                    if(recver_addr.value === '') {
+                        recver_addr.value='0000000000000000000000000000000000000000'
+                    }
+                    DelegateAsset(recver_addr.value, send_amt.value)
+                }
+                btn_unstaking.onclick = () => {
+                    rweb3.queryStakes(activeAcct.address).then (ret => {
+                        let list = ''
+                        ret.value.forEach(s => {
+                            list += `
+                                <tr>
+                                    <td><span class="text_hex_small">${s.txhash}</span></td>
+                                    <td><span style="color:darkorange;">${acnUtil.fmtNum(s.amount.toString())}</span></td>
+                                    <td><span style="color:orangered;" onclick="UndelegateAsset('${s.txhash}')">Withdraw</span></td>
+                                </tr>
+                            `
+                        })
+                        div_stakes.innerHTML = `<table>${list}</table>`
+                    })
+                    showStakesLayout(true)
+                }
+            </script>
+
+        </div>
+
+    </div>
+
+
+    <!--
+
+        Ceate Account section
+
+    -->
+
+    <div id='div_create_section' class='section_area' style='display:none;'>
+        <div class='text_title_underline'>Create Account</div>
+        <input id='input_acct_name' class='inputboxred' type='text' placeholder='Input account name'>
+        <div class="flex_area" style="padding:8px 0; align-items:flex-end">
+            <button class='menu_btn2' onclick=showCreateLayout(false);>Cancel</button>
+            <button class='menu_btn' onclick=doCreate();>Do create</button>
+        </div>
+    </div>
+
+    <!--
+
+        Import Account section
+
+    -->
+
+    <div id='div_import_section' class='section_area' style='display:none;'>
+        <div class='text_title_underline'>Import Account</div>
+        <div>
+                <textarea id='ta_walkey'
+                          class='inputboxred simpletextbox'
+                          style='font-family:Arial;font-size:14px;height:100px;'
+                          placeholder='Paste a wallet key json data'
+                          oninput="auto_height(this);"></textarea>
+            <input id='input_pwd' class='inputboxred' type='password' placeholder='Input a password for the wallet key'>
+
+            <div class="flex_area" style="padding:8px 0; align-items:flex-end">
+                <button class='menu_btn2' onclick=showImportLayout(false);>Cancel</button>
+                <button class='menu_btn' onclick="doImport();">OK</button>
+            </div>
+
+            <script>
+                function auto_height(elem) {
+                    elem.style.height='1px';
+                    elem.style.height=(elem.scrollHeight)+'px';
+                }
+                ta_walkey.onkeydown = (evt) => {
+                    var key = evt.key;
+                    var cmd_key = evt.metaKey;
+                    var ctrl_key = evt.ctrlKey;
+                    if ((cmd_key && key == "c") || (ctrl_key && key == "c")) {
+                        return true;
+                    } else if ((cmd_key && key == "v") || (ctrl_key && key == "v")) {
+                        return true;
+                    } else if ((cmd_key && key == "x") || (ctrl_key && key == "x")) {
+                        return true;
+                    } else if ((cmd_key && key == "a") || (ctrl_key && key == "a")) {
+                        return true;
+                    } else {
+                        evt.preventDefault();
+                    }
+                }
+            </script>
+        </div>
+    </div>
+
+
+    <!--
+
+        Export Account section
+
+    -->
+
+    <div id='div_export_section' class='section_area' style='display:none;'>
+        <div class='text_title_underline'>Export Account</div>
+        <div id='div_export_acct' class='inputboxred'
+             style='white-space: pre-wrap; height:auto; word-wrap:break-word;'>
+        </div>
+        <div class="flex_area" style="padding:8px 0; align-items:flex-end">
+            <button class='menu_btn' onclick="showExportLayout(false);">OK</button>
+        </div>
+
+    </div>
+
+
+    <!--
+
+        Stake list (Unstaking) section
+
+    -->
+
+    <div id='div_stakes_section' class='section_area' style='display:none;'>
+        <div id='stakesoftitle' class='text_title_underline'>Stakes of</div>
+        <div id='div_stakes'></div>
+        <button class="menu_btn" onclick="stakesoftitle.innerHTML=`Stakes of 0x${activeAcct.address}`; showStakesLayout(false)">Dismiss</button>
+    </div>
+    <br><br><br>
+
+    <!-- 
+        Transactions section
+    -->
+
+    <div class="section_area">
+        <div class="text_title_underline">Transactions</div>
+        <div id='div_txs'></div>
+    </div>
+
+</div>
+
+
+
+<div id='div_alert_back' class='alert_back'>
+    <div id='div_alert' class='alert_layer'>
+        <p id='p_alert_msg' class='alert_text'></p>
+        <button id='btn_ok'
+                class="menu_btn"
+                style='width:160px;'
+                onclick="hideAlert();">OK</button>
+    </div>
+</div>
+<div id="div_toast">
+    Toast Message
+</div>
+
+<script type='text/javascript'>
+    function showToast(m) {
+        div_toast.innerHTML = m;
+        if(div_toast.classList.contains('show')) {
+            return;
+        }
+        div_toast.classList.add('show');
+        setTimeout( () => {
+            div_toast.classList.remove('show');
+        }, 2700);
+    }
+</script>
+
+<script>
+    let activeAddrStr;
+    let activeAcct;
+
+    window.onload = () => {
+        node_url.value = rweb3.getUrl()
+
+        if(!SessSto.Read('secret')) {
+            window.location.href = 'login.html';
+        }
+        activeAddrStr = LocalSto.Read('default');
+        if(!activeAddrStr) {
+            window.location.href = 'join.html';
+        }
+        activeAcct = Account.Unmarshal(LocalSto.Read(activeAddrStr));
+
+        // load all accounts from localStorage
+        for(let i=0; i<localStorage.length; i++) {
+            const key = localStorage.key(i);
+            if(key !== 'default' && key !== 'url') {
+                const acct = Account.Unmarshal(LocalSto.Read(key));
+                appendAccount(acct);
+            }
+        }
+
+        // // todo: Search by activeAddr
+        // // To search by address, event attribute for address should be defined and recorded by 'tychaind'
+        // TrxBuilder.decodeSearchTx("tx.height >= 15000", true, 1, 10, "asc")
+        // .then( retTxs => {
+        //     console.log('SearchTx returns', retTxs.total_count);
+        //     for(let i=0; i<retTxs.total_count; i++) {
+        //         ProcessResultTx(retTxs.txs[i]);
+        //     }
+        // });
+    }
+
+
+    function CreateAccount(name) {
+        const acct = Account.New(name, SessSto.Read('secret'));
+        LocalSto.Write(acct.address, acct.marshal())
+        return acct;
+    }
+
+    function ImportAccount(wk, wkPwd) {
+        const acct = Account.Import(
+            `Account-${sel_acct_name.length}`,
+            SessSto.Read('secret'),
+            Bytes.fromHex(wk),
+            wkPwd);
+        LocalSto.Write(acct.address, acct.marshal())
+        return acct;
+    }
+
+    function TransferAsset(to, amt) {
+        rweb3.syncAccount(activeAcct)
+            .then( () => {
+                activeAcct.unlock();
+
+                //
+                // build a tx.
+                const tx = TrxBuilder.BuildTransferTrx({
+                    from: activeAcct.address,
+                    to: to,
+                    nonce: activeAcct.nonce + 1,
+                    gas: "10",
+                    amount: acnUtil.pureNum(amt)
+                })
+
+                // sign the tx.
+                TrxBuilder.SignTrx(tx, activeAcct);
+
+                //
+                // broadcast a tx.
+                rweb3.broadcastTrxSync(tx)
+                    .then( ret => {
+                        if(ret.code != 0) {
+                            console.error(ret.log);
+                            showAlert(ret.log);
+                        } else {
+                            // Broadcasting is success. but not commited.
+                            // Check that the tx (ret.hash) is commited
+                            CheckTx(ret.hash);
+
+                            recver_addr.value = '';
+                            send_amt.value = '';
+                            showAlert(`Tx (${acnUtil.shortString(ret.hash, 6, 6)}) is synchronously broadcasted.`);
+                        }
+                    });
+            })
+            .catch( err => {
+                console.error(err);
+                showAlert(err);
+            });
+    }
+
+    function DelegateAsset(to, amt) {
+        rweb3.syncAccount(activeAcct)
+            .then( () => {
+                activeAcct.unlock();
+
+                //
+                // Build a tx.
+                const tx = TrxBuilder.BuildDelegateTrx({
+                    from: activeAcct.address,
+                    to: to,
+                    nonce: activeAcct.nonce + 1,
+                    gas: "10",
+                    amount: acnUtil.pureNum(amt)
+                })
+
+                // sign the tx.
+                const sig = TrxBuilder.SignTrx(tx, activeAcct);
+                // Assert.notNull(sig);
+                // Assert.equal(65, sig.length);
+                // Assert.notNull(tx.getHeader().getSig());
+
+                //
+                // broadcast a tx.
+                rweb3.broadcastTrxSync(tx)
+                    .then( ret => {
+                        if(ret.code != 0) {
+                            console.error(ret.log);
+                            showAlert(ret.log);
+                        } else {
+                            // broadcast success. but not commited.
+
+                            // Check that the tx (ret.hash) is commited
+                            CheckTx(ret.hash);
+
+                            recver_addr.value = '';
+                            send_amt.value = '';
+                            showAlert(`Tx (${acnUtil.shortString(ret.hash, 6, 6)}) is synchronously broadcasted.`);
+                        }
+                    });
+            })
+            .catch( err => {
+                console.error(err);
+                showAlert(err);
+            });
+    }
+
+    function UndelegateAsset(txhash) {
+        rweb3.queryTrx(txhash).then( retTx => {
+            const txbytes = acnUtil.b64ToU8Array(retTx.tx);
+            const tx = TrxBuilder.DecodeTrx(txbytes);
+
+            recver_addr.value = tx.to
+
+            rweb3.syncAccount(activeAcct)
+                .then( () => {
+                    activeAcct.unlock();
+
+                    //
+                    // Build a tx.
+                    const tx = TrxBuilder.BuildUndelegateTrx({
+                        from: activeAcct.address,
+                        to: recver_addr.value,
+                        nonce: activeAcct.nonce + 1,
+                        gas: "10",
+                        amount: "0",
+                        txhash: txhash
+                    })
+
+                    // sign the tx.
+                    const sig = TrxBuilder.SignTrx(tx, activeAcct);
+                    // Assert.notNull(sig);
+                    // Assert.equal(65, sig.length);
+                    // Assert.notNull(tx.getHeader().getSig());
+
+                    //
+                    // broadcast a tx.
+                    rweb3.broadcastTrxSync(tx, resp => {
+                        console.log('debug', resp)
+                    })
+                        .then( ret => {
+                            if(ret.code != 0) {
+                                console.error(ret.log);
+                                showAlert(ret.log);
+                            } else {
+                                // broadcast success. but not commited.
+
+                                // Check that the tx (ret.hash) is commited
+                                CheckTx(ret.hash);
+
+                                recver_addr.value = '';
+                                send_amt.value = '';
+                                showAlert(`Tx (${acnUtil.shortString(ret.hash, 6, 6)}) has been sent.`);
+                            }
+                        });
+                })
+                .catch( err => {
+                    console.error(err);
+                    showAlert(err);
+                });
+        })
+
+    }
+
+    function CheckTx(hash) {
+        try {
+            setTimeout( () => {
+                rweb3.queryTrx(hash).then( retTx => {
+                    ProcessResultTx(retTx);
+                });
+            }, 1500)
+
+        } catch(e) {
+            console.error('this is catched at html', e)
+        }
+    }
+
+    function ProcessResultTx(retTx) {
+        if(retTx.tx_result.code == 0) {
+            rweb3.syncAccount(activeAcct).then( () => {
+                displayAccount(activeAcct);
+            }).catch(err => {
+                console.error(err);
+                showAlert(err);
+            });
+        }
+        handlRetTxUI(retTx);
+    }
+
+    function ShowTx(hash) {
+        rweb3.queryTrx(hash)
+            .then(retTx => {
+                console.log(JSON.stringify(retTx.tx, null, 4))
+                showAlert(JSON.stringify(retTx.tx, null, 4))
+            })
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,28 @@
+{
+  "round_state": {
+    "height/round/step": "847019/0/1",
+    "start_time": "2023-08-28T05:41:51.149467181Z",
+    "proposal_block_hash": "",
+    "locked_block_hash": "",
+    "valid_block_hash": "",
+    "height_vote_set": [
+      {
+        "round": 0,
+        "prevotes": [
+          "nil-Vote",
+          "nil-Vote"
+        ],
+        "prevotes_bit_array": "BA{2:__} 0/27000020 = 0.00",
+        "precommits": [
+          "nil-Vote",
+          "nil-Vote"
+        ],
+        "precommits_bit_array": "BA{2:__} 0/27000020 = 0.00"
+      }
+    ],
+    "proposer": {
+      "address": "32ADA67A1177A5D7EAB958D16E287B3A89A33011",
+      "index": 1
+    }
+  }
+}

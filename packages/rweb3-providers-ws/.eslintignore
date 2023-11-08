@@ -1,0 +1,6 @@
+dist
+lib
+.eslintrc.js
+jest.config.js
+websocket_provider.test.ts
+src/*

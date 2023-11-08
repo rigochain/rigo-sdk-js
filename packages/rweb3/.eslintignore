@@ -1,0 +1,6 @@
+dist
+lib
+.eslintrc.js
+jest.config.js
+webpack.analyze.js
+webpack.config.js

@@ -1,0 +1,25 @@
+{
+  "block_height": "10000",
+  "validators": [
+    {
+      "address": "4F0668EC7E655EDD9B647455F291F3057BE6CD6D",
+      "pub_key": {
+        "type": "tendermint/PubKeySecp256k1",
+        "value": "AilueMocy4WE/RBxdcJ0+73ptZXEAUu3nRFy5kYEOtPs"
+      },
+      "voting_power": "90000010",
+      "proposer_priority": "29548491"
+    },
+    {
+      "address": "32ADA67A1177A5D7EAB958D16E287B3A89A33011",
+      "pub_key": {
+        "type": "tendermint/PubKeySecp256k1",
+        "value": "AykNjxZHyUtjMlmJNxP/2JBCf+XnZZXJWTHhVJ/nl15k"
+      },
+      "voting_power": "7000005",
+      "proposer_priority": "-29548490"
+    }
+  ],
+  "count": "2",
+  "total": "2"
+}

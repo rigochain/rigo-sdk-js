@@ -1,0 +1,13 @@
+{
+  "code": 3,
+  "data": null,
+  "log": "CheckTx failed\n\tproto: cannot parse invalid wire-format data",
+  "info": "",
+  "gas_wanted": "0",
+  "gas_used": "0",
+  "events": [],
+  "codespace": "",
+  "sender": "",
+  "priority": "0",
+  "mempoolError": ""
+}

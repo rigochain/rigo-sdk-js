@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>RIGO Explorer</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width,initial-scale=1">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css"/>
+        <link href="../css/main.css" rel="stylesheet" />
+        <link href="../css/toast.css" rel="stylesheet" />
+        <link href="../css/tooltip.css" rel="stylesheet" />
+        <script type='text/javascript' src='../../dist/rigo.js'></script>
+        <script type='module'>
+            import * as _util from '../js/utils.js';
+            window.acnUtil = _util;
+        </script>
+        <script type='text/javascript'>
+            let url = LocalSto.Read('url')
+            if(!url) {
+                url = 'http://localhost:26657'
+                LocalSto.Write('url', url)
+            }
+            const rweb3 = new RWeb3(url)
+
+            const blockItems = []
+            rweb3.subscribe('ws://localhost:26657/websocket', "tm.event='NewBlock'", (resp) => {
+                if(!resp.data) {
+                    return
+                }
+                // console.log(resp)
+                const header = resp.data.value.header?resp.data.value.header:resp.data.value.block.header
+                header.num_txs = resp.data.value.num_txs?resp.data.value.num_txs:resp.data.value.block.data.txs.length
+                displayBlockHeader(header)
+
+            })
+
+            function displayBlockHeader(header) {
+                const blockItem = `
+                <div class="flex_area" style="margin:8px 0;">
+                    <div class="text_box" style="display:flex;" >
+                        <div class="text_box" style="width:80px;cursor:pointer;" onclick="showBlock(${header.height})">${header.height}</div>
+                        <div class="text_box" style="width:80px;cursor:pointer;" onclick="displayTxs(${header.height})">
+                            ${header.num_txs} txs
+                        </div>
+                        <div class="text_box">
+                            <div class="text_hex_small" style="cursor:pointer;" onclick="showBlock(${header.height})">
+                                Proposer ${header.proposer_address.toLowerCase()}
+                            </div>
+                            <div class="text_label" style="text-align: right;">
+                                ${new Date(header.time).toLocaleString()}
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                `
+                blockItems.push(blockItem)
+                if(blockItems.length > 10) {
+                    blockItems.shift()
+                }
+
+                div_blocks.innerHTML = ''
+                blockItems.forEach((elem, idx) => {
+                    div_blocks.innerHTML = blockItems[idx] + div_blocks.innerHTML
+                })
+
+                last_block_height.innerText = `${header.height}`
+            }
+
+            function showBlock(height) {
+
+                window.open(rweb3.getUrl() + `/block?height=${height}`, 'block')
+            }
+
+
+            function displayTxs(height) {
+                rweb3.queryBlockByHeight(height).then(block => {
+                    const bid = block.block_id
+                    const body = block.block
+
+                    div_txs.innerHTML = ''
+                    body.data.txs.forEach( b64Val => {
+                        const txu8arr = acnUtil.b64ToU8Array(b64Val)
+                        const tx = TrxBuilder.DecodeTrx(txu8arr)
+                        const errmark = ''
+                        const txitem = `
+                        <div class="flex_area" style="margin:8px 0;">
+                            <div class="text_box" style="display:flex; flex:0.6;">
+                                <div>
+                                    <div class="text_hex_small" title="${tx.hash}"
+                                    style="cursor:pointer;"
+                                    onclick="showTx('${tx.hash}')">
+                                        ${errmark}${acnUtil.shortString(tx.hash, 20, 0)}
+                                    </div>
+                                    <div class="text_label" style="display:block;">
+                                        ${body.header.height} @ ${tx.time}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="text_box" style="margin-left:4px;height:100%;">
+                                <div class="text_label" style="text-align: right;">from</div>
+                                <div class="text_label" style="text-align: right;">to</div>
+                            </div>
+                            <div class="text_box" style="display:flex; flex:0.4; margin-left:4px;">
+                                <div>
+                                    <div class="text_hex_small" title="${tx.from}">
+                                        ${acnUtil.shortString(tx.from)}
+                                    </div>
+                                    <div class="text_hex_small" title="${tx.to}">
+                                        ${acnUtil.shortString(tx.to)}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="text_box" style="margin-left:4px;">
+                                <div class="text_amount_small" id="trans_amt">${acnUtil.fmtNum(tx.amount)}</div>
+                                <div class="text_amount_small" id="trans_gas">${acnUtil.fmtNum(tx.gas)}</div>
+                            </div>
+                        </div>`
+
+                        div_txs.innerHTML += txitem
+                    })
+
+
+                })
+            }
+
+            function showTx(hash) {
+                window.open(rweb3.getUrl() + `/tx?hash=0x${hash}`, 'tx')
+            }
+
+            displayValidators()
+
+            function displayValidators() {
+                rweb3.queryValidators().then( resp => {
+                    let totalPower = 0
+                    resp.validators.forEach( val => {
+                        totalPower += Number.parseInt(val.voting_power)
+                    })
+                    total_power.innerHTML = totalPower
+                })
+            }
+
+            function showValidators() {
+                window.open(rweb3.getUrl() + '/validators', 'validators')
+            }
+
+        </script>
+
+    </head>
+    <body>
+    <div class="top_div" style="max-width:100%;">
+        <!--
+
+            Common section
+
+        -->
+        <div class="flex_area">
+            <div class="info_block" style="width:50%;">
+                <div class="text_title1"> Latest Block Height </div>
+                <span id='last_block_height' style="font-size:60px; color:dodgerblue; cursor:pointer;" onclick=showBlock(this.innerText)></span>
+            </div>
+            <div class="info_block" style="width:50%;">
+                <div class="text_title1"> Total Voting Power </div>
+                <div id='total_power' style="font-size:60px; color:dodgerblue; cursor:pointer;" onclick="showValidators();"></div>
+            </div>
+        </div>
+
+        <div class="flex_area">
+            <!--
+
+                Block section
+
+            -->
+            <div class="section_area" style="width:50%;">
+                <div class="text_title_underline" style="text-align:left;"> Blocks </div>
+                <div id='div_blocks'></div>
+            </div>
+            <!--
+
+                Tx section
+
+            -->
+            <div class="section_area" style="width:50%;">
+                <div class="text_title_underline" style="text-align:left;"> Transactions </div>
+                <div id='div_txs'></div>
+            </div>
+        </div>
+
+    </div>
+    </body>
+</html>
