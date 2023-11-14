@@ -21,14 +21,12 @@ describe('setProvider check ', () => {
 
     beforeAll(() => {
         defaultRWeb3 = new RWeb3();
+        defaultRWeb3.setProvider(getTestWsServer());
     });
 
     it('should call rweb3 setProvider success ', async () => {
-        defaultRWeb3.setProvider(getTestWsServer());
-
         const websocketStatusResponse: StatusResponse = await defaultRWeb3.rigo.status();
-
-        expect(websocketStatusResponse.node_info.channels).toEqual('40202122233038606100');
+        expect(websocketStatusResponse.node_info.network).toEqual('testnet');
         expect(websocketStatusResponse.validator_info.pub_key.type).toEqual(
             'tendermint/PubKeyEd25519',
         );
@@ -40,8 +38,7 @@ describe('setProvider check ', () => {
             .then(() => {
                 fail();
             })
-            .catch((error) => {
-                console.log(error);
+            .catch(() => {
                 done();
             });
     });

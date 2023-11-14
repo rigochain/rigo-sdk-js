@@ -27,14 +27,14 @@ describe('consensusParams check ', () => {
     it('should call rweb3 with testWebsocketRWeb3Instance.consensusParams method success return', async () => {
         const testConsensusParamsResponse: ConsensusParamsResponse =
             await testWebsocketRWeb3Instance.rigo.consensusParams();
-
-        console.log(JSON.stringify(testConsensusParamsResponse));
+        expect(testConsensusParamsResponse.block_height).toBeDefined();
+        expect(testConsensusParamsResponse.consensus_params).toBeDefined();
     });
 
     it('should call rweb3 with testWebsocketRWeb3Instance.consensusParams(10000) method success return', async () => {
         const testConsensusParamsResponse2: ConsensusParamsResponse =
             await testWebsocketRWeb3Instance.rigo.consensusParams(10000);
-
-        console.log(JSON.stringify(testConsensusParamsResponse2));
+        expect(testConsensusParamsResponse2.block_height).toBeDefined();
+        expect(testConsensusParamsResponse2.consensus_params).toBeDefined();
     });
 });

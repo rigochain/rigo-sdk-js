@@ -27,6 +27,9 @@ describe('unconfirmedTxs check ', () => {
     it('should call rweb3 with testWebsocketRWeb3Instance.getunconfirmedTxs method success return', async () => {
         const websocketUnconfirmedTxsResponse: UnconfirmedTxsResponse =
             await testWebsocketRWeb3Instance.rigo.unconfirmedTxs(10);
-        console.log(JSON.stringify(websocketUnconfirmedTxsResponse));
+        expect(websocketUnconfirmedTxsResponse.n_txs).toBeDefined();
+        expect(websocketUnconfirmedTxsResponse.total).toBeDefined();
+        expect(websocketUnconfirmedTxsResponse.total_bytes).toBeDefined();
+        expect(websocketUnconfirmedTxsResponse.txs).toBeDefined();
     });
 });

@@ -27,7 +27,6 @@ describe('consensusState check ', () => {
     it('should call rweb3 with testWebsocketRWeb3Instance.consensusState method success return', async () => {
         const testConsensusStateResponse: ConsensusStateResponse =
             await testWebsocketRWeb3Instance.rigo.consensusState();
-
-        console.log(JSON.stringify(testConsensusStateResponse));
+        expect(testConsensusStateResponse.round_state).toBeDefined();
     });
 });

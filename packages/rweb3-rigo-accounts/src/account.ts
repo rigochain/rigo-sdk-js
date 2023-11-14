@@ -57,24 +57,15 @@ export const signTransaction = (
     trxProto: TrxProto,
     privateKey: HexString,
     chainId: string,
-    // To make it compatible with rest of the API, have to keep it async
-    // eslint-disable-next-line @typescript-eslint/require-await
 ): SignTransactionResult => {
     const encodedData = RlpUtils.encodeTrxProto(trxProto);
-
     const prefix = `\x19RIGO(${chainId}) Signed Message:\n${encodedData.length}`;
-
     const prefixedData = Buffer.concat([Buffer.from(prefix), encodedData]);
-
     trxProto.sig = sign(new BytesUint8Array(prefixedData), privateKey);
 
     const signedTxByte = new BytesUint8Array(TrxProtoUtils.encode(trxProto).finish());
-
     const rawTransaction = Buffer.from(signedTxByte).toString('base64');
-
-    // TODO : 이건 검증 필요함. Node 에서 Transaction 생성을 다른 방법 으로 할 수도 있음.
     const transactionHash = sha3Raw(rawTransaction);
-
     return {
         rawTransaction: rawTransaction,
         transactionHash: transactionHash,

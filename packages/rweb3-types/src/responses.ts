@@ -197,7 +197,7 @@ export interface BlockchainResponse {
 /**
  * Represents a response after broadcasting a transaction asynchronously.
  */
-export interface BroadcastTxAsyncResponse {
+export interface BroadcastTxAsyncResponse extends TxData {
     /** The hash of the broadcasted transaction */
     readonly hash: HexString;
 }

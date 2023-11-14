@@ -27,7 +27,9 @@ describe('genesis check ', () => {
     it('should call rweb3 with testWebsocketRWeb3Instance.genesis method success return', async () => {
         const testWebsocketGenesisResponse: GenesisResponse =
             await testWebsocketRWeb3Instance.rigo.genesis();
-
-        console.log(testWebsocketGenesisResponse);
+        expect(testWebsocketGenesisResponse.genesis_time).toBeDefined();
+        expect(testWebsocketGenesisResponse.chain_id).toEqual('testnet');
+        expect(testWebsocketGenesisResponse.initial_height).toEqual(1);
+        expect(testWebsocketGenesisResponse.app_hash).toBeDefined();
     });
 });
