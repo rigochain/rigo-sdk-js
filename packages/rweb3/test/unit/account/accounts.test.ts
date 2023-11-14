@@ -29,7 +29,9 @@ describe('check accounts methods', () => {
         expect(rweb3Account.address.length > 0).toBeTruthy();
 
         const testAccount = rweb3.rigo.accounts.privateKeyToAccount(getTestAccountPrivateKey());
-        expect(testAccount.address.toUpperCase() === getTestAccountAddress()).toBeTruthy();
+        expect(
+            testAccount.address.toLowerCase() === getTestAccountAddress().toLowerCase(),
+        ).toBeTruthy();
     });
 
     it('test sign transaction', async () => {
@@ -42,7 +44,7 @@ describe('check accounts methods', () => {
             gas: 1000000,
             gasPrice: '250000000000',
         });
-        account.signTransaction(trxProto, 'testnet0');
-        expect(TrxProtoBuilder.verifyTrxProto(trxProto, account, 'testnet0')).toBeTruthy();
+        account.signTransaction(trxProto, 'testnet');
+        expect(TrxProtoBuilder.verifyTrxProto(trxProto, account, 'testnet')).toBeTruthy();
     });
 });

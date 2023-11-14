@@ -14,16 +14,17 @@
     limitations under the License.
 */
 import { RWeb3 } from '../../../src';
+import { getTestWsServer } from '../e2e_utils';
 
 describe('rweb3.rigo.account check ', () => {
-    let notSetProviderRweb3: RWeb3;
+    let rweb3: RWeb3;
 
     beforeAll(() => {
-        notSetProviderRweb3 = new RWeb3();
+        rweb3 = new RWeb3(getTestWsServer());
     });
 
     it('should callRWeb3.utils method working', async () => {
-        let utilsTest = RWeb3.utils.hexToBytes('0x123');
-        expect(utilsTest.length > 0).toBeTruthy();
+        const utilsTest = rweb3.utils.toFons('1', 'rigo');
+        expect(utilsTest).toEqual('1000000000000000000');
     });
 });
