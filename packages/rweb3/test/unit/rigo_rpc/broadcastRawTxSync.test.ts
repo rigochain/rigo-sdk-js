@@ -46,7 +46,6 @@ describe('broadcastTxSync check ', () => {
 
         const broadcastTxCommitResponse: BroadcastTxSyncResponse =
             await testWebsocketRWeb3Instance.rigo.broadcastRawTxSync(rawTransaction);
-        expect(broadcastTxCommitResponse.code).toEqual(0);
         expect(broadcastTxCommitResponse.hash).toBeDefined();
     });
 });

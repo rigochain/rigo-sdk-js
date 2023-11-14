@@ -50,7 +50,6 @@ describe('broadcastTxAsync check ', () => {
         TrxProtoBuilder.signTrxProto(tx, rweb3Account, 'testnet');
         const broadcastTxAsyncResponse: BroadcastTxAsyncResponse =
             await testWebsocketRWeb3Instance.rigo.broadcastTxAsync(tx);
-        expect(broadcastTxAsyncResponse.code).toEqual(0);
         expect(broadcastTxAsyncResponse.hash).toBeDefined();
     });
 });

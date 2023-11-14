@@ -13,10 +13,10 @@
     See the License for the specific language governing permissions and
     limitations under the License.
 */
-import { getDevWsServer } from '../e2e_utils';
 import WebsocketProvider from '../../../src/index';
 import { JsonRpcRequest } from '@rigochain/rweb3-types';
 import { uuidV4 } from '@rigochain/rweb3-utils';
+import {getTestWsServer} from "../e2e_utils";
 export function createJsonRpcRequest(method: string, params?: {}): JsonRpcRequest<any> {
     const paramsCopy = params ? { ...params } : {};
     return {
@@ -29,12 +29,9 @@ export function createJsonRpcRequest(method: string, params?: {}): JsonRpcReques
 
 describe('WebsocketClient', () => {
     it('can make a simple call', async () => {
-        const provider = new WebsocketProvider(getDevWsServer());
-        console.log(provider);
-
+        const provider = new WebsocketProvider(getTestWsServer());
         const healthResponse = await provider.request(createJsonRpcRequest('status'));
-
-        console.log('healthResponse', healthResponse);
+        expect(healthResponse.result).toBeDefined();
 
         const healthResponse2 = await provider.execute(createJsonRpcRequest('health'));
         expect(healthResponse2.result).toEqual({});

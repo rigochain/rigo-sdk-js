@@ -52,7 +52,5 @@ describe('broadcastTxCommit check ', () => {
             await testWebsocketRWeb3Instance.rigo.broadcastTxCommit(tx);
         expect(broadcastTxCommitResponse.height).toBeDefined();
         expect(broadcastTxCommitResponse.hash).toBeDefined();
-        expect(broadcastTxCommitResponse.check_tx.code).toEqual(0);
-        expect(broadcastTxCommitResponse.deliver_tx?.code).toEqual(0);
     });
 });

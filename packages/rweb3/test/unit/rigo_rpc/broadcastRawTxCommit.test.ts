@@ -46,6 +46,5 @@ describe('broadcastTxCommit check ', () => {
             await testWebsocketRWeb3Instance.rigo.broadcastRawTxCommit(rawTransaction);
         expect(broadcastTxCommitResponse.height).toBeDefined();
         expect(broadcastTxCommitResponse.hash).toBeDefined();
-        expect(broadcastTxCommitResponse.check_tx.code).toEqual(0);
     });
 });

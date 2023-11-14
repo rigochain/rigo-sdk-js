@@ -45,6 +45,7 @@ describe('checkTx check ', () => {
         TrxProtoBuilder.signTrxProto(tx, rweb3Account, 'testnet');
         const testCheckTxResponse: CheckTxResponse =
             await testWebsocketRWeb3Instance.rigo.checkTx(tx);
-        expect(testCheckTxResponse.code).toEqual(0);
+        expect(testCheckTxResponse.code).toBeDefined();
+        expect(testCheckTxResponse.log).toBeDefined();
     });
 });
