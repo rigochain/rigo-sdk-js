@@ -27,50 +27,24 @@ describe('checkTx check ', () => {
 
     it('should call rweb3 with testWebsocketRWeb3Instance.checkTx() method success return', async () => {
         const secretKey = getTestAccountPrivateKey();
-
-        const acct = privateKeyToAccount(secretKey) as RWeb3Account;
-
-        console.log('acct', acct);
+        const rweb3Account = privateKeyToAccount(secretKey) as RWeb3Account;
 
         const accountResponse: AccountResponse = await testWebsocketRWeb3Instance.rigo.getAccount(
-            acct.address,
+            rweb3Account.address,
         );
 
-        acct.balance = accountResponse.value.balance;
-        acct.nonce = accountResponse.value.nonce;
-
-        console.log(acct.balance);
-        console.log(acct.nonce);
-
-        console.log('address 2', acct);
-
-        //
-        // build a tx.
         const tx = TrxProtoBuilder.buildTransferTrxProto({
-            from: acct.address,
+            from: rweb3Account.address,
             nonce: accountResponse.value.nonce,
-            to: '6fff13a50450039c943c9987fa43cef0d7421904',
-            amount: '1000000000000000',
-            gas: '1000000000000000',
+            to: rweb3Account.address,
+            amount: '1',
+            gas: 4000,
+            gasPrice: '250000000000',
         });
 
-        // sign the tx.
-        const [sig, signedTx] = TrxProtoBuilder.signTrxProto(tx, acct);
-        tx.sig = sig;
-
-        console.log('signedTx', signedTx);
-
-        console.log('nonce', tx.nonce);
-
-        const testCheckTxResponse: CheckTxResponse = await testWebsocketRWeb3Instance.rigo.checkTx(
-            tx,
-        );
-
-        console.log(JSON.stringify(testCheckTxResponse));
-
-        // let broadcastTxCommitResponse: BroadcastTxCommitResponse =
-        //     await testWebsocketRWeb3Instance.rigo.broadcastTxCommit(tx);
-        //
-        // console.log(JSON.stringify(broadcastTxCommitResponse));
+        TrxProtoBuilder.signTrxProto(tx, rweb3Account, 'testnet');
+        const testCheckTxResponse: CheckTxResponse =
+            await testWebsocketRWeb3Instance.rigo.checkTx(tx);
+        expect(testCheckTxResponse.code).toEqual(0);
     });
 });

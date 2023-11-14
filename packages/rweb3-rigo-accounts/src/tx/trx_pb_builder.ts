@@ -324,7 +324,6 @@ function signTrxProto(
     chainId: string,
 ): [BytesUint8Array, BytesUint8Array] {
     trxProto.sig = new Uint8Array();
-    //const encodedData = TrxProtoUtils.encodeTrxProto(trxProto);
     const encodedData = RlpUtils.encodeTrxProto(trxProto);
     const prefix = `\x19RIGO(${chainId}) Signed Message:\n${encodedData.length}`;
     const prefixedData = Buffer.concat([Buffer.from(prefix), encodedData]);

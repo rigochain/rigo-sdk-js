@@ -27,9 +27,8 @@ describe('health check ', () => {
     it('should call rweb3 with testWebsocketRWeb3Instance.delegatee(736a9f6fa280a88599dc7fcd24e42975da89a5ae) method success return', async () => {
         const testDelegateeResponse: DelegateeResponse =
             await testWebsocketRWeb3Instance.rigo.delegatee(
-                '736a9f6fa280a88599dc7fcd24e42975da89a5ae',
+                '1594b3a79f75a81f0181dd6d113a95dca419e7ec',
             );
-
-        console.log(JSON.stringify(testDelegateeResponse));
+        expect(testDelegateeResponse.value).toBeDefined();
     });
 });

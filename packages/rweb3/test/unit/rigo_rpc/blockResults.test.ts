@@ -24,10 +24,10 @@ describe('blockResults check ', () => {
         testWebsocketRWeb3Instance = new RWeb3(getTestWsServer());
     });
 
-    it('should call rweb3 with testWebsocketRWeb3Instance.blockResults(AA04B4AAE915679B72CBB6A3BA83078F6120E9035A1634A7DBD3BD2A29A573F9) method success return', async () => {
+    it('should call rweb3 with testWebsocketRWeb3Instance.blockResults(10000) method success return', async () => {
         const testBlockResultsResponse: BlockResultsResponse =
             await testWebsocketRWeb3Instance.rigo.blockResults(10000);
-
-        console.log(JSON.stringify(testBlockResultsResponse));
+        expect(testBlockResultsResponse.height).toBeDefined();
+        expect(testBlockResultsResponse.txs_results).toBeDefined();
     });
 });

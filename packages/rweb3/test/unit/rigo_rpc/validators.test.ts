@@ -27,7 +27,9 @@ describe('validators check ', () => {
     it('should call rweb3 with testWebsocketRWeb3Instance.validators method success return', async () => {
         const testValidatorsResponse: ValidatorsResponse =
             await testWebsocketRWeb3Instance.rigo.validators(10000);
-
-        console.log(JSON.stringify(testValidatorsResponse));
+        expect(testValidatorsResponse.block_height).toEqual(10000);
+        expect(testValidatorsResponse.total).toBeDefined();
+        expect(testValidatorsResponse.count).toBeDefined();
+        expect(testValidatorsResponse.validators).toBeDefined();
     });
 });

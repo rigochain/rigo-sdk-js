@@ -27,9 +27,8 @@ describe('contractAddrFromTx check ', () => {
 
     it('Check return value of contractAddrFromTx call', async () => {
         const contractAddr: string = await rweb3.rigo.contractAddrFromTx(
-            'A29CE7BEEE8B09E3C59A85BBC9CF90E3F066ADAF485FACBBFB3C538FF32A7098',
+            '8612E355C72FBC4034708C1A42CEEE92BB3A0B6D1F5A08D33A393A3D31FE5A08',
         );
-
-        expect(contractAddr).toBe('0xa0ee488fe69273b40985c52ac5a6e91034eb61cd');
+        expect(contractAddr).toBe('0xed2701da7141b9ebf456a98cf5d16aa6c9585fe1');
     });
 });

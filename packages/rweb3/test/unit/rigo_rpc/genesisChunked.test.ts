@@ -27,7 +27,8 @@ describe('genesisChunked check ', () => {
     it('should call rweb3 with testWebsocketRWeb3Instance.genesisChunked method success return', async () => {
         const testWebsocketGenesisChunkedResponse: GenesisChunkedResponse =
             await testWebsocketRWeb3Instance.rigo.genesisChunked(0);
-
-        console.log(testWebsocketGenesisChunkedResponse);
+        expect(testWebsocketGenesisChunkedResponse.chunk).toBeDefined();
+        expect(testWebsocketGenesisChunkedResponse.total).toBeDefined();
+        expect(testWebsocketGenesisChunkedResponse.data).toBeDefined();
     });
 });

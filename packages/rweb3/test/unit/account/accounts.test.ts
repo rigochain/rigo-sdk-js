@@ -14,34 +14,35 @@
     limitations under the License.
 */
 import { RWeb3 } from '../../../src';
-import {
-    getTestAccountAddress,
-    getTestAccountPrivateKey,
-    getTestProposalAccountPrivateKey,
-    getTestWsServer,
-} from '../e2e_utils';
-import * as fs from 'fs';
-import { privateKeyToAccount, RWeb3Account, TrxProtoBuilder } from '@rigochain/rweb3-rigo-accounts';
-import { hexToBytes } from '@rigochain/rweb3-utils';
+import { getTestAccountAddress, getTestAccountPrivateKey, getTestWsServer } from '../e2e_utils';
+import { privateKeyToAccount, TrxProtoBuilder } from '@rigochain/rweb3-rigo-accounts';
+import { TrxProto } from '@rigochain/rweb3-types';
 
-describe('rweb3.rigo.account check ', () => {
-    let notSetProviderRweb3: RWeb3;
+describe('check accounts methods', () => {
+    let rweb3: RWeb3;
 
     beforeAll(() => {
-        notSetProviderRweb3 = new RWeb3();
+        rweb3 = new RWeb3(getTestWsServer());
     });
-
-    it('should call rweb3 with erc20 transfer method success return', async () => {
-        let rweb3Account = notSetProviderRweb3.rigo.accounts.create();
-
-        console.log(rweb3Account);
-
+    it('test account creation and import private key', async () => {
+        const rweb3Account = rweb3.rigo.accounts.create();
         expect(rweb3Account.address.length > 0).toBeTruthy();
 
-        let testAccount = notSetProviderRweb3.rigo.accounts.privateKeyToAccount(
-            getTestAccountPrivateKey(),
-        );
+        const testAccount = rweb3.rigo.accounts.privateKeyToAccount(getTestAccountPrivateKey());
+        expect(testAccount.address.toUpperCase() === getTestAccountAddress()).toBeTruthy();
+    });
 
-        expect(testAccount.address === getTestAccountAddress()).toBeTruthy();
+    it('test sign transaction', async () => {
+        const account = privateKeyToAccount(getTestAccountPrivateKey());
+        const trxProto: TrxProto = TrxProtoBuilder.buildTransferTrxProto({
+            from: account.address,
+            nonce: 0,
+            to: account.address,
+            amount: '1',
+            gas: 1000000,
+            gasPrice: '250000000000',
+        });
+        account.signTransaction(trxProto, 'testnet0');
+        expect(TrxProtoBuilder.verifyTrxProto(trxProto, account, 'testnet0')).toBeTruthy();
     });
 });

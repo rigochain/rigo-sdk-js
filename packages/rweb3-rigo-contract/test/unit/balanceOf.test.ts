@@ -30,7 +30,7 @@ describe('deploy test', () => {
             from: '20838EBC355D287F71830FE60DD717BA14301AE0',
         };
         erc20Contract.methods
-            .balanceOf('736A9F6FA280A88599DC7FCD24E42975DA89A5AE')
+            .balanceOf('0x0Ab16465885e27108Ad15586586E96A5718A2bd0')
             .call(fromObject, 1)
             .then((balance: string) => {
                 console.log('balance', balance);

@@ -27,7 +27,7 @@ describe('txSearch check ', () => {
     it('should call rweb3 with testWebsocketRWeb3Instance.txSearch method success return', async () => {
         const testTxSearchResponse: TxSearchResponse =
             await testWebsocketRWeb3Instance.rigo.txSearch('tx.height=1');
-
-        console.log(JSON.stringify(testTxSearchResponse));
+        expect(testTxSearchResponse.total_count).toBeDefined();
+        expect(testTxSearchResponse.txs).toBeDefined();
     });
 });
