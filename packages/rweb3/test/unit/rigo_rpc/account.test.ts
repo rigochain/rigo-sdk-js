@@ -18,18 +18,16 @@ import { getTestAccountAddress, getTestWsServer } from '../e2e_utils';
 import { AccountResponse } from '@rigochain/rweb3-types';
 
 describe('account check ', () => {
-    let testWebsocketRWeb3Instance: RWeb3;
+    let rweb3: RWeb3;
 
     beforeAll(() => {
-        testWebsocketRWeb3Instance = new RWeb3(getTestWsServer());
+        rweb3 = new RWeb3(getTestWsServer());
     });
 
     it('should call rweb3 with testWebsocketRWeb3Instance.account method success return', async () => {
         const testAccountAddress = getTestAccountAddress();
         const testAccountResponse: AccountResponse =
-            await testWebsocketRWeb3Instance.rigo.getAccount(testAccountAddress);
-
-        console.log(JSON.stringify(testAccountResponse));
+            await rweb3.rigo.getAccount(testAccountAddress);
 
         expect(testAccountResponse.key.toLowerCase()).toEqual(testAccountAddress.toLowerCase());
         expect(testAccountResponse.value.address.toLowerCase()).toEqual(
@@ -37,11 +35,5 @@ describe('account check ', () => {
         );
         expect(testAccountResponse.value.nonce).toBeDefined();
         expect(testAccountResponse.value.balance).toBeDefined();
-
-        const testContractAddress = '0xde5fde64d239707a7caece5d71691d14f9113166';
-        const testContractAccountResponse: AccountResponse =
-            await testWebsocketRWeb3Instance.rigo.getAccount(testContractAddress);
-
-        console.log(testContractAccountResponse);
     });
 });

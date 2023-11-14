@@ -33,12 +33,8 @@ describe('subscribeTx check ', () => {
             complete: () => done.fail('subscription should not complete'),
             next: (event: SubscriptionEvent) => {
                 events.push(event);
-                console.log('event', event);
-                console.log('height', event.data.value);
-
                 if (events.length === 2) {
                     // make sure they are consecutive heights
-
                     subscription.unsubscribe();
 
                     // wait 1.5 * blockTime and check we did not get more events

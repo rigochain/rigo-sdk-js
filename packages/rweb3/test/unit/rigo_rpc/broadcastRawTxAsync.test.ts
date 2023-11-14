@@ -27,32 +27,25 @@ describe('broadcastTxAsync check ', () => {
 
     it('should call rweb3 with testWebsocketRWeb3Instance.broadcastTxAsync() method success return', async () => {
         const secretKey = getTestAccountPrivateKey();
-
         const rweb3Account = privateKeyToAccount(secretKey) as RWeb3Account;
-
         const accountResponse: AccountResponse = await testWebsocketRWeb3Instance.rigo.getAccount(
             rweb3Account.address,
         );
+        expect(Number(accountResponse.value.balance)).toBeGreaterThan(0);
 
-        rweb3Account.balance = accountResponse.value.balance;
-        rweb3Account.nonce = accountResponse.value.nonce;
-
-        //
-        // build a tx.
         const tx = TrxProtoBuilder.buildTransferTrxProto({
             from: rweb3Account.address,
             nonce: accountResponse.value.nonce,
-            to: '6fff13a50450039c943c9987fa43cef0d7421904',
-            amount: '1000000000000000',
-            gas: 100000,
-            gasPrice: '10000000000',
+            to: rweb3Account.address,
+            amount: '1',
+            gas: 4000,
+            gasPrice: '250000000000',
         });
 
-        const { rawTransaction, transactionHash } = rweb3Account.signTransaction(tx, 'testnet0');
+        const { rawTransaction } = rweb3Account.signTransaction(tx, 'testnet');
 
         const broadcastTxAsyncResponse: BroadcastTxAsyncResponse =
             await testWebsocketRWeb3Instance.rigo.broadcastRawTxAsync(rawTransaction);
-
-        console.log(JSON.stringify(broadcastTxAsyncResponse));
+        expect(broadcastTxAsyncResponse.hash).toBeDefined();
     });
 });

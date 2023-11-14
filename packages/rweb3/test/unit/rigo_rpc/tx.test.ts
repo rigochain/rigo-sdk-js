@@ -24,31 +24,12 @@ describe('txSearch check ', () => {
     beforeAll(() => {
         testWebsocketRWeb3Instance = new RWeb3(getTestWsServer());
     });
-    //
-    // public async getContractAddress(txHash: string) {
-    //         const transactionData = await this._rweb3.queryTrx(txHash);
-    //         if (!transactionData.tx_result || !transactionData.tx_result.data) throw Error('not found contract address');
-    //         const bytes = Bytes.b64ToBytes(transactionData.tx_result.data);
-    //         let bytesToHex = bytes.toHex();
-    //         if(!bytesToHex.startsWith('0x'))    bytesToHex = '0x' + bytesToHex;
-    //         return bytesToHex.toLowerCase();
-    //     }
 
     it('should call rweb3 with testWebsocketRWeb3Instance.txSearch method success return', async () => {
         const testTxResponse: TxResponse = await testWebsocketRWeb3Instance.rigo.tx(
-            '84b366c007e62513913d5a2d642e2792363188db899012139700ba0e6fd0728f',
+            '8612E355C72FBC4034708C1A42CEEE92BB3A0B6D1F5A08D33A393A3D31FE5A08',
         );
-
-        if (testTxResponse.tx_result.data) {
-            const bytes = BytesUint8Array.b64ToBytes(testTxResponse.tx_result.data);
-            let bytesToHex = bytes.toHex();
-            if (!bytesToHex.startsWith('0x')) bytesToHex = '0x' + bytesToHex;
-            console.log('contractAddr', bytesToHex.toLowerCase());
-        }
-
-        console.log(JSON.stringify(testTxResponse));
-        console.log(JSON.stringify(testTxResponse.tx_result.data));
-        console.log(JSON.stringify(testTxResponse.hash));
-        console.log(JSON.stringify(testTxResponse.height));
+        expect(testTxResponse.height).toBeDefined();
+        expect(testTxResponse.result.code).toEqual(0);
     });
 });

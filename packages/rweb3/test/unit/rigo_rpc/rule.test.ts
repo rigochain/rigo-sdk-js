@@ -26,7 +26,6 @@ describe('rule check ', () => {
 
     it('should call rweb3 with testWebsocketRWeb3Instance.rule() method success return', async () => {
         const testRuleResponse: RuleResponse = await testWebsocketRWeb3Instance.rigo.rule();
-
-        console.log(JSON.stringify(testRuleResponse));
+        expect(testRuleResponse.value.version).toBeDefined();
     });
 });

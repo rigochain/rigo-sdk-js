@@ -24,11 +24,10 @@ describe('stakes check ', () => {
         testWebsocketRWeb3Instance = new RWeb3(getTestWsServer());
     });
     it('should call rweb3 with testWebsocketRWeb3Instance.stakes method success return', async () => {
-        const testAccountAddress = '736a9f6fa280a88599dc7fcd24e42975da89a5ae';
         const testStakeResponse: StakesResponse = await testWebsocketRWeb3Instance.rigo.stakes(
-            testAccountAddress,
+            '1594b3a79f75a81f0181dd6d113a95dca419e7ec',
         );
-
-        console.log(JSON.stringify(testStakeResponse));
+        expect(testStakeResponse.key).toEqual('1594B3A79F75A81F0181DD6D113A95DCA419E7EC');
+        expect(testStakeResponse.value).toBeDefined();
     });
 });
