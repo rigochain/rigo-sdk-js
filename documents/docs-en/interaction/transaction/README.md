@@ -332,3 +332,44 @@ When a submission to the RIGO network is successful, the following result is ret
   }
 }
 ```
+
+### decodeTransaction
+
+It is possible to decode the result of a transaction queried from RIGO. The required argument for the decodeTransaction is as follows:
+- d : BytesUint8Array of the transaction to be decoded.
+
+The following code is an example that utilizes TrxProtoBuilder's decodeTransaction to decode a submitted transaction.
+
+```typescript
+import { RWeb3, TrxProtoBuilder } from '@rigochain/rweb3';
+import { RWeb3Account } from '@rigochain/rweb3-rigo-accounts';
+
+// create rweb3 instance
+const rweb3 = new RWeb3('https://rpc1.testnet.rigochain.io');
+
+const tx = 'dd50bd3118acf45cf1c3b55a516bf8bad7905c37679d12236ad2f624aead5e41';
+const data = await rweb3.rigo.tx(tx);
+
+const bytesData = BytesUint8Array.b64ToBytes(data.tx);
+const result = TrxProtoBuilder.decodeTransaction(bytesData);
+console.log(result);
+```
+
+## Result
+If decodeTransaction is executed successfully, the following result value will be returned.
+```shell
+{
+  hash: 'dd50bd3118acf45cf1c3b55a516bf8bad7905c37679d12236ad2f624aead5e41',
+  version: 1,
+  time: 2023-12-01T11:00:39.704Z,
+  nonce: 11,
+  from: '66c44877759d97a9a78be296fd72e1a7e9cce190',
+  to: 'd71e8104a28c1fe1fcfb89e5fa67bc21f424fc80',
+  amount: '1000000000000000000000',
+  gas: 1000000,
+  gasPrice: '250000000000',
+  type: 1,
+  payload: undefined,
+  sig: 'e5274bf14ed4aee71fd3989db31518769b683285baca3a1b8647bf5fd57a6d50368fbd232a3bf300b666b7e367d8408458c60325b744d1e876c86005042dac8700'
+}
+```
