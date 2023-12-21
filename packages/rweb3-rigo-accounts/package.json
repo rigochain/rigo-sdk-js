@@ -1,6 +1,6 @@
 {
   "name": "@rigochain/rweb3-rigo-accounts",
-  "version": "1.0.19",
+  "version": "1.0.20",
   "main": "./lib/commonjs/index.js",
   "module": "./lib/esm/index.js",
   "license": "Apache-2.0",
@@ -60,8 +60,8 @@
     "long": "5.2.3",
     "path-browserify": "^1.0.1",
     "protobufjs": "7.2.5",
-    "@rigochain/rweb3-types": "1.0.19",
-    "@rigochain/rweb3-utils": "1.0.19",
+    "@rigochain/rweb3-types": "1.0.20",
+    "@rigochain/rweb3-utils": "1.0.20",
     "secp256k1": "^4.0.2",
     "ts-proto": "^1.137.0",
     "ethereumjs-util": "^6.1.0"

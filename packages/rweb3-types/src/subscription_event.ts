@@ -20,4 +20,5 @@ export interface SubscriptionEvent {
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         readonly value: any;
     };
+    readonly events: Record<string, string[]>;
 }

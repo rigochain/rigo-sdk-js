@@ -1,6 +1,6 @@
 {
   "name": "@rigochain/rweb3-validator",
-  "version": "1.0.19",
+  "version": "1.0.20",
   "main": "./lib/commonjs/index.js",
   "module": "./lib/esm/index.js",
   "license": "Apache-2.0",
@@ -58,7 +58,7 @@
     "ethereum-cryptography": "2.1.2",
     "is-my-json-valid": "^2.20.6",
     "util": "^0.12.5",
-    "@rigochain/rweb3-types": "1.0.19",
-    "@rigochain/rweb3-errors": "1.0.19"
+    "@rigochain/rweb3-types": "1.0.20",
+    "@rigochain/rweb3-errors": "1.0.20"
   }
 }

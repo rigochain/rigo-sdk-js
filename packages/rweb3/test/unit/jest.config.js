@@ -4,7 +4,7 @@ module.exports = {
     ...base,
     maxWorkers: 1, // Nonce 체크로 인해 병렬 처리
     testTimeout: 10000,
-     testMatch: ['<rootDir>/test/unit/**/*.(spec|test).(js|ts)'],
+    // testMatch: ['<rootDir>/test/unit/**/*.(spec|test).(js|ts)'],
     // testMatch: ['<rootDir>/test/unit/**/setProvider.(spec|test).(js|ts)'], // 단일 테스트
     // testMatch: ['<rootDir>/test/unit/**/multipleRWeb3.(spec|test).(js|ts)'], // 단일 테스트
     // testMatch: ['<rootDir>/test/unit/**/status.(spec|test).(js|ts)'], // 단일 테스트
@@ -37,7 +37,7 @@ module.exports = {
     // testMatch: ['<rootDir>/test/unit/**/broadcastRawTxSync.(spec|test).(js|ts)'], // 단일 테스트
     // testMatch: ['<rootDir>/test/unit/**/broadcastRawTxAsync.(spec|test).(js|ts)'], // 단일 테스트
     // testMatch: ['<rootDir>/test/unit/**/broadcastRawTxCommit.(spec|test).(js|ts)'], // 단일 테스트
-    // testMatch: ['<rootDir>/test/unit/**/subscribe.(spec|test).(js|ts)'], // 단일 테스트
+     testMatch: ['<rootDir>/test/unit/**/subscribe.(spec|test).(js|ts)'], // 단일 테스트
     // testMatch: ['<rootDir>/test/unit/**/subscribeNewBlock.(spec|test).(js|ts)'], // 단일 테스트
     // testMatch: ['<rootDir>/test/unit/**/transfer.(spec|test).(js|ts)'], // 단일 테스트
     // testMatch: ['<rootDir>/test/unit/**/setdoc.(spec|test).(js|ts)'], // 단일 테스트

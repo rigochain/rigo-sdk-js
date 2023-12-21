@@ -34,6 +34,7 @@ describe('subscribe check ', () => {
             error: done.fail,
             complete: () => done.fail('subscription should not complete'),
             next: (event: SubscriptionEvent) => {
+                console.log(event.events);
                 events.push(event);
                 expect(event.query).toEqual(query);
                 if (events.length === 2) {
