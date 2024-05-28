@@ -12,11 +12,11 @@
   "homepage": "https://github.com/rigochain/rigo-sdk-js",
   "bugs": {
     "url": "https://github.com/rigochain/rigo-sdk-js",
-    "email": "kyle.kwon@themedium.io"
+    "email": "kyle.kwon@rigolabs.io"
   },
   "author": {
     "name": "Kyle Kwon",
-    "email": "kyle.kwon@themedium.io",
+    "email": "kyle.kwon@rigolabs.io",
     "url": "https://github.com/rigochain"
   },
   "license": "Apache-2.0",
