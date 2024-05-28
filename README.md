@@ -38,7 +38,7 @@ cd rigo-sdk-js
 npm install
 
 npm run build 
-```js
+```
 
 
 ### Browserify
