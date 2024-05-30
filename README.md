@@ -30,7 +30,13 @@ npm -v
 
 ## Usages
 
-### nodejs
+### Install SDK
+
+```bash
+npm install @rigochain/rweb3
+```
+
+### Build sources
 
 ```bash
 git clone https://github.com/rigochain/rigo-sdk-js.git
@@ -40,7 +46,7 @@ npm install
 npm run build 
 ```
 
-
+<!--
 ### Browserify
 
 ```bash
@@ -54,15 +60,9 @@ npm run build:web
 ```
 
 ```html
-
 <script type="text/javascript" src="./dist/rigo.min.js"></script>
 ```
-
-### NodeJS
-
-```bash
-npm i rigo-sdk-js
-```
+-->
 
 ---
 
