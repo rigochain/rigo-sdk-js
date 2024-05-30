@@ -1,6 +1,6 @@
 {
   "name": "@rigochain/rweb3-errors",
-  "version": "1.0.20",
+  "version": "1.0.22",
   "main": "./lib/commonjs/index.js",
   "module": "./lib/esm/index.js",
   "license": "Apache-2.0",
@@ -50,6 +50,6 @@
     "@types/jest": "^28.1.6"
   },
   "dependencies": {
-    "@rigochain/rweb3-types": "1.0.20"
+    "@rigochain/rweb3-types": "1.0.22"
   }
 }
