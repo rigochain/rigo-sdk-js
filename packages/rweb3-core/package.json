@@ -1,6 +1,6 @@
 {
   "name": "@rigochain/rweb3-core",
-  "version": "1.0.20",
+  "version": "1.0.23",
   "main": "./lib/commonjs/index.js",
   "module": "./lib/esm/index.js",
   "license": "Apache-2.0",
@@ -34,7 +34,6 @@
     "test": "jest --config=./test/unit/jest.config.js",
     "test:silent": "jest --silent --config=./test/unit/jest.config.js"
   },
-
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^5.30.7",
     "@typescript-eslint/parser": "^5.30.7",
@@ -50,12 +49,11 @@
     "ts-jest": "^28.0.7",
     "@types/jest": "^28.1.6"
   },
-
   "dependencies": {
-    "@rigochain/rweb3-providers-http" : "1.0.20",
-    "@rigochain/rweb3-providers-ws" : "1.0.20",
-    "@rigochain/rweb3-validator" : "1.0.20",
-    "@rigochain/rweb3-types" : "1.0.20",
-    "@rigochain/rweb3-utils" : "1.0.20"
+    "@rigochain/rweb3-providers-http": "1.0.23",
+    "@rigochain/rweb3-providers-ws": "1.0.23",
+    "@rigochain/rweb3-validator": "1.0.23",
+    "@rigochain/rweb3-types": "1.0.23",
+    "@rigochain/rweb3-utils": "1.0.23"
   }
 }
